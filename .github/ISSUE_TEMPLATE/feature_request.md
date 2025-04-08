@@ -7,15 +7,6 @@ assignees: ''
 
 ---
 
----
-name: Feature request
-about: 새로운 기능 추가 또는 기존 기능 수정에 대한 요청
-title: ''
-labels: ''
-assignees: ''
-
----
-
 # 기능 추가/수정 요청
 
 ## 기능 설명
