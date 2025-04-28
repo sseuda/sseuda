@@ -1,7 +1,12 @@
 package com.sseuda.sseuda_server.function.categorySmall.dao;
 
+import com.sseuda.sseuda_server.function.categorySmall.dto.CategorySmallDTO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface CategorySmallMapper {
+
+    List<CategorySmallDTO> findCategorySmallList();
 }

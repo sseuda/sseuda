@@ -2,8 +2,6 @@ package com.sseuda.sseuda_server.function.categorySmall.controller;
 
 import com.sseuda.sseuda_server.common.ResponseDTO;
 import com.sseuda.sseuda_server.function.categorySmall.service.CategorySmallService;
-
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
