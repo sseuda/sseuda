@@ -1,20 +1,18 @@
-package com.sseuda.sseuda_server.common;
+package com.sseuda.sseuda_server.exception.dto;
 
 import org.springframework.http.HttpStatus;
 
-public class ResponseDTO {
+public class ApiExceptionDTO {
 
-    private int status;     //  HTTP 응답 상태 코드
-    private String message; //  HTTP 응답 메시지
-    private Object data;    //  HTTP 응답 데이터
+    private int status;
+    private String message;
 
-    public ResponseDTO() {
+    public ApiExceptionDTO() {
     }
 
-    public ResponseDTO(HttpStatus status, String message, Object data) {
+    public ApiExceptionDTO(HttpStatus status, String message) {
         this.status = status.value();
         this.message = message;
-        this.data = data;
     }
 
     public int getStatus() {
@@ -33,20 +31,11 @@ public class ResponseDTO {
         this.message = message;
     }
 
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
     @Override
     public String toString() {
-        return "ResponseDTO{" +
+        return "ApiExceptionDTO{" +
                 "status=" + status +
                 ", message='" + message + '\'' +
-                ", data=" + data +
                 '}';
     }
 }
