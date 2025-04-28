@@ -2,14 +2,11 @@ package com.sseuda.sseuda_server.common;
 
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDateTime;
-
 public class ResponseDTO {
 
     private int status;     //  HTTP 응답 상태 코드
     private String message; //  HTTP 응답 메시지
     private Object data;    //  HTTP 응답 데이터
-//    private LocalDateTime timestamp = LocalDateTime.now();
 
     public ResponseDTO() {
     }
