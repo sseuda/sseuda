@@ -99,10 +99,7 @@ public class TokenProvider {
     }
 
     private String getAuthorities(Member member) {
-//        return member.getMemberRole().stream()
-//                .map(role -> role.getAuthority().getAuthorityName())
-//                .collect(Collectors.joining(","));
-        return null;
+        return member.getRole().getRole(); // "USER", "ADMIN", "SUPER"
     }
 }
 
