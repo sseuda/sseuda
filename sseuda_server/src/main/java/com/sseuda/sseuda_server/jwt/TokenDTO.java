@@ -2,19 +2,22 @@ package com.sseuda.sseuda_server.jwt;
 
 public class TokenDTO {
 
-    private String grantType;
-    private String username;
-    private String accessToken;
+    private String grantType;       // 토큰 타입
+    private String username;        // 사용자아이디
+    private String accessToken;     // 엑세스 토큰
     private Long accessTokenExpiresIn; // 액세스 토큰 만료 시간
 
-    public TokenDTO(String grantType, String memberName, String accessToken, Long accessTokenExpiresIn) {
+    // 기본 생성자
+    public TokenDTO() {
+    }
+
+    public TokenDTO(String grantType, String username, String accessToken, Long accessTokenExpiresIn) {
         this.grantType = grantType;
-        this.username = memberName;
+        this.username = username;
         this.accessToken = accessToken;
         this.accessTokenExpiresIn = accessTokenExpiresIn;
     }
 
-    // Getter와 Setter 추가 (Lombok을 사용할 수도 있음)
     public String getGrantType() {
         return grantType;
     }
@@ -23,11 +26,11 @@ public class TokenDTO {
         this.grantType = grantType;
     }
 
-    public String getMemberName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setMemberName(String memberName) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
