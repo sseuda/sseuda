@@ -1,4 +1,4 @@
 package com.sseuda.sseuda_server.function.post.dao;
 
-public interface PostDAO {
+public interface PostMapper {
 }
