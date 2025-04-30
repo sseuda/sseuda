@@ -25,4 +25,11 @@ public class CategorySmallService {
 
         return categorySmallMapper.findCategorySmallList();
     }
+
+//    소분류 카테고리 삭제
+    public int deleteCategorySmallCode(int smallCode) {
+        log.info("[CSController] 소분류 카테고리 삭제 시작...");
+
+        return categorySmallMapper.deleteCategorySmallCode(smallCode);
+    }
 }
