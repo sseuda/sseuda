@@ -26,4 +26,17 @@
         WHERE
             small_category_id = #{ smallCode }
     </delete>
+
+    <!--    소분류 카테고리 등록 -->
+    <insert id="insertCategorySmallCode" parameterType="com.sseuda.sseuda_server.function.categorySmall.dto.CategorySmallDTO">
+        INSERT
+        tbl_category_small
+        VALUE
+        (
+            #{ small_category_id },
+            #{ small_category_name },
+            #{ big_category_id }
+        );
+    </insert>
 </mapper>
+
