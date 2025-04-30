@@ -18,4 +18,20 @@ public class SecurityConfig {
                 );
         return http.build();
     }
+
+    private AuthFailHandler authFailHandler;
+
+    public SecurityConfig(AuthFailHandler authFailHandler) { this.authFailHandler = authFailHandler; }
+
+    @Bean
+        public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    }
+
 }
