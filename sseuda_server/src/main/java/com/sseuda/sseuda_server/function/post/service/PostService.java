@@ -21,8 +21,15 @@ public class PostService {
         this.postMapper = postMapper;
     }
 
+//    게시글 전체 조회
     public List<PostDTO> findPostList(){
 
         return postMapper.findPostList();
+    }
+
+//    회원별 게시글 전체 조회
+    public  List<PostDTO> findUserPostList(int userCode){
+
+        return postMapper.findUserPostList(userCode);
     }
 }

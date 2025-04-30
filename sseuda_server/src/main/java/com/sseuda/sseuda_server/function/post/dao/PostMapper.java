@@ -8,5 +8,9 @@ import java.util.List;
 @Mapper
 public interface PostMapper {
 
+//    게시글 전체 조회
     List<PostDTO> findPostList();
+
+//    회원별 게시글 전체 조회
+    List<PostDTO> findUserPostList(int userCode);
 }
