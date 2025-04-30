@@ -3,6 +3,10 @@ server:
   port: 8080
   address: 0.0.0.0
 
+# jwt 토큰
+jwt:
+  secret: 3CRveG45XAO7ij5koXwir62gBWB8rpDWmBsZ6P+N5X+mehGmytVXQ4/Ie77+ME8T9ENh2pVeYv0AJZ3Cdkfqmw==
+
 spring:
   #DB config
   datasource:
@@ -47,3 +51,4 @@ logging:
     root: info
     org.hibernate.SQL: debug
     org.hibernate.orm.jdbc.bind: trace
+
