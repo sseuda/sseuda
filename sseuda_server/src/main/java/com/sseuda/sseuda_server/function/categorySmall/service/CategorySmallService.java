@@ -4,6 +4,7 @@ import com.sseuda.sseuda_server.function.categorySmall.dao.CategorySmallMapper;
 import com.sseuda.sseuda_server.function.categorySmall.dto.CategorySmallDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +15,12 @@ public class CategorySmallService {
     private final Logger log = LoggerFactory.getLogger(CategorySmallService.class);
     private CategorySmallMapper categorySmallMapper;
 
+    @Autowired
     public CategorySmallService(CategorySmallMapper categorySmallMapper) {
         this.categorySmallMapper = categorySmallMapper;
     }
 
+//    소분류 카테고리 전체 조회
     public List<CategorySmallDTO> findCategorySmallList(){
 
         return categorySmallMapper.findCategorySmallList();

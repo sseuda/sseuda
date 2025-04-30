@@ -10,6 +10,7 @@
         <result property="bigCategoryId" column="big_category_id"/>
     </resultMap>
 
+<!--    소분류 카테고리 전체 조회 -->
     <select id="findCategorySmallList" resultMap="categortSmallResultMap">
         SELECT
             small_category_name
