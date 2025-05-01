@@ -14,8 +14,16 @@
         SELECT
         big_category_name
         FROM
-        tbl_category_big;
+        tbl_category_big
     </select>
+
+    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
+        DELETE
+        FROM
+            tbl_category_big
+        WHERE
+            #{ big_category_id }
+    </delete>
 
 
 </mapper>

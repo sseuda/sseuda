@@ -26,7 +26,7 @@ public class CategoryBigController {
     @GetMapping("/mypage")
     public ResponseEntity<ResponseDTO> findBigCategoryLiat(){
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", categoryBigService.findBigCategoryLiat()));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "대분류 카테고리 조회 성공", categoryBigService.findBigCategoryLiat()));
 
     }
 
