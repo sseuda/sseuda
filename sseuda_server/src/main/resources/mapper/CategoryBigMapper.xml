@@ -9,7 +9,8 @@
         <result property="bigCategoryName" column="big_category_name"/>
     </resultMap>
 
-    <select id="findBigCategory" resultMap="categoryBigResultMap">
+<!--    대분류 카테고리 전체 조회 -->
+    <select id="findBigCategoryLiat" resultMap="categoryBigResultMap">
         SELECT
         big_category_name
         FROM

@@ -8,5 +8,6 @@ import java.util.List;
 @Mapper
 public interface CategoryBigMapper {
 
-    List<CategoryBigDTO> findBigCategory();
+//    대분류 카테고리 전체 조회
+    List<CategoryBigDTO> findBigCategoryLiat();
 }
