@@ -9,11 +9,13 @@ import java.util.List;
 
 public class Member implements UserDetails {
 
+
+public class Member {
+
     private final String username;
     private final String password;
     private UserRole role;
 
-    // 로그인용
     public Member(String username, String password, UserRole role) {
         this.username = username;
         this.password = password;
@@ -41,6 +43,5 @@ public class Member implements UserDetails {
     // 관리자가 role 변경이 가능하도록 (user->admin)
     public void setRole(UserRole role) {
         this.role = role;
-    }
 
 }

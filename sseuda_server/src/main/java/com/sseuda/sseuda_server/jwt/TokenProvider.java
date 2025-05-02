@@ -129,6 +129,7 @@ public class TokenProvider {
                 .collect(Collectors.toList());
     }
 
+
     private static String getAuthorities(Member member) {
         return member.getRole().getRole(); // "USER", "ADMIN", "SUPER"
     }
