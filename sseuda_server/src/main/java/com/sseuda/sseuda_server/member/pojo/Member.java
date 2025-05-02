@@ -13,6 +13,7 @@ public class Member implements UserDetails {
     private final String password;
     private UserRole role;
 
+    // 로그인용
     public Member(String username, String password, UserRole role) {
         this.username = username;
         this.password = password;
@@ -41,4 +42,5 @@ public class Member implements UserDetails {
     public void setRole(UserRole role) {
         this.role = role;
     }
+
 }

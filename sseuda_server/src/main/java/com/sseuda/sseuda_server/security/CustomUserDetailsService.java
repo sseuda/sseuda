@@ -18,17 +18,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        System.out.println("유저 찾기 시도: " + username);
-
-        // MemberRepository에서 Member 객체를 가져와서 CustomUserDetails로 변환
         Member member = memberRepository.findByUsername(username);
         if (member == null) {
-            throw new UsernameNotFoundException("존재하지 않는 사용자입니다: " + username);
+            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username);
         }
-
-        System.out.println(username + "찾기완료!");
-
         return new CustomUserDetails(member);
     }
 }

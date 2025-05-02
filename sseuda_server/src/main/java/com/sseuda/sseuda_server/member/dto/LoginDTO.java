@@ -1,14 +1,14 @@
 package com.sseuda.sseuda_server.member.dto;
 
-public class LoginRequest {
+public class LoginDTO {
 
     private String username;
     private String password;
 
     // 기본 생성자 필요 (JSON -> 객체 변환 시)
-    public LoginRequest() {}
+    public LoginDTO() {}
 
-    public LoginRequest(String username, String password) {
+    public LoginDTO(String username, String password) {
         this.username = username;
         this.password = password;
     }

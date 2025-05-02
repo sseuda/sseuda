@@ -1,14 +1,11 @@
 package com.sseuda.sseuda_server.security;
 
 import com.sseuda.sseuda_server.member.pojo.Member;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -18,13 +15,9 @@ public class CustomUserDetails implements UserDetails {
         this.member = member;
     }
 
-    public Member getMember() {
-        return member;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + member.getRole().name()));
+        return List.of(() -> member.getRole().getRole());
     }
 
     @Override
@@ -37,23 +30,13 @@ public class CustomUserDetails implements UserDetails {
         return member.getUsername();
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true; // 필요 시 변경
-    }
+    // 나머지 UserDetails 필드들
+    @Override public boolean isAccountNonExpired() { return true; }
+    @Override public boolean isAccountNonLocked() { return true; }
+    @Override public boolean isCredentialsNonExpired() { return true; }
+    @Override public boolean isEnabled() { return true; }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true; // 필요 시 변경
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true; // 필요 시 변경
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true; // 필요 시 변경
+    public Member getMember() {
+        return member;
     }
 }

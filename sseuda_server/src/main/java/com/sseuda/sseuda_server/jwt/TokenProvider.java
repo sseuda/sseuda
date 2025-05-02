@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -53,13 +54,25 @@ public class TokenProvider {
 //        return new TokenDTO("Bearer", member.getUsername(), token, expiration.getTime());
 //    }
     public String createToken(Authentication authentication) {
-//        Member member = (Member) authentication.getPrincipal(); // authentication에서 사용자 정보 가져오기
+
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Member member = userDetails.getMember();  // ✅ 이렇게 안전하게 추출
+        Member member = userDetails.getMember();
+//        long now = System.currentTimeMillis();
+//        Date expiration = new Date(now + TOKEN_EXPIRE_TIME);
+//
+//        return Jwts.builder()
+//                .setSubject(member.getUsername())
+//                .claim("auth", getAuthorities(member))
+//                .setExpiration(expiration)
+//                .signWith(key, SignatureAlgorithm.HS512)
+//                .compact();
+        return createToken(member);
+    }
+
+    public String createToken(Member member) {
         long now = System.currentTimeMillis();
         Date expiration = new Date(now + TOKEN_EXPIRE_TIME);
 
-        // 토큰 생성
         return Jwts.builder()
                 .setSubject(member.getUsername())
                 .claim("auth", getAuthorities(member))
@@ -116,7 +129,7 @@ public class TokenProvider {
                 .collect(Collectors.toList());
     }
 
-    private String getAuthorities(Member member) {
+    private static String getAuthorities(Member member) {
         return member.getRole().getRole(); // "USER", "ADMIN", "SUPER"
     }
 }
