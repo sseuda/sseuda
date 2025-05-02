@@ -27,16 +27,16 @@ public class CategorySmallService {
     }
 
 //    소분류 카테고리 삭제
-    public int deleteCategorySmallCode(int smallCode) {
-        log.info("[CSService] 소분류 카테고리 삭제 시작...");
-
-        return categorySmallMapper.deleteCategorySmallCode(smallCode);
-    }
+//    public int deleteCategorySmallCode(int smallCode) {
+//        log.info("[CSService] 소분류 카테고리 삭제 시작...");
+//
+//        return categorySmallMapper.deleteCategorySmallCode(smallCode);
+//    }
 
 //    소분류 카테고리 등록
-    public int insertCategorySmallCode(int userCode){
-        log.info("[CSService] 소분류 카테고리 등록 시작...");
-
-        return categorySmallMapper.insertCategorySmallCode(userCode);
-    }
+//    public int insertCategorySmallCode(int userCode){
+//        log.info("[CSService] 소분류 카테고리 등록 시작...");
+//
+//        return categorySmallMapper.insertCategorySmallCode(userCode);
+//    }
 }

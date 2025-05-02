@@ -31,33 +31,37 @@ public class CategorySmallController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "소분류 카테고리 전체 조회 성공", categorySmallService.findCategorySmallList()));
     }
 
-    @Operation(summary = "소분류 카테고리 삭제", description = "소분류 카테고리 삭제가 진행됩니다", tags = {"CategorySmallController"})
-    @DeleteMapping(value = "/mypage/delete")
-    public ResponseEntity<String> deleteCategorySmallCode(@RequestParam ("smallCode") int smallCode){
+//    생성, 삭제는 userCode가 있어야하는데 현재 db로는 userCode를 엮을 수 없어서 지금은 카테고리 모두 조회만 될수있게 한다.
 
-        int result = categorySmallService.deleteCategorySmallCode(smallCode);
+//    @Operation(summary = "소분류 카테고리 등록", description = "소분류 카테고리 등록이 진행됩니다.", tags = {"CategorySmallController"})
+//    @PostMapping(value = "/mypage/insert")
+//    public ResponseEntity<String> insertCategorySmallCode(@RequestParam ("userCode") int userCode){
+//
+//        int result = categorySmallService.insertCategorySmallCode(userCode);
+//
+//        if (result < 0){
+//            return ResponseEntity.ok("카테고리가 등록되었습니다.");
+//        }else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없는 카테고리입니다.");
+//        }
+//
+//    }
 
-        log.info("[CSController] smallCode: {}", result);
+//    @Operation(summary = "소분류 카테고리 삭제", description = "소분류 카테고리 삭제가 진행됩니다", tags = {"CategorySmallController"})
+//    @DeleteMapping(value = "/mypage/delete")
+//    public ResponseEntity<String> deleteCategorySmallCode(@RequestParam ("smallCode") int smallCode){
+//
+//        int result = categorySmallService.deleteCategorySmallCode(smallCode);
+//
+//        log.info("[CSController] smallCode: {}", result);
+//
+//        if(result > 0){
+//            return ResponseEntity.ok("카테고리가 삭제되었습니다.");
+//        }else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없는 카테고리입니다.");
+//        }
+//
+//    }
 
-        if(result > 0){
-            return ResponseEntity.ok("카테고리가 삭제되었습니다.");
-        }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없는 카테고리입니다.");
-        }
 
-    }
-
-    @Operation(summary = "소분류 카테고리 등록", description = "소분류 카테고리 등록이 진행됩니다.", tags = {"CategorySmallController"})
-    @PostMapping(value = "/mypage/insert")
-    public ResponseEntity<String> insertCategorySmallCode(@RequestParam ("userCode") int userCode){
-
-        int result = categorySmallService.insertCategorySmallCode(userCode);
-
-        if (result < 0){
-            return ResponseEntity.ok("카테고리가 등록되었습니다.");
-        }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없는 카테고리입니다.");
-        }
-
-    }
 }

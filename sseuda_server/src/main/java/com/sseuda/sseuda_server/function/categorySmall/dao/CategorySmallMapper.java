@@ -13,8 +13,8 @@ public interface CategorySmallMapper {
     List<CategorySmallDTO> findCategorySmallList();
 
 //    소분류 카테고리 삭제
-    int deleteCategorySmallCode(int smallCode);
+//    int deleteCategorySmallCode(int smallCode);
 
 //    소분류 카테고리 등록
-    int insertCategorySmallCode(int userCode);
+//    int insertCategorySmallCode(int userCode);
 }
