@@ -1,6 +1,6 @@
 package com.sseuda.sseuda_server.jwt;
 
-import com.sseuda.sseuda_server.member.pojo.Member;
+import com.sseuda.sseuda_server.function.member.pojo.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

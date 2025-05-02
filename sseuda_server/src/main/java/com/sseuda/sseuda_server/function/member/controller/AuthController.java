@@ -1,4 +1,4 @@
-package com.sseuda.sseuda_server.member.controller;
+package com.sseuda.sseuda_server.function.member.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -17,24 +17,27 @@
         tbl_category_big
     </select>
 
-    <insert id="" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
-        INSERT INTO
-            tbl_category_big
-        VALUES
-            (
-            1,
-            '여행'
-            )
-    </insert>
+<!--    <insert id="insertBigCategory" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">-->
+<!--        INSERT INTO tbl_category_big-->
+<!--            (-->
+<!--                big_category_id,-->
+<!--                big_category_name-->
+<!--            )-->
+<!--        VALUES-->
+<!--            (-->
+<!--            #{ big_category_name }-->
+<!--            )-->
+<!--        WHERE-->
+<!--    </insert>-->
 
 <!--    대분류 카테고리 삭제 -->
-    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
-        DELETE
-        FROM
-            tbl_category_big
-        WHERE
-            #{ big_category_id }
-    </delete>
+<!--    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">-->
+<!--        DELETE-->
+<!--        FROM-->
+<!--            tbl_category_big-->
+<!--        WHERE-->
+<!--            #{ big_category_id }-->
+<!--    </delete>-->
 
 
 </mapper>

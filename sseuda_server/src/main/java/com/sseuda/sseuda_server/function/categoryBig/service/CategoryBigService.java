@@ -27,15 +27,15 @@ public class CategoryBigService {
     }
 
 //    대분류 카테고리 등록
-    public List<CategoryBigDTO> insertBigCategory(int userCode){
-
-        return categoryBigMapper.insertBigCategory(userCode);
-    }
+//    public List<CategoryBigDTO> insertBigCategory(int userCode){
+//
+//        return categoryBigMapper.insertBigCategory(userCode);
+//    }
 
 //    대분류 카테고리 삭제
-    public int deleteBigCategory(int bigCode){
-
-        log.info("[CBService] 대분류 카테고리 삭제 진행중...");
-        return categoryBigMapper.deleteBigCategory(bigCode);
-    }
+//    public int deleteBigCategory(int bigCode){
+//
+//        log.info("[CBService] 대분류 카테고리 삭제 진행중...");
+//        return categoryBigMapper.deleteBigCategory(bigCode);
+//    }
 }

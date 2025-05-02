@@ -33,34 +33,37 @@ public class CategoryBigController {
 
     }
 
-    @Operation(summary = "대분로 카테고리 생성", description = "대분류 카테고리 생성이 진행됩니다.", tags = {"CategoryBigController"})
-    @PostMapping("/mypage/insert")
-    public ResponseEntity<String> insertBigCategory(@RequestParam("userId") int userId){
 
-        List<CategoryBigDTO> result = categoryBigService.insertBigCategory(userId);
+//  생성, 삭제는 userCode가 있어야하는데 현재 db로는 userCode를 엮을 수 없어서 지금은 카테고리 모두 조회만 될수있게 한다.
 
-        log.info("[CBController] 대분류 카테고리 생성 result : {}", result);
-
-        if(!result.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("카테고리 생성에 실패했습니다.");
-        }else {
-            return ResponseEntity.ok("카테고리가 생성되었습니다.");
-        }
-    }
+//    @Operation(summary = "대분로 카테고리 생성", description = "대분류 카테고리 생성이 진행됩니다.", tags = {"CategoryBigController"})
+//    @PostMapping("/mypage/insert")
+//    public ResponseEntity<String> insertBigCategory(@RequestParam("userId") int userId){
+//
+//        List<CategoryBigDTO> result = categoryBigService.insertBigCategory(userId);
+//
+//        log.info("[CBController] 대분류 카테고리 생성 result : {}", result);
+//
+//        if(!result.isEmpty()){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("카테고리 생성에 실패했습니다.");
+//        }else {
+//            return ResponseEntity.ok("카테고리가 생성되었습니다.");
+//        }
+//    }
 
 
 //    하위에 소분류 카테고리가 있을때도 생각해야함
-    @Operation(summary = "대분류 카테고리 삭제", description = "대분류 카테고리 삭제가 진행됩니다.", tags = {"CategoryBigController"})
-    @DeleteMapping("/mypage/delete")
-    public ResponseEntity<String> deleteBigCategory(@RequestParam("bigCode") int bigCode){
-
-        int result = categoryBigService.deleteBigCategory(bigCode);
-
-        if(result > 0){
-            return ResponseEntity.ok("카테고리가 삭제되었습니다.");
-        }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없는 카테고리입니다.");
-        }
-    }
+//    @Operation(summary = "대분류 카테고리 삭제", description = "대분류 카테고리 삭제가 진행됩니다.", tags = {"CategoryBigController"})
+//    @DeleteMapping("/mypage/delete")
+//    public ResponseEntity<String> deleteBigCategory(@RequestParam("bigCode") int bigCode){
+//
+//        int result = categoryBigService.deleteBigCategory(bigCode);
+//
+//        if(result > 0){
+//            return ResponseEntity.ok("카테고리가 삭제되었습니다.");
+//        }else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없는 카테고리입니다.");
+//        }
+//    }
 
 }
