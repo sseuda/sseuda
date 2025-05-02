@@ -1,6 +1,7 @@
 package com.sseuda.sseuda_server.jwt;
 
 import com.sseuda.sseuda_server.member.pojo.Member;
+import com.sseuda.sseuda_server.security.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -22,10 +24,11 @@ import java.util.stream.Collectors;
 
 @Component
 public class TokenProvider {
+
     private final Key key;
     private final UserDetailsService userDetailsService;
 
-    // 토큰 유효기간 (예: 1시간)
+    // 토큰 유효기간 (1시간)
     private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60;
 
     // 생성자: key 생성
@@ -50,7 +53,9 @@ public class TokenProvider {
 //        return new TokenDTO("Bearer", member.getUsername(), token, expiration.getTime());
 //    }
     public String createToken(Authentication authentication) {
-        Member member = (Member) authentication.getPrincipal(); // authentication에서 사용자 정보 가져오기
+//        Member member = (Member) authentication.getPrincipal(); // authentication에서 사용자 정보 가져오기
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        Member member = userDetails.getMember();  // ✅ 이렇게 안전하게 추출
         long now = System.currentTimeMillis();
         Date expiration = new Date(now + TOKEN_EXPIRE_TIME);
 

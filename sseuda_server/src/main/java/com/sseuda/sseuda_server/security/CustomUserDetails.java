@@ -1,8 +1,10 @@
 package com.sseuda.sseuda_server.security;
 
 import com.sseuda.sseuda_server.member.pojo.Member;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -16,9 +18,13 @@ public class CustomUserDetails implements UserDetails {
         this.member = member;
     }
 
+    public Member getMember() {
+        return member;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(member.getRole().name()));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + member.getRole().name()));
     }
 
     @Override

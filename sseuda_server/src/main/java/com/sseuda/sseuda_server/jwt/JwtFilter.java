@@ -4,9 +4,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 public class JwtFilter extends OncePerRequestFilter {
@@ -23,7 +23,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (token != null && tokenProvider.validateToken(token)) {
             // 유효한 토큰이면 인증 정보를 저장
-            SecurityContextHolder.getContext().setAuthentication(tokenProvider.getAuthentication(token));
+            Authentication authentication = tokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);
     }
