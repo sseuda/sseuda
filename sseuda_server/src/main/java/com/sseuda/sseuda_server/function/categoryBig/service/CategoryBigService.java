@@ -26,6 +26,12 @@ public class CategoryBigService {
         return categoryBigMapper.findBigCategoryLiat();
     }
 
+//    대분류 카테고리 등록
+    public List<CategoryBigDTO> insertBigCategory(int userCode){
+
+        return categoryBigMapper.insertBigCategory(userCode);
+    }
+
 //    대분류 카테고리 삭제
     public int deleteBigCategory(int bigCode){
 

@@ -1,6 +1,7 @@
 package com.sseuda.sseuda_server.function.categoryBig.controller;
 
 import com.sseuda.sseuda_server.common.ResponseDTO;
+import com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO;
 import com.sseuda.sseuda_server.function.categoryBig.service.CategoryBigService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/*")
@@ -29,6 +32,22 @@ public class CategoryBigController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "대분류 카테고리 조회 성공", categoryBigService.findBigCategoryLiat()));
 
     }
+
+    @Operation(summary = "대분로 카테고리 생성", description = "대분류 카테고리 생성이 진행됩니다.", tags = {"CategoryBigController"})
+    @PostMapping("/mypage/insert")
+    public ResponseEntity<String> insertBigCategory(@RequestParam("userId") int userId){
+
+        List<CategoryBigDTO> result = categoryBigService.insertBigCategory(userId);
+
+        log.info("[CBController] 대분류 카테고리 생성 result : {}", result);
+
+        if(!result.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("카테고리 생성에 실패했습니다.");
+        }else {
+            return ResponseEntity.ok("카테고리가 생성되었습니다.");
+        }
+    }
+
 
 //    하위에 소분류 카테고리가 있을때도 생각해야함
     @Operation(summary = "대분류 카테고리 삭제", description = "대분류 카테고리 삭제가 진행됩니다.", tags = {"CategoryBigController"})
