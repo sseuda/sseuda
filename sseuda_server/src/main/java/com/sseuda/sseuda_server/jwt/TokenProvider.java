@@ -36,18 +36,31 @@ public class TokenProvider {
     }
 
     // ✅ 1. 토큰 생성
-    public TokenDTO generateTokenDTO(Member member) {
+//    public TokenDTO generateTokenDTO(Member member) {
+//        long now = System.currentTimeMillis();
+//        Date expiration = new Date(now + TOKEN_EXPIRE_TIME);
+//
+//        String token = Jwts.builder()
+//                .setSubject(member.getUsername())
+//                .claim("auth", getAuthorities(member))
+//                .setExpiration(expiration)
+//                .signWith(key, SignatureAlgorithm.HS512)
+//                .compact();
+//
+//        return new TokenDTO("Bearer", member.getUsername(), token, expiration.getTime());
+//    }
+    public String createToken(Authentication authentication) {
+        Member member = (Member) authentication.getPrincipal(); // authentication에서 사용자 정보 가져오기
         long now = System.currentTimeMillis();
         Date expiration = new Date(now + TOKEN_EXPIRE_TIME);
 
-        String token = Jwts.builder()
+        // 토큰 생성
+        return Jwts.builder()
                 .setSubject(member.getUsername())
                 .claim("auth", getAuthorities(member))
                 .setExpiration(expiration)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
-
-        return new TokenDTO("Bearer", member.getUsername(), token, expiration.getTime());
     }
 
     // ✅ 2. 토큰으로 사용자 아이디 꺼내기

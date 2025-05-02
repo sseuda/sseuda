@@ -1,8 +1,13 @@
 package com.sseuda.sseuda_server.member.pojo;
 
 import com.sseuda.sseuda_server.member.UserRole;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class Member {
+import java.util.Collection;
+import java.util.List;
+
+public class Member implements UserDetails {
 
     private final String username;
     private final String password;
@@ -17,6 +22,11 @@ public class Member {
     // getter만 제공 (불변성 보장)
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
 
     public String getPassword() {
