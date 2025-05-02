@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sseuda.sseuda_server.function.categoryBig.dao.CategoryBigMapper">
+
+    <resultMap id="categoryBigResultMap" type="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
+        <id property="bigCategoryId" column="big_category_id"/>
+        <result property="bigCategoryName" column="big_category_name"/>
+    </resultMap>
+
+<!--    대분류 카테고리 전체 조회 -->
+    <select id="findBigCategoryLiat" resultMap="categoryBigResultMap">
+        SELECT
+        big_category_name
+        FROM
+        tbl_category_big
+    </select>
+
+    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
+        DELETE
+        FROM
+            tbl_category_big
+        WHERE
+            #{ big_category_id }
+    </delete>
+
+
+</mapper>
