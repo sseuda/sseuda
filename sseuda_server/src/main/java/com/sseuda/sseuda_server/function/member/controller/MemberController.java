@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/members")
+@RequestMapping("/member")
 public class MemberController {
 
     private final MemberService memberService;
@@ -17,9 +17,9 @@ public class MemberController {
     }
 
     // 회원가입 처리
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public String registerMember(@RequestBody MemberDTO dto) {
-        int result = memberService.register(dto);
+        int result = memberService.signup(dto);
         return result > 0 ? "회원가입 성공" : "회원가입 실패";
     }
 }
