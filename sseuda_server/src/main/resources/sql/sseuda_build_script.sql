@@ -33,7 +33,9 @@ CREATE TABLE IF NOT EXISTS tbl_user_role (
 -- 대분류 카테고리 테이블
 CREATE TABLE IF NOT EXISTS tbl_category_big (
     big_category_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '카테고리번호(대)',
-    big_category_name VARCHAR(50) NOT NULL COMMENT '카테고리이름(대)'
+    big_category_name VARCHAR(50) NOT NULL COMMENT '카테고리이름(대)',
+    user_id INT NOT NULL COMMENT '회원 번호',
+    FOREIGN KEY (user_id) REFERENCES tbl_user_role(user_id) ON DELETE CASCADE
 );
 
 -- 소분류 카테고리 테이블
@@ -152,12 +154,13 @@ INSERT INTO tbl_user_role (user_id, user_role) VALUES
 INSERT INTO tbl_category_big
 (
     big_category_id,
-    big_category_name
+    big_category_name,
+    user_id
 )
 VALUES
-    (1, '여행'),
-    (2, '자기개발'),
-    (3, '육아');
+    (1, '여행', 2),
+    (2, '자기개발', 2),
+    (3, '육아', 2);
 
 -- 소분류 카테고리 더미데이터
 INSERT INTO tbl_category_small
