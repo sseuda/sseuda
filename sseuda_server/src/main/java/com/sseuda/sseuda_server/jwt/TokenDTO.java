@@ -18,6 +18,9 @@ public class TokenDTO {
         this.accessTokenExpiresIn = accessTokenExpiresIn;
     }
 
+    public TokenDTO(String token) {
+    }
+
     public String getGrantType() {
         return grantType;
     }
