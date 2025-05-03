@@ -1,15 +1,15 @@
-package com.sseuda.sseuda_server.member.controller;
+package com.sseuda.sseuda_server.function.member.controller;
 
+import com.sseuda.sseuda_server.function.member.dto.LoginDTO;
+import com.sseuda.sseuda_server.function.member.service.AuthService;
 import com.sseuda.sseuda_server.jwt.TokenDTO;
 import com.sseuda.sseuda_server.jwt.TokenProvider;
-import com.sseuda.sseuda_server.member.dto.LoginDTO;
-import com.sseuda.sseuda_server.member.dto.JwtResponse;
-import com.sseuda.sseuda_server.member.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")

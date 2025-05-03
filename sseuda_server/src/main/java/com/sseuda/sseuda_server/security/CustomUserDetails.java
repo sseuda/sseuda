@@ -1,6 +1,6 @@
 package com.sseuda.sseuda_server.security;
 
-import com.sseuda.sseuda_server.member.pojo.Login;
+import com.sseuda.sseuda_server.function.member.pojo.Login;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

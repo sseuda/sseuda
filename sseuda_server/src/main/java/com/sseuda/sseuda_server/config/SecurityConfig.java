@@ -4,7 +4,7 @@ import com.sseuda.sseuda_server.jwt.JwtAccessDeniedHandler;
 import com.sseuda.sseuda_server.jwt.JwtAuthenticationEntryPoint;
 import com.sseuda.sseuda_server.jwt.JwtFilter;
 import com.sseuda.sseuda_server.jwt.TokenProvider;
-import com.sseuda.sseuda_server.member.exception.AuthFailHandler;
+import com.sseuda.sseuda_server.function.member.exception.AuthFailHandler;
 import com.sseuda.sseuda_server.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.file.NoopPathVisitor;

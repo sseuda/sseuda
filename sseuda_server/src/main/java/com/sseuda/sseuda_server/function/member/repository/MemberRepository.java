@@ -1,6 +1,6 @@
-package com.sseuda.sseuda_server.member. repository;
+package com.sseuda.sseuda_server.function.member. repository;
 
-import com.sseuda.sseuda_server.member.pojo.Login;
+import com.sseuda.sseuda_server.function.member.pojo.Login;
 
 public interface MemberRepository {
 
