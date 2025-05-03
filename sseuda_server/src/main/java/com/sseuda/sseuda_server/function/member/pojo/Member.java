@@ -1,4 +1,4 @@
-package com.sseuda.sseuda_server.member.pojo;
+package com.sseuda.sseuda_server.function.member.pojo;
 
 public class Member {
 

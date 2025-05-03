@@ -1,4 +1,4 @@
-package com.sseuda.sseuda_server.member.exception;
+package com.sseuda.sseuda_server.function.member.exception;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

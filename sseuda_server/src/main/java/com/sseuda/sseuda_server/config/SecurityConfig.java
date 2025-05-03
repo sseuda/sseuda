@@ -1,6 +1,6 @@
 package com.sseuda.sseuda_server.config;
 
-import com.sseuda.sseuda_server.member.exception.AuthFailHandler;
+import com.sseuda.sseuda_server.function.member.exception.AuthFailHandler;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
