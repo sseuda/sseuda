@@ -1,8 +1,8 @@
 package com.sseuda.sseuda_server.member. repository;
 
-import com.sseuda.sseuda_server.member.pojo.Member;
+import com.sseuda.sseuda_server.member.pojo.Login;
 
 public interface MemberRepository {
 
-    Member findByUsername(String username);
+    Login findByUsername(String username);
 }

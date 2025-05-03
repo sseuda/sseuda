@@ -1,7 +1,7 @@
 package com.sseuda.sseuda_server.member.repository;
 
 import com.sseuda.sseuda_server.member.UserRole;
-import com.sseuda.sseuda_server.member.pojo.Member;
+import com.sseuda.sseuda_server.member.pojo.Login;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,7 +16,7 @@ public class JdbcMemberRepository implements MemberRepository {
     }
 
     @Override
-        public Member findByUsername(String username) {
+        public Login findByUsername(String username) {
             String sql = "SELECT m.username, m.password, r.user_role " +
                         "FROM tbl_member m " +
                         "JOIN tbl_user_role r ON m.user_id = r.user_id " +
@@ -28,7 +28,7 @@ public class JdbcMemberRepository implements MemberRepository {
                     String roleStr = rs.getString("user_role").toUpperCase();
                     UserRole role = UserRole.valueOf(roleStr);
 
-                    return new Member(uname, pwd, role);
+                    return new Login(uname, pwd, role);
                 });
             } catch (EmptyResultDataAccessException e) {
                 return null;
