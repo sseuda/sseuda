@@ -1,10 +1,10 @@
-package com.sseuda.sseuda_server.member.service;
+package com.sseuda.sseuda_server.function.member.service;
 
 import com.sseuda.sseuda_server.jwt.TokenDTO;
 import com.sseuda.sseuda_server.jwt.TokenProvider;
-import com.sseuda.sseuda_server.member.dto.LoginDTO;
-import com.sseuda.sseuda_server.member.pojo.Login;
-import com.sseuda.sseuda_server.member.repository.MemberRepository;
+import com.sseuda.sseuda_server.function.member.dto.LoginDTO;
+import com.sseuda.sseuda_server.function.member.pojo.Login;
+import com.sseuda.sseuda_server.function.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;

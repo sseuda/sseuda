@@ -1,7 +1,7 @@
 package com.sseuda.sseuda_server.security;
 
-import com.sseuda.sseuda_server.member.pojo.Login;
-import com.sseuda.sseuda_server.member.repository.JdbcMemberRepository;
+import com.sseuda.sseuda_server.function.member.pojo.Login;
+import com.sseuda.sseuda_server.function.member.repository.JdbcMemberRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

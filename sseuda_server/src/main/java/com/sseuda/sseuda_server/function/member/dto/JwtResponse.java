@@ -1,4 +1,4 @@
-package com.sseuda.sseuda_server.member.dto;
+package com.sseuda.sseuda_server.function.member.dto;
 
 public class JwtResponse {
 
