@@ -1,6 +1,6 @@
 package com.sseuda.sseuda_server.jwt;
 
-import com.sseuda.sseuda_server.member.pojo.Member;
+import com.sseuda.sseuda_server.member.pojo.Login;
 import com.sseuda.sseuda_server.security.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -56,7 +56,7 @@ public class TokenProvider {
     public String createToken(Authentication authentication) {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Member member = userDetails.getMember();
+        Login login = userDetails.getMember();
 //        long now = System.currentTimeMillis();
 //        Date expiration = new Date(now + TOKEN_EXPIRE_TIME);
 //
@@ -66,16 +66,16 @@ public class TokenProvider {
 //                .setExpiration(expiration)
 //                .signWith(key, SignatureAlgorithm.HS512)
 //                .compact();
-        return createToken(member);
+        return createToken(login);
     }
 
-    public String createToken(Member member) {
+    public String createToken(Login login) {
         long now = System.currentTimeMillis();
         Date expiration = new Date(now + TOKEN_EXPIRE_TIME);
 
         return Jwts.builder()
-                .setSubject(member.getUsername())
-                .claim("auth", getAuthorities(member))
+                .setSubject(login.getUsername())
+                .claim("auth", getAuthorities(login))
                 .setExpiration(expiration)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
@@ -130,8 +130,8 @@ public class TokenProvider {
     }
 
 
-    private static String getAuthorities(Member member) {
-        return member.getRole().getRole(); // "USER", "ADMIN", "SUPER"
+    private static String getAuthorities(Login login) {
+        return login.getRole().getRole(); // "USER", "ADMIN", "SUPER"
     }
 }
 

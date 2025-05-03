@@ -1,6 +1,6 @@
 package com.sseuda.sseuda_server.security;
 
-import com.sseuda.sseuda_server.member.pojo.Member;
+import com.sseuda.sseuda_server.member.pojo.Login;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,25 +9,25 @@ import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
-    private final Member member;
+    private final Login login;
 
-    public CustomUserDetails(Member member) {
-        this.member = member;
+    public CustomUserDetails(Login login) {
+        this.login = login;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> member.getRole().getRole());
+        return List.of(() -> login.getRole().getRole());
     }
 
     @Override
     public String getPassword() {
-        return member.getPassword();
+        return login.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return member.getUsername();
+        return login.getUsername();
     }
 
     // 나머지 UserDetails 필드들
@@ -36,7 +36,7 @@ public class CustomUserDetails implements UserDetails {
     @Override public boolean isCredentialsNonExpired() { return true; }
     @Override public boolean isEnabled() { return true; }
 
-    public Member getMember() {
-        return member;
+    public Login getMember() {
+        return login;
     }
 }
