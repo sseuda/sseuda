@@ -36,20 +36,20 @@ public class CategoryBigController {
 
 //  생성, 삭제는 userCode가 있어야하는데 현재 db로는 userCode를 엮을 수 없어서 지금은 카테고리 모두 조회만 될수있게 한다.
 
-//    @Operation(summary = "대분로 카테고리 생성", description = "대분류 카테고리 생성이 진행됩니다.", tags = {"CategoryBigController"})
-//    @PostMapping("/mypage/insert")
-//    public ResponseEntity<String> insertBigCategory(@RequestParam("userId") int userId){
-//
-//        List<CategoryBigDTO> result = categoryBigService.insertBigCategory(userId);
-//
-//        log.info("[CBController] 대분류 카테고리 생성 result : {}", result);
-//
-//        if(!result.isEmpty()){
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("카테고리 생성에 실패했습니다.");
-//        }else {
-//            return ResponseEntity.ok("카테고리가 생성되었습니다.");
-//        }
-//    }
+    @Operation(summary = "대분로 카테고리 생성", description = "대분류 카테고리 생성이 진행됩니다.", tags = {"CategoryBigController"})
+    @PostMapping("/mypage/insert")
+    public ResponseEntity<String> insertBigCategory(@RequestParam("userCode") int userCode){
+
+        List<CategoryBigDTO> result = categoryBigService.insertBigCategory(2);
+
+        log.info("[CBController] 대분류 카테고리 생성 result : {}", result);
+
+        if(!result.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("카테고리 생성에 실패했습니다.");
+        }else {
+            return ResponseEntity.ok("카테고리가 생성되었습니다.");
+        }
+    }
 
 
 //    하위에 소분류 카테고리가 있을때도 생각해야함

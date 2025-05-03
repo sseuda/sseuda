@@ -17,18 +17,28 @@
         tbl_category_big
     </select>
 
-<!--    <insert id="insertBigCategory" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">-->
-<!--        INSERT INTO tbl_category_big-->
-<!--            (-->
-<!--                big_category_id,-->
-<!--                big_category_name-->
-<!--            )-->
-<!--        VALUES-->
-<!--            (-->
-<!--            #{ big_category_name }-->
-<!--            )-->
-<!--        WHERE-->
-<!--    </insert>-->
+<!--    대분류 카테고리 등록 -->
+    <insert id="insertBigCategory" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+        INSERT INTO tbl_category_big
+            (
+                big_category_id,
+                big_category_name,
+                user_id
+            )
+        VALUES
+            (
+                #{ big_category_id },
+                #{ big_category_name },
+                (
+                    SELECT
+                        user_id
+                    FROM
+                        tbl_user_role
+                    WHERE
+                        #{ user_id }
+                )
+            )
+    </insert>
 
 <!--    대분류 카테고리 삭제 -->
 <!--    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">-->
