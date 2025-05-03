@@ -4,21 +4,41 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sseuda.sseuda_server.function.member.dao.MemberMapper">
 
-<insert id="insertMember" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO" useGeneratedKeys="true" keyProperty="userId">
-    INSERT INTO tbl_member (
-    user_fullname, username, password, user_nickname, user_email, user_phone, enroll_date, user_status
-    ) VALUES (
-    #{userFullname}, #{username}, #{password}, #{userNickname}, #{userEmail}, #{userPhone}, NOW(), #{userStatus}
-    )
-</insert>
+    <resultMap id="memberResultMap" type="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+        <id property="userId" column="user_id"/>
+        <result property="userFullname" column="user_fullname"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="userNickname" column="user_nickname"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="enrollDate" column="enroll_date"/>
+        <result property="userStatus" column="user_status"/>
+    </resultMap>
 
-<insert id="insertUserRole" parameterType="map">
-    INSERT INTO tbl_user_role (user_id, user_role)
-    VALUES (#{userId}, #{userRole})
-</insert>
+    <!-- 전체 회원 조회 -->
+    <select id="findAllMembers" resultMap="memberResultMap">
+        SELECT * FROM tbl_member
+    </select>
 
-<select id="findByUsername" parameterType="String" resultType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
-SELECT * FROM tbl_member WHERE username = #{username}
-</select>
+    <!--  특정 회원 조회 (username)  -->
+    <select id="findMemberByUsername" parameterType="String" resultMap="memberResultMap">
+    SELECT * FROM tbl_member WHERE username = #{username}
+    </select>
+
+    <!--  회원가입1 (member)  -->
+    <insert id="insertMember" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO tbl_member (
+        user_fullname, username, password, user_nickname, user_email, user_phone, enroll_date, user_status
+        ) VALUES (
+        #{userFullname}, #{username}, #{password}, #{userNickname}, #{userEmail}, #{userPhone}, NOW(), #{userStatus}
+        )
+    </insert>
+
+    <!--  회원가입2 (role)  -->
+    <insert id="insertUserRole" parameterType="map">
+        INSERT INTO tbl_user_role (user_id, user_role)
+        VALUES (#{userId}, #{userRole})
+    </insert>
 
 </mapper>
