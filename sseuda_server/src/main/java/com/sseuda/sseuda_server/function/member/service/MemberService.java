@@ -42,4 +42,14 @@ public class MemberService {
     public boolean isUsernameDuplicate(String username) {
         return memberMapper.findMemberByUsername(username) != null;
     }
+
+    // 회원 전체 조회
+    public List<MemberDTO> getAllMembers() {
+        return memberMapper.findAllMembers();
+    }
+
+    // 특정 회원 조회 (username)
+    public MemberDTO getMemberByUsername(String username) {
+        return memberMapper.findMemberByUsername(username);
+    }
 }
