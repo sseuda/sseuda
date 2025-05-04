@@ -15,4 +15,8 @@ public interface MemberMapper {
     List<MemberDTO> findAllMembers();
 
     MemberDTO findMemberByUsername(String username);
+
+    int updateUserInfo(MemberDTO member);
+
+    int deactivateUser(MemberDTO member);
 }

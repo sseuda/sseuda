@@ -52,4 +52,14 @@ public class MemberService {
     public MemberDTO getMemberByUsername(String username) {
         return memberMapper.findMemberByUsername(username);
     }
+
+    // 회원 정보 수정 (user id)
+    public int updateUserInfo(MemberDTO member) {
+        return memberMapper.updateUserInfo(member);
+    }
+
+    // 회원 탈퇴 (비활성화)
+    public int deactivateUser(MemberDTO member) {
+        return memberMapper.deactivateUser(member);
+    }
 }
