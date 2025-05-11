@@ -34,5 +34,17 @@
         LEFT JOIN tbl_category_big b ON s.big_category_id = b.big_category_id
     </select>
 
+    <!--    대분류 카테고리 등록 -->
+    <insert id="insertBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
+        INSERT INTO tbl_category_big
+            (
+                big_category_name
+            )
+        VALUES
+            (
+                #{ bigCategoryName }
+            )
+    </insert>
+
 </mapper>
 
