@@ -1,6 +1,5 @@
 package com.sseuda.sseuda_server.function.post.service;
 
-import com.sseuda.sseuda_server.function.post.controller.PostController;
 import com.sseuda.sseuda_server.function.post.dao.PostMapper;
 import com.sseuda.sseuda_server.function.post.dto.PostDTO;
 import org.slf4j.Logger;
@@ -13,7 +12,7 @@ import java.util.List;
 @Service
 public class PostService {
 
-    private static final Logger log = LoggerFactory.getLogger(PostController.class);
+    private static final Logger log = LoggerFactory.getLogger(PostService.class);
     private final PostMapper postMapper;
 
     @Autowired
