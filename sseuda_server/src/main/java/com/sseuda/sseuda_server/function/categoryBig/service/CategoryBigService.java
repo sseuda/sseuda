@@ -2,6 +2,7 @@ package com.sseuda.sseuda_server.function.categoryBig.service;
 
 import com.sseuda.sseuda_server.function.categoryBig.dao.CategoryBigMapper;
 import com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO;
+import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,18 @@ public class CategoryBigService {
     }
 
 //    대분류 카테고리 등록
-    public List<CategoryBigDTO> insertBigCategory(int userCode){
+    public int insertBigCategory(CategoryBigDTO categoryBigDTO){
 
-        return categoryBigMapper.insertBigCategory(2);
+//        log.info("[CBService] userId : {}", userId);
+
+        int result = categoryBigMapper.insertBigCategory(categoryBigDTO);
+
+        return result;
     }
+//public int insertBigCategory(MemberDTO memberDTO) {
+//    return categoryBigMapper.insertBigCategory(memberDTO);
+//}
+
 
 //    대분류 카테고리 삭제
 //    public int deleteBigCategory(int bigCode){

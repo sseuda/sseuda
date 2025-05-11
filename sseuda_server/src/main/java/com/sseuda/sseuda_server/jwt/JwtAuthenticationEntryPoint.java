@@ -15,6 +15,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse res,
                          AuthenticationException authException) throws IOException, ServletException {
-        res.sendError(HttpServletResponse.SC_FORBIDDEN, "인증이 필요합니다!");
+        res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "인증이 필요합니다!");
     }
+
 }
+

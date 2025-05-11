@@ -5,7 +5,6 @@ import com.sseuda.sseuda_server.jwt.JwtAccessDeniedHandler;
 import com.sseuda.sseuda_server.jwt.JwtAuthenticationEntryPoint;
 import com.sseuda.sseuda_server.jwt.JwtFilter;
 import com.sseuda.sseuda_server.jwt.TokenProvider;
-import com.sseuda.sseuda_server.function.member.exception.AuthFailHandler;
 import com.sseuda.sseuda_server.security.CustomUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -67,7 +66,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                         .accessDeniedHandler(jwtAccessDeniedHandler))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/").permitAll()
+                        .requestMatchers("/auth/**", "/api/**", "api/mypage/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
