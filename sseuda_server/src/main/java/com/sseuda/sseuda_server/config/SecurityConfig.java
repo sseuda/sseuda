@@ -1,5 +1,6 @@
 package com.sseuda.sseuda_server.config;
 
+import com.sseuda.sseuda_server.function.member.exception.AuthFailHandler;
 import com.sseuda.sseuda_server.jwt.JwtAccessDeniedHandler;
 import com.sseuda.sseuda_server.jwt.JwtAuthenticationEntryPoint;
 import com.sseuda.sseuda_server.jwt.JwtFilter;
