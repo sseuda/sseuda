@@ -14,6 +14,9 @@ public interface CategoryBigMapper {
 //    대분류 카테고리 등록
     int insertBigCategory(CategoryBigDTO categoryBigDTO);
 
+//    대분류 카테고리 수정
+    int updateBigCategory(CategoryBigDTO categoryBigDTO);
+
 //    대분류 카테고리 삭제
 //    int deleteBigCategory(int bigCode);
     int deleteBigCategory(CategoryBigDTO categoryBigDTO);

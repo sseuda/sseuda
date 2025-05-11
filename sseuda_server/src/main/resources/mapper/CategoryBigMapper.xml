@@ -29,6 +29,16 @@
             )
     </insert>
 
+<!--    대분류 카테고리 수정 -->
+    <update id="updateBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
+        UPDATE
+            tbl_category_big
+        SET
+            big_category_name = #{ bigCategoryName }
+        WHERE
+            big_category_id = #{ bigCategoryId };
+    </update>
+
 <!--    대분류 카테고리 삭제 -->
     <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
         DELETE

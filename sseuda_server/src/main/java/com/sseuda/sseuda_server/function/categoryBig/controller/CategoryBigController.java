@@ -55,15 +55,24 @@ public class CategoryBigController {
         return result > 0 ? "성공" : "실패";
     }
 
+    @Operation(summary = "대분류 카테고리 수정", description = "대분류 카테고리 이름 수정이 진행됩니다.", tags = {"CategoryBigController"})
+    @PutMapping("/mypage/update")
+    public ResponseEntity<String> updateBigCategory(@ModelAttribute CategoryBigDTO categoryBigDTO){
+
+        int result = categoryBigService.updateBigCategory(categoryBigDTO);
+
+        if(result > 0){
+            return ResponseEntity.ok("카테고리 수정이 완료되었습니다.");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("수정이 취소되었습니다.");
+        }
+    }
 
 
-//    하위에 소분류 카테고리가 있을때도 생각해야함
-//    전체가 삭제되는 오류 발생 05.11 12:24
     @Operation(summary = "대분류 카테고리 삭제", description = "대분류 카테고리 삭제가 진행됩니다.", tags = {"CategoryBigController"})
-    @DeleteMapping("/mypage/delete/{bigCode}")
+    @DeleteMapping("/mypage/delete")
     public ResponseEntity<String> deleteBigCategory(@ModelAttribute CategoryBigDTO categoryBigDTO){
 
-//        int result = categoryBigService.deleteBigCategory(bigCode);
         int result = categoryBigService.deleteBigCategory(categoryBigDTO);
 
         log.info("result : {}", result);
