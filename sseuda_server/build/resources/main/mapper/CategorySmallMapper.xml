@@ -10,10 +10,6 @@
         <result property="bigCategoryId" column="big_category_id"/>
     </resultMap>
 
-<!--    <resultMap id="categoryBigResultMap" type="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">-->
-<!--        <id property="bigCategoryId" column="big_category_id"/>-->
-<!--        <result property="bigCategoryName" column="big_category_name"/>-->
-<!--    </resultMap>-->
 
 <!--    소분류 카테고리 전체 조회 -->
     <select id="findCategorySmallList" resultMap="categortSmallResultMap">
@@ -23,25 +19,5 @@
             tbl_category_small
     </select>
 
-<!--    소분류 카테고리 삭제 -->
-<!--    <delete id="deleteCategorySmallCode" parameterType="com.sseuda.sseuda_server.function.categorySmall.dto.CategorySmallDTO">-->
-<!--        DELETE-->
-<!--        FROM-->
-<!--            tbl_category_small-->
-<!--        WHERE-->
-<!--            small_category_id = #{ smallCode }-->
-<!--    </delete>-->
-
-    <!--    소분류 카테고리 등록 -->
-<!--    <insert id="insertCategorySmallCode" parameterType="com.sseuda.sseuda_server.function.categorySmall.dto.CategorySmallDTO">-->
-<!--        INSERT-->
-<!--        tbl_category_small-->
-<!--        VALUE-->
-<!--        (-->
-<!--            #{ small_category_id },-->
-<!--            #{ small_category_name },-->
-<!--            #{ big_category_id }-->
-<!--        );-->
-<!--    </insert>-->
 </mapper>
 
