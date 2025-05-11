@@ -12,9 +12,14 @@ public interface CategoryMapper {
 //    카테고리 전체 조회
     List<CategorySmallDTO> findCategoryList();
 
+
 //    대분류 카테고리 등록
     int insertBigCategory(CategoryBigDTO category);
 
 //    소분류 카테고리 등록
     int insertSmallCategory(CategorySmallDTO category);
+
+
+//    대분류 카테고리 수정
+    int updateBigCategory(CategoryBigDTO category);
 }

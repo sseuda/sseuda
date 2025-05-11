@@ -57,4 +57,18 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("카테고리 등록에 실패했습니다.");
         }
     }
+
+
+    @Operation(summary = "대분류 카테고리 수정", description = "대분류 카테고리 이름 수정이 진행됩니다.", tags = {"CategoryBigController"})
+    @PutMapping("/mypage/update")
+    public ResponseEntity<String> updateBigCategory(@ModelAttribute CategoryBigDTO category){
+
+        int result = categoryService.updateBigCategory(category);
+
+        if(result > 0){
+            return ResponseEntity.ok("카테고리 수정이 완료되었습니다.");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("수정이 취소되었습니다.");
+        }
+    }
 }
