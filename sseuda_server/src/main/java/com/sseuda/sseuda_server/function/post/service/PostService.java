@@ -27,8 +27,8 @@ public class PostService {
     }
 
 //    회원별 게시글 전체 조회
-    public  List<PostDTO> findUserPostList(int userCode){
-
-        return postMapper.findUserPostList(userCode);
-    }
+//    public  List<PostDTO> findUserPostList(int userCode){
+//
+//        return postMapper.findUserPostList(userCode);
+//    }
 }
