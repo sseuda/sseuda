@@ -54,21 +54,27 @@ public class CategoryBigController {
         int result = categoryBigService.insertBigCategory(dto);
         return result > 0 ? "성공" : "실패";
     }
-    }
+
 
 
 //    하위에 소분류 카테고리가 있을때도 생각해야함
-//    @Operation(summary = "대분류 카테고리 삭제", description = "대분류 카테고리 삭제가 진행됩니다.", tags = {"CategoryBigController"})
-//    @DeleteMapping("/mypage/delete")
-//    public ResponseEntity<String> deleteBigCategory(@RequestParam("bigCode") int bigCode){
-//
+//    전체가 삭제되는 오류 발생 05.11 12:24
+    @Operation(summary = "대분류 카테고리 삭제", description = "대분류 카테고리 삭제가 진행됩니다.", tags = {"CategoryBigController"})
+    @DeleteMapping("/mypage/delete/{bigCode}")
+    public ResponseEntity<String> deleteBigCategory(@ModelAttribute CategoryBigDTO categoryBigDTO){
+
 //        int result = categoryBigService.deleteBigCategory(bigCode);
-//
-//        if(result > 0){
-//            return ResponseEntity.ok("카테고리가 삭제되었습니다.");
-//        }else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없는 카테고리입니다.");
-//        }
-//    }
+        int result = categoryBigService.deleteBigCategory(categoryBigDTO);
+
+        log.info("result : {}", result);
+
+        if(result > 0){
+            return ResponseEntity.ok("카테고리가 삭제되었습니다.");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없는 카테고리입니다.");
+        }
+    }
+
+}
 
 

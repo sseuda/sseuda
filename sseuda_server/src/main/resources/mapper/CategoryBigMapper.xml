@@ -30,13 +30,13 @@
     </insert>
 
 <!--    대분류 카테고리 삭제 -->
-<!--    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">-->
-<!--        DELETE-->
-<!--        FROM-->
-<!--            tbl_category_big-->
-<!--        WHERE-->
-<!--            #{ big_category_id }-->
-<!--    </delete>-->
+    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
+        DELETE
+        FROM
+            tbl_category_big
+        WHERE
+            big_category_id = #{ bigCategoryId }
+    </delete>
 
 
 </mapper>

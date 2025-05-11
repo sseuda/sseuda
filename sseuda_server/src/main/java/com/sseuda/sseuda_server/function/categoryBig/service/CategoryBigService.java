@@ -42,9 +42,10 @@ public class CategoryBigService {
 
 
 //    대분류 카테고리 삭제
-//    public int deleteBigCategory(int bigCode){
-//
-//        log.info("[CBService] 대분류 카테고리 삭제 진행중...");
+    public int deleteBigCategory(CategoryBigDTO categoryBigDTO){
+
+        log.info("[CBService] 대분류 카테고리 삭제 진행중...");
+        return categoryBigMapper.deleteBigCategory(categoryBigDTO);
 //        return categoryBigMapper.deleteBigCategory(bigCode);
-//    }
+    }
 }
