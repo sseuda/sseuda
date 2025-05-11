@@ -1,4 +1,4 @@
-package com.sseuda.sseuda_server.member;
+package com.sseuda.sseuda_server.function.member;
 
 public enum UserStatus {
 
