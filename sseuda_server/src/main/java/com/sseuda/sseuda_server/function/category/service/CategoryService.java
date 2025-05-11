@@ -58,4 +58,11 @@ public class CategoryService {
         return categoryMapper.updateSmallCategory(category);
     }
 
+
+    //    카테고리 전체 삭제
+    public int deleteBigCategory(CategoryBigDTO category){
+
+        log.info("[CBService] 대분류 카테고리 삭제 진행중...");
+        return categoryMapper.deleteBigCategory(category);
+    }
 }

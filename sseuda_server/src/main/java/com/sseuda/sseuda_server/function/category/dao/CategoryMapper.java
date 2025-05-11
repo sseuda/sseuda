@@ -25,4 +25,8 @@ public interface CategoryMapper {
 
 //    대분류 카테고리 수정
     int updateSmallCategory(CategorySmallDTO category);
+
+
+//    카테고리 전체 삭제
+    int deleteBigCategory(CategoryBigDTO category);
 }

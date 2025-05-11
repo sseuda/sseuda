@@ -84,4 +84,20 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("수정이 취소되었습니다.");
         }
     }
+
+
+    @Operation(summary = "카테고리 전체 삭제", description = "상위 카테고리 삭제가 진행됩니다.", tags = {"CategoryController"})
+    @DeleteMapping("/mypage/delete")
+    public ResponseEntity<String> deleteBigCategory(@ModelAttribute CategoryBigDTO category){
+
+        int result = categoryService.deleteBigCategory(category);
+
+        log.info("result : {}", result);
+
+        if(result > 0){
+            return ResponseEntity.ok("카테고리가 삭제되었습니다.");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없는 카테고리입니다.");
+        }
+    }
 }

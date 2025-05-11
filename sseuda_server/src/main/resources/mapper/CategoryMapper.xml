@@ -85,5 +85,15 @@
             small_category_id = #{ smallCategoryId } AND
             big_category_id = #{ bigCategoryId }
     </update>
+
+
+    <!--    카테고리 전체 삭제 -->
+    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
+        DELETE
+        FROM
+        tbl_category_big
+        WHERE
+        big_category_id = #{ bigCategoryId }
+    </delete>
 </mapper>
 
