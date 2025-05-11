@@ -21,24 +21,22 @@ public class CategoryBigService {
         this.categoryBigMapper = categoryBigMapper;
     }
 
+
 //    대분류 카테고리 전체 조회
     public List<CategoryBigDTO> findBigCategoryLiat(){
 
         return categoryBigMapper.findBigCategoryLiat();
     }
 
+
 //    대분류 카테고리 등록
     public int insertBigCategory(CategoryBigDTO categoryBigDTO){
-
-//        log.info("[CBService] userId : {}", userId);
 
         int result = categoryBigMapper.insertBigCategory(categoryBigDTO);
 
         return result;
     }
-//public int insertBigCategory(MemberDTO memberDTO) {
-//    return categoryBigMapper.insertBigCategory(memberDTO);
-//}
+
 
 //    대분류 카테고리 수정
     public int updateBigCategory(CategoryBigDTO categoryBigDTO){
@@ -53,6 +51,5 @@ public class CategoryBigService {
 
         log.info("[CBService] 대분류 카테고리 삭제 진행중...");
         return categoryBigMapper.deleteBigCategory(categoryBigDTO);
-//        return categoryBigMapper.deleteBigCategory(bigCode);
     }
 }
