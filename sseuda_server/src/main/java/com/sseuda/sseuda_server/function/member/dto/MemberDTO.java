@@ -1,7 +1,6 @@
 package com.sseuda.sseuda_server.function.member.dto;
 
 import com.sseuda.sseuda_server.function.member.UserStatus;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 
