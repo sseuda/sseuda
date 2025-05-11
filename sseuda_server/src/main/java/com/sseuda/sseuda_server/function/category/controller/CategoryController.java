@@ -44,4 +44,17 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("카테고리 등록에 실패했습니다.");
         }
     }
+
+    @Operation(summary = "소분류 카테고리 등록", description = "소분류 카테고리 등록이 진행됩니다.", tags = {"CategoryController"})
+    @PostMapping("/insert/small")
+    public ResponseEntity<String> insertSmallCategory(@ModelAttribute CategorySmallDTO category) {
+
+        int result = categoryService.insertSmallCategory(category);
+
+        if(result > 0){
+            return ResponseEntity.ok("카테고리가 등록되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("카테고리 등록에 실패했습니다.");
+        }
+    }
 }

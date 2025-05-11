@@ -14,4 +14,7 @@ public interface CategoryMapper {
 
 //    대분류 카테고리 등록
     int insertBigCategory(CategoryBigDTO category);
+
+//    소분류 카테고리 등록
+    int insertSmallCategory(CategorySmallDTO category);
 }

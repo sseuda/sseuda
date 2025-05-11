@@ -35,4 +35,12 @@ public class CategoryService {
         log.info("[CService] 대분류 카테고리 등록중...");
         return categoryMapper.insertBigCategory(category);
     }
+
+
+//    소분류 카테고리 등록
+    public int insertSmallCategory(CategorySmallDTO category){
+
+        log.info("[CService] 소분류 카테고리 등록중...");
+        return categoryMapper.insertSmallCategory(category);
+    }
 }

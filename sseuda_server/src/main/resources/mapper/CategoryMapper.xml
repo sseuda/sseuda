@@ -46,5 +46,22 @@
             )
     </insert>
 
+
+    <!--    소분류 카테고리 등록 -->
+    <insert id="insertSmallCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
+        INSERT INTO tbl_category_small
+        (
+            small_category_name,
+            big_category_id
+        )
+        VALUES
+        (
+            #{ smallCategoryName },
+            #{ bigCategoryId }
+
+        )
+    </insert>
+
+
 </mapper>
 
