@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sseuda.sseuda_server.function.member.dao.MemberMapper">
+
+<insert id="insertMember" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+    INSERT INTO tbl_member (
+    user_fullname, username, password, user_nickname, user_email, user_phone, enroll_date, user_status
+    ) VALUES (
+    #{userFullname}, #{username}, #{password}, #{userNickname}, #{userEmail}, #{userPhone}, NOW(), #{userStatus}
+    )
+</insert>
+
+<select id="findByUsername" parameterType="String" resultType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+SELECT * FROM tbl_member WHERE username = #{username}
+</select>
+
+</mapper>
