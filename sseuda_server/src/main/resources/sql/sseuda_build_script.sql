@@ -26,14 +26,16 @@ CREATE TABLE IF NOT EXISTS tbl_member (
 -- 회원권한 테이블
 CREATE TABLE IF NOT EXISTS tbl_user_role (
     user_id INT PRIMARY KEY COMMENT '회원 번호',
-    user_role ENUM('super', 'admin', 'user') DEFAULT 'user' COMMENT '회원 권한',
+    user_role ENUM('SUPER', 'ADMIN', 'USER') DEFAULT 'USER' COMMENT '회원 권한',
     FOREIGN KEY (user_id) REFERENCES tbl_member(user_id) ON DELETE CASCADE
 );
 
 -- 대분류 카테고리 테이블
 CREATE TABLE IF NOT EXISTS tbl_category_big (
     big_category_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '카테고리번호(대)',
-    big_category_name VARCHAR(50) NOT NULL COMMENT '카테고리이름(대)'
+    big_category_name VARCHAR(50) NOT NULL COMMENT '카테고리이름(대)',
+    user_id INT NOT NULL COMMENT '회원 번호',
+    FOREIGN KEY (user_id) REFERENCES tbl_user_role(user_id) ON DELETE CASCADE
 );
 
 -- 소분류 카테고리 테이블
@@ -137,27 +139,28 @@ VALUES
 
 -- 회원 권한 더미데이터
 INSERT INTO tbl_user_role (user_id, user_role) VALUES
-    (1, 'super'),
-    (2, 'admin'),
-    (3, 'user'),
-    (4, 'user'),
-    (5, 'user'),
-    (6, 'user'),
-    (7, 'user'),
-    (8, 'user'),
-    (9, 'user'),
-    (10, 'user');
+    (1, 'SUPER'),
+    (2, 'ADMIN'),
+    (3, 'USER'),
+    (4, 'USER'),
+    (5, 'USER'),
+    (6, 'USER'),
+    (7, 'USER'),
+    (8, 'USER'),
+    (9, 'USER'),
+    (10, 'USER');
 
 -- 대분류 카테고리 더미데이터
 INSERT INTO tbl_category_big
 (
     big_category_id,
-    big_category_name
+    big_category_name,
+    user_id
 )
 VALUES
-    (1, '여행'),
-    (2, '자기개발'),
-    (3, '육아');
+    (1, '여행', 2),
+    (2, '자기개발', 2),
+    (3, '육아', 2);
 
 -- 소분류 카테고리 더미데이터
 INSERT INTO tbl_category_small

@@ -3,18 +3,18 @@ package com.sseuda.sseuda_server.function.member.exception;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 
-@Configuration
+@Component
 public class AuthFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Override
@@ -37,7 +37,7 @@ public class AuthFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
         errorMessege = URLEncoder.encode(errorMessege, "UTF-8");
 
-        setDefaultFailureUrl("auth/fail?massage=" + errorMessege);
+        setDefaultFailureUrl("/auth/fail?message=" + errorMessege);
 
         super.onAuthenticationFailure(req, res, e);
     }
