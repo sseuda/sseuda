@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sseuda.sseuda_server.function.categoryBig.dao.CategoryBigMapper">
 
-    <resultMap id="categoryBigResultMap" type="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
+    <resultMap id="categoryBigResultMap" type="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
         <id property="bigCategoryId" column="big_category_id"/>
         <result property="bigCategoryName" column="big_category_name"/>
     </resultMap>
@@ -18,7 +18,7 @@
     </select>
 
 <!--    대분류 카테고리 등록 -->
-    <insert id="insertBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
+    <insert id="insertBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
         INSERT INTO tbl_category_big
             (
                 big_category_name
@@ -30,7 +30,7 @@
     </insert>
 
 <!--    대분류 카테고리 수정 -->
-    <update id="updateBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
+    <update id="updateBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
         UPDATE
             tbl_category_big
         SET
@@ -40,7 +40,7 @@
     </update>
 
 <!--    대분류 카테고리 삭제 -->
-    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO">
+    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
         DELETE
         FROM
             tbl_category_big
