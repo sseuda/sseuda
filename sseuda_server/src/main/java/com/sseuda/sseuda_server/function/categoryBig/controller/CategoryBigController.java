@@ -2,6 +2,7 @@ package com.sseuda.sseuda_server.function.categoryBig.controller;
 
 import com.sseuda.sseuda_server.common.ResponseDTO;
 import com.sseuda.sseuda_server.function.categoryBig.*;
+import com.sseuda.sseuda_server.function.categoryBig.dto.CategoryBigDTO;
 import com.sseuda.sseuda_server.function.categoryBig.service.CategoryBigService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
