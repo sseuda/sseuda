@@ -19,5 +19,27 @@
             tbl_category_small
     </select>
 
+
+<!--    소분류 카테고리 등록 -->
+        <insert id="insertCategorySmallCode" parameterType="com.sseuda.sseuda_server.function.categorySmall.dto.CategorySmallDTO">
+            INSERT
+            tbl_category_small
+            VALUE
+            (
+                #{ small_category_name },
+                #{ big_category_id }
+            );
+        </insert>
+
+<!--    소분류 카테고리 삭제 -->
+<!--    <delete id="deleteCategorySmallCode" parameterType="com.sseuda.sseuda_server.function.categorySmall.dto.CategorySmallDTO">-->
+<!--        DELETE-->
+<!--        FROM-->
+<!--            tbl_category_small-->
+<!--        WHERE-->
+<!--            small_category_id = #{ smallCode }-->
+<!--    </delete>-->
+
+
 </mapper>
 
