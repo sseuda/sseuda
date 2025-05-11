@@ -51,4 +51,11 @@ public class CategoryService {
         return categoryMapper.updateBigCategory(category);
     }
 
+    //    소분류 카테고리 수정
+    public int updateSmallCategory(CategorySmallDTO category){
+
+        log.info("[CBService] 소분류 카테고리 수정 진행중...");
+        return categoryMapper.updateSmallCategory(category);
+    }
+
 }

@@ -25,6 +25,8 @@
         <result property="bigCategoryName" column="big_category_name"/>
     </resultMap>
 
+
+<!--    카테고리 전체 조회-->
     <select id="findCategoryList" resultMap="categoryResultMap">
         SELECT
             s.small_category_name,
@@ -33,6 +35,7 @@
             tbl_category_small s
         LEFT JOIN tbl_category_big b ON s.big_category_id = b.big_category_id
     </select>
+
 
     <!--    대분류 카테고리 등록 -->
     <insert id="insertBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
@@ -45,7 +48,6 @@
                 #{ bigCategoryName }
             )
     </insert>
-
 
     <!--    소분류 카테고리 등록 -->
     <insert id="insertSmallCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
@@ -62,6 +64,7 @@
         )
     </insert>
 
+
     <!--    대분류 카테고리 수정 -->
     <update id="updateBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
         UPDATE
@@ -69,6 +72,17 @@
         SET
             big_category_name = #{ bigCategoryName }
         WHERE
+            big_category_id = #{ bigCategoryId }
+    </update>
+
+    <!--    소분류 카테고리 수정 -->
+    <update id="updateSmallCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
+        UPDATE
+            tbl_category_small
+        SET
+            small_category_name = #{ smallCategoryName }
+        WHERE
+            small_category_id = #{ smallCategoryId } AND
             big_category_id = #{ bigCategoryId }
     </update>
 </mapper>

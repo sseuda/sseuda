@@ -22,4 +22,7 @@ public interface CategoryMapper {
 
 //    대분류 카테고리 수정
     int updateBigCategory(CategoryBigDTO category);
+
+//    대분류 카테고리 수정
+    int updateSmallCategory(CategorySmallDTO category);
 }
