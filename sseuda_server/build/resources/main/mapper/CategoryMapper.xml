@@ -37,7 +37,7 @@
     </select>
 
 
-    <!--    대분류 카테고리 등록 -->
+    <!--    상위 카테고리 등록 -->
     <insert id="insertBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
         INSERT INTO tbl_category_big
             (
@@ -49,7 +49,7 @@
             )
     </insert>
 
-    <!--    소분류 카테고리 등록 -->
+    <!--    하위 카테고리 등록 -->
     <insert id="insertSmallCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
         INSERT INTO tbl_category_small
         (
@@ -65,7 +65,7 @@
     </insert>
 
 
-    <!--    대분류 카테고리 수정 -->
+    <!--    상위 카테고리 수정 -->
     <update id="updateBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
         UPDATE
             tbl_category_big
@@ -75,7 +75,7 @@
             big_category_id = #{ bigCategoryId }
     </update>
 
-    <!--    소분류 카테고리 수정 -->
+    <!--    하위 카테고리 수정 -->
     <update id="updateSmallCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
         UPDATE
             tbl_category_small
@@ -88,11 +88,21 @@
 
 
     <!--    카테고리 전체 삭제 -->
-    <delete id="deleteBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
+    <delete id="deleteCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
         DELETE
         FROM
         tbl_category_big
         WHERE
+        big_category_id = #{ bigCategoryId }
+    </delete>
+
+    <!--    하위 카테고리 삭제 -->
+    <delete id="deleteSmallCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
+        DELETE
+        FROM
+        tbl_category_small
+        WHERE
+        small_category_id = #{ smallCategoryId } AND
         big_category_id = #{ bigCategoryId }
     </delete>
 </mapper>

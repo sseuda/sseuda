@@ -32,7 +32,7 @@ public class CategoryController {
     }
 
 
-    @Operation(summary = "대분류 카테고리 등록", description = "대분류 카테고리 등록이 진행됩니다.", tags = {"CategoryController"})
+    @Operation(summary = "상위 카테고리 등록", description = "상위 카테고리 등록이 진행됩니다.", tags = {"CategoryController"})
     @PostMapping("/insert")
     public ResponseEntity<String> insertBigCategory(@ModelAttribute CategoryBigDTO category) {
 
@@ -45,7 +45,7 @@ public class CategoryController {
         }
     }
 
-    @Operation(summary = "소분류 카테고리 등록", description = "소분류 카테고리 등록이 진행됩니다.", tags = {"CategoryController"})
+    @Operation(summary = "하위 카테고리 등록", description = "하위 카테고리 등록이 진행됩니다.", tags = {"CategoryController"})
     @PostMapping("/insert/small")
     public ResponseEntity<String> insertSmallCategory(@ModelAttribute CategorySmallDTO category) {
 
@@ -59,7 +59,7 @@ public class CategoryController {
     }
 
 
-    @Operation(summary = "대분류 카테고리 수정", description = "대분류 카테고리 이름 수정이 진행됩니다.", tags = {"CategoryController"})
+    @Operation(summary = "상위 카테고리 수정", description = "상위 카테고리 이름 수정이 진행됩니다.", tags = {"CategoryController"})
     @PutMapping("/update")
     public ResponseEntity<String> updateBigCategory(@ModelAttribute CategoryBigDTO category){
 
@@ -72,7 +72,7 @@ public class CategoryController {
         }
     }
 
-    @Operation(summary = "소분류 카테고리 수정", description = "소분류 카테고리 이름 수정이 진행됩니다.", tags = {"CategoryController"})
+    @Operation(summary = "하위 카테고리 수정", description = "하위 카테고리 이름 수정이 진행됩니다.", tags = {"CategoryController"})
     @PutMapping("/update/small")
     public ResponseEntity<String> updateSmallCategory(@ModelAttribute CategorySmallDTO category){
 
@@ -87,10 +87,25 @@ public class CategoryController {
 
 
     @Operation(summary = "카테고리 전체 삭제", description = "상위 카테고리 삭제가 진행됩니다.", tags = {"CategoryController"})
-    @DeleteMapping("/mypage/delete")
-    public ResponseEntity<String> deleteBigCategory(@ModelAttribute CategoryBigDTO category){
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteCategory(@ModelAttribute CategoryBigDTO category){
 
-        int result = categoryService.deleteBigCategory(category);
+        int result = categoryService.deleteCategory(category);
+
+        log.info("result : {}", result);
+
+        if(result > 0){
+            return ResponseEntity.ok("카테고리가 삭제되었습니다.");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없는 카테고리입니다.");
+        }
+    }
+
+    @Operation(summary = "하위 카테고리 삭제", description = "하위 카테고리 삭제가 진행됩니다.", tags = {"CategoryController"})
+    @DeleteMapping("/delete/small")
+    public ResponseEntity<String> deleteSmallCategory(@ModelAttribute CategorySmallDTO category){
+
+        int result = categoryService.deleteSmallCategory(category);
 
         log.info("result : {}", result);
 

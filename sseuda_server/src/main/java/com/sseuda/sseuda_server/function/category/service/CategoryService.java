@@ -29,40 +29,47 @@ public class CategoryService {
     }
 
 
-//    대분류 카테고리 등록
+//    상위 카테고리 등록
     public int insertBigCategory(CategoryBigDTO category){
 
-        log.info("[CService] 대분류 카테고리 등록중...");
+        log.info("[CService] 상위 카테고리 등록중...");
         return categoryMapper.insertBigCategory(category);
     }
 
-//    소분류 카테고리 등록
+//    하위 카테고리 등록
     public int insertSmallCategory(CategorySmallDTO category){
 
-        log.info("[CService] 소분류 카테고리 등록중...");
+        log.info("[CService] 하위 카테고리 등록중...");
         return categoryMapper.insertSmallCategory(category);
     }
 
 
-    //    대분류 카테고리 수정
+    //    상위 카테고리 수정
     public int updateBigCategory(CategoryBigDTO category){
 
-        log.info("[CBService] 대분류 카테고리 수정 진행중...");
+        log.info("[CBService] 상위 카테고리 수정 진행중...");
         return categoryMapper.updateBigCategory(category);
     }
 
-    //    소분류 카테고리 수정
+    //    하위 카테고리 수정
     public int updateSmallCategory(CategorySmallDTO category){
 
-        log.info("[CBService] 소분류 카테고리 수정 진행중...");
+        log.info("[CBService] 하위 카테고리 수정 진행중...");
         return categoryMapper.updateSmallCategory(category);
     }
 
 
     //    카테고리 전체 삭제
-    public int deleteBigCategory(CategoryBigDTO category){
+    public int deleteCategory(CategoryBigDTO category){
 
-        log.info("[CBService] 대분류 카테고리 삭제 진행중...");
-        return categoryMapper.deleteBigCategory(category);
+        log.info("[CBService] 상위 카테고리 삭제 진행중...");
+        return categoryMapper.deleteCategory(category);
+    }
+
+    //    하위 카테고리 삭제
+    public int deleteSmallCategory(CategorySmallDTO category){
+
+        log.info("[CBService] 하위 카테고리 삭제 진행중...");
+        return categoryMapper.deleteSmallCategory(category);
     }
 }

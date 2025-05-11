@@ -13,20 +13,23 @@ public interface CategoryMapper {
     List<CategorySmallDTO> findCategoryList();
 
 
-//    대분류 카테고리 등록
+//    상위 카테고리 등록
     int insertBigCategory(CategoryBigDTO category);
 
-//    소분류 카테고리 등록
+//    하위 카테고리 등록
     int insertSmallCategory(CategorySmallDTO category);
 
 
-//    대분류 카테고리 수정
+//    상위 카테고리 수정
     int updateBigCategory(CategoryBigDTO category);
 
-//    대분류 카테고리 수정
+//    하위 카테고리 수정
     int updateSmallCategory(CategorySmallDTO category);
 
 
 //    카테고리 전체 삭제
-    int deleteBigCategory(CategoryBigDTO category);
+    int deleteCategory(CategoryBigDTO category);
+
+//    하위 카테고리 삭제
+    int deleteSmallCategory(CategorySmallDTO category);
 }
