@@ -12,5 +12,5 @@ public interface PostMapper {
     List<PostDTO> findPostList();
 
 //    회원별 게시글 전체 조회
-//    List<PostDTO> findUserPostList(int userCode);
+    List<PostDTO> findUserPostList(int userCode);
 }

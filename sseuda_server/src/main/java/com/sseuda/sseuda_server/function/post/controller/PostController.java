@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,5 +32,11 @@ public class PostController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findPostList()));
     }
 
-//    yaml 파일 삭제..
+    @Operation(summary = "회원별 게시글 전체 조회", description = "회원별로 게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
+    @GetMapping("/all/{userCode}")
+    public ResponseEntity<ResponseDTO> findUserPostList(@PathVariable("userCode") int userCode){
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findUserPostList(userCode)));
+    }
+
 }
