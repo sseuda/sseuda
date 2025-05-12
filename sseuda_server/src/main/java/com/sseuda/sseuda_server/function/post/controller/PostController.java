@@ -30,4 +30,6 @@ public class PostController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findPostList()));
     }
+
+//    yaml 파일 삭제..
 }
