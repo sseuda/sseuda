@@ -85,4 +85,13 @@
         c.big_category_id = #{ bigCategoryId }
     </select>
 
+    <delete id="deleteUserPosting" parameterType="com.sseuda.sseuda_server.function.post.dto.PostDTO">
+        DELETE
+        FROM
+            tbl_post
+        WHERE
+            post_id = #{ postId } AND
+            user_id = #{ userCode }
+    </delete>
+
 </mapper>

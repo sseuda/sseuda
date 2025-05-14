@@ -44,5 +44,9 @@ public class PostService {
         return postMapper.findUserCategoryPostList(userCode, bigCategoryId, smallCategoryId);
     }
 
+//  회원별 게시글 삭제
+    public int deleteUserPosting(PostDTO post, int userCode, int postId) {
 
+        return postMapper.deleteUserPosting(post, userCode, postId);
+    }
 }

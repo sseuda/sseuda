@@ -20,4 +20,6 @@ public interface PostMapper {
 //    회원별 카테고리 게시글 전체 조회
     List<PostDTO> findUserCategoryPostList(int userCode, int bigCategoryId, int smallCategoryId);
 
+//    회원별 게시글 삭제
+    int deleteUserPosting(PostDTO post, int userCode, int postId);
 }

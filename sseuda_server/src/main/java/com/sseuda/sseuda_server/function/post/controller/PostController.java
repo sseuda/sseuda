@@ -1,6 +1,7 @@
 package com.sseuda.sseuda_server.function.post.controller;
 
 import com.sseuda.sseuda_server.common.ResponseDTO;
+import com.sseuda.sseuda_server.function.post.dto.PostDTO;
 import com.sseuda.sseuda_server.function.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
@@ -8,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/post/*")
@@ -56,6 +54,28 @@ public class PostController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "카테고리별 게시글 전체 조회 성공", postService.findUserCategoryPostList(userCode, bigCategoryId, smallCategoryId)));
     }
 
+//    @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
+//    @PostMapping("/mypage/{userCode}/{bigCategoryId}/{smallCategoryId}")
+//    public ResponseEntity<String> insertUserPosting(@PathVariable("userCode") int userCode,
+//                                                    @PathVariable("bigCategoryId") int bigCategoryId,
+//                                                    @PathVariable("smallCategoryId") int smallCategoryId){
+//
+//
+//    }
 
+    @Operation(summary = "회원별 게시글 삭제", description = "회원별 게시글 삭제가 진행됩니다.", tags = {"PostController"})
+    @DeleteMapping("/mypage/{userCode}/{postId}/delete")
+    public ResponseEntity<String> deleteUserPosting(@ModelAttribute PostDTO post,
+                                                    @PathVariable("userCode") int userCode,
+                                                    @PathVariable("postId") int postId){
+
+        int result = postService.deleteUserPosting(post, userCode, postId);
+
+        if(result > 0){
+            return ResponseEntity.ok("해당 게시글이 삭제되었습니다.");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 게시글을 찾을 수 없습니다.");
+        }
+    }
 
 }
