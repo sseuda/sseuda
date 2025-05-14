@@ -34,6 +34,24 @@
             tbl_post
     </select>
 
+    <!--    카테고리별 게시글 전체 조회-->
+    <select id="findCategoryPostList" resultMap="postResultMap">
+        SELECT
+        a.post_title,
+        a.post_content,
+        a.post_create_at,
+        a.view_count,
+        a.small_category_id,
+        c.big_category_id
+        FROM
+        tbl_post a
+        JOIN tbl_category_small b ON a.small_category_id = b.small_category_id
+        JOIN tbl_category_big c ON b.big_category_id = c.big_category_id
+        WHERE
+        a.small_category_id = #{ smallCategoryId } AND
+        c.big_category_id = #{ bigCategoryId }
+    </select>
+
 <!--    회원별 게시글 전체 조회 -->
     <select id="findUserPostList" resultMap="postResultMap">
         SELECT
@@ -48,19 +66,23 @@
             user_id = #{ userCode }
     </select>
 
-    <select id="findCategoryPostList" resultMap="postResultMap">
+    <!--    회원별 카테고리 게시글 전체 조회-->
+    <select id="findUserCategoryPostList" resultMap="postResultMap">
         SELECT
-            a.post_title,
-            a.post_content,
-            a.post_create_at,
-            a.view_count,
-            a.small_category_id,
-            c.big_category_id
+        a.post_title,
+        a.post_content,
+        a.post_create_at,
+        a.view_count,
+        a.small_category_id,
+        c.big_category_id
         FROM
-            tbl_post a
+        tbl_post a
         JOIN tbl_category_small b ON a.small_category_id = b.small_category_id
         JOIN tbl_category_big c ON b.big_category_id = c.big_category_id
         WHERE
-            a.small_category_id = #{ smallCategoryId } AND c.big_category_id = #{ bigCategoryId }
+        a.user_id = #{ userCode } AND
+        a.small_category_id = #{ smallCategoryId } AND
+        c.big_category_id = #{ bigCategoryId }
     </select>
+
 </mapper>
