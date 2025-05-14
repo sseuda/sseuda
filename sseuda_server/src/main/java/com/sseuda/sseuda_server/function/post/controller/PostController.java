@@ -32,11 +32,21 @@ public class PostController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findPostList()));
     }
 
+    @Operation(summary = "카테고리별 게시글 전체 조회", description = "카테고리별 게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
+    @GetMapping("/all/{bigCategoryId}/{smallCategoryId}")
+    public ResponseEntity<ResponseDTO> findCategoryPostList(@PathVariable("bigCategoryId") int bigCategoryId,
+                                                            @PathVariable("smallCategoryId") int smallCategoryId){
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "카테고리별 게시글 전체 조회 성공", postService.findCategoryPostList(bigCategoryId, smallCategoryId)));
+    }
+
     @Operation(summary = "회원별 게시글 전체 조회", description = "회원별로 게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
     @GetMapping("/all/{userCode}")
     public ResponseEntity<ResponseDTO> findUserPostList(@PathVariable("userCode") int userCode){
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findUserPostList(userCode)));
     }
+
+
 
 }

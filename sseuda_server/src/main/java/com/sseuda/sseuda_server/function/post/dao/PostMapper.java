@@ -11,6 +11,10 @@ public interface PostMapper {
 //    게시글 전체 조회
     List<PostDTO> findPostList();
 
+//    카테고리별 게시글 전체 조회
+    List<PostDTO> findCategoryPostList(int bigCategoryId, int smallCategoryId);
+
 //    회원별 게시글 전체 조회
     List<PostDTO> findUserPostList(int userCode);
+
 }

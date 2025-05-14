@@ -26,9 +26,17 @@ public class PostService {
         return postMapper.findPostList();
     }
 
+//    카테고리별 게시글 전체 조회
+    public List<PostDTO> findCategoryPostList(int bigCategoryId, int smallCategoryId) {
+
+        return postMapper.findCategoryPostList(bigCategoryId, smallCategoryId);
+    }
+
 //    회원별 게시글 전체 조회
     public  List<PostDTO> findUserPostList(int userCode){
 
         return postMapper.findUserPostList(userCode);
     }
+
+
 }
