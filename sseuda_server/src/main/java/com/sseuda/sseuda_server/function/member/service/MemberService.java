@@ -62,4 +62,13 @@ public class MemberService {
     public int deactivateUser(MemberDTO member) {
         return memberMapper.deactivateUser(member);
     }
+
+    // 아이디 찾기 (이메일로)
+    public String findUsernameByEmail(String email) {
+        String username = memberMapper.findUsernameByEmail(email);
+        if (username == null) {
+            throw new IllegalArgumentException("해당 이메일로 가입된 회원이 없습니다.");
+        }
+        return username;
+    }
 }

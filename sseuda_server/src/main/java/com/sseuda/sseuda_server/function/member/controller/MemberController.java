@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/member")
@@ -40,7 +41,7 @@ public class MemberController {
     }
 
     // 회원 정보 수정 (user id)
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<String> updateUserInfo(@PathVariable int id, @RequestBody MemberDTO dto) {
         dto.setUserId(id);
         int result = memberService.updateUserInfo(dto);
@@ -60,6 +61,24 @@ public class MemberController {
             return ResponseEntity.ok("탈퇴 완료");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴안돼ㅜㅠ");
+        }
+    }
+
+    // 아이디 찾기 (이메일로)
+    @PostMapping("/find-username")
+    public ResponseEntity<?> findUsernameByEmail(@RequestBody Map<String, String> request) {
+        try {
+            String email = request.get("email");
+            String username = memberService.findUsernameByEmail(email);
+            return ResponseEntity.ok(Map.of("username", username));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "서버 내부 오류가 발생했습니다."));
         }
     }
 }

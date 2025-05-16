@@ -19,4 +19,6 @@ public interface MemberMapper {
     int updateUserInfo(MemberDTO member);
 
     int deactivateUser(MemberDTO member);
+
+    String findUsernameByEmail(String email);
 }

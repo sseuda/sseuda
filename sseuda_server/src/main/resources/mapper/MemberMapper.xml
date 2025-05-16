@@ -53,12 +53,19 @@
         WHERE user_id = #{userId}
     </update>
 
-    <!-- 회원탈퇴 (상태변경 -->
+    <!-- 회원탈퇴 (상태변경) -->
     <update id="deactivateUser" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
         UPDATE tbl_member
         SET user_status = "탈퇴"
         WHERE user_id = #{userId}
     </update>
+    
+    <!--  아이디찾기 (이메일로)  -->
+    <select id="findUsernameByEmail" parameterType="String" resultType="String">
+        SELECT username
+        FROM tbl_member
+        WHERE user_email = #{userEmail}
+    </select>
 
 
 </mapper>
