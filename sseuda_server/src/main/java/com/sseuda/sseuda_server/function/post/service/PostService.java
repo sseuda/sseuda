@@ -44,9 +44,17 @@ public class PostService {
         return postMapper.findUserCategoryPostList(userCode, bigCategoryId, smallCategoryId);
     }
 
+//    회원별 게시글 등록
+    public void saveUserPosting(String postTitle, int userId, String postContent, int smallCategoryId) {
+        postMapper.saveUserPosting(postTitle, userId, postContent, smallCategoryId);
+    }
+
 //  회원별 게시글 삭제
     public int deleteUserPosting(PostDTO post, int userCode, int postId) {
 
         return postMapper.deleteUserPosting(post, userCode, postId);
     }
+
+
+
 }

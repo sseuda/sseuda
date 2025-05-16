@@ -85,6 +85,21 @@
         c.big_category_id = #{ bigCategoryId }
     </select>
 
+    <insert id="saveUserPosting" parameterType="com.sseuda.sseuda_server.function.post.dto.PostDTO">
+        INSERT INTO tbl_post (
+            post_title,
+            user_id,
+            post_content,
+            small_category_id
+        )
+        VALUES (
+            #{postTitle},
+            #{userId},
+            #{postContent},
+            #{smallCategoryId}
+        )
+    </insert>
+
     <delete id="deleteUserPosting" parameterType="com.sseuda.sseuda_server.function.post.dto.PostDTO">
         DELETE
         FROM

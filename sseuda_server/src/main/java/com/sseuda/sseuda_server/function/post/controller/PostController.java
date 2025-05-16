@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/post/*")
 public class PostController {
@@ -54,14 +56,25 @@ public class PostController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "카테고리별 게시글 전체 조회 성공", postService.findUserCategoryPostList(userCode, bigCategoryId, smallCategoryId)));
     }
 
-//    @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
-//    @PostMapping("/mypage/{userCode}/{bigCategoryId}/{smallCategoryId}")
-//    public ResponseEntity<String> insertUserPosting(@PathVariable("userCode") int userCode,
+//    React에서 axios로 넘겨준다
+    @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
+    @PostMapping("/posts")
+    public ResponseEntity<String> saveUserPosting(
+//            @PathVariable("userCode") int userCode,
 //                                                    @PathVariable("bigCategoryId") int bigCategoryId,
-//                                                    @PathVariable("smallCategoryId") int smallCategoryId){
-//
-//
-//    }
+//                                                    @PathVariable("smallCategoryId") int smallCategoryId,
+                                                    @RequestBody PostDTO dto){
+
+        postService.saveUserPosting(
+             dto.getPostTitle(),
+            dto.getUserId(),
+            dto.getPostContent(),
+            dto.getSmallCategoryId()
+        );
+
+        return ResponseEntity.ok("게시글 저장 완료");
+
+    }
 
     @Operation(summary = "회원별 게시글 삭제", description = "회원별 게시글 삭제가 진행됩니다.", tags = {"PostController"})
     @DeleteMapping("/mypage/{userCode}/{postId}/delete")
