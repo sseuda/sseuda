@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./layouts/Layout";
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
       <Routes>
         {/* 메인페이지 경로 */}
         <Route path="/" element={<Layout/>}/>
-        
+
       </Routes>
     </BrowserRouter>
   );
