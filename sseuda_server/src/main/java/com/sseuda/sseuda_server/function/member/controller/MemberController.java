@@ -1,5 +1,6 @@
 package com.sseuda.sseuda_server.function.member.controller;
 
+import com.sseuda.sseuda_server.function.member.dto.MailRequestDTO;
 import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
 import com.sseuda.sseuda_server.function.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,19 +67,24 @@ public class MemberController {
 
     // 아이디 찾기 (이메일로)
     @PostMapping("/find-username")
-    public ResponseEntity<?> findUsernameByEmail(@RequestBody Map<String, String> request) {
+    public ResponseEntity<?> findUsernameAndSendMail(@RequestBody MailRequestDTO request) {
+        System.out.println(">>> 아이디 찾기 이메일 요청: " + request.getTo());
         try {
-            String email = request.get("email");
+            String email = request.getTo();
             String username = memberService.findUsernameByEmail(email);
-            return ResponseEntity.ok(Map.of("username", username));
+
+            memberService.sendUsernameEmail(email, username);
+
+            return ResponseEntity.ok("아이디가 이메일로 전송되었습니다.");
+
         } catch (IllegalArgumentException e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(Map.of("error", e.getMessage()));
+            // 사용자가 잘못 입력한 경우 → 400 에러로 처리
+            return ResponseEntity.badRequest().body(e.getMessage());
+
         } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "서버 내부 오류가 발생했습니다."));
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("아이디 전송 중 서버 오류 발생: " + e.getMessage());
         }
     }
 }

@@ -2,7 +2,11 @@ package com.sseuda.sseuda_server.function.member.service;
 
 import com.sseuda.sseuda_server.function.member.dao.MemberMapper;
 import com.sseuda.sseuda_server.function.member.UserStatus;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
@@ -18,6 +22,8 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JavaMailSender mailSender;
+
 
     @Transactional
     public int signup(MemberDTO dto) {
@@ -66,9 +72,35 @@ public class MemberService {
     // 아이디 찾기 (이메일로)
     public String findUsernameByEmail(String email) {
         String username = memberMapper.findUsernameByEmail(email);
+        System.out.println("입력한 이메일: " + email);
         if (username == null) {
-            throw new IllegalArgumentException("해당 이메일로 가입된 회원이 없습니다.");
+            throw new IllegalArgumentException("서비스: 해당 이메일로 가입된 회원이 없습니다.");
         }
         return username;
+    }
+
+    public void sendUsernameEmail(String to, String username) {
+        String subject = "[쓰다] 아이디 찾기 결과";
+        String content = String.format("""
+                <div style='padding:20px; font-family:sans-serif;'>
+                    <h2>아이디 찾기 결과</h2>
+                    <p>요청하신 이메일로 가입된 아이디는 다음과 같습니다:</p>
+                    <p style='font-weight:bold; font-size:18px;'>%s</p>
+                    <br>
+                    <p>감사합니다.</p>
+                </div>
+                """, username);
+
+        MimeMessage message = mailSender.createMimeMessage();
+
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(content, true); // HTML 전송
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("이메일 전송 실패", e);
+        }
     }
 }
