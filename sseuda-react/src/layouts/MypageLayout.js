@@ -1,11 +1,13 @@
 import React from 'react'
 import MyPage from '../pages/myPage/MyPage'
+import TextEditor from '../components/common/TextEditor';
 
 function MypageLayout() {
   return (
     <>
         <main>
             <MyPage/>
+            <TextEditor/>
         </main>
     </>
   )

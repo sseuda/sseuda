@@ -24,3 +24,18 @@
 📝 참고:
 - 현재 react19 버전이 quill 설치 버전이랑 맞지 않아서 생긴 문제이기에 router 설치에도 문제 발생ㅠㅠ
 - 사용한 명령어 : 'npm i react-router-dom --legacy-peer-deps'
+
+
+## 2025.05.16 quill api 사용 관련 설명
+
+- 25.05.15 이 날 했던 --legacy-peer-deps'로 react19버전에 quill을 강제로 추가시켰지만 실제 작동해본 결과 react-quill 내부 코드가 'ReactDOM.findDOMNode()'를 사용중이라 React19와 충돌 발생
+- 따라서 React 버전을 18로 다운그래이드 함
+
+📝 참고:
+- 현재 React19가 아닌 React18 버전
+- React19 버전은 Quill의 내부 코드인 'ReactDOM.findDOMNode()'와 충돌이 발생해 React18로 낮췄음
+- 사용한 명령어 (위에서 차례로)
+    * npm uninstall react react-dom
+    * npm install react@18.2.0 react-dom@18.2.0
+    * npm install react-quill
+
