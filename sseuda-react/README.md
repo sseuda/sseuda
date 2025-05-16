@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+📦 2025.05.14 react-quill@2.0.0 설치 관련 메모
+현재 React 버전은 19
+지금 버전의 quill은 현재 사용하는 react19 버전과 충돌이 있어 '--legacy-peer-deps' 옵션으로 충돌을 무시하고 설치함
+quill 공식 페이지에 react19버전을 호환하는 quill 버전이 나오면 그때 교체해야함
+📝 참고:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+현재 설치한 버전은 대부분 기능이 동작한다해서 이전 버전이 아닌 최신 버전으로 설치했슴다
+사용한 명령어 : 'npm i react-quill --legacy-peer-deps'
+2025.05.14 rafce 관련 설명
+js파일을 만들고 아무것도 없는 상태에서 'rfce + tab'을 하면 자동으로 기본설정이 된다는 사실~~
+자동으로 형식 맞추는 명령어 : rfce + tab
+2025.05.14 react-router-dom 설치 관련 설명
+quill 버전 때문에 'react-router-dom' 설치 관련해서 호환 문제 발생
+현재 방법으로는 지금 사용하고있는 react19 버전을 낮추거나 '--legacy-peer-deps' 옵션으로 강제로 충돌을 무시하고 설치하는 방법뿐
+강제로 의존성 주입해도 문제될건 없기에 '--legacy-peer-deps' 옵션으로 강제로 의존성 주입하겠음
+📝 참고:
 
-## Available Scripts
+현재 react19 버전이 quill 설치 버전이랑 맞지 않아서 생긴 문제이기에 router 설치에도 문제 발생ㅠㅠ
+사용한 명령어 : 'npm i react-router-dom --legacy-peer-deps'
+2025.05.16 quill api 사용 관련 설명
+25.05.15 이 날 했던 --legacy-peer-deps'로 react19버전에 quill을 강제로 추가시켰지만 실제 작동해본 결과 react-quill 내부 코드가 'ReactDOM.findDOMNode()'를 사용중이라 React19와 충돌 발생
+따라서 React 버전을 18로 다운그래이드 함
+📝 참고:
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+현재 React19가 아닌 React18 버전
+React19 버전은 Quill의 내부 코드인 'ReactDOM.findDOMNode()'와 충돌이 발생해 React18로 낮췄음
+사용한 명령어 (위에서 차례로)
+npm uninstall react react-dom
+npm install react@18.2.0 react-dom@18.2.0
+npm install react-quill
