@@ -67,7 +67,15 @@ public class SecurityConfig {
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                         .accessDeniedHandler(jwtAccessDeniedHandler))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "member/**", "member/update/**", "/mypage/**").permitAll()
+                        .requestMatchers(
+                                "/auth/**",
+                                "/auth/login",
+                                "/member/**",
+                                "/member/update/**",
+                                "/member/reset-password-request",
+                                "/member/reset-password",
+                                "/mypage/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
