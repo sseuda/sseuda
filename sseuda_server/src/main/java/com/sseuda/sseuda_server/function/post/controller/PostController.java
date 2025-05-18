@@ -72,6 +72,8 @@ public class PostController {
             dto.getSmallCategoryId()
         );
 
+        System.out.println("받은 postDTO: " + dto);
+
         return ResponseEntity.ok("게시글 저장 완료");
 
     }
