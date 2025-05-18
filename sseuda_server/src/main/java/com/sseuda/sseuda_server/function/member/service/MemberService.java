@@ -2,9 +2,11 @@ package com.sseuda.sseuda_server.function.member.service;
 
 import com.sseuda.sseuda_server.function.member.dao.MemberMapper;
 import com.sseuda.sseuda_server.function.member.UserStatus;
+import com.sseuda.sseuda_server.function.member.dto.PasswordTokenDTO;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,9 +14,11 @@ import org.springframework.stereotype.Service;
 import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +27,7 @@ public class MemberService {
     private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
-
+    private final MailService mailService;
 
     @Transactional
     public int signup(MemberDTO dto) {
@@ -57,6 +61,11 @@ public class MemberService {
     // 특정 회원 조회 (username)
     public MemberDTO getMemberByUsername(String username) {
         return memberMapper.findMemberByUsername(username);
+    }
+
+    // 특정 회원 조회 (email)
+    public MemberDTO findMemberByEmail(String email) {
+        return memberMapper.findMemberByEmail(email);
     }
 
     // 회원 정보 수정 (user id)
@@ -103,4 +112,50 @@ public class MemberService {
             throw new RuntimeException("이메일 전송 실패", e);
         }
     }
+
+    public PasswordTokenDTO findPasswordToken(String token) {
+        return memberMapper.findPasswordToken(token);
+    }
+
+    public void updatePassword(MemberDTO member, String newPassword) {
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        member.setPassword(encodedPassword);
+        memberMapper.updatePassword(member);
+    }
+
+    public void deleteByToken(String token) {
+        memberMapper.deleteByToken(token);
+    }
+
+    // 비밀번호 찾기(재설정) 프로세스
+    public void processPasswordReset(String email) {
+
+//        System.out.println("서비스에서 비밀번호찾기 프로세스 시작");
+        // 1. 사용자 존재 여부 확인
+        MemberDTO member = memberMapper.findMemberByEmail(email);
+        if (member == null) {
+            throw new IllegalArgumentException("해당 이메일로 등록된 사용자가 없습니다.");
+        }
+
+//        System.out.println("서비스에서 토큰 생성 시작");
+        // 2. 토큰 생성
+        String token = UUID.randomUUID().toString();
+        LocalDateTime expiration = LocalDateTime.now().plusMinutes(30);
+//        System.out.println("token: " + token);
+
+//        System.out.println("서비스에서 디비 저장 시작");
+        // 3. DB에 토큰 저장
+        PasswordTokenDTO tokenDTO = new PasswordTokenDTO();
+        tokenDTO.setEmail(email);
+        tokenDTO.setToken(token);
+        tokenDTO.setExpiration(expiration);
+        tokenDTO.setCreatedAt(LocalDateTime.now());
+
+        memberMapper.insertPasswordToken(tokenDTO);
+//        System.out.println("저장된 내용: " + tokenDTO);
+
+        // 4. 이메일 전송
+        mailService.sendPasswordEmail(email, token);
+    }
+
 }

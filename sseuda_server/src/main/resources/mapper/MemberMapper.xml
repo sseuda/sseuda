@@ -26,6 +26,11 @@
     SELECT * FROM tbl_member WHERE username = #{username}
     </select>
 
+    <!--  특정 회원 조회 (email  -->
+    <select id="findMemberByEmail" resultMap="memberResultMap" parameterType="string">
+        SELECT * FROM tbl_member WHERE user_email = #{email}
+    </select>
+
     <!--  회원가입1 (member)  -->
     <insert id="insertMember" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO tbl_member (
@@ -56,7 +61,7 @@
     <!-- 회원탈퇴 (상태변경) -->
     <update id="deactivateUser" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
         UPDATE tbl_member
-        SET user_status = "탈퇴"
+        SET user_status = '탈퇴'
         WHERE user_id = #{userId}
     </update>
     
@@ -67,5 +72,32 @@
         WHERE user_email = #{userEmail}
     </select>
 
+    <!--  비밀번호 찾기 (초기화토큰)  -->
+    <insert id="insertPasswordToken">
+        INSERT INTO tbl_password_token (email, token, expiration)
+        VALUES (#{email}, #{token}, #{expiration})
+    </insert>
+
+    <select id="findPasswordToken" parameterType="string">
+        SELECT * FROM tbl_password_token
+        WHERE token = #{token}
+    </select>
+
+    <delete id="deleteByEmail" parameterType="string">
+        DELETE FROM tbl_password_token
+        WHERE email = #{email}
+    </delete>
+
+    <delete id="deleteByToken" parameterType="string">
+        DELETE FROM tbl_password_token
+        WHERE token = #{token}
+    </delete>
+
+    <!--  비밀번호 업데이트  -->
+    <update id="updatePassword" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+        UPDATE tbl_member
+        SET password = #{password}
+        WHERE user_email = #{email}
+    </update>
 
 </mapper>
