@@ -134,7 +134,8 @@ public class MemberController {
 
     // 2. 비밀번호 재설정
     @PostMapping("/reset-password")
-    public String handlePasswordReset(@RequestParam("token") String token, @RequestParam("newPassword") String newPassword, Model model) {
+    public String handlePasswordReset(@RequestParam("token") String token, @RequestParam("password") String newPassword, Model model) {
+        System.out.println("찐 재설정 시작");
         PasswordTokenDTO passwordToken = memberService.findPasswordToken(token);
         if (passwordToken == null || passwordToken.getExpiration().isBefore(LocalDateTime.now())) {
             model.addAttribute("message", "유효하지 않거나 만료된 링크임");

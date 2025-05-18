@@ -97,7 +97,7 @@
     <update id="updatePassword" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
         UPDATE tbl_member
         SET password = #{password}
-        WHERE user_email = #{email}
+        WHERE user_email = #{userEmail}
     </update>
 
 </mapper>

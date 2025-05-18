@@ -30,7 +30,7 @@ public interface MemberMapper {
     PasswordTokenDTO findPasswordToken(String token);
     void deleteByEmail(String email);       // 재발급 시 이전꺼 삭제
 
-    MemberDTO updatePassword(MemberDTO member);
+    int updatePassword(MemberDTO member);
 
-    PasswordTokenDTO deleteByToken(String token);
+    int deleteByToken(String token);
 }
