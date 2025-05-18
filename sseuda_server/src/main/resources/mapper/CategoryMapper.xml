@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sseuda.sseuda_server.function.category.dao.CategoryMapper">
+
+<!--    category small 과 category big join-->
+    <resultMap id="categoryResultMap" type="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
+        <id property="smallCategoryId" column="small_category_id"/>
+        <result property="smallCategoryName" column="small_category_name"/>
+        <result property="bigCategoryId" column="big_category_id"/>
+        <collection property="categoryBigDTO" resultMap="categoryBigResultMap"/>
+    </resultMap>
+
+<!--    category small-->
+    <resultMap id="categorySmallResultMap" type="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
+        <id property="smallCategoryId" column="small_category_id"/>
+        <result property="smallCategoryName" column="small_category_name"/>
+        <result property="bigCategoryId" column="big_category_id"/>
+    </resultMap>
+
+<!--    category big-->
+    <resultMap id="categoryBigResultMap" type="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
+        <id property="bigCategoryId" column="big_category_id"/>
+        <result property="bigCategoryName" column="big_category_name"/>
+    </resultMap>
+
+
+<!--    카테고리 전체 조회-->
+    <select id="findCategoryList" resultMap="categoryResultMap">
+        SELECT
+            s.small_category_name,
+            b.big_category_name
+        FROM
+            tbl_category_small s
+        LEFT JOIN tbl_category_big b ON s.big_category_id = b.big_category_id
+    </select>
+
+
+    <!--    상위 카테고리 등록 -->
+    <insert id="insertBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
+        INSERT INTO tbl_category_big
+            (
+                big_category_name
+            )
+        VALUES
+            (
+                #{ bigCategoryName }
+            )
+    </insert>
+
+    <!--    하위 카테고리 등록 -->
+    <insert id="insertSmallCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
+        INSERT INTO tbl_category_small
+        (
+            small_category_name,
+            big_category_id
+        )
+        VALUES
+        (
+            #{ smallCategoryName },
+            #{ bigCategoryId }
+
+        )
+    </insert>
+
+
+    <!--    상위 카테고리 수정 -->
+    <update id="updateBigCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
+        UPDATE
+            tbl_category_big
+        SET
+            big_category_name = #{ bigCategoryName }
+        WHERE
+            big_category_id = #{ bigCategoryId }
+    </update>
+
+    <!--    하위 카테고리 수정 -->
+    <update id="updateSmallCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
+        UPDATE
+            tbl_category_small
+        SET
+            small_category_name = #{ smallCategoryName }
+        WHERE
+            small_category_id = #{ smallCategoryId } AND
+            big_category_id = #{ bigCategoryId }
+    </update>
+
+
+    <!--    카테고리 전체 삭제 -->
+    <delete id="deleteCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategoryBigDTO">
+        DELETE
+        FROM
+        tbl_category_big
+        WHERE
+        big_category_id = #{ bigCategoryId }
+    </delete>
+
+    <!--    하위 카테고리 삭제 -->
+    <delete id="deleteSmallCategory" parameterType="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
+        DELETE
+        FROM
+        tbl_category_small
+        WHERE
+        small_category_id = #{ smallCategoryId } AND
+        big_category_id = #{ bigCategoryId }
+    </delete>
+</mapper>
+

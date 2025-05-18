@@ -2,10 +2,11 @@ package com.sseuda.sseuda_server.exception.dto;
 
 import org.springframework.http.HttpStatus;
 
+//  예외 발생 시 프론트로 보낼 데이터를 담는 DTO 객체
 public class ApiExceptionDTO {
 
-    private int status;
-    private String message;
+    private int status;     //  상태코드
+    private String message; //  에러 메시지
 
     public ApiExceptionDTO() {
     }
