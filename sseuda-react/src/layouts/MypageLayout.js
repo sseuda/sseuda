@@ -1,6 +1,6 @@
-import React from 'react'
-import MyPage from '../pages/myPage/MyPage'
-import TextEditor from '../components/common/TextEditor';
+import React from 'react';
+import MyPage from '../pages/myPage/MyPage';
+import TextEditor from '../components/common/post/TextEditor';
 
 function MypageLayout() {
   return (
