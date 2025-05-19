@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.sseuda.sseuda_server.SseudaServerApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-05-18T07:27:24.722Z" hostname="DESKTOP-BSSBUNV" time="1.895">
+<testsuite name="com.sseuda.sseuda_server.SseudaServerApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-05-19T03:07:48.704Z" hostname="DESKTOP-BSSBUNV" time="2.324">
   <properties/>
-  <testcase name="contextLoads()" classname="com.sseuda.sseuda_server.SseudaServerApplicationTests" time="1.895"/>
-  <system-out><![CDATA[16:27:17.254 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sseuda.sseuda_server.SseudaServerApplicationTests]: SseudaServerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-16:27:17.542 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sseuda.sseuda_server.SseudaServerApplication for test class com.sseuda.sseuda_server.SseudaServerApplicationTests
+  <testcase name="contextLoads()" classname="com.sseuda.sseuda_server.SseudaServerApplicationTests" time="2.324"/>
+  <system-out><![CDATA[12:07:36.903 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sseuda.sseuda_server.SseudaServerApplicationTests]: SseudaServerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:07:37.233 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sseuda.sseuda_server.SseudaServerApplication for test class com.sseuda.sseuda_server.SseudaServerApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,14 +14,12 @@
 
  :: Spring Boot ::                (v3.4.4)
 
-2025-05-18T16:27:18.807+09:00  INFO 15384 --- [    Test worker] c.s.s.SseudaServerApplicationTests       : Starting SseudaServerApplicationTests using Java 17.0.12 with PID 15384 (started by 82102 in C:\Users\82102\Desktop\sseuda project\sseuda\sseuda_server)
-2025-05-18T16:27:18.810+09:00  INFO 15384 --- [    Test worker] c.s.s.SseudaServerApplicationTests       : No active profile set, falling back to 1 default profile: "default"
-2025-05-18T16:27:22.743+09:00  INFO 15384 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
-2025-05-18T16:27:23.657+09:00  WARN 15384 --- [    Test worker] thorizationManagerRequestMatcherRegistry : One of the patterns in [/auth/**, member/**, member/update/**, /mypage/**, /post/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
-2025-05-18T16:27:23.745+09:00  WARN 15384 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@627bcd7e. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
-2025-05-18T16:27:24.032+09:00  INFO 15384 --- [    Test worker] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
-2025-05-18T16:27:24.195+09:00  WARN 15384 --- [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-2025-05-18T16:27:24.684+09:00  INFO 15384 --- [    Test worker] c.s.s.SseudaServerApplicationTests       : Started SseudaServerApplicationTests in 6.61 seconds (process running for 9.48)
+2025-05-19T12:07:38.669+09:00  INFO 10284 --- [    Test worker] c.s.s.SseudaServerApplicationTests       : Starting SseudaServerApplicationTests using Java 17.0.12 with PID 10284 (started by 82102 in C:\Users\82102\Desktop\sseuda project\sseuda\sseuda_server)
+2025-05-19T12:07:38.669+09:00  INFO 10284 --- [    Test worker] c.s.s.SseudaServerApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2025-05-19T12:07:43.517+09:00  INFO 10284 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-05-19T12:07:46.939+09:00  WARN 10284 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@2c08c787. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-05-19T12:07:47.365+09:00  INFO 10284 --- [    Test worker] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-05-19T12:07:48.589+09:00  INFO 10284 --- [    Test worker] c.s.s.SseudaServerApplicationTests       : Started SseudaServerApplicationTests in 10.859 seconds (process running for 14.711)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
