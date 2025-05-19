@@ -17,6 +17,12 @@ function Main() {
         dispatch(callPostsListApi(category, postId))
     }
 
+    // quill Api 사용 첫번째 이미지 추출 함수 
+    const extractFirstImageSrc = (html) => {
+        const match = html.match(/<img[^>]+src="([^">]+)"/);
+        return match ? match[1] : null;
+    };
+
     useEffect(() => {
         fetchData();
     },[]);
@@ -30,21 +36,38 @@ function Main() {
         console.log(postList, "확인");
     },[postList]);
 
+    
   return (
     <div>
         <div>
-            {Array.isArray(postList) && postList.map((post) =>(
-                <div key={post.postId} style={{
-                        border: '1px solid #ccc',
-                        padding: '10px',
-                        marginBottom: '10px',
-                        borderRadius: '8px'
-                    }}>
-                        <h3>{post.postTitle}</h3>
-                        <p>{post.postContent}</p>
-                        <small>작성일: {post.postCreateAt}</small>
+            {Array.isArray(postList) && postList.map((post) =>{
+                const firstImage = extractFirstImageSrc(post.postContent);
+                return(
+<div key={post.postId}>
+                    <div>
+                        <div>
+                            <p>
+                                {post.memberDTO?.username}
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2>{post.postTitle}</h2>
+                            <p>{post.postContent}</p>
+                        </div>
                     </div>
-            ))}
+                    <div>
+                        {firstImage && (
+                            <img
+                            src={firstImage}
+                            alt="썸네일"
+                            style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', marginBottom: '10px' }}
+                            />)}
+                    </div>
+                </div>
+                )
+                
+            })}
         </div>
         <Link to={"/mypage"}>마이페이지 바로가기</Link>
     </div>
