@@ -1,4 +1,4 @@
-import { DELETE_USER_POST, GET_CATEGORY_POST, GET_POSTS, GET_USER_CATEGORY_POSTS, GET_USER_POSTS, POST_USER_POSTING } from "../modules/PostModule";
+import { DELETE_USER_POST, GET_CATEGORY_POST, GET_POST, GET_POSTS, GET_USER_CATEGORY_POSTS, GET_USER_POSTS, POST_USER_POSTING } from "../modules/PostModule";
 
 const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 
@@ -19,6 +19,27 @@ export const callPostsListApi = () =>{
         if(result.status === 200){
             console.log('[PostApiCalls] callPostsListApi RESULT : ', result);
             dispatch({type: GET_POSTS, payload: result.data});
+        }
+    };
+};
+
+//  게시글 상세 조회
+export const callPostApi = (postId) =>{
+
+    let requestURL = `${prefix}/post/${postId}}`;
+    console.log('[PostApiCalls] requestURL : ', requestURL);
+
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*'
+            }
+        }).then((response) => response.json());
+        if(result.status === 200){
+            console.log('[PostApiCalls] callPostApi RESULT : ', result);
+            dispatch({type: GET_POST, payload: result.data});
         }
     };
 };
@@ -45,9 +66,9 @@ export const callCategoryPostsListApi = () =>{
 };
 
 //  회원별 게시글 전체 조회
-export const callUserPostsListApi = () =>{
+export const callUserPostsListApi = ({userCode}) =>{
 
-    let requestURL = `${prefix}/post/mypage/{userCode}`;
+    let requestURL = `${prefix}/post/mypage/${userCode}`;
     console.log('[PostApiCalls] requestURL : ', requestURL);
 
     return async (dispatch, getState) => {
