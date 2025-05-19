@@ -14,14 +14,8 @@ function Main() {
     console.log("postList : ", postList);
 
     const fetchData=() =>{
-        dispatch(callPostsListApi(category, postId))
+        dispatch(callPostsListApi(postId))
     }
-
-    // quill Api 사용 첫번째 이미지 추출 함수 
-    const extractFirstImageSrc = (html) => {
-        const match = html.match(/<img[^>]+src="([^">]+)"/);
-        return match ? match[1] : null;
-    };
 
     useEffect(() => {
         fetchData();
@@ -32,7 +26,7 @@ function Main() {
     // },[category]);
 
     useEffect(()=>{
-        console.log('category :', category);
+        // console.log('category :', category);
         console.log(postList, "확인");
     },[postList]);
 
@@ -40,34 +34,9 @@ function Main() {
   return (
     <div>
         <div>
-            {Array.isArray(postList) && postList.map((post) =>{
-                const firstImage = extractFirstImageSrc(post.postContent);
-                return(
-<div key={post.postId}>
-                    <div>
-                        <div>
-                            <p>
-                                {post.memberDTO?.username}
-                            </p>
-                        </div>
-
-                        <div>
-                            <h2>{post.postTitle}</h2>
-                            <p>{post.postContent}</p>
-                        </div>
-                    </div>
-                    <div>
-                        {firstImage && (
-                            <img
-                            src={firstImage}
-                            alt="썸네일"
-                            style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', marginBottom: '10px' }}
-                            />)}
-                    </div>
-                </div>
-                )
-                
-            })}
+            {Array.isArray(postList) && postList.map((post) => (
+                <MainPost key={post.postId} post={post}/>
+            ))}
         </div>
         <Link to={"/mypage"}>마이페이지 바로가기</Link>
     </div>

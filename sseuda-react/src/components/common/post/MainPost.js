@@ -1,40 +1,53 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { callPostsListApi } from '../../../apis/PostAPICalls';
 
 function Post({
-  // post의 객체구조 분해하여 내부 속성 꺼내기
-    post: {postId, postTitle, userId, postContent, postCreateAt, postUpdateAt, viewCount, postDelete, smallCategoryId}
-}) {
+  post: {postId, postTitle, postContent, memberDTO}
+}){
 
     const navigate = useNavigate();
-
-    //  게시글을 클릭하면 해당 상세 페이지로 이동하는 함수
-    //  'replace : false' -> 브라우저의 뒤로가기 기능 유지
     const onClickPostHandler = postId => {
-        navigate(`/post/${postId}`, {replace: false});
+      navigate(`/post/${postId}`, {replace:false});
     };
 
-  return (
-    <div>
-        <div>
-          <div>
-            <p>{userId}</p>
-          </div>
+    // quill Api 사용 첫번째 이미지 추출 함수 
+    const extractFirstImageSrc = (html) => {
+        const match = html.match(/<img[^>]+src="([^">]+)"/);
+        return match ? match[1] : null;
+    };
 
-          <div>
-            <div>
-              <h2>{postTitle}</h2>
-            </div>
-            <div>
-              <p>{postContent}</p>
-            </div>
-          </div>
-        </div>
+    
+    const firstImage = extractFirstImageSrc(postContent);
+
+  return (
+    <div onClick={() => onClickPostHandler(postId)}>
         <div>
-          <img src={postContent} alt={postTitle}/>
+            <div>
+                  <div>
+                      <div>
+                          <p>
+                              {memberDTO?.username}
+                          </p>
+                      </div>
+
+                      <div>
+                          <h2>{postTitle}</h2>
+                          <p>{postContent}</p>
+                      </div>
+                  </div>
+                  <div>
+                      {firstImage && (
+                          <img
+                          src={firstImage}
+                          alt="썸네일"
+                          style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', marginBottom: '10px' }}
+                          />)}
+                  </div>
+              </div>
         </div>
     </div>
   )
 }
-
-export default Post
+export default Post;
