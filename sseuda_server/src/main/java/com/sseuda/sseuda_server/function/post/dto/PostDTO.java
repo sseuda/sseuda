@@ -1,5 +1,7 @@
 package com.sseuda.sseuda_server.function.post.dto;
 
+import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
+
 import java.sql.Timestamp;
 
 public class PostDTO {
@@ -13,11 +15,12 @@ public class PostDTO {
     private int viewCount;
     private String postDelete;
     private int smallCategoryId;
+    private MemberDTO memberDTO;
 
     public PostDTO() {
     }
 
-    public PostDTO(int postId, String postTitle, int userId, String postContent, Timestamp postCreateAt, Timestamp postUpdateAt, int viewCount, String postDelete, int smallCategoryId) {
+    public PostDTO(int postId, String postTitle, int userId, String postContent, Timestamp postCreateAt, Timestamp postUpdateAt, int viewCount, String postDelete, int smallCategoryId, MemberDTO memberDTO) {
         this.postId = postId;
         this.postTitle = postTitle;
         this.userId = userId;
@@ -27,6 +30,7 @@ public class PostDTO {
         this.viewCount = viewCount;
         this.postDelete = postDelete;
         this.smallCategoryId = smallCategoryId;
+        this.memberDTO = memberDTO;
     }
 
     public int getPostId() {
@@ -101,6 +105,14 @@ public class PostDTO {
         this.smallCategoryId = smallCategoryId;
     }
 
+    public MemberDTO getMemberDTO() {
+        return memberDTO;
+    }
+
+    public void setMemberDTO(MemberDTO memberDTO) {
+        this.memberDTO = memberDTO;
+    }
+
     @Override
     public String toString() {
         return "PostDTO{" +
@@ -113,6 +125,8 @@ public class PostDTO {
                 ", viewCount=" + viewCount +
                 ", postDelete='" + postDelete + '\'' +
                 ", smallCategoryId=" + smallCategoryId +
+                ", memberDTO=" + memberDTO +
                 '}';
     }
 }
+
