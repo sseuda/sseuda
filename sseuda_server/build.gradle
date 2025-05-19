@@ -63,6 +63,9 @@ dependencies {
     // 아이디 찾기를 위함
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+    // 로그아웃
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 }
 
 tasks.named('test') {

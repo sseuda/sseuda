@@ -1,5 +1,6 @@
 package com.sseuda.sseuda_server.config;
 
+import com.sseuda.sseuda_server.function.member.service.AuthService;
 import com.sseuda.sseuda_server.jwt.JwtAccessDeniedHandler;
 import com.sseuda.sseuda_server.jwt.JwtAuthenticationEntryPoint;
 import com.sseuda.sseuda_server.jwt.JwtFilter;
@@ -58,7 +59,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAccessDeniedHandler jwtAccessDeniedHandler) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAccessDeniedHandler jwtAccessDeniedHandler, AuthService authService) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -69,6 +70,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/auth/**",
                                 "/auth/login",
+                                "/auth/logout",
                                 "/member/**",
                                 "/member/update/**",
                                 "/member/reset-password-request",
@@ -76,7 +78,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(tokenProvider, authService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
