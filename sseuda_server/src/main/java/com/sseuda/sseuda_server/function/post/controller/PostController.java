@@ -32,6 +32,13 @@ public class PostController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findPostList()));
     }
 
+    @Operation(summary = "게시글 상세 조회", description = "게시글 상세 조회가 진행됩니다.", tags = {"PostController"})
+    @GetMapping("/{postId}")
+    public ResponseEntity<ResponseDTO> findPost(@PathVariable("postId") int postId){
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 상세 조회 성공", postService.findPost(postId)));
+    }
+
     @Operation(summary = "카테고리별 게시글 전체 조회", description = "카테고리별 게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
     @GetMapping("/all/{bigCategoryId}/{smallCategoryId}")
     public ResponseEntity<ResponseDTO> findCategoryPostList(@PathVariable("bigCategoryId") int bigCategoryId,

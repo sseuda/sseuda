@@ -26,6 +26,12 @@ public class PostService {
         return postMapper.findPostList();
     }
 
+//    게시글 상세 조회
+    public List<PostDTO> findPost(int postId) {
+
+        return postMapper.findPost(postId);
+    }
+
 //    카테고리별 게시글 전체 조회
     public List<PostDTO> findCategoryPostList(int bigCategoryId, int smallCategoryId) {
 

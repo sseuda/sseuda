@@ -50,6 +50,20 @@
         JOIN tbl_member b ON a.user_id = b.user_id
     </select>
 
+<!--    게시글 상세 조회-->
+    <select id="findPost" resultMap="postResultMap">
+        SELECT
+            b.username,
+            a.post_title,
+            a.post_content,
+            a.post_create_at,
+            a.view_count
+        FROM
+            tbl_post a
+        JOIN tbl_member b ON a.user_id = b.user_id
+        WHERE post_id = #{postId}
+    </select>
+
     <!--    카테고리별 게시글 전체 조회-->
     <select id="findCategoryPostList" resultMap="postResultMap">
         SELECT
