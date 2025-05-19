@@ -20,23 +20,23 @@ const actions = createActions({
 })
 
 const postReducer = handleActions({
-    [GET_POSTS]: (state, {payLoad}) => {
-        return payLoad
+    [GET_POSTS]: (state, {payload}) => {
+        return payload
     },
-    [GET_CATEGORY_POST]: (state, {payLoad}) => {
-        return payLoad
+    [GET_CATEGORY_POST]: (state, {payload}) => {
+        return payload
     },
-    [GET_USER_POSTS]: (state, {payLoad}) => {
-        return payLoad
+    [GET_USER_POSTS]: (state, {payload}) => {
+        return payload
     },
-    [GET_USER_CATEGORY_POSTS]: (state, {payLoad}) => {
-        return payLoad
+    [GET_USER_CATEGORY_POSTS]: (state, {payload}) => {
+        return payload
     },
-    [POST_USER_POSTING]: (state, {payLoad}) => {
-        return payLoad
+    [POST_USER_POSTING]: (state, {payload}) => {
+        return payload
     },
-    [DELETE_USER_POST]: (state, {payLoad}) => {
-        return payLoad
+    [DELETE_USER_POST]: (state, {payload}) => {
+        return payload
     },
 }, initialState);
 

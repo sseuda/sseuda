@@ -25,10 +25,10 @@ function Main() {
     //     fetchData();
     // },[category]);
 
-    // useEffect(()=>{
-    //     console.log('category :', category);
-    //     console.log(postList, "확인");
-    // },[postList]);
+    useEffect(()=>{
+        console.log('category :', category);
+        console.log(postList, "확인");
+    },[postList]);
 
   return (
     <div>
