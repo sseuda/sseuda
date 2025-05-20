@@ -8,7 +8,7 @@ function Layout() {
 		<div>
 			<Header />
 			<main>
-				<Main/>				
+				<Main />
 			</main>
 			<Footer />
 		</div>

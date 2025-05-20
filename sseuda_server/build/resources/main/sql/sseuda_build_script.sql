@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS tbl_category_small;
 DROP TABLE IF EXISTS tbl_category_big;
 DROP TABLE IF EXISTS tbl_user_role;
 DROP TABLE IF EXISTS tbl_member;
+DROP TABLE IF EXISTS tbl_password_token;
 
 -- 회원 테이블
 CREATE TABLE IF NOT EXISTS tbl_member (
@@ -118,6 +119,15 @@ CREATE TABLE IF NOT EXISTS tbl_tag (
     tag_name VARCHAR(50) NOT NULL COMMENT '태그명',
     post_id INT NOT NULL COMMENT '게시글번호',
     FOREIGN KEY (post_id) REFERENCES tbl_post(post_id) ON DELETE CASCADE
+);
+
+-- 비밀번호 변경 토큰
+CREATE TABLE tbl_password_token (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expiration DATETIME NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 회원 더미데이터
