@@ -26,7 +26,7 @@ export const callPostsListApi = () =>{
 //  게시글 상세 조회
 export const callPostApi = (postId) =>{
 
-    let requestURL = `${prefix}/post/${postId}}`;
+    let requestURL = `${prefix}/post/${postId}`;
     console.log('[PostApiCalls] requestURL : ', requestURL);
 
     return async (dispatch, getState) => {

@@ -38,7 +38,6 @@ function PostMain() {
                 <MainPost key={post.postId} post={post}/>
             ))}
         </div>
-        <Link to={"/mypage"}>마이페이지 바로가기</Link>
     </div>
   )
 

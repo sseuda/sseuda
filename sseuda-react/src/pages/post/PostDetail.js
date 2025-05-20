@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { callPostApi } from '../../apis/PostAPICalls';
-import DetailPost from '../../components/common/post/DetailPost';
 
 function PostDetail() {
 
@@ -15,15 +14,43 @@ function PostDetail() {
   console.log("postDetail : ", postDetail);
 
   useEffect(() =>{
-    dispatch(callPostApi({postId: params.postId}));
+    dispatch(callPostApi(params.postId));
   },[params.postId]);
+
+  // const fetchData=()=>{
+  //   dispatch(callPostApi(params.postId));
+  // }
+
+  // useEffect(() => {
+  //         fetchData();
+  //     },[]);
+
+  // const {postTitle, postContent, postCreateAt, viewCount, memberDTO} = postDetail;
+
+const post = postDetail[0];
+
+if(!post){
+  return <p>게시글을 불러오는 중입니다...</p>;
+}
 
   return (
     <div>
       <div>
-        {Array.isArray(postDetail) && postDetail.map((post) => (
-          <DetailPost key={post.postId} post={post}/>
-        ))}
+        <div>
+          <h1>{post.postTitle}</h1>
+        </div>
+        <div>
+          <div>
+            <p>{post.postCreateAt}</p>
+            <p>{post.memberDTO?.username}</p>
+          </div>
+          <div>
+            <p>{post.viewCount}</p>
+          </div>
+        </div>
+        <div>
+          {post.postContent}
+        </div>
       </div>
     </div>
   )
