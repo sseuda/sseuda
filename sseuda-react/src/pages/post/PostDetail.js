@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { callPostApi } from '../../apis/PostAPICalls';
+import Detail from './css/PostDetail.module.css';
 
 function PostDetail() {
 
@@ -34,25 +35,25 @@ if(!post){
 }
 
   return (
-    <div>
-      <div>
-        <div>
+    <>
+      <div className={Detail.detailBox}>
+        <div className={Detail.titleBox}>
           <h1>{post.postTitle}</h1>
         </div>
-        <div>
-          <div>
-            <p>{post.postCreateAt}</p>
+        <div className={Detail.decBox}>
+          <div className={Detail.userBox}>
             <p>{post.memberDTO?.username}</p>
+            <p>{post.postCreateAt}</p>
           </div>
-          <div>
+          <div className={Detail.userView}>
             <p>{post.viewCount}</p>
           </div>
         </div>
-        <div>
+        <div className={Detail.contentBox}>
           {post.postContent}
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
