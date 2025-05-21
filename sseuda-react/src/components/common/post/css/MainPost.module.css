@@ -1,0 +1,47 @@
+.postBox{
+    width: 840px;
+    height: 250px;
+    margin-bottom: 30px;
+    padding: 28px 30px;
+    background-color: #dfdfdf;
+}
+
+.box{
+    display: flex;
+    justify-content: space-between;
+}
+
+.textBox{
+    width: 550px;
+    height: 200px;
+}
+
+.userBox{
+    width: 100%;
+    height: 42px;
+    border-bottom: 1px solid var(--text02);
+    position: relative;
+}
+
+.userBox p {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+}
+
+.contentBox{
+   width: 100%;
+   height: 156px;
+   padding: 10px 20px;
+   /* background-color: #fff; */
+}
+
+.contentBox p{
+    margin-top: 10px;
+}
+
+.imgBox{
+    width: 200px;
+    height: 200px;
+    background-color: #fff;
+}

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { callPostsListApi } from '../../../apis/PostAPICalls';
+import MainPost from './css/MainPost.module.css';
 
 function Post({
   post: {postId, postTitle, postContent, memberDTO}
@@ -22,30 +23,28 @@ function Post({
     const firstImage = extractFirstImageSrc(postContent);
 
   return (
-    <div onClick={() => onClickPostHandler(postId)}>
-        <div>
-            <div>
-                  <div>
-                      <div>
-                          <p>
-                              {memberDTO?.username}
-                          </p>
-                      </div>
+    <div className={MainPost.postBox} onClick={() => onClickPostHandler(postId)}>
+        <div className={MainPost.box}>
+            <div className={MainPost.textBox}>
+                <div className={MainPost.userBox}>
+                    <p>
+                        {memberDTO?.username}
+                    </p>
+                </div>
 
-                      <div>
-                          <h2>{postTitle}</h2>
-                          <p>{postContent}</p>
-                      </div>
-                  </div>
-                  <div>
-                      {firstImage && (
-                          <img
-                          src={firstImage}
-                          alt="썸네일"
-                          style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', marginBottom: '10px' }}
-                          />)}
-                  </div>
-              </div>
+                <div className={MainPost.contentBox}>
+                    <h2>{postTitle}</h2>
+                    <p>{postContent}</p>
+                </div>
+            </div>
+            <div className={MainPost.imgBox}>
+                {firstImage && (
+                    <img
+                    src={firstImage}
+                    alt="썸네일"
+                    style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', marginBottom: '10px' }}
+                    />)}
+            </div>
         </div>
     </div>
   )
