@@ -17,7 +17,7 @@ function App() {
 
         {/* 마이페이지를 위한 Route */}
         <Route path="post/mypage" element={<MypageLayout/>}>
-        <Route path=":userCode" element={<PostMypage/>}/>
+        <Route path=":userCode" element={<MyPage/>}/>
       
         </Route>
 
