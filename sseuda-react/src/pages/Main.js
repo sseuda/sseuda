@@ -9,7 +9,7 @@ function Main() {
     <>
       <div className={MainCSS.mainBox}>
         <PostMain/>
-        <Link to={"/mypage"}>마이페이지 바로가기</Link>
+        <Link to={"/post/mypage"}>마이페이지 바로가기</Link>
       </div>
     </>
   )

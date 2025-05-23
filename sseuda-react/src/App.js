@@ -3,6 +3,8 @@ import MypageLayout from "./layouts/MypageLayout";
 import Layout from "./layouts/Layout";
 import PostLayout from "./layouts/PostLayout";
 import PostDetail from "./pages/post/PostDetail";
+import PostMypage from "./pages/post/PostMypage";
+import MyPage from "./pages/myPage/MyPage";
 
 function App() {
   return (
@@ -14,8 +16,9 @@ function App() {
         </Route>
 
         {/* 마이페이지를 위한 Route */}
-        <Route path="/mypage" element={<MypageLayout/>}>
-
+        <Route path="post/mypage" element={<MypageLayout/>}>
+        <Route path=":userCode" element={<PostMypage/>}/>
+      
         </Route>
 
         {/* 게시글 관련 Route */}

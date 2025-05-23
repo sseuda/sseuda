@@ -76,7 +76,7 @@ export const callUserPostsListApi = ({userCode}) =>{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
             }
         }).then((response) => response.json());
         if(result.status === 200){
