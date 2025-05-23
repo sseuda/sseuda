@@ -1,0 +1,32 @@
+.navBox{
+    width: 130px;
+    height: 1069px;
+    padding-top: 50px;
+    background-color: var(--main-color01);
+}
+
+.posting, .user{
+    width: 130px;
+    height: 100px;
+    padding: 20px 35px;
+}
+
+.posting:hover, .user:hover{
+    background-color: #F19A65;
+    cursor: pointer;
+}
+
+.iconBox{
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border-radius: 50px;
+    background-color: #FFEBDF;
+    position: relative;
+}
+
+.iconBox p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
