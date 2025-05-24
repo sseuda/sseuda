@@ -80,7 +80,6 @@ public class SecurityConfig {
                                 "/member/update/**",
                                 "/member/reset-password-request",
                                 "/member/reset-password",
-                                "/mypage/**",
                                 "/post/**"
                         ).permitAll()
                         .anyRequest().authenticated()
