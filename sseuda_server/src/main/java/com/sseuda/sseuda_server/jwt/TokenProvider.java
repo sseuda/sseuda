@@ -133,5 +133,19 @@ public class TokenProvider {
     private static String getAuthorities(Login login) {
         return login.getRole().getRole(); // "USER", "ADMIN", "SUPER"
     }
+
+    public long getTokenRemainingTime(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return claims.getExpiration().getTime() - System.currentTimeMillis();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 }
 
