@@ -1,5 +1,4 @@
 import HeaderCSS from "./Global/Header.module.css";
-import GlobalCSS from "./Global/Global.module.css";
 import ButtonCSS from "./Global/Button.module.css";
 
 
