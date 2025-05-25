@@ -3,7 +3,7 @@
 export default function Main() {
     return (
         <div>
-			<img src="/images/main/sseudaLogo.png"/>
+			인생은 쓰다...
         </div>
     );
 }

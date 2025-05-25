@@ -20,7 +20,7 @@ img {
 
 body {
 	font-family: "Pretendard", "Montserrat", sans-serf;
-	background-color: var(--main-bg-color);
+	/* background-color: var(--main-bg-color); */
 }
 
 ul {
@@ -71,20 +71,15 @@ button {
 	--page-bg-color: #39393a;
 
 	/* 포인트 컬러 */
-	--main-color01: #7b9064;
-	--main-color02: #a8b29d;
-	--main-color03: #546e7a;
-	--main-color04: #41535C;
-	--sub-color01: #bbdefb;
-	--sub-color02: #c5e1a5;
-	--sub-color03: #7fffd4;
+	--main-color01: #F5C3A4;
+	--main-color02: #FCEF9F;
+	--main-color03: #FBF5CC;
+	--main-color04: #A9CDD7;
 
 	/* 텍스트 컬러 */
 	--text01: #ffffff;
 	--text02: #202020;
 	--text03: #757575;
-	--text03: #849076;
-	--text04: #d1d1d1;
 
 	/* 간격 */
 	--spacing-xs: 8px;
