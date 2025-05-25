@@ -7,6 +7,7 @@ import PostMypage from "./pages/post/PostMypage";
 import MyPage from "./pages/myPage/MyPage";
 import Login from "./pages/member/Login";
 import Main from "./pages/Main";
+import TextEditor from "./components/common/post/TextEditor";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         {/* 마이페이지를 위한 Route */}
         <Route path="post/mypage" element={<MypageLayout/>}>
         <Route path=":userCode" element={<MyPage/>}/>
+        <Route path="editor" element={<TextEditor/>}/>
       
         </Route>
 
