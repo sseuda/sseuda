@@ -15,13 +15,13 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
-    private final AuthService authService;
+    private AuthService authService;
 
     private static final Logger log = LoggerFactory.getLogger(JwtFilter.class);
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String BEARER_PREFIX = "Bearer ";
 
-    public JwtFilter(TokenProvider tokenProvider, AuthService authService) {
+    public JwtFilter(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
         this.authService = authService;
     }
