@@ -6,9 +6,9 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-backend/build/
-backend/.gradle/
-frontend/build/
+sseuda_server/build/
+sseuda_server/.gradle/
+sseuda_react/build/
 
 ### STS ###
 .apt_generated
