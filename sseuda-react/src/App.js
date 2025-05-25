@@ -5,6 +5,8 @@ import PostLayout from "./layouts/PostLayout";
 import PostDetail from "./pages/post/PostDetail";
 import PostMypage from "./pages/post/PostMypage";
 import MyPage from "./pages/myPage/MyPage";
+import Login from "./pages/member/Login";
+import Main from "./pages/Main";
 
 function App() {
   return (
@@ -12,7 +14,8 @@ function App() {
       <Routes>
         {/* 메인페이지를 위한 Route */}
         <Route path="/" element={<Layout/>}>
-        
+          <Route index element={<Main />} />
+          <Route path="auth/login" element={<Login/>}/>
         </Route>
 
         {/* 마이페이지를 위한 Route */}
