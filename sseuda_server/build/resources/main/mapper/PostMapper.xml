@@ -1,0 +1,144 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sseuda.sseuda_server.function.post.dao.PostMapper">
+
+    <resultMap id="postResultMap" type="com.sseuda.sseuda_server.function.post.dto.PostDTO">
+        <id property="postId" column="post_id" />
+        <result property="postTitle" column="post_title"/>
+        <result property="userId" column="user_id"/>
+        <result property="postContent" column="post_content"/>
+        <result property="postCreateAt" column="post_create_at"/>
+        <result property="postUpdateAt" column="post_update_at"/>
+        <result property="viewCount" column="view_count"/>
+        <result property="postDelete" column="post_delete"/>
+        <result property="smallCategoryId" column="small_category_id"/>
+        <collection property="memberDTO" resultMap="memberResultMap"/>
+    </resultMap>
+
+    <resultMap id="memberResultMap" type="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+        <id property="userId" column="user_id"/>
+        <result property="userFullname" column="user_fullname"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="userNickname" column="user_nickname"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="enrollDate" column="enroll_date"/>
+        <result property="userStatus" column="user_status"/>
+    </resultMap>
+
+    <!--    category small 과 category big join-->
+    <resultMap id="categoryResultMap" type="com.sseuda.sseuda_server.function.category.dto.CategorySmallDTO">
+        <id property="smallCategoryId" column="small_category_id"/>
+        <result property="smallCategoryName" column="small_category_name"/>
+        <result property="bigCategoryId" column="big_category_id"/>
+        <collection property="categoryBigDTO" resultMap="categoryBigResultMap"/>
+    </resultMap>
+
+<!--    게시글 전체 조회 -->
+    <select id="findPostList" resultMap="postResultMap">
+        SELECT
+        b.username,
+        a.post_title,
+        a.post_content,
+        a.post_create_at,
+        a.view_count,
+        a.post_id
+        FROM
+        tbl_post a
+        JOIN tbl_member b ON a.user_id = b.user_id
+    </select>
+
+<!--    게시글 상세 조회-->
+    <select id="findPost" resultMap="postResultMap">
+        SELECT
+            b.username,
+            a.post_title,
+            a.post_content,
+            a.post_create_at,
+            a.view_count
+        FROM
+            tbl_post a
+        JOIN tbl_member b ON a.user_id = b.user_id
+        WHERE post_id = #{postId}
+    </select>
+
+    <!--    카테고리별 게시글 전체 조회-->
+    <select id="findCategoryPostList" resultMap="postResultMap">
+        SELECT
+        a.post_title,
+        a.post_content,
+        a.post_create_at,
+        a.view_count,
+        a.small_category_id,
+        c.big_category_id
+        FROM
+        tbl_post a
+        JOIN tbl_category_small b ON a.small_category_id = b.small_category_id
+        JOIN tbl_category_big c ON b.big_category_id = c.big_category_id
+        WHERE
+        a.small_category_id = #{ smallCategoryId } AND
+        c.big_category_id = #{ bigCategoryId }
+    </select>
+
+<!--    회원별 게시글 전체 조회 -->
+    <select id="findUserPostList" resultMap="postResultMap">
+        SELECT
+            b.username,
+            a.post_title,
+            a.post_content,
+            a.post_create_at,
+            a.view_count,
+            a.post_id
+        FROM
+            tbl_post a
+        JOIN tbl_member b ON a.user_id = b.user_id
+        WHERE
+            a.user_id = #{ userCode }
+    </select>
+
+    <!--    회원별 카테고리 게시글 전체 조회-->
+    <select id="findUserCategoryPostList" resultMap="postResultMap">
+        SELECT
+        a.post_title,
+        a.post_content,
+        a.post_create_at,
+        a.view_count,
+        a.small_category_id,
+        c.big_category_id
+        FROM
+        tbl_post a
+        JOIN tbl_category_small b ON a.small_category_id = b.small_category_id
+        JOIN tbl_category_big c ON b.big_category_id = c.big_category_id
+        WHERE
+        a.user_id = #{ userCode } AND
+        a.small_category_id = #{ smallCategoryId } AND
+        c.big_category_id = #{ bigCategoryId }
+    </select>
+
+    <insert id="saveUserPosting" parameterType="com.sseuda.sseuda_server.function.post.dto.PostDTO">
+        INSERT INTO tbl_post (
+            post_title,
+            user_id,
+            post_content,
+            small_category_id
+        )
+        VALUES (
+            #{postTitle},
+            #{userId},
+            #{postContent},
+            #{smallCategoryId}
+        )
+    </insert>
+
+    <delete id="deleteUserPosting" parameterType="com.sseuda.sseuda_server.function.post.dto.PostDTO">
+        DELETE
+        FROM
+            tbl_post
+        WHERE
+            post_id = #{ postId } AND
+            user_id = #{ userCode }
+    </delete>
+
+</mapper>

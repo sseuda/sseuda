@@ -14,6 +14,9 @@ spring:
     url: jdbc:mysql://localhost:3306/sseudadb?allowMultiQueries=true
     username: sseuda
     password: sseuda
+  jpa:
+    hibernate:
+      ddl-auto: update
 
   #fileupload config
   servlet:
@@ -28,6 +31,23 @@ spring:
   web:
     resources:
       static-locations: classpath:/sseudaimgs/
+
+# mail(google)
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jieune120@gmail.com
+    password: boju vkii bdeb wdel
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 
 #Mybatis framework config
 mybatis:
