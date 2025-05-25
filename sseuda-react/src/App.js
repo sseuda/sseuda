@@ -16,6 +16,7 @@ function App() {
         <Route path="/" element={<Layout/>}>
           <Route index element={<Main />} />
           <Route path="auth/login" element={<Login/>}/>
+          
         </Route>
 
         {/* 마이페이지를 위한 Route */}
