@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import postReducer from './PostModule';
+import memberReducer from './MemberModule';
 
 const rootReducer = combineReducers({
-    postReducer
+    postReducer,
+    memberReducer
 })
 
 export default rootReducer;
