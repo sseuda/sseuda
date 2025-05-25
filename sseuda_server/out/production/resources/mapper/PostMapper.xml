@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sseuda.sseuda_server.function.post.dao.PostMapper">
+
+    <resultMap id="postResultMap" type="com.sseuda.sseuda_server.function.post.dto.PostDTO">
+        <id property="postId" column="post_id" />
+        <result property="postTitle" column="post_title"/>
+        <result property="userId" column="user_id"/>
+        <result property="postContent" column="post_content"/>
+        <result property="postCreateAt" column="post_create_at"/>
+        <result property="postUpdateAt" column="post_update_at"/>
+        <result property="viewCount" column="view_count"/>
+        <result property="postDelete" column="post_delete"/>
+        <result property="smallCategoryId" column="small_category_id"/>
+    </resultMap>
+
+<!--    게시글 전체 조회 -->
+    <select id="findPostList" resultMap="postResultMap">
+        select
+            post_title,
+            post_content,
+            post_create_at,
+            view_count
+        from
+            tbl_post
+    </select>
+
+<!--    회원별 게시글 전체 조회 -->
+    <select id="findUserPostList" resultMap="postResultMap">
+        select
+            post_title,
+            post_content,
+            post_create_at,
+            view_count
+        from
+            tbl_post
+        where
+            user_id = #{ userCode }
+    </select>
+</mapper>
