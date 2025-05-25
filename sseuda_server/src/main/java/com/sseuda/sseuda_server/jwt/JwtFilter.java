@@ -1,5 +1,6 @@
 package com.sseuda.sseuda_server.jwt;
 
+import com.sseuda.sseuda_server.function.member.service.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,9 +15,15 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
+    private AuthService authService;
+
+    private static final Logger log = LoggerFactory.getLogger(JwtFilter.class);
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String BEARER_PREFIX = "Bearer ";
 
     public JwtFilter(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
+        this.authService = authService;
     }
 
     @Override
@@ -24,6 +31,12 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = resolveToken(request);
 
         if (token != null && tokenProvider.validateToken(token)) {
+
+            if (authService.isBlacklisted(token)) {
+                log.warn("차단된 토큰 (로그아웃 처리됨): ", token);
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "로그아웃된 토큰입니다.");
+                return;
+            }
             // 유효한 토큰이면 인증 정보를 저장
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -40,9 +53,4 @@ public class JwtFilter extends OncePerRequestFilter {
         }
         return null;
     }
-
-        private static final Logger log = LoggerFactory.getLogger(JwtFilter.class);
-
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String BEARER_PREFIX = "Bearer ";
 }

@@ -13,6 +13,19 @@
         <result property="viewCount" column="view_count"/>
         <result property="postDelete" column="post_delete"/>
         <result property="smallCategoryId" column="small_category_id"/>
+        <collection property="memberDTO" resultMap="memberResultMap"/>
+    </resultMap>
+
+    <resultMap id="memberResultMap" type="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+        <id property="userId" column="user_id"/>
+        <result property="userFullname" column="user_fullname"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="userNickname" column="user_nickname"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="enrollDate" column="enroll_date"/>
+        <result property="userStatus" column="user_status"/>
     </resultMap>
 
     <!--    category small 과 category big join-->
@@ -26,12 +39,29 @@
 <!--    게시글 전체 조회 -->
     <select id="findPostList" resultMap="postResultMap">
         SELECT
-            post_title,
-            post_content,
-            post_create_at,
-            view_count
+        b.username,
+        a.post_title,
+        a.post_content,
+        a.post_create_at,
+        a.view_count,
+        a.post_id
         FROM
-            tbl_post
+        tbl_post a
+        JOIN tbl_member b ON a.user_id = b.user_id
+    </select>
+
+<!--    게시글 상세 조회-->
+    <select id="findPost" resultMap="postResultMap">
+        SELECT
+            b.username,
+            a.post_title,
+            a.post_content,
+            a.post_create_at,
+            a.view_count
+        FROM
+            tbl_post a
+        JOIN tbl_member b ON a.user_id = b.user_id
+        WHERE post_id = #{postId}
     </select>
 
     <!--    카테고리별 게시글 전체 조회-->
@@ -55,15 +85,17 @@
 <!--    회원별 게시글 전체 조회 -->
     <select id="findUserPostList" resultMap="postResultMap">
         SELECT
-            post_title,
-            post_content,
-            post_create_at,
-            view_count,
-            user_id
+            b.username,
+            a.post_title,
+            a.post_content,
+            a.post_create_at,
+            a.view_count,
+            a.post_id
         FROM
-            tbl_post
+            tbl_post a
+        JOIN tbl_member b ON a.user_id = b.user_id
         WHERE
-            user_id = #{ userCode }
+            a.user_id = #{ userCode }
     </select>
 
     <!--    회원별 카테고리 게시글 전체 조회-->

@@ -32,23 +32,30 @@ public class PostController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findPostList()));
     }
 
+    @Operation(summary = "게시글 상세 조회", description = "게시글 상세 조회가 진행됩니다.", tags = {"PostController"})
+    @GetMapping("/{postId}")
+    public ResponseEntity<ResponseDTO> findPost(@PathVariable("postId") int postId){
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 상세 조회 성공", postService.findPost(postId)));
+    }
+
     @Operation(summary = "카테고리별 게시글 전체 조회", description = "카테고리별 게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
     @GetMapping("/all/{bigCategoryId}/{smallCategoryId}")
     public ResponseEntity<ResponseDTO> findCategoryPostList(@PathVariable("bigCategoryId") int bigCategoryId,
-                                                            @PathVariable("smallCategoryId") int smallCategoryId){
+                                                             @PathVariable("smallCategoryId") int smallCategoryId){
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "카테고리별 게시글 전체 조회 성공", postService.findCategoryPostList(bigCategoryId, smallCategoryId)));
     }
 
     @Operation(summary = "회원별 게시글 전체 조회", description = "회원별로 게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
-    @GetMapping("/all/{userCode}")
+    @GetMapping("/mypage/{userCode}")
     public ResponseEntity<ResponseDTO> findUserPostList(@PathVariable("userCode") int userCode){
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findUserPostList(userCode)));
     }
 
     @Operation(summary = "회원별 카테고리 게시글 전체 조회", description = "회원별 카테고리 게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
-    @GetMapping("/all/{userCode}/{bigCategoryId}/{smallCategoryId}")
+    @GetMapping("/mypage/{userCode}/{bigCategoryId}/{smallCategoryId}")
     public ResponseEntity<ResponseDTO> findUserCategoryPostList(@PathVariable("userCode") int userCode,
                                                             @PathVariable("bigCategoryId") int bigCategoryId,
                                                             @PathVariable("smallCategoryId") int smallCategoryId){
@@ -58,7 +65,7 @@ public class PostController {
 
 //    React에서 axios로 넘겨준다
     @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
-    @PostMapping("/posts")
+    @PostMapping("/mypage/posting")
     public ResponseEntity<String> saveUserPosting(
 //            @PathVariable("userCode") int userCode,
 //                                                    @PathVariable("bigCategoryId") int bigCategoryId,
@@ -71,6 +78,8 @@ public class PostController {
             dto.getPostContent(),
             dto.getSmallCategoryId()
         );
+
+        System.out.println("받은 postDTO: " + dto);
 
         return ResponseEntity.ok("게시글 저장 완료");
 

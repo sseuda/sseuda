@@ -6,9 +6,12 @@ import com.sseuda.sseuda_server.function.member.dto.LoginDTO;
 import com.sseuda.sseuda_server.function.member.pojo.Login;
 import com.sseuda.sseuda_server.function.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @Service
@@ -17,6 +20,7 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+    private final RedisTemplate<String, String> redisTemplate;
 
     public TokenDTO login(LoginDTO loginDTO) {
         Login login = memberRepository.findByUsername(loginDTO.getUsername());
@@ -42,6 +46,15 @@ public class AuthService {
         System.out.println("로그인 완료");
         // 로그인 성공 시 토큰 발급
         return new TokenDTO("Bearer", login.getUsername(), token, expireTime);
+    }
+
+    public void blacklistToken(String token) {
+        long expiration = tokenProvider.getTokenRemainingTime(token);
+        redisTemplate.opsForValue().set(token, "logout", expiration, TimeUnit.MILLISECONDS);
+    }
+
+    public boolean isBlacklisted(String token) {
+        return Boolean.TRUE.equals(redisTemplate.hasKey(token));
     }
 
 }

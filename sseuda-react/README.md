@@ -9,7 +9,7 @@
 - 사용한 명령어 : 'npm i react-quill --legacy-peer-deps'
 
 
-## 2025.05.14 rafce 관련 설명
+## 2025.05.14 rfce 관련 설명
 
 - js파일을 만들고 아무것도 없는 상태에서 'rfce + tab'을 하면 자동으로 기본설정이 된다는 사실~~
 - 자동으로 형식 맞추는 명령어 : rfce + tab

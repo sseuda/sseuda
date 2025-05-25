@@ -1,0 +1,41 @@
+.postBox{
+    display: inline-block;
+    width: 300px;
+    height: 350px;
+    margin-top: 50px;
+    margin-left: 27px;
+    border-radius: 20px;
+    background-color: #333;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    position: relative;
+} 
+
+.blurBox{
+   width: 230px;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.8); 
+   position: relative;
+   border-radius: 20px 0 0 20px;
+}
+
+.postTitle, .viewCount{
+    color: var(--text01);
+    position: absolute;
+}
+
+.postTitle{
+    top: 100px;
+    left: 20px;
+}
+
+.viewCount{
+    font-weight: 200;
+    bottom: 20px;
+    left: 20px;
+}
+
+.viewCount p{
+    font-size: 16px;
+}

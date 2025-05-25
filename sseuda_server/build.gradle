@@ -60,6 +60,12 @@ dependencies {
     implementation 'jakarta.mail:jakarta.mail-api:2.0.1'
     implementation 'com.sun.mail:jakarta.mail:2.0.1'
 
+    // 아이디 찾기를 위함
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    // 로그아웃
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 }
 
 tasks.named('test') {
