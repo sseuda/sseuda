@@ -2,13 +2,13 @@ HELP.md
 ../../../.gradle
 *.yaml
 **/*.yaml
-build/
+*/build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 sseuda_server/build/
 sseuda_server/.gradle/
-sseuda_react/build/
+sseuda-react/build/
 
 ### STS ###
 .apt_generated
