@@ -12,7 +12,6 @@ function App() {
       <Routes>
         {/* 메인페이지를 위한 Route */}
         <Route path="/" element={<Layout/>}>
-        
         </Route>
 
         {/* 마이페이지를 위한 Route */}
