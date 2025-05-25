@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sseuda.sseuda_server.function.member.dao.MemberMapper">
+
+    <resultMap id="memberResultMap" type="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+        <id property="userId" column="user_id"/>
+        <result property="userFullname" column="user_fullname"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="userNickname" column="user_nickname"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="enrollDate" column="enroll_date"/>
+        <result property="userStatus" column="user_status"/>
+    </resultMap>
+
+    <!-- 전체 회원 조회 -->
+    <select id="findAllMembers" resultMap="memberResultMap">
+        SELECT * FROM tbl_member
+    </select>
+
+    <!--  특정 회원 조회 (username)  -->
+    <select id="findMemberByUsername" parameterType="String" resultMap="memberResultMap">
+    SELECT * FROM tbl_member WHERE username = #{username}
+    </select>
+
+    <!--  특정 회원 조회 (email  -->
+    <select id="findMemberByEmail" resultMap="memberResultMap" parameterType="string">
+        SELECT * FROM tbl_member WHERE user_email = #{email}
+    </select>
+
+    <!--  회원가입1 (member)  -->
+    <insert id="insertMember" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO tbl_member (
+        user_fullname, username, password, user_nickname, user_email, user_phone, enroll_date, user_status
+        ) VALUES (
+        #{userFullname}, #{username}, #{password}, #{userNickname}, #{userEmail}, #{userPhone}, NOW(), #{userStatus}
+        )
+    </insert>
+
+    <!--  회원가입2 (role)  -->
+    <insert id="insertUserRole" parameterType="map">
+        INSERT INTO tbl_user_role (user_id, user_role)
+        VALUES (#{userId}, #{userRole})
+    </insert>
+
+    <!--  회원 정보 수정  -->
+    <update id="updateUserInfo" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+        UPDATE tbl_member
+        <set>
+            <if test="userFullname != null">user_fullname = #{userFullname},</if>
+            <if test="userNickname != null">user_nickname = #{userNickname},</if>
+            <if test="userEmail != null">user_email = #{userEmail},</if>
+            <if test="userPhone != null">user_phone = #{userPhone},</if>
+        </set>
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- 회원탈퇴 (상태변경) -->
+    <update id="deactivateUser" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+        UPDATE tbl_member
+        SET user_status = '탈퇴'
+        WHERE user_id = #{userId}
+    </update>
+    
+    <!--  아이디찾기 (이메일로)  -->
+    <select id="findUsernameByEmail" parameterType="String" resultType="String">
+        SELECT username
+        FROM tbl_member
+        WHERE user_email = #{userEmail}
+    </select>
+
+    <!--  비밀번호 찾기 (초기화토큰)  -->
+    <insert id="insertPasswordToken">
+        INSERT INTO tbl_password_token (email, token, expiration)
+        VALUES (#{email}, #{token}, #{expiration})
+    </insert>
+
+    <select id="findPasswordToken" parameterType="string">
+        SELECT * FROM tbl_password_token
+        WHERE token = #{token}
+    </select>
+
+    <delete id="deleteByEmail" parameterType="string">
+        DELETE FROM tbl_password_token
+        WHERE email = #{email}
+    </delete>
+
+    <delete id="deleteByToken" parameterType="string">
+        DELETE FROM tbl_password_token
+        WHERE token = #{token}
+    </delete>
+
+    <!--  비밀번호 업데이트  -->
+    <update id="updatePassword" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+        UPDATE tbl_member
+        SET password = #{password}
+        WHERE user_email = #{userEmail}
+    </update>
+
+</mapper>
