@@ -1,5 +1,5 @@
 .headerBox{
-    /* margin: 0 auto; */
+    margin: 0 auto;
     line-height: 50px;
     /*justify-content: space-around; */
     width: 100%;
@@ -16,7 +16,7 @@
 .headerLogo{
     width: 92px;
     height: 74px;
-        margin: 2px 0;
+    margin: 2px 0;
     background-image: url("/public/images/main/sseudaLogo.png");
     background-size: 100px;
     background-position: center;

@@ -1,0 +1,98 @@
+.big-container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	height: 100vh;
+	/* background-color: #fff; */
+}
+
+.logoImage{
+	width: 300px;
+	height: 300px;
+	margin-top: 40px;
+	/* border: 1px solid #000; */
+	background-image: url("/public/images/main/sseudaLogo.png");
+	background-size: 100%;
+	background-position: center;
+}
+
+.login-logo {
+	margin: 0;
+	/* padding-top: 10px; */
+	width: 300px;
+}
+
+.login-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.form-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #d9d9d931;
+	padding: 30px;
+	border-radius: 15px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.form-container input {
+	width: 350px;
+	padding: 12px;
+	margin: 8px 0;
+	border-radius: 15px;
+	font-size: 16px;
+	box-sizing: border-box;
+	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+}
+
+.form-username {
+	background-color: #fcf09f2a;
+}
+
+.form-password {
+	background-color: #F5C3A42a;
+}
+
+.form-container input:focus {
+	outline: none;
+	border-color: #FCEF9F;
+	box-shadow: 0 0 5px rgba(255, 134, 0, 0.3);
+}
+
+.form-container button {
+	width: 350px;
+	padding: 12px;
+	margin-top: 16px;
+	background-color: #A9CDD7;
+	color: white;
+	border: none;
+	border-radius: 15px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+	background-color: #fff;
+	color: #A9CDD7;
+	border: solid 1px #A9CDD7;
+}
+
+.bottom-links {
+	margin-top: 20px;
+	font-size: 14px;
+	color: #666;
+	display: flex;
+	gap: 10px;
+}
+.bottom-links a {
+	text-decoration: none;
+	color: #666;
+}
+.bottom-links a:hover {
+	color: #A9CDD7;
+}

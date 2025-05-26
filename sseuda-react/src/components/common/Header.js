@@ -8,10 +8,8 @@ function Header() {
 	return (
 		<div className={HeaderCSS.headerBox}>
 			<div className={HeaderCSS.box}>
-				
-				<Link to={"/"} className={HeaderCSS.headerLogo}/>
-				<Link to={"auth/login"} className={ButtonCSS.headerBTN}>로그인</Link>
-
+				<Link to={'/'} className={HeaderCSS.headerLogo}/>
+				<Link to={'auth/login'} className={ButtonCSS.headerBTN}>로그인</Link>
 			</div>			
 		</div>
 	);
