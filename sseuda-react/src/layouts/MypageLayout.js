@@ -10,7 +10,7 @@ function MypageLayout() {
   return (
     <div style={{position: 'relative'}}>
       <Header/>
-      <div style={{display: 'flex'}}>
+      <div style={{display: 'flex', height: '93vh'}}>
         <MypageNavbar style={{position: 'absolute', top: '0', left: '0'}}/>
         <div style={{width: '1280px', margin: '0 auto'}}>
           <Outlet/>

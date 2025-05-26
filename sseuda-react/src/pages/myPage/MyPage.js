@@ -10,12 +10,13 @@ function MyPage() {
   
   console.log("마이페이지 게시글 리스트 시작");
 
-  
 
   return (
-    <div>
+    <div style={{position: 'relative'}}>
       <PostMypage/>
-      <PostTextEditor/>
+      <div style={{position: 'absolute', bottom: '50px', right: '0'}}>
+        <PostTextEditor/>
+      </div>
     </div>
   )
 }
