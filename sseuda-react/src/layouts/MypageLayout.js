@@ -12,8 +12,9 @@ function MypageLayout() {
       <Header/>
       <div style={{display: 'flex'}}>
         <MypageNavbar style={{position: 'absolute', top: '0', left: '0'}}/>
-        {/* <TextEditor/> */}
-        <Outlet/>
+        <div style={{width: '1280px', margin: '0 auto'}}>
+          <Outlet/>
+        </div>
       </div>
     </div>
   )
