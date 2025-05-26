@@ -3,7 +3,17 @@
 	align-items: center;
 	flex-direction: column;
 	height: 100vh;
-	background-color: #fff;
+	/* background-color: #fff; */
+}
+
+.logoImage{
+	width: 300px;
+	height: 300px;
+	margin-top: 40px;
+	/* border: 1px solid #000; */
+	background-image: url("/public/images/main/sseudaLogo.png");
+	background-size: 100%;
+	background-position: center;
 }
 
 .login-logo {

@@ -48,7 +48,9 @@ function Login() {
 
 	return (
 		<div className="big-container">
-				<img src="/images/main/sseudaLogo.png" alt="로고" className="login-logo" />
+			<div className="logoImage">
+				{/* <img src="/images/main/sseudaLogo.png" alt="로고" className="login-logo" /> */}
+			</div>
 			<div className="login-box">
 				
 				<div className="form-container">
