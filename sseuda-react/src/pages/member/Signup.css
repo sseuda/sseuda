@@ -10,7 +10,7 @@
 }
 
 .signup-title {
-	margin-top: 40px;
+	margin-top: 60px;
 	display: flex;
 	color: #3e3e3e;
 	font-weight: bold;
@@ -21,14 +21,14 @@
 }
 
 .signup-container {
-	margin-top: 40px;;
+	margin-top: 40px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	background-color: #d9d9d931;
-	gap: 20px;
+	gap: 6px;
 	padding: 30px;
-	border-radius: 15px;
+	border-radius: 18px;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
@@ -38,13 +38,21 @@
 
 .signup-container input {
 	color: #3e3e3e;
-	width: 350px;
-	padding: 12px;
+	width: 400px;
+	padding: 14px;
 	margin: 5px 0;
 	border-radius: 15px;
 	font-size: 16px;
 	box-sizing: border-box;
-	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+	box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.input-yellow {
+	background-color: #fcf09f2a;
+}
+
+.input-red {
+	background-color: #F5C3A42a;
 }
 
 .warning {
@@ -55,12 +63,12 @@
 
 .signup-button {
 	font-size: 18px;
-	margin-left: 250px;
+	margin-left: 290px;
 	margin-top: 20px;
 	border-radius: 20px;
 	background-color: #A9CDD7;
 	color: #fff;
 	width: 170px;
 	height: 45px;
-	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+	box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.3);
 }

@@ -96,15 +96,15 @@ function Signup() {
 				<p className='title-font'>회원가입</p>
 			</div>
 			<div className="signup-container">
-				<input type="text" name="userFullname" placeholder="이름" onChange={onChangeHandler} />
-				<input type="text" name="username" placeholder="아이디" onChange={onChangeHandler} />
-				<input type="password" name="password" placeholder="비밀번호" onChange={onChangeHandler} />
+				<input className="input-yellow" type="text" name="userFullname" placeholder="이름" onChange={onChangeHandler} />
+				<input className="input-red" type="text" name="username" placeholder="아이디" onChange={onChangeHandler} />
+				<input className="input-yellow" type="password" name="password" placeholder="비밀번호" onChange={onChangeHandler} />
 				{!passwordValid && <p className="warning">비밀번호는 8자 이상, 영문+숫자+특수문자를 포함해야 합니다.</p>}
-				<input type="password" name="confirmPassword" placeholder="비밀번호 확인" onChange={onChangeHandler} />
+				<input className="input-yellow" type="password" name="confirmPassword" placeholder="비밀번호 확인" onChange={onChangeHandler} />
 				{!passwordsMatch && <p className="warning">비밀번호가 일치하지 않습니다.</p>}
-				<input type="text" name="userNickname" placeholder="닉네임" onChange={onChangeHandler} />
-				<input type="email" name="userEmail" placeholder="이메일" onChange={onChangeHandler} />
-				<input type="text" name="userPhone" placeholder="전화번호" onChange={onChangeHandler} />
+				<input className="input-red" type="text" name="userNickname" placeholder="닉네임" onChange={onChangeHandler} />
+				<input className="input-yellow" type="email" name="userEmail" placeholder="이메일" onChange={onChangeHandler} />
+				<input className="input-red" type="text" name="userPhone" placeholder="전화번호" onChange={onChangeHandler} />
 			</div>
 			<button onClick={onClickSignupHandler} className='signup-button'>가입하기</button>
 		</div>
