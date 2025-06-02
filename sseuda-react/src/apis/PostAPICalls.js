@@ -110,7 +110,7 @@ export const callUserCategoryPostsListApi = () =>{
 //  회원별 게시글 등록
 export const callPostRegistApi = ({form}) =>{
 
-    let requestURL = `${prefix}/post/mypage/posting`;
+    let requestURL = `${prefix}/post/mypage/{userCode}/posting`;
     console.log('[PostApiCalls] callPostRegistApi Call');
 
     return async (dispatch, getState) => {
