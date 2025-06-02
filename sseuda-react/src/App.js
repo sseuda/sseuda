@@ -7,6 +7,7 @@ import PostMypage from "./pages/post/PostMypage";
 import MyPage from "./pages/myPage/MyPage";
 import Login from "./pages/member/Login";
 import Main from "./pages/Main";
+import Signup from "./pages/member/Signup";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path="/" element={<Layout/>}>
           <Route index element={<Main />} />
           <Route path="auth/login" element={<Login/>}/>
-          
+          <Route path="member/signup" element={<Signup/>}/>
         </Route>
 
         {/* 마이페이지를 위한 Route */}

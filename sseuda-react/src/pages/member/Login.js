@@ -78,7 +78,7 @@ function Login() {
 					<span>|</span>
 					<Link to="/find-password">비밀번호 찾기</Link>
 					<span>|</span>
-					<Link to="/signup">회원가입</Link>
+					<Link to="/member/signup">회원가입</Link>
 				</div>
 			</div>
 		</div>
