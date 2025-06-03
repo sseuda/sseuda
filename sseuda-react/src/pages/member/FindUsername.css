@@ -1,0 +1,96 @@
+.big-container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.signup-logo {
+	width: 100px;
+}
+
+.find-username-title {
+	margin-top: 200px;
+	display: flex;
+	color: #3e3e3e;
+	font-weight: bold;
+}
+
+.title-font {
+	margin-top: 25px;
+	margin-left: 10px;
+}
+
+.find-username-container {
+	margin-top: 40px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #d9d9d931;
+	gap: 6px;
+	padding: 30px;
+	border-radius: 18px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.find-username-container ::placeholder {
+	color: #A9CDD7;
+}
+
+.find-username-container input {
+	color: #3e3e3e;
+	width: 400px;
+	padding: 14px;
+	margin: 5px 0;
+	border-radius: 20px;
+	font-size: 16px;
+	box-sizing: border-box;
+	box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.3);
+	border: 1px solid #ccc;           /* 기본 테두리 지정 */
+	outline: none;                    /* 포커스 시 파란/빨간 테두리 제거 */
+}
+
+/* 잘못된 값 입력 시 테두리 색상 제어 */
+.find-username-container input:invalid {
+	box-shadow: none;
+	border: 1px solid #F5C3A4;        /* 원하는 테두리 색상으로 */
+}
+
+/* 포커스됐을 때 테두리 효과 */
+.find-username-container input:focus {
+	border: 1px solid #A9CDD7;
+	box-shadow: 0 0 0 3px #a9cdd762;
+}
+
+.input-yellow {
+	background-color: #fcf09f2a;
+}
+
+.input-red {
+	background-color: #F5C3A42a;
+}
+
+.warning {
+	color: #F5C3A4;
+	font-size: 0.8rem;
+	margin: 4px 0 8px;
+}
+
+.find-username-container button{
+	font-size: 16px;
+	margin-left: 230px;
+	margin-top: 20px;
+	border-radius: 20px;
+	background-color: #A9CDD7;
+	color: #fff;
+	width: 150px;
+	height: 40px;
+	box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.find-username-container button:hover {
+	color: #A9CDD7;
+	background-color: #fff;
+}
