@@ -1,54 +1,61 @@
 import React, { useState } from 'react';
-import { callResetPasswordRequestAPI } from '../../apis/MemberAPICalls';
-import { useDispatch } from 'react-redux';
+import './ResetPasswordRequest.css';
 
 function ResetPasswordRequest() {
-	const dispatch = useDispatch();
-
-	// 상태값
-	const [email, setEmail] = useState('');
 	const [username, setUsername] = useState('');
-	const [error, setError] = useState('');
-	const [message, setMessage] = useState('');
+	const [email, setEmail] = useState('');
 
-	// 폼 제출
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		setError('');
-		setMessage('');
-
 		try {
-			const result = await dispatch(callResetPasswordRequestAPI(email, username));
-			setMessage(result);  // 서버에서 준 성공 메시지
+			const response = await fetch('/member/reset-password-request', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: new URLSearchParams({ username, email })
+			});
+
+			const result = await response.text();
+
+			if (!response.ok || result.includes("일치하는")) {
+				alert(result || '재설정 링크 요청 중 오류가 발생했습니다.');
+			} else {
+				alert('비밀번호 재설정 링크가 이메일로 전송되었습니다.');
+			}
 		} catch (err) {
-			setError(err.message);  // 서버에서 준 실패 메시지
+			alert('요청 중 오류가 발생했습니다.');
 		}
 	};
 
 	return (
-		<div className="reset-password-request-container">
-			<h2>비밀번호 재설정</h2>
-			<form onSubmit={handleSubmit}>
-				<input
-					type="text"
-					placeholder="아이디"
-					value={username}
-					onChange={(e) => setUsername(e.target.value)}
-					required
-				/>
-				<input
-					type="email"
-					placeholder="이메일"
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-					required
-				/>
-				<button type="submit">재설정 링크 보내기</button>
-			</form>
-
-			{error && <p style={{ color: 'red' }}>{error}</p>}
-			{message && <p style={{ color: 'green' }}>{message}</p>}
+		<div className='big-container'>
+			<div className='reset-password-request-title'>
+				<img src="/images/main/sseudaKoreanColor.png" alt="로고" className="sseuda-logo" />
+				<p className='title-font'>비밀번호 재설정</p>
+			</div>
+			<div className="reset-password-request-container">
+				<form onSubmit={handleSubmit}>
+					<input 
+						className='input-yellow'
+						type="text"
+						placeholder="아이디"
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
+						required
+					/>
+					<input
+						className='input-red'
+						type="email"
+						placeholder="이메일"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						required
+					/>
+					<button type="submit">재설정 링크 보내기</button>
+				</form>
+			</div>
 		</div>
 	);
 }

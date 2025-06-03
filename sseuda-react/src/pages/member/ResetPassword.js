@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './ResetPassword.css';
 
 function ResetPassword() {
 	const location = useLocation();
@@ -48,39 +49,40 @@ function ResetPassword() {
 			if (!response.ok || result.includes("유효하지 않습니다.")) {
 				setError(result || "비밀번호 재설정 중 오류가 발생했습니다.");
 			} else {
-				setMessage("비밀번호가 성공적으로 재설정되었습니다.");
-				setTimeout(() => {
-					navigate('/auth/login');
-				}, 2000);
+				alert("비밀번호가 성공적으로 재설정되었습니다.");
+				navigate('/auth/login');
 			}
 		} catch (err) {
-			setError("요청 중 오류가 발생했습니다.");
+			alert("요청 중 오류가 발생했습니다.");
 		}
 	};
 
 	return (
-		<div className="reset-password-container">
-			<h2>새 비밀번호 설정</h2>
-			<form onSubmit={handleSubmit}>
-				<input
-					type="password"
-					placeholder="새 비밀번호"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-					required
-				/>
-				<input
-					type="password"
-					placeholder="비밀번호 확인"
-					value={confirmPassword}
-					onChange={(e) => setConfirmPassword(e.target.value)}
-					required
-				/>
-				<button type="submit">비밀번호 재설정</button>
-			</form>
-
-			{error && <p style={{ color: 'red' }}>{error}</p>}
-			{message && <p style={{ color: 'green' }}>{message}</p>}
+		<div className='big-container'>
+			<div className='reset-password-title'>
+				<img src='/images/main/sseudaKoreanColor.png' alt='로고' className='sseuda-logo'/>
+				<p className='title-font'>새 비밀번호 설정</p>
+			</div>
+			<div className="reset-password-container">
+				
+				<form onSubmit={handleSubmit}>
+					<input className='input-red'
+						type="password"
+						placeholder="새 비밀번호"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+						required
+					/>
+					<input className='input-red'
+						type="password"
+						placeholder="비밀번호 확인"
+						value={confirmPassword}
+						onChange={(e) => setConfirmPassword(e.target.value)}
+						required
+					/>
+					<button type="submit">비밀번호 재설정</button>
+				</form>
+			</div>
 		</div>
 	);
 }
