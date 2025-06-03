@@ -101,3 +101,36 @@ export const callSignupAPI = (form) => {
 		}
 	};
 };
+
+// 아이디 찾기
+export const callFindUsernameAPI = (form) => {
+	let requestURL = `${prefix}/member/find-username`;
+
+	return async (dispatch, getState) => {
+		try {
+			const response = await fetch(requestURL, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: '*/*'
+				},
+				body: JSON.stringify({
+					fullname: form.userFullname,
+					to: form.userEmail
+				})
+			});
+
+			const result = await response.text();
+
+			if (response.ok) {
+				alert('아이디 찾기 결과가 이메일로 전송되었습니다 :-)');
+			} else {
+				alert(`아이디 찾기 실패: ${result}`);
+			}
+		
+		} catch (error) {
+			console.error('아이디 찾기 중 오류 발생: ', error);
+			alert('서버 오류로 아이디 찾기에 실패했습니다.')
+		}
+	}
+}
