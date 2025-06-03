@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { callUserPostsListApi } from '../../apis/PostAPICalls';
 import MypagePost from '../../components/common/post/MypagePost';
+import Button from '../../components/common/Global/Button.module.css';
 
 function PostMypage() {
 
@@ -22,13 +23,16 @@ function PostMypage() {
     },[myPostList]);
 
   return (
-    <div>
-      <div>
-        {Array.isArray(myPostList) && myPostList.map((post) =>(
-          <MypagePost key={post.postId} post={post}/>
-        ))}
+    <>
+      <div style={{marginTop: '50px' ,position: 'relative'}}>
+        <button className={Button.allPostBTN}>전체보기</button>
+        <div>
+          {Array.isArray(myPostList) && myPostList.map((post) =>(
+            <MypagePost key={post.postId} post={post}/>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

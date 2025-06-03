@@ -43,6 +43,11 @@
 ## 2025.06.02 font awesome 설치
 
 - icon 관련 키트를 모아놓은 'Font Awesome' 설치
+- 리액트에서 사용하는 fontawesome 설치
 
 📝 참고:
-    - 사용한 명령어 'npm i --save @fortawesome/fontawesome-free' 
+- 사용한 명령어 
+    * npm i --save @fortawesome/fontawesome-free
+    * npm install --save @fortawesome/react-fontawesome (중요)
+    * npm i --save @fortawesome/free-solid-svg-icons (중요)
+

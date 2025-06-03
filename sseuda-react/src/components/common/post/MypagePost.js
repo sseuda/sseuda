@@ -1,6 +1,9 @@
 import React from 'react'
 import { replace, useNavigate } from 'react-router-dom';
 import Post from './css/MypagePost.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+
 
 function MypagePost({
     post: {postId, postTitle, postContent, memberDTO, viewCount}
@@ -30,6 +33,7 @@ function MypagePost({
                         <h4>{postTitle}</h4>
                     </div>
                     <div className={Post.viewCount}>
+                        <FontAwesomeIcon className={Post.viewIcon} icon={faEye} />
                         <p>{viewCount}</p>  
                     </div>
                 </div>

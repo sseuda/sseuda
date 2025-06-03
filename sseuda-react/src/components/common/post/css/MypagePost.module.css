@@ -2,7 +2,8 @@
     display: inline-block;
     width: 300px;
     height: 350px;
-    margin-top: 50px;
+    margin-top: 100px;
+    /* margin-top: 50px; 검색 기능도 들어오면 position 사용 안함 */
     margin-left: 27px;
     border-radius: 20px;
     background-color: #333;
@@ -31,9 +32,15 @@
 }
 
 .viewCount{
+    display: flex;
+    line-height: 15px;
     font-weight: 200;
     bottom: 20px;
     left: 20px;
+}
+
+.viewIcon{
+    margin-right: 8px;
 }
 
 .viewCount p{
