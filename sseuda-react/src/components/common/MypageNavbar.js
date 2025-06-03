@@ -1,5 +1,7 @@
 import React from 'react'
 import MyNav from './Global/MypageNavbar.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faAddressBook } from '@fortawesome/free-solid-svg-icons';
 
 function MypageNavbar() {
 
@@ -7,13 +9,13 @@ function MypageNavbar() {
     <div className={MyNav.navBox}>
         <div className={MyNav.posting}>
             <div className={MyNav.iconBox}>
-                <p>icon</p>
+                <FontAwesomeIcon className={MyNav.plusIcon} icon={faPlus} />
             </div>
         </div>
 
         <div className={MyNav.user}>
             <div className={MyNav.iconBox}>
-                <p>icon</p>
+                <FontAwesomeIcon className={MyNav.addressBookIcon} icon={faAddressBook} />
             </div>
         </div>
     </div>

@@ -51,3 +51,6 @@
     * npm install --save @fortawesome/react-fontawesome (중요)
     * npm i --save @fortawesome/free-solid-svg-icons (중요)
 
+
+
+스와이퍼 설치
