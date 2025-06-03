@@ -6,7 +6,7 @@ import PostBanner from "./post/PostBanner";
 function Main() {
   const navigate = useNavigate();
 
-  const userPageList = userCode =>{
+  const userMyPageList = userCode =>{
     navigate(`/post/mypage/${userCode}`, {replace:false});
   }
     
@@ -15,7 +15,7 @@ function Main() {
       <PostBanner/>
       <div className={MainCSS.mainBox}>
         <PostMain/>
-        <div onClick={() => userPageList(1)}>마이페이지 바로가기</div>
+        <div onClick={() => userMyPageList(1)}>마이페이지 바로가기</div>
       </div>
     </>
   )
