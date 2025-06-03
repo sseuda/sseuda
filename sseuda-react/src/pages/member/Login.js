@@ -74,11 +74,11 @@ function Login() {
 				</div>
 	
 				<div className="bottom-links">
-					<Link to="/find-id">아이디 찾기</Link>
+					<Link to="/member/find-username">아이디 찾기</Link>
 					<span>|</span>
-					<Link to="/find-password">비밀번호 찾기</Link>
+					<Link to="/member/reset-password-request">비밀번호 찾기</Link>
 					<span>|</span>
-					<Link to="/signup">회원가입</Link>
+					<Link to="/member/signup">회원가입</Link>
 				</div>
 			</div>
 		</div>

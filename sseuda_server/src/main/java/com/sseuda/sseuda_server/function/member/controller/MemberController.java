@@ -73,12 +73,15 @@ public class MemberController {
     // 아이디 찾기 (이메일로)
     @PostMapping("/find-username")
     public ResponseEntity<?> findUsernameAndSendMail(@RequestBody MailRequestDTO request) {
-        System.out.println(">>> 아이디 찾기 이메일 요청: " + request.getTo());
+        System.out.println(">>> 아이디 찾기 요청: 이름=" + request.getFullname() + ", 이메일=" + request.getTo());
+
         try {
             String email = request.getTo();
-            String username = memberService.findUsernameByEmail(email);
+            String fullname = request.getFullname();
 
-            memberService.sendUsernameEmail(email, username);
+            String username = memberService.findUsernameByFullnameAndEmail(fullname, email);
+
+            memberService.sendUsernameEmail(fullname, email, username);
 
             return ResponseEntity.ok("아이디가 이메일로 전송되었습니다.");
 
@@ -109,26 +112,37 @@ public class MemberController {
 
     // 1. 비밀번호 요청
     @PostMapping("/reset-password-request")
-    public String requestPasswordReset(@RequestParam("email") String email, Model model) {
+    public ResponseEntity<?> requestPasswordReset(@RequestParam("email") String email,
+                                       @RequestParam("username") String username) {
 
-        System.out.println("요청실행?");
         System.out.println(">>>> 입력한 이메일: " + email);
+        System.out.println(">>>> 입력한 아이디: " + username);
+
         MemberDTO member = memberService.findMemberByEmail(email);
 
+        // 이메일로 가입된 사용자가 없을 경우
         if (member == null) {
-            model.addAttribute("error", "해당 이메일로 등록된 사용자가 없습니다.");
-            return "reset-password-request"; // 이메일 입력 폼으로 다시 이동
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("해당 이메일로 등록된 사용자가 없습니다.");
         }
 
-        // 토큰 생성 및 이메일 전송
+        // 아이디가 일치하지 않을 경우
+        if (!member.getUsername().equals(username)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("아이디와 이메일이 일치하지 않습니다.");
+        }
+
+        // 둘 다 일치하면 토큰 생성 및 이메일 전송
         try {
             memberService.processPasswordReset(email);
-            model.addAttribute("message", "비밀번호 재설정 링크를 이메일로 전송했습니다.");
+            return ResponseEntity.ok("비밀번호 재설정 링크를 이메일로 전송했습니다.");
         } catch (Exception e) {
-            model.addAttribute("error", "메일 전송 중 오류가 발생했습니다.");
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("메일 전송 중 오류가 발생했습니다.");
         }
-
-        return "reset-password-request-result"; // 결과 메시지를 보여주는 페이지
     }
 
     // 2. 비밀번호 재설정

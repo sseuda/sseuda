@@ -72,6 +72,13 @@
         WHERE user_email = #{userEmail}
     </select>
 
+    <select id="findUsernameByFullnameAndEmail" parameterType="String" resultType="String">
+        SELECT username
+        FROM tbl_member
+        WHERE user_fullname = #{fullname}
+            AND user_email = #{email}
+    </select>
+
     <!--  비밀번호 찾기 (초기화토큰)  -->
     <insert id="insertPasswordToken">
         INSERT INTO tbl_password_token (email, token, expiration)
