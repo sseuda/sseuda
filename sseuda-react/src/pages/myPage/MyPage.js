@@ -12,8 +12,8 @@ function MyPage() {
   const {category, postId} = useParams();
   const navigate = useNavigate();
 
-  const userPageList = userCode => {
-    navigate(`/post/mypage/${userCode}/postoing`, {replace:false});
+  const userPageList = userId => {
+    navigate(`/post/${userId}/posting`, {replace:false});
   }
   
   console.log("마이페이지 게시글 리스트 시작");
@@ -24,7 +24,6 @@ function MyPage() {
       <PostMypage/>
       <div onClick={() => userPageList(1)} className={MypageCSS.textEditorBox}>
         <FontAwesomeIcon className={MypageCSS.penIcon} icon={faPen} />
-        {/* <PostTextEditor/> */}
       </div>
 
     </div>

@@ -100,4 +100,15 @@
         WHERE user_email = #{userEmail}
     </update>
 
+    <!-- post에서 필요한 username 가지고오기-->
+    <select id="findUsernameByUserId" parameterType="int" resultType="String">
+        SELECT
+            username
+        FROM
+            tbl_member
+        WHERE
+            user_id = #{userId}
+    </select>
+
+
 </mapper>

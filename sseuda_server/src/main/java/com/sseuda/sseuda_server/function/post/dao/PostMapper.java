@@ -2,7 +2,9 @@ package com.sseuda.sseuda_server.function.post.dao;
 
 import com.sseuda.sseuda_server.function.post.dto.PostDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Mapper
@@ -24,7 +26,7 @@ public interface PostMapper {
     List<PostDTO> findUserCategoryPostList(int userCode, int bigCategoryId, int smallCategoryId);
 
 //    회원별 게시글 등록
-    void saveUserPosting(String postTitle, int userId, String postContent, int smallCategoryId);
+    void saveUserPosting(@Param("dto") PostDTO dto, @Param("userCode") int userCode);
 
 //    회원별 게시글 삭제
     int deleteUserPosting(PostDTO post, int userCode, int postId);

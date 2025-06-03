@@ -65,18 +65,11 @@ public class PostController {
 
 //    React에서 axios로 넘겨준다
     @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
-    @PostMapping("/mypage/{userCode}/posting")
+    @PostMapping("/{userCode}/posting")
     public ResponseEntity<String> saveUserPosting(@PathVariable("userCode") int userCode,
-//                                                    @PathVariable("bigCategoryId") int bigCategoryId,
-//                                                    @PathVariable("smallCategoryId") int smallCategoryId,
-                                                    @RequestBody PostDTO dto){
+                                                  @RequestBody PostDTO dto){
 
-        postService.saveUserPosting(
-             dto.getPostTitle(),
-            dto.getUserId(),
-            dto.getPostContent(),
-            dto.getSmallCategoryId()
-        );
+        postService.saveUserPosting(dto, userCode);
 
         System.out.println("받은 postDTO: " + dto);
 

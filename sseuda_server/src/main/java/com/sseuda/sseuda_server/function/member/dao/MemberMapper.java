@@ -33,4 +33,7 @@ public interface MemberMapper {
     int updatePassword(MemberDTO member);
 
     int deleteByToken(String token);
+
+//    post에서 필요한 username 가져오기
+    String findUsernameByUserId(int userId);
 }
