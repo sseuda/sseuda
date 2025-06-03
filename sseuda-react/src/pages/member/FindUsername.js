@@ -57,14 +57,14 @@ function FindUsername() {
 	return (
 		<div className='big-container'>
 			<div className='find-username-title'>
-				<img src="/images/main/sseudaKorean.png" alt="로고" className="signup-logo" />	
+				<img src="/images/main/sseudaKoreanColor.png" alt="로고" className="signup-logo" />	
 				<p className='title-font'>아이디 찾기</p>
 			</div>
 			<div className="find-username-container">
 				<input className="input-yellow" type="text" name="userFullname" placeholder="이름" onChange={onChangeHandler} />
 				<input className="input-red" type="email" name="userEmail" placeholder="이메일" onChange={onChangeHandler} />
 				{!userEmailValid && <p className="warning">올바른 이메일 형식으로 작성해주세요.</p>}
-				<button onClick={onClickFindUsernameHandler}>아이디 찾기</button>
+				<button onClick={onClickFindUsernameHandler}>찾기</button>
 			</div>
 			
 		</div>
