@@ -9,6 +9,8 @@ import Login from "./pages/member/Login";
 import Main from "./pages/Main";
 import Signup from "./pages/member/Signup";
 import FindUsername from "./pages/member/FindUsername";
+import ResetPasswordRequest from "./pages/member/ResetPasswordRequest";
+import ResetPassword from "./pages/member/ResetPassword";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="auth/login" element={<Login/>}/>
           <Route path="member/signup" element={<Signup/>}/>
           <Route path="member/find-username" element={<FindUsername/>}/>
+          <Route path="member/reset-password-request" element={<ResetPasswordRequest/>}/>
+          <Route path="member/reset-password" element={<ResetPassword/>}/>
         </Route>
 
         {/* 마이페이지를 위한 Route */}

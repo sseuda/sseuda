@@ -134,3 +134,28 @@ export const callFindUsernameAPI = (form) => {
 		}
 	}
 }
+
+// 비밀번호 재설정 요청 API
+export const callResetPasswordRequestAPI = (email, username) => {
+	const requestURL = `/member/reset-password-request`;
+
+	return async () => {
+		const response = await fetch(requestURL, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			body: new URLSearchParams({ email, username })
+		});
+
+		const result = await response.text();
+
+		
+		if (!response.ok) {
+			// HTTP 상태가 400/500번대일 경우
+			throw new Error(result);
+		}
+
+		return result;
+	};
+};
