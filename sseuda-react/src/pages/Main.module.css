@@ -1,5 +1,7 @@
 .mainBox{
+    width: 1310px;
     display: flex;
     justify-content: space-between;
-    margin: 52px 304px;
+    margin: 52px auto;
+
 }
