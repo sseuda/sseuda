@@ -76,7 +76,7 @@ function Login() {
 				<div className="bottom-links">
 					<Link to="/member/find-username">아이디 찾기</Link>
 					<span>|</span>
-					<Link to="/find-password">비밀번호 찾기</Link>
+					<Link to="/member/reset-password-request">비밀번호 찾기</Link>
 					<span>|</span>
 					<Link to="/member/signup">회원가입</Link>
 				</div>

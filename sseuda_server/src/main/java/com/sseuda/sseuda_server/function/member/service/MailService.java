@@ -27,7 +27,7 @@ public class MailService {
     public void sendPasswordEmail(String email, String token) {
 
         String subject = "[쓰다] 비밀번호 재설정";
-        String resetLink = "http://localhost:8000/member/password-reset?token=" + token;
+        String resetLink = "http://localhost:3000/member/reset-password?token=" + token;
         String body = "아래 링크를 클릭하여 비밀번호를 재설정하세요:\n\n" + resetLink +
                 "\n\n해당 링크는 30분 동안 유효합니다.";
 
