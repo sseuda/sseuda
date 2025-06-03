@@ -8,6 +8,7 @@ import lombok.Setter;
 public class MailRequestDTO {
 
     private String to;
+    private String fullname;
     private String subject;
     private String text;
 }

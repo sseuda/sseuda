@@ -25,6 +25,8 @@ public interface MemberMapper {
 
     String findUsernameByEmail(String email);
 
+    String findUsernameByFullnameAndEmail(String fullname, String email);
+
     // 비밀번호 초기화
     void insertPasswordToken(PasswordTokenDTO passwordToken);
     PasswordTokenDTO findPasswordToken(String token);

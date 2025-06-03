@@ -73,12 +73,15 @@ public class MemberController {
     // 아이디 찾기 (이메일로)
     @PostMapping("/find-username")
     public ResponseEntity<?> findUsernameAndSendMail(@RequestBody MailRequestDTO request) {
-        System.out.println(">>> 아이디 찾기 이메일 요청: " + request.getTo());
+        System.out.println(">>> 아이디 찾기 요청: 이름=" + request.getFullname() + ", 이메일=" + request.getTo());
+
         try {
             String email = request.getTo();
-            String username = memberService.findUsernameByEmail(email);
+            String fullname = request.getFullname();
 
-            memberService.sendUsernameEmail(email, username);
+            String username = memberService.findUsernameByFullnameAndEmail(fullname, email);
+
+            memberService.sendUsernameEmail(fullname, email, username);
 
             return ResponseEntity.ok("아이디가 이메일로 전송되었습니다.");
 

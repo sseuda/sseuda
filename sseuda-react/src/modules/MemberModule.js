@@ -1,5 +1,4 @@
 import { createActions, handleActions } from "redux-actions";
-import { POST_USER_POSTING } from "./PostModule";
 
 // 초기값
 const initalState = {
@@ -9,11 +8,13 @@ const initalState = {
 // 액션
 export const POST_LOGIN = 'member/POST_LOGIN';		// 로그인
 export const POST_SIGNUP = 'member/POST_SIGNUP';	// 회원가입
+export const POST_FIND_USERNAME = 'member/POST_FIND_USERNAME';	// 아이디찾기
 
 
 const actions = createActions({
 	[POST_LOGIN]: () => {},
-	[POST_USER_POSTING]: () => {}
+	[POST_SIGNUP]: () => {},
+	[POST_FIND_USERNAME]: () => {}
 })
 
 
@@ -24,6 +25,9 @@ const memberReducer = handleActions(
 			return payload;
 		},
 		[POST_SIGNUP]: (sate, { payload }) => {
+			return payload;
+		},
+		[POST_FIND_USERNAME]: (state, {payload}) => {
 			return payload;
 		}
 	},
