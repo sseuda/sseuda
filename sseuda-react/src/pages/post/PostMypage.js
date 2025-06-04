@@ -8,15 +8,15 @@ import Button from '../../components/common/Global/Button.module.css';
 function PostMypage() {
 
     const dispatch = useDispatch();
-    const {userCode, postId} = useParams();
+    const {username, postId} = useParams();
 
     console.log("마이페이지 게시글 전체 조회 시작");
     const myPostList = useSelector(state => state.postReducer);
     console.log("myPostList :", myPostList);
 
     useEffect(() => {
-        dispatch(callUserPostsListApi({ userCode }));
-    }, [dispatch, userCode]);
+        dispatch(callUserPostsListApi({ username }));
+    }, [dispatch, username]);
 
     useEffect(()=>{
       console.log(myPostList, "확인");
