@@ -52,5 +52,20 @@
     * npm i --save @fortawesome/free-solid-svg-icons (중요)
 
 
+## 2025.06.05 스와이퍼 설치
 
-스와이퍼 설치
+- 메인에 돌아가는 배너에 사용
+
+📝 참고:
+- 사용한 명령어 
+    * 
+    
+
+## 2025.06.04 jwt-decode 설치
+
+- Jwt에서 username이라는 정보를 추출하기 위해서 'decodeJwt'를 사용해야 한다.
+
+📝 참고:
+- 사용한 명령어 
+    * npm install jwt-decode
+

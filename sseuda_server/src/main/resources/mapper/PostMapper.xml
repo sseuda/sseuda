@@ -120,14 +120,12 @@
     <insert id="saveUserPosting" parameterType="map">
         INSERT INTO tbl_post (
             post_title,
-            user_id,
             post_content,
             post_create_at,
             small_category_id
         )
         VALUES (
             #{dto.postTitle},
-            #{dto.userCode},
             #{dto.postContent},
             #{dto.postCreateAt},
             #{dto.smallCategoryId}

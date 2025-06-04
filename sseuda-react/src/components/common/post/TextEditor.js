@@ -1,6 +1,7 @@
 // HTTP 요청 (POST/GET/DELETE/PUT) 을 위해 사용용
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+// import { decodeJwt } from "../../utils/tokenUtils";
 import ReactQuill from 'react-quill'
 // Quill 에디터 css (필수)
 import "react-quill/dist/quill.snow.css";
@@ -14,7 +15,10 @@ function TextEditor() {
     const [title, setTitle] = useState("");
     const [createAt, setCreateAt] = useState("");
     const [category, setCategory] = useState(1);
-    const [userCode, setUserCode] = useState(1);
+
+    // const isLogin = window.localStorage.getItem("accessToken"); // Local Storage에 token 정보 확인
+    // const username = isLogin ? decodeJwt(isLogin).sub : null; // JWT에서 사용자 ID 추출
+
 
     useEffect(() =>{
       const today = new Date().toISOString().slice(0, 10);
@@ -29,13 +33,20 @@ function TextEditor() {
     const handleSave = async () => {
         
         try{
-            const response = await axios.post(`/post/${userCode}/posting`, {
+            // const token = localStorage.getItem('token'); // 로그인 후 저장한 토큰
+
+            const response = await axios.post(`/post/posting`, {
                 postTitle: title,
-                userCode: userCode,
                 postContent: content,
                 createAt: createAt,
                 category: category
-            });
+            },
+            {
+              // headers: {
+              //   Authorization: `Bearer ${token}`
+              // }
+            }
+          );
             console.log("저장 성공", response.data);
         }catch(err){
             console.log("저장 실패", err)
