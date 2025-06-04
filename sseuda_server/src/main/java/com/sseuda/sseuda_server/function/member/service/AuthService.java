@@ -50,6 +50,7 @@ public class AuthService {
     }
 
     public void blacklistToken(String token) {
+        System.out.println("로그아웃 시도");
         long expiration = tokenProvider.getTokenRemainingTime(token);
         redisTemplate.opsForValue().set(token, "logout", expiration, TimeUnit.MILLISECONDS);
     }

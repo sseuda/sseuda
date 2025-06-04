@@ -1,5 +1,5 @@
 // 멤버api
-import { POST_LOGIN } from "../modules/MemberModule";
+import { POST_LOGIN, POST_LOGOUT } from "../modules/MemberModule";
 
 const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 
@@ -30,6 +30,7 @@ export const callLoginAPI = ( form ) => {
 		
 			if (response.status === 200) {
 				console.log("[LoginAPI] 로그인 성공", result)
+				alert(form.username, '님, 환영합니다.')
 				window.localStorage.setItem('accessToken', result.accessToken);
 				dispatch({type: POST_LOGIN, payload:result});
 			} else if (response.status === 401) {
@@ -40,6 +41,35 @@ export const callLoginAPI = ( form ) => {
 		} catch (error) {
 			console.log("로그인 요청 실패!: ", error)
 			alert("서버 연결 실패!")
+		}
+	};
+};
+
+// 로그아웃
+export const callLogoutAPI = () => {
+	const token = window.localStorage.getItem('accessToken');
+	const requestURL = `${prefix}/auth/logout`;
+
+	return async (dispatch) => {
+		try {
+			const response = await fetch(requestURL, {
+				method: 'POST',
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			});
+
+			if (response.ok) {
+				localStorage.removeItem('accessToken');
+				dispatch({ type: 'POST_LOGOUT', payload: { member: null } });
+				alert("로그아웃 되었습니다.");
+			} else {
+				const msg = await response.text();
+				alert(`로그아웃 실패: ${msg}`);
+			}
+		} catch (error) {
+			alert("로그아웃 요청 중 오류 발생");
+			console.error("로그아웃 오류:", error);
 		}
 	};
 };
