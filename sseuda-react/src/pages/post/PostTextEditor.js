@@ -6,15 +6,12 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function PostTextEditor() {
 
-    const navigate = useNavigate();
-
-    const postEditor=()=>{
-        navigate('post/mypage/editor');
-    }
 
   return (
-    <div onClick={()=>postEditor()} className={editor.editorBox}>
-    </div>
+    <>
+    
+      <TextEditor/>
+    </>
   )
 }
 

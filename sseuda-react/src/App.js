@@ -12,6 +12,7 @@ import FindUsername from "./pages/member/FindUsername";
 import ResetPasswordRequest from "./pages/member/ResetPasswordRequest";
 import ResetPassword from "./pages/member/ResetPassword";
 import TextEditor from "./components/common/post/TextEditor";
+import PostTextEditor from "./pages/post/PostTextEditor";
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
         {/* 게시글 관련 Route */}
         <Route path="post" element={<PostLayout/>}>
           <Route path=":postId" element={<PostDetail/>}/>
-          <Route path=":paramUsername/posting" element={<TextEditor/>}/>
+          <Route path=":paramUsername/posting" element={<PostTextEditor/>}/>
         </Route>
         
       </Routes>
