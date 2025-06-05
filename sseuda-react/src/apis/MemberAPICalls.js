@@ -63,6 +63,7 @@ export const callLogoutAPI = () => {
 				localStorage.removeItem('accessToken');
 				dispatch({ type: 'POST_LOGOUT', payload: { member: null } });
 				alert("로그아웃 되었습니다.");
+				return true;
 			} else {
 				const msg = await response.text();
 				alert(`로그아웃 실패: ${msg}`);
