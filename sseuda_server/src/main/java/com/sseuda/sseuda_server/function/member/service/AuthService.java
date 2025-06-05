@@ -44,11 +44,13 @@ public class AuthService {
         long expireTime = now + 1000 * 60 * 60; // 1시간
 
         System.out.println("로그인 완료");
+        System.out.println("토큰: " + token);
         // 로그인 성공 시 토큰 발급
         return new TokenDTO("Bearer", login.getUsername(), token, expireTime);
     }
 
     public void blacklistToken(String token) {
+        System.out.println("로그아웃 시도");
         long expiration = tokenProvider.getTokenRemainingTime(token);
         redisTemplate.opsForValue().set(token, "logout", expiration, TimeUnit.MILLISECONDS);
     }
