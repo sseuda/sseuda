@@ -85,7 +85,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 ).cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(tokenProvider, authService), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
