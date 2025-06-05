@@ -28,7 +28,18 @@ function Main() {
       <PostBanner/>
       <div className={MainCSS.mainBox}>
         <PostMain/>
-        <div onClick={userMyPageList}>마이페이지 바로가기</div>
+        <div className={MainCSS.loginBox}>
+          <p><b>쓰다</b>에 로그인하여 더 많은 기능을 이용해보세요 :-)</p>
+          <Link to="/auth/login" className={MainCSS.loginBTN}><img src="/images/main/sseudaKorean.png" className={MainCSS.logo}/>로그인</Link>
+          <div className="bottom-links">
+					<Link to="/member/find-username">아이디 찾기</Link>
+					<span>|</span>
+					<Link to="/member/reset-password-request">비밀번호 찾기</Link>
+					<span>|</span>
+					<Link to="/member/signup">회원가입</Link>
+          </div>
+          <div onClick={userMyPageList}>마이페이지 바로가기</div>
+        </div>
       </div>
     </>
   )
