@@ -1,6 +1,7 @@
 package com.sseuda.sseuda_server.function.post.controller;
 
 import com.sseuda.sseuda_server.common.ResponseDTO;
+import com.sseuda.sseuda_server.function.member.service.MemberService;
 import com.sseuda.sseuda_server.function.post.dto.PostDTO;
 import com.sseuda.sseuda_server.function.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.util.Map;
 
 @RestController
@@ -19,6 +21,7 @@ public class PostController {
 
     private static Logger log = LoggerFactory.getLogger(PostController.class);
     private PostService postService;
+    private MemberService memberService;
 
     @Autowired
     public PostController(PostService postService) {
@@ -48,8 +51,13 @@ public class PostController {
     }
 
     @Operation(summary = "회원별 게시글 전체 조회", description = "회원별로 게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
-    @GetMapping("/mypage/{userCode}")
-    public ResponseEntity<ResponseDTO> findUserPostList(@PathVariable("userCode") int userCode){
+    @GetMapping("/mypage/{username}")
+    public ResponseEntity<ResponseDTO> findUserPostList(@PathVariable("username") String username){
+
+        int userCode = 0;
+        if(username != null){
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findUserPostList(userCode)));
     }
@@ -65,19 +73,10 @@ public class PostController {
 
 //    React에서 axios로 넘겨준다
     @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
-    @PostMapping("/mypage/posting")
-    public ResponseEntity<String> saveUserPosting(
-//            @PathVariable("userCode") int userCode,
-//                                                    @PathVariable("bigCategoryId") int bigCategoryId,
-//                                                    @PathVariable("smallCategoryId") int smallCategoryId,
-                                                    @RequestBody PostDTO dto){
+    @PostMapping("/posting")
+    public ResponseEntity<String> saveUserPosting(@RequestBody PostDTO dto){
 
-        postService.saveUserPosting(
-             dto.getPostTitle(),
-            dto.getUserId(),
-            dto.getPostContent(),
-            dto.getSmallCategoryId()
-        );
+        postService.saveUserPosting(dto);
 
         System.out.println("받은 postDTO: " + dto);
 

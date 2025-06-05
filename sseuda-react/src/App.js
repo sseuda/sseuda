@@ -11,6 +11,7 @@ import Signup from "./pages/member/Signup";
 import FindUsername from "./pages/member/FindUsername";
 import ResetPasswordRequest from "./pages/member/ResetPasswordRequest";
 import ResetPassword from "./pages/member/ResetPassword";
+import TextEditor from "./components/common/post/TextEditor";
 
 function App() {
   return (
@@ -28,13 +29,13 @@ function App() {
 
         {/* 마이페이지를 위한 Route */}
         <Route path="post/mypage" element={<MypageLayout/>}>
-        <Route path=":userCode" element={<MyPage/>}/>
-      
+        <Route path=":username" element={<MyPage/>}/>
         </Route>
 
         {/* 게시글 관련 Route */}
         <Route path="post" element={<PostLayout/>}>
           <Route path=":postId" element={<PostDetail/>}/>
+          <Route path=":paramUsername/posting" element={<TextEditor/>}/>
         </Route>
         
       </Routes>

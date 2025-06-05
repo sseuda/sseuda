@@ -8,3 +8,18 @@
     background-color: var(--main-color04);
     color: var(--text01);
 }
+
+.allPostBTN{
+    width: 80px;
+    height: 30px;
+    line-height: 32px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text01);
+    background-color: var(--main-color01);
+    /* 검색 기능 들어오기 전 임시 */
+    position: absolute; 
+    top: 0;
+    right: 0;
+}

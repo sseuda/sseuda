@@ -1,5 +1,7 @@
 package com.sseuda.sseuda_server.function.post.service;
 
+import com.sseuda.sseuda_server.function.member.dao.MemberMapper;
+import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
 import com.sseuda.sseuda_server.function.post.dao.PostMapper;
 import com.sseuda.sseuda_server.function.post.dto.PostDTO;
 import org.slf4j.Logger;
@@ -7,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -14,10 +17,12 @@ public class PostService {
 
     private static final Logger log = LoggerFactory.getLogger(PostService.class);
     private final PostMapper postMapper;
+    private final MemberMapper memberMapper;
 
     @Autowired
-    public PostService(PostMapper postMapper) {
+    public PostService(PostMapper postMapper, MemberMapper memberMapper) {
         this.postMapper = postMapper;
+        this.memberMapper = memberMapper;
     }
 
 //    게시글 전체 조회
@@ -51,8 +56,14 @@ public class PostService {
     }
 
 //    회원별 게시글 등록
-    public void saveUserPosting(String postTitle, int userId, String postContent, int smallCategoryId) {
-        postMapper.saveUserPosting(postTitle, userId, postContent, smallCategoryId);
+    public void saveUserPosting(PostDTO dto) {
+
+        String username = memberMapper.findUsernameByUserId(dto.getUserId());
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setUsername(username);
+        dto.setMemberDTO(memberDTO);
+
+        postMapper.saveUserPosting(dto);
     }
 
 //  회원별 게시글 삭제

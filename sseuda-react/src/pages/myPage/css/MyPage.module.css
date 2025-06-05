@@ -1,0 +1,17 @@
+.textEditorBox{
+    width: 90px;
+    height: 90px;
+    border-radius: 50px;
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    background-color: var(--main-color01);
+    cursor: pointer;
+}
+
+.penIcon{
+    padding: 26px;
+    font-size: 40px;
+    color: var(--text01);
+    z-index: 10;
+}
