@@ -16,6 +16,23 @@ function Main() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
+  const accessToken = localStorage.getItem('accessToken');
+  const isLogin = !!accessToken;
+	const decodedToken = isLogin ? decodeJwt(accessToken) : null;
+
+	const isTokenExpired = (decodedToken) => {
+		if (!decodedToken) return true;
+		const currentTime = Math.floor(Date.now() / 1000);
+		return decodedToken.exp < currentTime;
+	};
+
+	const handleLogout = async () => {
+		if (!isLogin || isTokenExpired(decodedToken)) {
+			alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
+			navigate("/auth/login");
+			return;
+		}}
+
   // const handleSearch = () => {
   //   if (searchTerm.trim() === "") {
   //     alert("검색어를 입력해주세요.");
@@ -37,30 +54,38 @@ function Main() {
     
   return (
     <>
-      <div className={MainCSS.searchBox}>
-        <div className={MainCSS.searchWrapper}>
-          <input
-            type="text"
-            className={MainCSS.searchInput}
-            placeholder="검색어를 입력하세요"
-            // value={searchTerm}
-            // onChange={(e) => setSearchTerm(e.target.value)}
-            // onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          />
-          <button className={MainCSS.searchBtn}>
-            <FontAwesomeIcon icon={faMagnifyingGlass} className={MainCSS.searchIcon} />
-          </button>
-        </div>
-      </div>
+  {/* 검색창 */}
+  <div className={MainCSS.searchBox}>
+    <div className={MainCSS.searchWrapper}>
+      <input
+        type="text"
+        className={MainCSS.searchInput}
+        placeholder="검색어를 입력하세요"
+        // value={searchTerm}
+        // onChange={(e) => setSearchTerm(e.target.value)}
+        // onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+      />
+      <button className={MainCSS.searchBtn}>
+        <FontAwesomeIcon icon={faMagnifyingGlass} className={MainCSS.searchIcon} />
+      </button>
+    </div>
+  </div>
 
-      <PostBanner />
+  {/* 배너 */}
+  <PostBanner />
 
-      <div className={MainCSS.mainBox}>
-        <PostMain />
-        <div className={MainCSS.loginBox}>
-          <p><b>쓰다</b>에 로그인하여 더 많은 기능을 이용해보세요 :-)</p>
+  {/* 메인 콘텐츠 */}
+  <div className={MainCSS.mainBox}>
+    <PostMain />
+
+    {/* 로그인 박스 */}
+    <div className={MainCSS.loginBox}>
+      {!isLogin ? (
+        <div className={MainCSS.login}>
+          <p><b>쓰다</b>에 로그인하여 더 많은 기능을 이용해보세요 😊</p>
           <Link to="/auth/login" className={MainCSS.loginBTN}>
-            <img src="/images/main/sseudaKorean.png" className={MainCSS.logo}/>로그인
+            <img src="/images/main/sseudaKorean.png" className={MainCSS.logo} />
+            로그인
           </Link>
           <div className="bottom-links">
             <Link to="/member/find-username">아이디 찾기</Link>
@@ -69,10 +94,18 @@ function Main() {
             <span>|</span>
             <Link to="/member/signup">회원가입</Link>
           </div>
-          <div onClick={userMyPageList}>마이페이지 바로가기</div>
         </div>
-      </div>
-    </>
+      ) : (
+        <div className={MainCSS.myBlog}>
+          <p><b>쓰다</b>에 일상을 기록해보세요 😊</p>
+          <div onClick={userMyPageList} className={MainCSS.myBlogBTN}>
+            내블로그 바로가기
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</>
   )
 }
 
