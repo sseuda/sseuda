@@ -74,7 +74,7 @@ public class PostController {
 //    React에서 axios로 넘겨준다
     @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
     @PostMapping("/posting")
-    public ResponseEntity<String> saveUserPosting(@RequestBody PostDTO dto){
+    public ResponseEntity<String> saveUserPosting(@ModelAttribute PostDTO dto){
 
         postService.saveUserPosting(dto);
 
