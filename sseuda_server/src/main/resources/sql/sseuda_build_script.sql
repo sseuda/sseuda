@@ -2,8 +2,8 @@
 DROP TABLE IF EXISTS tbl_tag;
 DROP TABLE IF EXISTS tbl_alarm;
 DROP TABLE IF EXISTS tbl_likes;
-DROP TABLE IF EXISTS tbl_comment;
 DROP TABLE IF EXISTS tbl_reports;
+DROP TABLE IF EXISTS tbl_comment;
 DROP TABLE IF EXISTS tbl_post;
 DROP TABLE IF EXISTS tbl_category_small;
 DROP TABLE IF EXISTS tbl_category_big;
@@ -60,20 +60,6 @@ CREATE TABLE IF NOT EXISTS tbl_post (
     FOREIGN KEY (small_category_id) REFERENCES tbl_category_small(small_category_id) ON DELETE CASCADE
 );
 
--- 신고 테이블
-CREATE TABLE IF NOT EXISTS tbl_reports (
-    reports_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '신고번호',
-    reporter_id INT NOT NULL COMMENT '신고자 ID',
-    reported_id INT NOT NULL COMMENT '신고된 유저 ID',
-    post_id INT NOT NULL COMMENT '신고된 게시글 ID',
-    reports_create_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '신고일',
-    reason VARCHAR(300) COMMENT '신고사유',
-    reports_status ENUM('처리중', '완료') DEFAULT '처리중' COMMENT '처리상태',
-    FOREIGN KEY (reporter_id) REFERENCES tbl_member(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (reported_id) REFERENCES tbl_member(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (post_id) REFERENCES tbl_post(post_id) ON DELETE CASCADE
-);
-
 -- 댓글 테이블
 CREATE TABLE IF NOT EXISTS tbl_comment (
     comment_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '댓글번호',
@@ -85,6 +71,23 @@ CREATE TABLE IF NOT EXISTS tbl_comment (
     user_id INT NOT NULL COMMENT '회원',
     FOREIGN KEY (post_id) REFERENCES tbl_post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES tbl_member(user_id) ON DELETE CASCADE
+);
+
+-- 신고 테이블
+CREATE TABLE IF NOT EXISTS tbl_reports (
+    reports_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '신고번호',
+    reporter_id INT NOT NULL COMMENT '신고자 ID',
+    reported_id INT NOT NULL COMMENT '신고된 유저 ID',
+    post_id INT DEFAULT NULL COMMENT '신고된 게시글 ID (nullable)',
+    comment_id INT DEFAULT NULL COMMENT '신고된 댓글 ID (nullable)',
+    reports_create_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '신고일',
+    reason_code VARCHAR(20) COMMENT '신고사유 코드',
+    reason_detail VARCHAR(300) COMMENT '신고사유 상세',
+    reports_status VARCHAR(20) DEFAULT '신고접수' COMMENT '처리상태',
+    FOREIGN KEY (reporter_id) REFERENCES tbl_member(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (reported_id) REFERENCES tbl_member(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES tbl_post(post_id) ON DELETE CASCADE,
+    FOREIGN KEY (comment_id) REFERENCES tbl_comment(comment_id) ON DELETE CASCADE
 );
 
 -- 좋아요(반응) 테이블
@@ -407,26 +410,6 @@ VALUES (
            5
        );
 
--- 신고 더미데이터
-INSERT INTO tbl_reports
-(reporter_id, reported_id, post_id, reports_create_at, reason, reports_status)
-VALUES
-(2, 3, 2, '2025-01-15 10:30:00',
- '해당 게시글에는 비속어 및 공격적인 표현이 반복적으로 사용되어 있어 다른 사용자에게 불쾌감을 줄 수 있습니다. 검토 부탁드립니다.',
- '처리중'),
-(4, 5, 5, '2025-02-02 14:10:00',
- '짧은 시간 안에 동일한 내용을 여러 번 게시하여 도배로 의심되며, 커뮤니티 이용에 불편을 주고 있습니다.',
- '처리중'),
-(6, 7, 8, '2025-02-20 18:45:00',
- '게시글 내에 타인의 명예를 훼손할 수 있는 허위 정보가 포함되어 있습니다. 확인 후 조치가 필요해 보입니다.',
- '완료'),
-(8, 9, 1, '2025-03-03 09:05:00',
- '해당 게시물에는 본인의 전화번호와 이메일이 노출되어 있어 개인정보 유출 우려가 있습니다. 빠른 조치 부탁드립니다.',
- '처리중'),
-(10, 4, 10, '2025-03-22 16:30:00',
- '댓글과 게시글에서 특정 사용자를 지속적으로 비난하고 있어 사이버 불링으로 판단됩니다. 심각한 상황입니다.',
- '완료');
-
 
 -- 댓글 더미데이터
 INSERT INTO tbl_comment (comment_id, comment_text, comment_create_at, comment_update_at, comment_delete, post_id, user_id)
@@ -441,6 +424,32 @@ VALUES
     (8, '해바라기 사진도 보여주세요~', NOW(), NULL, 'N', 7, 4),
     (9, '온천 어디서 묵으셨어요?', NOW(), NULL, 'N', 8, 5),
     (10, '기저귀 가방 추천 좀요!', NOW(), NULL, 'N', 10, 3);
+
+
+-- 신고 더미 데이터
+INSERT INTO tbl_reports
+(reporter_id, reported_id, post_id, comment_id, reports_create_at, reason_code, reason_detail, reports_status)
+VALUES
+(2, 3, 2, NULL, '2025-01-15 10:30:00',
+ 'ABUSE',
+ '해당 게시글에는 비속어 및 공격적인 표현이 반복적으로 사용되어 있어 다른 사용자에게 불쾌감을 줄 수 있습니다. 검토 부탁드립니다.',
+ '신고접수'),
+(4, 5, 5, NULL, '2025-02-02 14:10:00',
+ 'SPAM',
+ '짧은 시간 안에 동일한 내용을 여러 번 게시하여 도배로 의심되며, 커뮤니티 이용에 불편을 주고 있습니다.',
+ '신고접수'),
+(6, 7, 8, NULL, '2025-02-20 18:45:00',
+ 'FALSE_INFO',
+ '게시글 내에 타인의 명예를 훼손할 수 있는 허위 정보가 포함되어 있습니다. 확인 후 조치가 필요해 보입니다.',
+ '처리완료'),
+(8, 9, NULL, 3, '2025-03-03 09:05:00',
+ 'PRIVACY',
+ '댓글에 본인의 전화번호와 이메일이 노출되어 있어 개인정보 유출 우려가 있습니다. 빠른 조치 부탁드립니다.',
+ '신고접수'),
+(10, 4, NULL, 5, '2025-03-22 16:30:00',
+ 'HARASSMENT',
+ '댓글에서 특정 사용자를 지속적으로 비난하고 있어 사이버 불링으로 판단됩니다. 심각한 상황입니다.',
+ '처리완료');
 
 
 -- 좋아요(반응) 더미데이터
@@ -497,6 +506,7 @@ VALUES
     ('LIKE', '3번 회원님이 회원님의 게시글을 좋아합니다.', 3, 8, NULL, 8, '2025-01-12 19:50:00'),
     ('LIKE', '4번 회원님이 회원님의 게시글을 좋아합니다.', 4, 9, NULL, 9, '2025-01-13 21:00:00'),
     ('LIKE', '5번 회원님이 회원님의 게시글을 좋아합니다.', 5, 10, NULL, 10, '2025-01-14 22:30:00');
+
 
 -- 태그 더미데이터
 INSERT INTO tbl_tag (tag_id, tag_name, post_id) VALUES
