@@ -9,7 +9,7 @@ function TextEditor() {
   const [post, setPost] = useState({
     postTitle: '',
     postContent: '',
-    createdAt: '',
+    createAt: '',
     categoryBig: '',
     categorySmall: '',
     image: null,
@@ -19,6 +19,7 @@ function TextEditor() {
   const [smallCategory, setSmallCategory] = useState([]);
   const quillRef = useRef(null);
   const token = window.localStorage.getItem('accessToken');
+  console.log("accessToken : ", token);
   // const decodedToken = isLogin ? decodeJwt(isLogin) : null;
 
   // useEffect(() => {
@@ -87,7 +88,7 @@ const modules = useMemo(() => ({
 
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
-    setPost(prev => ({ ...prev, createdAt: today }));
+    setPost(prev => ({ ...prev, createAt: today }));
 
 
     axios.get('/post/userpage')
@@ -146,12 +147,12 @@ const modules = useMemo(() => ({
       const formData = new FormData();
       formData.append('postTitle', post.postTitle);
       formData.append('postContent', post.postContent);
-      formData.append('createAt', post.createdAt);
+      formData.append('createAt', post.createAt);
       formData.append('categoryBig', post.categoryBig);
       formData.append('categorySmall', post.categorySmall);
       formData.append('image', post.image);
 
-      const response = await axios.post('/post/posting', formData, {
+      const response = await axios.post('http://localhost:8080/post/posting', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`,  // ✅ 반드시 이 헤더 포함!
