@@ -1,4 +1,4 @@
-import { createActions, handleAction } from "redux-actions";
+import { createActions, handleAction, handleActions } from "redux-actions";
 
 const initialState = [];
 
@@ -23,7 +23,7 @@ const actions = createActions({
     [DELETE_SMALL_CATEGORY]: () => {},
 })
 
-const categoryReducer = handleAction({
+const categoryReducer = handleActions({
     [GET_CATEGORY]: (state, {payload}) => {
         return payload
     },

@@ -6,7 +6,7 @@ const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 //  카테고리 전체 조회
 export const callCategoryApi = () =>{
     
-    let requestURL = `${prefix}/mypage/userpage`;
+    let requestURL = `${prefix}/post/userpage`;
     console.log('[CategoryApiCalls] requestURL : ', requestURL);
 
     return async (dispatch, getState) => {

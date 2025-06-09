@@ -81,7 +81,8 @@ public class SecurityConfig {
                                 "/member/update/**",
                                 "/member/reset-password-request",
                                 "/member/reset-password",
-                                "/post/**"
+                                "/post/**",
+                                "/mypage/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 ).cors(cors -> cors.configurationSource(corsConfigurationSource()))

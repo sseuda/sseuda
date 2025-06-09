@@ -1,0 +1,34 @@
+.categoryBox {
+    width: 300px;
+    height: 100%;
+    margin-right: 200px;
+    padding-top: 100px;
+    padding-left: 50px;
+    /* background-color: red; */
+}
+
+.navBox {
+  margin-bottom: 38px;
+}
+
+.bigBox {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.smallBox {
+  padding: 6px 8px;
+  font-size: 18px;
+  color: #444;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  margin-left: 10px;
+}
+
+.smallBox:hover {
+  background-color: #f0f0f0;
+}
+
