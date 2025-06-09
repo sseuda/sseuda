@@ -1,57 +1,138 @@
-// HTTP 요청 (POST/GET/DELETE/PUT) 을 위해 사용용
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-// import { decodeJwt } from "../../utils/tokenUtils";
-import ReactQuill from 'react-quill'
-// Quill 에디터 css (필수)
-import "react-quill/dist/quill.snow.css";
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import Editor from './css/PostTextEditor.module.css';
 
-
 function TextEditor() {
+  const [post, setPost] = useState({
+    postTitle: '',
+    postContent: '',
+    createdAt: '',
+    categoryBig: '',
+    categorySmall: '',
+    image: null,
+  });
 
-    // quill의 내용을 저장할 상태 변수
-    const [content, setContent] = useState("");
-    const [title, setTitle] = useState("");
-    const [createAt, setCreateAt] = useState("");
-    const [category, setCategory] = useState(1);
+  const [category, setCategory] = useState([]);
+  const [smallCategory, setSmallCategory] = useState([]);
+  const quillRef = useRef(null);
 
-    // const isLogin = window.localStorage.getItem("accessToken"); // Local Storage에 token 정보 확인
-    // const username = isLogin ? decodeJwt(isLogin).sub : null; // JWT에서 사용자 ID 추출
+const imageHandler = () => {
+  const input = document.createElement('input');
+  input.setAttribute('type', 'file');
+  input.setAttribute('accept', 'image/*');
+  input.click();
 
+  input.onchange = async () => {
+    const file = input.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
 
-    useEffect(() =>{
-      const today = new Date().toISOString().slice(0, 10);
-      setCreateAt(today);
-    }, []);
+    try {
+      const res = await axios.post('/api/upload', formData);
+      const imageUrl = res.data.url;
 
-    // 상태(텍스트)가 변할때마다 상태를 업데이트하는 함수
-    const handleChange = value => {
-        setContent(value);
+      const editor = quillRef.current.getEditor();
+      const range = editor.getSelection(true);
+      editor.insertEmbed(range.index, 'image', imageUrl);
+      editor.setSelection(range.index + 1);
+    } catch (err) {
+      console.error('이미지 업로드 실패', err);
     }
+  };
+};
 
-    const handleSave = async () => {
-        
-        try{
-            // const token = localStorage.getItem('token'); // 로그인 후 저장한 토큰
+const modules = useMemo(() => ({
+  toolbar: {
+    container: [
+      ['bold', 'italic', 'underline'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['image'],
+    ],
+    handlers: {
+      image: imageHandler,
+    },
+  },
+}), []);
 
-            const response = await axios.post(`/post/posting`, {
-                postTitle: title,
-                postContent: content,
-                createAt: createAt,
-                category: category
-            },
-            {
-              // headers: {
-              //   Authorization: `Bearer ${token}`
-              // }
-            }
-          );
-            console.log("저장 성공", response.data);
-        }catch(err){
-            console.log("저장 실패", err)
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    setPost(prev => ({ ...prev, createdAt: today }));
+
+
+    axios.get('/post/userpage')
+    .then(res => {
+      const rawData = res.data.data;
+
+      // 대분류별 소분류 묶이
+      const categoryMap = {};
+
+      rawData.forEach(item => {
+        const bigName = item.categoryBigDTO.bigCategoryName;
+        const smallName = item.smallCategoryName;
+
+        if(!categoryMap[bigName]){
+          categoryMap[bigName] = [];
         }
+
+        categoryMap[bigName].push(smallName)
+      });
+      setCategory(categoryMap);
+    })
+    .catch(err => {
+      console.log('카테고리 데이터 로드 실패', err);
+    });
+
+  }, []);
+
+  // 대분류 변경 시
+  const handleCategoryBigChange = (e) => {
+    const selectedBig = e.target.value;
+    setPost(prev => ({
+      ...prev,
+      categoryBig: selectedBig,
+      categorySmall: '',
+    }));
+
+    if (selectedBig && category[selectedBig]) {
+      setSmallCategory(category[selectedBig]);
+    } else {
+      setSmallCategory([]);
     }
+  };
+
+  // 소분류 변경 시
+  const handleCategorySmallChange = (e) => {
+    setPost(prev => ({
+      ...prev,
+      categorySmall: e.target.value,
+    }));
+  };
+
+  
+
+  const handleSave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('postTitle', post.postTitle);
+      formData.append('postContent', post.postContent);
+      formData.append('createAt', post.createdAt);
+      formData.append('categoryBig', post.categoryBig);
+      formData.append('categorySmall', post.categorySmall);
+      formData.append('image', post.image);
+
+      const response = await axios.post('/post/posting', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('저장 성공', response.data);
+    } catch (err) {
+      console.error('저장 실패', err);
+    }
+  };
 
   return (
     <div className={Editor.editorBox}>
@@ -59,25 +140,46 @@ function TextEditor() {
         <input
           type="text"
           placeholder="제목을 입력하세요"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
+          value={post.postTitle}
+          onChange={e => setPost({ ...post, postTitle: e.target.value })}
         />
       </div>
 
       <div className={Editor.titleBox}>
-        <input
-          type="number"
-          value={category}
-          onChange={e => setCategory(Number(e.target.value))}
-        />
+        {/* 대분류 셀렉트박스 */}
+        <select value={post.categoryBig} onChange={handleCategoryBigChange}>
+          <option value="">대분류 선택</option>
+          {Object.keys(category).map(big => (
+            <option key={big} value={big}>{big}</option>
+          ))}
+        </select>
+
+        {/* 소분류 셀렉트박스 */}
+        <select
+          value={post.categorySmall}
+          onChange={handleCategorySmallChange}
+          disabled={!post.categoryBig}
+        >
+          <option value="">소분류 선택</option>
+          {smallCategory.map(small => (
+            <option key={small} value={small}>{small}</option>
+          ))}
+        </select>
       </div>
-      
-      <ReactQuill style={{width: "1280px"}} value={content} onChange={handleChange} />
+
+      <ReactQuill
+        ref={quillRef}
+        value={post.postContent}
+        onChange={value => setPost({ ...post, postContent: value })}
+        modules={modules}
+        style={{ width: '1280px' }}
+      />
+
       <div>
         <button onClick={handleSave}>저장</button>
       </div>
     </div>
-  )
+  );
 }
 
 export default TextEditor;
