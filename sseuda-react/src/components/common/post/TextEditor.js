@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Editor from './css/PostTextEditor.module.css';
+import { decodeJwt } from '../../../utils/tokenUtils';
 
 function TextEditor() {
   const [post, setPost] = useState({
@@ -17,7 +18,18 @@ function TextEditor() {
   const [category, setCategory] = useState([]);
   const [smallCategory, setSmallCategory] = useState([]);
   const quillRef = useRef(null);
-  const token = localStorage.getItem('token');
+  const token = window.localStorage.getItem('accessToken');
+  // const decodedToken = isLogin ? decodeJwt(isLogin) : null;
+
+  // useEffect(() => {
+  //     if (!isLogin || !decodedToken || isTokenExpired(decodedToken)) {
+  //         alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
+  //         navigate("/auth/login");
+  //         return;
+  //     }
+  
+  //     dispatch(callUserPostsListApi({ username: paramUsername }));
+  //   }, [dispatch]);
 
 const imageHandler = () => {
   const input = document.createElement('input');
@@ -33,25 +45,24 @@ const imageHandler = () => {
     formData.append('image', file);
 
     try {
-      const res = await axios.post('/api/upload', formData, {
+      const res = await axios.post('http://localhost:8080/sseudaimgs', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`,  // 토큰 넣기
+          'Authorization': `Bearer ${token}`,
         },
       });
 
-      console.log('서버 응답:', res);       // 전체 응답 객체 확인
-      console.log('응답 데이터:', res.data); // 실제 데이터 부분 확인
+      console.log('서버 응답:', res);
+      const relativeImageUrl = res.data?.url || res.data; // 예: /sseudaimgs/1749438505160.png
 
-      // 업로드된 이미지의 URL
-      const imageUrl = res.data?.url || res.data; // 서버 응답 형태에 따라 조정
+      // 절대 경로로 변환
+      const imageUrl = `http://localhost:8080${relativeImageUrl}`;
 
-      // Quill 에디터 인스턴스 가져오기
       const editor = quillRef.current?.getEditor?.();
       if (editor) {
-        const range = editor.getSelection(true); // 현재 커서 위치 가져오기
-        editor.insertEmbed(range.index, 'image', imageUrl); // 이미지 삽입
-        editor.setSelection(range.index + 1); // 커서를 이미지 뒤로 이동
+        const range = editor.getSelection(true);
+        editor.insertEmbed(range.index, 'image', imageUrl);
+        editor.setSelection(range.index + 1);
       } else {
         console.error('에디터가 초기화되지 않았습니다.');
       }
@@ -143,6 +154,7 @@ const modules = useMemo(() => ({
       const response = await axios.post('/post/posting', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,  // ✅ 반드시 이 헤더 포함!
         },
       });
 
