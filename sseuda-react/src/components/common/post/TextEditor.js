@@ -17,6 +17,7 @@ function TextEditor() {
   const [category, setCategory] = useState([]);
   const [smallCategory, setSmallCategory] = useState([]);
   const quillRef = useRef(null);
+  const token = localStorage.getItem('token');
 
 const imageHandler = () => {
   const input = document.createElement('input');
@@ -25,18 +26,35 @@ const imageHandler = () => {
   input.click();
 
   input.onchange = async () => {
-    const file = input.files[0];
+    const file = input.files?.[0];
+    if (!file) return;
+
     const formData = new FormData();
     formData.append('image', file);
 
     try {
-      const res = await axios.post('/api/upload', formData);
-      const imageUrl = res.data.url;
+      const res = await axios.post('/api/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,  // 토큰 넣기
+        },
+      });
 
-      const editor = quillRef.current.getEditor();
-      const range = editor.getSelection(true);
-      editor.insertEmbed(range.index, 'image', imageUrl);
-      editor.setSelection(range.index + 1);
+      console.log('서버 응답:', res);       // 전체 응답 객체 확인
+      console.log('응답 데이터:', res.data); // 실제 데이터 부분 확인
+
+      // 업로드된 이미지의 URL
+      const imageUrl = res.data?.url || res.data; // 서버 응답 형태에 따라 조정
+
+      // Quill 에디터 인스턴스 가져오기
+      const editor = quillRef.current?.getEditor?.();
+      if (editor) {
+        const range = editor.getSelection(true); // 현재 커서 위치 가져오기
+        editor.insertEmbed(range.index, 'image', imageUrl); // 이미지 삽입
+        editor.setSelection(range.index + 1); // 커서를 이미지 뒤로 이동
+      } else {
+        console.error('에디터가 초기화되지 않았습니다.');
+      }
     } catch (err) {
       console.error('이미지 업로드 실패', err);
     }
@@ -166,6 +184,28 @@ const modules = useMemo(() => ({
           ))}
         </select>
       </div>
+
+      {/* <input
+        type="file"
+        accept="image/*"
+        onChange={e => {
+          const file = e.target.files[0];
+          if (file) {
+            // 파일을 post 상태에도 저장 (기존 방식 유지)
+            setPost(prev => ({ ...prev, image: file }));
+
+            // 이미지 미리보기 URL 만들기
+            const reader = new FileReader();
+            reader.onload = () => {
+              const quill = quillRef.current.getEditor();
+              const range = quill.getSelection(true); // 현재 커서 위치
+              quill.insertEmbed(range.index, 'image', reader.result);
+              quill.setSelection(range.index + 1); // 커서 다음으로 이동
+            };
+            reader.readAsDataURL(file); // base64로 읽기
+          }
+        }}
+      /> */}
 
       <ReactQuill
         ref={quillRef}
