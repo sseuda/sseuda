@@ -122,13 +122,15 @@
             post_title,
             post_content,
             post_create_at,
-            small_category_id
+            small_category_id,
+            user_id
         )
         VALUES (
             #{dto.postTitle},
             #{dto.postContent},
             #{dto.postCreateAt},
-            #{dto.smallCategoryId}
+            #{dto.smallCategoryId},
+            #{userCode}
         )
     </insert>
 

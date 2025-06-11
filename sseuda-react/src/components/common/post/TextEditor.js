@@ -4,34 +4,54 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Editor from './css/PostTextEditor.module.css';
 import { decodeJwt } from '../../../utils/tokenUtils';
+import { useNavigate, useParams } from 'react-router-dom';
+import { callUserPostsListApi } from '../../../apis/PostAPICalls';
+import { useDispatch } from 'react-redux';
+
+
 
 function TextEditor() {
+
+  const navigate = useNavigate();
+  const {paramUsername} = useParams();
+  
+  const [category, setCategory] = useState([]);
+  const [smallCategory, setSmallCategory] = useState([]);
+  
   const [post, setPost] = useState({
+    username: '',
     postTitle: '',
     postContent: '',
     createAt: '',
     categoryBig: '',
     categorySmall: '',
-    image: null,
+    image: '',
   });
-
-  const [category, setCategory] = useState([]);
-  const [smallCategory, setSmallCategory] = useState([]);
-  const quillRef = useRef(null);
-  const token = window.localStorage.getItem('accessToken');
-  console.log("accessToken : ", token);
-  // const decodedToken = isLogin ? decodeJwt(isLogin) : null;
-
-  // useEffect(() => {
-  //     if (!isLogin || !decodedToken || isTokenExpired(decodedToken)) {
-  //         alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
-  //         navigate("/auth/login");
-  //         return;
-  //     }
   
-  //     dispatch(callUserPostsListApi({ username: paramUsername }));
-  //   }, [dispatch]);
+  const quillRef = useRef(null);
 
+  const isLogin = window.localStorage.getItem('accessToken');
+  const decodedToken = isLogin ? decodeJwt(isLogin) : null;
+  const username = decodedToken?.sub ?? null;
+
+  function isTokenExpired(decodedToken) {
+    const currentTime = Math.floor(Date.now() / 1000);
+    return decodedToken.exp < currentTime;
+  }
+
+  useEffect(() => {
+      if (!isLogin || !decodedToken || isTokenExpired(decodedToken)) {
+          alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
+          navigate("/auth/login");
+          return;
+      }
+  
+    }, []);
+
+    console.log("username : ", paramUsername);
+    console.log("token : ", isLogin);
+
+    
 const imageHandler = () => {
   const input = document.createElement('input');
   input.setAttribute('type', 'file');
@@ -49,7 +69,7 @@ const imageHandler = () => {
       const res = await axios.post('http://localhost:8080/sseudaimgs', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${isLogin}`,
         },
       });
 
@@ -100,19 +120,22 @@ const modules = useMemo(() => ({
 
       rawData.forEach(item => {
         const bigName = item.categoryBigDTO.bigCategoryName;
+        const smallId = item.smallCategoryId;
         const smallName = item.smallCategoryName;
 
         if(!categoryMap[bigName]){
           categoryMap[bigName] = [];
         }
 
-        categoryMap[bigName].push(smallName)
+        categoryMap[bigName].push({id: smallId, name: smallName})
+        console.log("카테고리 아이디는???????? ", smallId);
       });
       setCategory(categoryMap);
     })
     .catch(err => {
       console.log('카테고리 데이터 로드 실패', err);
     });
+
 
   }, []);
 
@@ -145,17 +168,18 @@ const modules = useMemo(() => ({
   const handleSave = async () => {
     try {
       const formData = new FormData();
+      formData.append('paramUsername', paramUsername);
       formData.append('postTitle', post.postTitle);
       formData.append('postContent', post.postContent);
       formData.append('createAt', post.createAt);
       formData.append('categoryBig', post.categoryBig);
-      formData.append('categorySmall', post.categorySmall);
+      formData.append('smallCategoryId', post.categorySmall);
       formData.append('image', post.image);
 
-      const response = await axios.post('http://localhost:8080/post/posting', formData, {
+      const response = await axios.post(`http://localhost:8080/post/${paramUsername}/posting`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`,  // ✅ 반드시 이 헤더 포함!
+          'Authorization': `Bearer ${isLogin}`,  // ✅ 반드시 이 헤더 포함!
         },
       });
 
@@ -164,6 +188,8 @@ const modules = useMemo(() => ({
       console.error('저장 실패', err);
     }
   };
+
+  console.log(post.image);
 
   return (
     <div className={Editor.editorBox}>
@@ -190,15 +216,15 @@ const modules = useMemo(() => ({
           value={post.categorySmall}
           onChange={handleCategorySmallChange}
           disabled={!post.categoryBig}
-        >
+          >
           <option value="">소분류 선택</option>
           {smallCategory.map(small => (
-            <option key={small} value={small}>{small}</option>
+            <option key={small.id} value={small.id}>{small.name}</option>
           ))}
         </select>
       </div>
 
-      {/* <input
+      <input
         type="file"
         accept="image/*"
         onChange={e => {
@@ -218,13 +244,13 @@ const modules = useMemo(() => ({
             reader.readAsDataURL(file); // base64로 읽기
           }
         }}
-      /> */}
+      />
 
       <ReactQuill
         ref={quillRef}
         value={post.postContent}
         onChange={value => setPost({ ...post, postContent: value })}
-        modules={modules}
+        // modules={modules}
         style={{ width: '1280px' }}
       />
 

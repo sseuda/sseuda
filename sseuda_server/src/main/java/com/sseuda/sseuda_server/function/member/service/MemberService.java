@@ -60,6 +60,9 @@ public class MemberService {
 
     // 특정 회원 조회 (username)
     public MemberDTO getMemberByUsername(String username) {
+
+        System.out.println("username????? " + username);
+
         return memberMapper.findMemberByUsername(username);
     }
 

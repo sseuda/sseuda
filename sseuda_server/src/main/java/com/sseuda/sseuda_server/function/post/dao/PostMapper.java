@@ -26,7 +26,7 @@ public interface PostMapper {
     List<PostDTO> findUserCategoryPostList(int userCode, int bigCategoryId, int smallCategoryId);
 
 //    회원별 게시글 등록
-    void saveUserPosting(@Param("dto") PostDTO dto);
+    void saveUserPosting(@Param("dto") PostDTO dto, int userCode);
 
 //    회원별 게시글 삭제
     int deleteUserPosting(PostDTO post, int userCode, int postId);
