@@ -55,6 +55,12 @@ public class PostService {
         return postMapper.findUserCategoryPostList(userCode, smallCategoryId);
     }
 
+    // 검색용
+    public List<PostDTO> searchPosts(String keyword) {
+
+        return postMapper.searchPosts(keyword);
+    }
+
 //    회원별 게시글 등록
     public void saveUserPosting(PostDTO dto, int userCode) {
 //

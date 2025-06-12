@@ -118,6 +118,17 @@
         c.big_category_id = #{ bigCategoryId }
     </select>
 
+<!--  검색용  -->
+    <select id="searchPosts" resultMap="postResultMap">
+        SELECT b.user_nickname, a.*
+        FROM tbl_post a
+        JOIN tbl_member b ON a.user_id = b.user_id
+        WHERE (post_title LIKE CONCAT('%', #{keyword}, '%')
+        OR post_content LIKE CONCAT('%', #{keyword}, '%'))
+        AND post_delete = 'N'
+        ORDER BY post_create_at DESC
+    </select>
+
     <insert id="saveUserPosting" parameterType="map">
         INSERT INTO tbl_post (
             post_title,

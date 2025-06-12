@@ -25,6 +25,9 @@ public interface PostMapper {
 //    회원별 카테고리 게시글 전체 조회
     List<PostDTO> findUserCategoryPostList(int userCode, int smallCategoryId);
 
+//    검색용
+    List<PostDTO> searchPosts(@Param("keyword") String keyword);
+
 //    회원별 게시글 등록
     void saveUserPosting(@Param("dto") PostDTO dto, int userCode);
 
