@@ -39,7 +39,7 @@
 <!--    게시글 전체 조회 -->
     <select id="findPostList" resultMap="postResultMap">
         SELECT
-        b.username,
+        b.user_nickname,
         a.post_title,
         a.post_content,
         a.post_create_at,
@@ -53,7 +53,7 @@
 <!--    게시글 상세 조회-->
     <select id="findPost" resultMap="postResultMap">
         SELECT
-            b.username,
+            b.user_nickname,
             a.post_title,
             a.post_content,
             a.post_create_at,
@@ -85,7 +85,7 @@
 <!--    회원별 게시글 전체 조회 -->
     <select id="findUserPostList" resultMap="postResultMap">
         SELECT
-            b.username,
+            b.user_nickname,
             a.post_title,
             a.post_content,
             a.post_create_at,

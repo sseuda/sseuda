@@ -42,16 +42,14 @@ if(!post){
         </div>
         <div className={Detail.decBox}>
           <div className={Detail.userBox}>
-            <p>{post.memberDTO?.username}</p>
+            <p>{post.memberDTO?.userNickname}</p>
             <p>{post.postCreateAt}</p>
           </div>
           <div className={Detail.userView}>
             <p>{post.viewCount}</p>
           </div>
         </div>
-        <div className={Detail.contentBox}>
-          {post.postContent}
-        </div>
+        <div className={Detail.contentBox} dangerouslySetInnerHTML={{ __html: post.postContent }}/>
       </div>
     </>
   )
