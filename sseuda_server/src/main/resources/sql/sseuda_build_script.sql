@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS tbl_likes (
 -- 알림 테이블
 CREATE TABLE IF NOT EXISTS tbl_alarm (
     alarm_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '알림번호',
-    alarm_type ENUM('POST', 'COMMENT', 'LIKE') NOT NULL COMMENT '알림 유형',
+    alarm_type VARCHAR(10) NOT NULL COMMENT '알림 유형',
     alarm_detail VARCHAR(255) NOT NULL COMMENT '알림 내용',
     user_id INT NOT NULL COMMENT '알림 받을 회원 ID',
     post_id INT NOT NULL COMMENT '알림 대상 게시글 ID',

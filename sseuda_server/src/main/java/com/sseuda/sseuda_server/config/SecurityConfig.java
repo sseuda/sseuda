@@ -84,7 +84,7 @@ public class SecurityConfig {
                                 "/post/**",
                                 "/mypage/**",
                                 "/api/**",
-                                "/sseudaimgs/**" 
+                                "/sseudaimgs/**"
                         ).permitAll()
                                 .anyRequest().authenticated()
                 ).cors(cors -> cors.configurationSource(corsConfigurationSource()))
