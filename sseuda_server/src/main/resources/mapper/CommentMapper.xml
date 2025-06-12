@@ -22,4 +22,21 @@
         WHERE
             post_id = #{postId}
     </select>
+
+    <insert id="insertComment" parameterType="map">
+        INSERT INTO tbl_comment
+        (
+            comment_text,
+            comment_create_at,
+            post_id,
+            user_id
+        )
+        VALUES
+        (
+            #{dto.commentText},
+            #{dto.commentCreateAt},
+            #{dto.postId},
+            #{userCode}
+        )
+    </insert>
 </mapper>

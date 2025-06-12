@@ -24,4 +24,9 @@ public class CommentService {
 
         return commentMapper.findPostComment(postId);
     }
+
+    public void insertComment(CommentDTO dto, int userCode, int postId) {
+
+        commentMapper.insertComment(dto, userCode, postId);
+    }
 }
