@@ -34,7 +34,7 @@ public class CommentController {
     }
 
     @Operation(summary = "게시물별 특정 회원 댓글 등록", description = "게시물별 특정 회원 댓글 등록이 진행됩니다.", tags = { "CommentController" })
-    @PostMapping("/comment/{username}")
+    @PostMapping("/comment/{username}/input")
     public ResponseEntity<String> insertComment(@ModelAttribute CommentDTO dto,
                                                      @RequestParam("postId") int postId,
                                                      @PathVariable("username") String username){
@@ -49,5 +49,23 @@ public class CommentController {
         System.out.println("받은 CommentDTO: " + dto);
 
         return ResponseEntity.ok("댓글 등록 성공");
+    }
+
+    @Operation(summary = "게시물별 특정 회원 댓글 수정", description = "게시물별 특정 회원의 댓글 수정이 진행됩니다.", tags = { "CommentController" })
+    @PutMapping("/comment/{username}/update")
+    public ResponseEntity<String> updateComment(@ModelAttribute CommentDTO dto,
+                                                @RequestParam("postId") int postId,
+                                                @PathVariable("username") String username){
+
+        int userCode = 0;
+        if(username != null){
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
+        System.out.println("아이디는?? " + userCode);
+
+        commentService.updateComment(dto, userCode, postId);
+        System.out.println("받은 CommentDTO: " + dto);
+
+        return ResponseEntity.ok("댓글 수정 성공");
     }
 }

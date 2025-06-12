@@ -39,4 +39,15 @@
             #{userCode}
         )
     </insert>
+
+    <update id="updateComment" parameterType="map">
+        UPDATE tbl_comment
+        SET
+            comment_text = #{dto.commentText},
+            comment_create_at = #{dto.commentCreateAt}
+        WHERE
+            user_id = #{userCode} AND
+            post_id = #{dto.postId} AND
+            comment_id = #{dto.commentId}
+    </update>
 </mapper>

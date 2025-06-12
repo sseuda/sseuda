@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,8 +26,15 @@ public class CommentService {
         return commentMapper.findPostComment(postId);
     }
 
+    @Transactional
     public void insertComment(CommentDTO dto, int userCode, int postId) {
 
         commentMapper.insertComment(dto, userCode, postId);
+    }
+
+    @Transactional
+    public void updateComment(CommentDTO dto, int userCode, int postId) {
+
+        commentMapper.updateComment(dto, userCode, postId);
     }
 }

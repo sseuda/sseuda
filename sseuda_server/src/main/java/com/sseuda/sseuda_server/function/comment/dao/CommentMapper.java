@@ -11,4 +11,6 @@ public interface CommentMapper {
     List<CommentDTO> findPostComment(int postId);
 
     void insertComment(CommentDTO dto, int userCode, int postId);
+
+    void updateComment(CommentDTO dto, int userCode, int postId);
 }
