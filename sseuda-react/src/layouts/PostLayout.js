@@ -8,13 +8,13 @@ function PostLayout() {
   return (
     <div style={{position: 'relative'}}>
 		<Header />
-		<div style={{display: 'flex', height: '93vh'}}>
+		<div style={{display: 'flex'}}>
 			<CategoryNav style={{position: 'absolute', top: '0', left: '0'}}/>
 			<div>
 				<Outlet/>
 			</div>
 		</div>
-		<Footer />
+		<Footer style={{position: 'absolute', bottom: '0', left: '0'}}/>
 	</div>
   )
 }
