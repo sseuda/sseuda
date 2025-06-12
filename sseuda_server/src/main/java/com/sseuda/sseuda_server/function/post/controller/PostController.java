@@ -24,8 +24,9 @@ public class PostController {
     private MemberService memberService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, MemberService memberService) {
         this.postService = postService;
+        this.memberService = memberService;
     }
 
     @Operation(summary = "게시글 전체 조회", description = "게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
@@ -63,23 +64,32 @@ public class PostController {
     }
 
     @Operation(summary = "회원별 카테고리 게시글 전체 조회", description = "회원별 카테고리 게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
-    @GetMapping("/mypage/{userCode}/{bigCategoryId}/{smallCategoryId}")
+    @GetMapping("/mypage/{userCode}/{smallCategoryId}")
     public ResponseEntity<ResponseDTO> findUserCategoryPostList(@PathVariable("userCode") int userCode,
-                                                            @PathVariable("bigCategoryId") int bigCategoryId,
+//                                                            @PathVariable("bigCategoryId") int bigCategoryId,
                                                             @PathVariable("smallCategoryId") int smallCategoryId){
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "카테고리별 게시글 전체 조회 성공", postService.findUserCategoryPostList(userCode, bigCategoryId, smallCategoryId)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "카테고리별 게시글 전체 조회 성공", postService.findUserCategoryPostList(userCode, smallCategoryId)));
     }
 
 //    React에서 axios로 넘겨준다
     @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
-    @PostMapping("/posting")
-    public ResponseEntity<String> saveUserPosting(@RequestBody PostDTO dto){
+    @PostMapping("/{username}/posting")
+    public ResponseEntity<String> saveUserPosting(@ModelAttribute PostDTO dto,
+                                                  @PathVariable("username") String username){
 
-        postService.saveUserPosting(dto);
+        int userCode = 0;
+        if(username != null){
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
+
+        System.out.println("너의 아이디는? " + userCode);
+
+        postService.saveUserPosting(dto, userCode);
 
         System.out.println("받은 postDTO: " + dto);
-
+        System.out.println("user_id :" + dto.getUserId());
+        System.out.println("image: " + dto.getImage());
         return ResponseEntity.ok("게시글 저장 완료");
 
     }

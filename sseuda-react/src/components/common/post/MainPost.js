@@ -28,7 +28,7 @@ function Post({
             <div className={MainPost.textBox}>
                 <div className={MainPost.userBox}>
                     <p>
-                        {memberDTO?.username}
+                        {memberDTO?.userNickname}
                     </p>
                 </div>
 

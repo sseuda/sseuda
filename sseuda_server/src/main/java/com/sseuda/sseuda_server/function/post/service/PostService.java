@@ -50,20 +50,21 @@ public class PostService {
     }
 
 //    카테고리별 게시글 전체 조회
-    public List<PostDTO> findUserCategoryPostList(int userCode, int bigCategoryId, int smallCategoryId) {
+    public List<PostDTO> findUserCategoryPostList(int userCode, int smallCategoryId) {
 
-        return postMapper.findUserCategoryPostList(userCode, bigCategoryId, smallCategoryId);
+        return postMapper.findUserCategoryPostList(userCode, smallCategoryId);
     }
 
 //    회원별 게시글 등록
-    public void saveUserPosting(PostDTO dto) {
+    public void saveUserPosting(PostDTO dto, int userCode) {
+//
+//        String username = memberMapper.findUsernameByUserId(dto.getUserId());
+//
+//        MemberDTO memberDTO = new MemberDTO();
+//        memberDTO.setUsername(username);
+//        dto.setMemberDTO(memberDTO);
 
-        String username = memberMapper.findUsernameByUserId(dto.getUserId());
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setUsername(username);
-        dto.setMemberDTO(memberDTO);
-
-        postMapper.saveUserPosting(dto);
+        postMapper.saveUserPosting(dto, userCode);
     }
 
 //  회원별 게시글 삭제

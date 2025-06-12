@@ -8,11 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("file:///springboot-app/sseudaimgs/")
-    private String ADD_RESOURCE_LOCATION;
-
-    @Value("/sseudaimgs/**")
-    private String ADD_RESOURCE_HANDLER;
+    private static final String ADD_RESOURCE_HANDLER = "/sseudaimgs/**";
+    private static final String ADD_RESOURCE_LOCATION =
+            "file:" + System.getProperty("user.dir") + "/sseudaimgs/";
 
     // 정적 파일을 관리하는 핸들러
     @Override
