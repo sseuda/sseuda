@@ -57,8 +57,8 @@ public class PostService {
 
     // 검색용
     public List<PostDTO> searchPosts(String keyword) {
-
-        return postMapper.searchPosts(keyword);
+        String[] keywords = keyword.trim().split("\\s+");
+        return postMapper.searchPosts(keywords);
     }
 
 //    회원별 게시글 등록
