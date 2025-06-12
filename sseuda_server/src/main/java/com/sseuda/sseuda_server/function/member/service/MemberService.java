@@ -60,6 +60,9 @@ public class MemberService {
 
     // 특정 회원 조회 (username)
     public MemberDTO getMemberByUsername(String username) {
+
+        System.out.println("username????? " + username);
+
         return memberMapper.findMemberByUsername(username);
     }
 
@@ -88,17 +91,29 @@ public class MemberService {
         return username;
     }
 
-    public void sendUsernameEmail(String to, String username) {
+    // 아이디 찾기 (풀네임, 이메일)
+    public String findUsernameByFullnameAndEmail(String fullname, String email) {
+        String username = memberMapper.findUsernameByFullnameAndEmail(fullname, email);
+        System.out.println("입력한 풀네임: " + fullname + " / 입력한 이메일: " + email);
+
+        if (username == null) {
+            throw new IllegalArgumentException("서비스: 일치하는 사용자를 찾을 수 없습니다.");
+        }
+
+        return username;
+    }
+
+    public void sendUsernameEmail(String fullname, String to, String username) {
         String subject = "[쓰다] 아이디 찾기 결과";
         String content = String.format("""
-                <div style='padding:20px; font-family:sans-serif;'>
-                    <h2>아이디 찾기 결과</h2>
-                    <p>요청하신 이메일로 가입된 아이디는 다음과 같습니다:</p>
-                    <p style='font-weight:bold; font-size:18px;'>%s</p>
-                    <br>
-                    <p>감사합니다.</p>
-                </div>
-                """, username);
+            <div style='padding:20px; font-family:sans-serif;'>
+                <h2>아이디 찾기 결과</h2>
+                <p><strong>%s</strong> 님, 요청하신 이메일로 가입된 아이디는 다음과 같습니다:</p>
+                <p style='font-weight:bold; font-size:18px;'>%s</p>
+                <br>
+                <p>감사합니다.</p>
+            </div>
+            """, fullname, username);
 
         MimeMessage message = mailSender.createMimeMessage();
 

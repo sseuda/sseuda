@@ -1,0 +1,19 @@
+.ql-editor img {
+  max-width: 50px;
+  height: auto;
+}
+
+.ql-snow .ql-editor img {
+    max-width: 20%;
+}
+
+/* write section 용도. 스크롤 바로 동작! */
+/* .ql-container.ql-snow { */
+  /* border-style: none !important; 기본적으로 있는 border 지정. */
+  /* height: 1390px; */
+/* } */
+
+.ql-editor > * {
+    cursor: text;
+    height: 900px;
+}

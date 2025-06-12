@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sseuda.sseuda_server.function.alarm.dao.AlarmMapper">
+
+    <resultMap id="alarmResultMap" type="com.sseuda.sseuda_server.function.alarm.dto.AlarmDTO">
+        <id property="alarmId" column="alarm_id"/>
+        <result property="alarmType" column="alarm_type"/>
+        <result property="alarmDetail" column="alarm_detail"/>
+        <result property="userId" column="user_id"/>
+        <result property="postId" column="post_id"/>
+        <result property="commentId" column="comment_id"/>
+        <result property="likesId" column="likes_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="userNickname" column="user_nickname"/>
+    </resultMap>
+
+<!--  사용자별 알람 조회  -->
+    <select id="selectAlarmsByUserId" resultMap="alarmResultMap" parameterType="int">
+        SELECT a.*, m.user_nickname
+        FROM tbl_alarm a
+        JOIN tbl_post p ON a.post_id = p.post_id
+        JOIN tbl_member m ON a.user_id = m.user_id
+        WHERE p.user_id = #{userId}
+        ORDER BY a.created_at DESC
+    </select>
+</mapper>

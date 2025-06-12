@@ -25,6 +25,8 @@ public interface MemberMapper {
 
     String findUsernameByEmail(String email);
 
+    String findUsernameByFullnameAndEmail(String fullname, String email);
+
     // 비밀번호 초기화
     void insertPasswordToken(PasswordTokenDTO passwordToken);
     PasswordTokenDTO findPasswordToken(String token);
@@ -33,4 +35,7 @@ public interface MemberMapper {
     int updatePassword(MemberDTO member);
 
     int deleteByToken(String token);
+
+//    post에서 필요한 username 가져오기
+    String findUsernameByUserId(int userId);
 }

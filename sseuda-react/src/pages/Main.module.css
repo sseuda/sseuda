@@ -1,5 +1,130 @@
+.searchBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.searchWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 700px;
+    height: 60px;
+    border: 2px solid #A9CDD7;
+    border-radius: 30px;
+    background-color: #fff;
+    overflow: hidden;
+    margin-left: 20px;
+}
+
+.searchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 30px;
+    font-size: 18px;
+    background-color: white;
+    color: #333;
+}
+
+.searchInput::placeholder {
+    color: #A9CDD7;
+}
+
+.searchBtn {
+    width: 70px;
+    background-color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.searchIcon {
+    color: #A9CDD7;
+    font-size: 20px;
+}
+
 .mainBox{
+    width: 1310px;
     display: flex;
     justify-content: space-between;
-    margin: 52px 304px;
+    margin: 52px auto;
+}
+
+.loginBox {
+    width: 480px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.login {
+    width: 480px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loginBTN {
+    width: 80%;
+    max-width: 420px;
+    height: 120px;
+    background-color: #ffffff;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border: 2px solid #A9CDD7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.loginBTN:hover {
+    border-color: #F5C3A4;
+}
+
+.logo {
+    width: 100px;
+}
+
+.myBlog {
+    width: 480px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.myBlogBTN {
+    width: 80%;
+    height: 120px;
+    max-width: 420px;
+    background-color: #A9CDD7;
+    border-radius: 50px;
+    font-size: 18px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.myBlogBTN:hover {
+    color: #3e3e3e;
+    background-color: #FCEF9F;
 }

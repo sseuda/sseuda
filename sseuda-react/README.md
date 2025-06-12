@@ -39,3 +39,33 @@
     * npm install react@18.2.0 react-dom@18.2.0
     * npm install react-quill
 
+
+## 2025.06.02 font awesome 설치
+
+- icon 관련 키트를 모아놓은 'Font Awesome' 설치
+- 리액트에서 사용하는 fontawesome 설치
+
+📝 참고:
+- 사용한 명령어 
+    * npm i --save @fortawesome/fontawesome-free
+    * npm install --save @fortawesome/react-fontawesome (중요)
+    * npm i --save @fortawesome/free-solid-svg-icons (중요)
+
+
+## 2025.06.05 스와이퍼 설치
+
+- 메인에 돌아가는 배너에 사용
+
+📝 참고:
+- 사용한 명령어 
+    * 
+    
+
+## 2025.06.04 jwt-decode 설치
+
+- Jwt에서 username이라는 정보를 추출하기 위해서 'decodeJwt'를 사용해야 한다.
+
+📝 참고:
+- 사용한 명령어 
+    * npm install jwt-decode
+

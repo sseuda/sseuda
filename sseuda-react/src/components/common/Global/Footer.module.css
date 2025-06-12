@@ -1,0 +1,8 @@
+.footerBox{
+    width: 100%;
+    height: 390px;
+    text-align: center;
+    padding: 180px 0;
+    background-color: #aeaeae;
+    color: var(--text01);
+}

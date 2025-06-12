@@ -66,51 +66,107 @@ export const callCategoryPostsListApi = () =>{
 };
 
 //  회원별 게시글 전체 조회
-export const callUserPostsListApi = ({userCode}) =>{
+// export const callUserPostsListApi = ({username}) =>{
 
-    let requestURL = `${prefix}/post/mypage/${userCode}`;
-    console.log('[PostApiCalls] requestURL : ', requestURL);
+//     let requestURL = `${prefix}/post/mypage/${username}`;
+//     console.log('[PostApiCalls] requestURL : ', requestURL);
 
-    return async (dispatch, getState) => {
-        const result = await fetch(requestURL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: '*/*',
-            }
-        }).then((response) => response.json());
-        if(result.status === 200){
-            console.log('[PostApiCalls] callUserPostsListApi RESULT : ', result);
-            dispatch({type: GET_USER_POSTS, payload: result.data});
-        }
-    };
+//     return async (dispatch, getState) => {
+//         const result = await fetch(requestURL, {
+//             method: 'GET',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 Accept: '*/*',
+//             }
+
+//         }).then((response) => response.json());
+//         if(result.status === 200){
+//             console.log('[PostApiCalls] callUserPostsListApi RESULT : ', result);
+//             dispatch({type: GET_USER_POSTS, payload: result.data});
+//         }
+//     };
+// };
+
+export const callUserPostsListApi = ({ username }) => {
+  let requestURL = `${prefix}/post/mypage/${username}`;
+  console.log('[PostApiCalls] requestURL : ', requestURL);
+
+  return async (dispatch, getState) => {
+    const response = await fetch(requestURL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: '*/*',
+      }
+    });
+
+    // 응답이 비어있으면 빈 배열 처리 (예: 게시글 없을 때)
+    const text = await response.text();  // 먼저 텍스트로 읽기
+    let result = null;
+    try {
+      result = text ? JSON.parse(text) : null;
+    } catch (e) {
+      console.error('JSON 파싱 에러:', e);
+      result = null;
+    }
+
+    if (result && result.status === 200) {
+      console.log('[PostApiCalls] callUserPostsListApi RESULT : ', result);
+      dispatch({ type: GET_USER_POSTS, payload: result.data });
+    } else {
+      console.warn('API 호출 실패 또는 결과 없음:', result);
+      // 빈 배열로 초기화 하거나 에러 처리
+      dispatch({ type: GET_USER_POSTS, payload: [] });
+    }
+  };
 };
+
 
 //  회원 카테고리별 게시글 전체 조회
-export const callUserCategoryPostsListApi = () =>{
+export const callUserCategoryPostsListApi = ({ username, smallCategoryId }) => {
 
-    let requestURL = `${prefix}/post/mypage/{userCode}/{bigCategoryId}/{smallCategoryId}`;
-    console.log('[ProductApiCalls] requestURL : ', requestURL);
+  let requestURL = `${prefix}/post/mypage/${username}/${smallCategoryId}`;
+  console.log('[PostApiCalls] requestURL : ', requestURL);
 
-    return async (dispatch, getState) => {
-        const result = await fetch(requestURL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: '*/*'
-            }
-        }).then((response) => response.json());
-        if(result.status === 200){
-            console.log('[PostApiCalls] callUserCategoryPostsListApi RESULT : ', result);
-            dispatch({type: GET_USER_CATEGORY_POSTS, payload: result.data});
-        }
-    };
+  return async (dispatch, getState) => {
+    const response = await fetch(requestURL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: '*/*',
+        Authorization:
+            'Bearer ' + window.localStorage.getItem('accessToken')
+      }
+    });
+
+    // 상태코드가 200인지 확인
+    if (!response.ok) {
+      console.error('API 요청 실패, 상태:', response.status);
+      return;
+    }
+
+    // 빈 응답을 처리하기 위해 텍스트로 먼저 받음
+    const text = await response.text();
+
+    // 빈 문자열이면 빈 객체로 처리
+    const result = text ? JSON.parse(text) : {};
+
+    console.log('[PostApiCalls] callUserCategoryPostsListApi RESULT : ', result);
+
+    // result.data가 있다면 dispatch
+    if (result.data) {
+      dispatch({ type: GET_USER_CATEGORY_POSTS, payload: result.data });
+    } else {
+      console.warn('API 응답에 data가 없습니다.');
+    }
+  };
 };
+
 
 //  회원별 게시글 등록
 export const callPostRegistApi = ({form}) =>{
 
-    let requestURL = `${prefix}/post/mypage/posting`;
+    let requestURL = `${prefix}/post/{userCode}/posting`;
     console.log('[PostApiCalls] callPostRegistApi Call');
 
     return async (dispatch, getState) => {
@@ -131,7 +187,7 @@ export const callPostRegistApi = ({form}) =>{
 //  회원별 게시글 삭제
 export const callDeletePostsApi = ({form}) =>{
 
-    console.log('[ProductApiCalls] callDeletePostsApi Call');
+    console.log('[PostApiCalls] callDeletePostsApi Call');
 
     let requestURL = `${prefix}/post/mypage/{userCode}/{postId}/delete`;
 
