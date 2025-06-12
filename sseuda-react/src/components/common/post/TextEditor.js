@@ -261,7 +261,7 @@ const modules = useMemo(() => ({
         value={post.postContent}
         onChange={value => setPost({ ...post, postContent: value })}
         // modules={modules}
-        style={{ width: '1280px'}}
+        className={Editor.quill}
       />
     </div>
   );
