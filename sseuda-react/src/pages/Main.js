@@ -9,29 +9,19 @@ import { useState } from "react";
 
 function Main() {
   const navigate = useNavigate();
-
-  const token = localStorage.getItem("accessToken");
-  const decoded = token ? decodeJwt(token) : null;
-  const username = decoded ? decoded.sub : null;
-
   const [searchTerm, setSearchTerm] = useState("");
 
   const accessToken = localStorage.getItem('accessToken');
-  const isLogin = !!accessToken;
-	const decodedToken = isLogin ? decodeJwt(accessToken) : null;
+	const decodedToken = accessToken ? decodeJwt(accessToken) : null;
 
-	const isTokenExpired = (decodedToken) => {
+	const isTokenExpired = (accessToken) => {
 		if (!decodedToken) return true;
 		const currentTime = Math.floor(Date.now() / 1000);
 		return decodedToken.exp < currentTime;
 	};
 
-	const handleLogout = async () => {
-		if (!isLogin || isTokenExpired(decodedToken)) {
-			alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
-			navigate("/auth/login");
-			return;
-		}}
+  const isLogin = accessToken && decodedToken && !isTokenExpired(decodedToken);
+  const username = isLogin ? decodedToken.sub : null;
 
   // const handleSearch = () => {
   //   if (searchTerm.trim() === "") {

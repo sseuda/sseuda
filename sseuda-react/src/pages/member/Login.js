@@ -69,6 +69,10 @@ function Login() {
 						placeholder="패스워드"
 						autoComplete="off"
 						onChange={onChangeHandler}
+						onKeyDown={(e) => {
+							if (e.key === "Enter" ) {
+							onClickLoginHandler();}
+						}}
 					/>
 					<button onClick={onClickLoginHandler}>로그인</button>
 				</div>

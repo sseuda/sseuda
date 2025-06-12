@@ -10,8 +10,7 @@ function Header() {
 	const navigate = useNavigate();
 
 	const accessToken = localStorage.getItem('accessToken');
-	const isLogin = !!accessToken;
-	const decodedToken = isLogin ? decodeJwt(accessToken) : null;
+	const decodedToken = accessToken ? decodeJwt(accessToken) : null;
 
 	const isTokenExpired = (decodedToken) => {
 		if (!decodedToken) return true;
@@ -19,8 +18,10 @@ function Header() {
 		return decodedToken.exp < currentTime;
 	};
 
+	const isLogin = accessToken && decodedToken && !isTokenExpired(decodedToken);
+
 	const handleLogout = async () => {
-		if (!isLogin || isTokenExpired(decodedToken)) {
+		if (!isLogin) {
 			alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
 			navigate("/auth/login");
 			return;
