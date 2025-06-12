@@ -24,14 +24,16 @@ function PostMypage() {
 
   return (
     <>
-      <div style={{marginTop: '50px' ,position: 'relative'}}>
-        <button className={Button.allPostBTN}>전체보기</button>
-        <div>
-          {Array.isArray(myPostList) && myPostList.map((post) =>(
-            <MypagePost key={post.postId} post={post}/>
-          ))}
+      {Array.isArray(myPostList) && myPostList.length > 0 ? (
+        <div style={{marginTop: '50px' ,position: 'relative'}}>
+          <button className={Button.allPostBTN}>전체보기</button>
+          <div>
+            {Array.isArray(myPostList) && myPostList.map((post) =>(
+              <MypagePost key={post.postId} post={post}/>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
     </>
   )
 }

@@ -43,12 +43,11 @@ function MyPage() {
 
 
   return (
-    <div style={{width: '100hv', position: 'relative', backgroundColor: 'blue'}}>
+    <div className={MypageCSS.myPageBox}>
       <PostMypage/>
       <div onClick={() => userPageList(username)} className={MypageCSS.textEditorBox}>
         <FontAwesomeIcon className={MypageCSS.penIcon} icon={faPen} />
       </div>
-
     </div>
   )
 }
