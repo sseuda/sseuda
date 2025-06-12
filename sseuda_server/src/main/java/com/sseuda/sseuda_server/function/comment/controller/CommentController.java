@@ -68,4 +68,24 @@ public class CommentController {
 
         return ResponseEntity.ok("댓글 수정 성공");
     }
+
+    @Operation(summary = "게시물별 특정 회원 댓글 삭제", description = "게시물별 특정 회원 댓글 삭제 진행중", tags = { "CommentController" })
+    @DeleteMapping("/comment/{username}/delete")
+    public ResponseEntity<String> deleteComment(@ModelAttribute CommentDTO dto,
+                                                @RequestParam("postId") int postId,
+                                                @PathVariable("username") String username){
+        int userCode = 0;
+        if(username != null){
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
+        System.out.println("아이디는?? " + userCode);
+
+        commentService.deleteComment(dto, userCode, postId);
+        System.out.println("받은 CommentDTO: " + dto);
+
+        return ResponseEntity.ok("댓글 삭제 성공");
+    }
+
 }
+
+

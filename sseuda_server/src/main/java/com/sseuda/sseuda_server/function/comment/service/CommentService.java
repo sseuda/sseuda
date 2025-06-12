@@ -37,4 +37,10 @@ public class CommentService {
 
         commentMapper.updateComment(dto, userCode, postId);
     }
+
+    @Transactional
+    public void deleteComment(CommentDTO dto, int userCode, int postId) {
+
+        commentMapper.deleteComment(dto, userCode, postId);
+    }
 }

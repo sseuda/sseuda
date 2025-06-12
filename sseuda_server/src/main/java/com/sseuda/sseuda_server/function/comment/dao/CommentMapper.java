@@ -13,4 +13,6 @@ public interface CommentMapper {
     void insertComment(CommentDTO dto, int userCode, int postId);
 
     void updateComment(CommentDTO dto, int userCode, int postId);
+
+    void deleteComment(CommentDTO dto, int userCode, int postId);
 }

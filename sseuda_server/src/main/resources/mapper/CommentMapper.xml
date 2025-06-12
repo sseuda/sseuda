@@ -50,4 +50,12 @@
             post_id = #{dto.postId} AND
             comment_id = #{dto.commentId}
     </update>
+
+    <delete id="deleteComment" parameterType="map">
+        DELETE
+        FROM tbl_comment
+        WHERE user_id = #{userCode} AND
+        post_id = #{dto.postId} AND
+        comment_id = #{dto.commentId}
+    </delete>
 </mapper>
