@@ -124,10 +124,18 @@
         SELECT b.user_nickname, a.*
         FROM tbl_post a
         JOIN tbl_member b ON a.user_id = b.user_id
-        WHERE (post_title LIKE CONCAT('%', #{keyword}, '%')
-        OR post_content LIKE CONCAT('%', #{keyword}, '%'))
-        AND post_delete = 'N'
-        ORDER BY post_create_at DESC
+        WHERE a.post_delete = 'N'
+        AND (
+        <if test="keywords != null and keywords.length > 0">
+            <foreach collection="keywords" item="keyword" separator="AND">
+                (
+                a.post_title LIKE CONCAT('%', #{keyword}, '%')
+                OR a.post_content LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </foreach>
+        </if>
+        )
+        ORDER BY a.post_create_at DESC
     </select>
 
     <insert id="saveUserPosting" parameterType="map">
