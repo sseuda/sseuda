@@ -2,7 +2,7 @@ package com.sseuda.sseuda_server.function.comment.dto;
 
 import java.sql.Timestamp;
 
-public class CommemtDTO {
+public class CommentDTO {
 
     private int commentId;
     private String commentText;
@@ -12,10 +12,10 @@ public class CommemtDTO {
     private int postId;
     private int userId;
 
-    public CommemtDTO() {
+    public CommentDTO() {
     }
 
-    public CommemtDTO(int commentId, String commentText, Timestamp commentCreateAt, Timestamp commentUpdateAt, String commentDelete, int postId, int userId) {
+    public CommentDTO(int commentId, String commentText, Timestamp commentCreateAt, Timestamp commentUpdateAt, String commentDelete, int postId, int userId) {
         this.commentId = commentId;
         this.commentText = commentText;
         this.commentCreateAt = commentCreateAt;
@@ -83,7 +83,7 @@ public class CommemtDTO {
 
     @Override
     public String toString() {
-        return "CommemtDTO{" +
+        return "CommentDTO{" +
                 "commentId=" + commentId +
                 ", commentText='" + commentText + '\'' +
                 ", commentCreateAt=" + commentCreateAt +
