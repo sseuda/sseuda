@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { callUserCategoryPostsListApi } from '../../apis/PostAPICalls';
 import MypagePost from '../../components/common/post/MypagePost';
+import CategoryNav from '../../components/common/category/CategoryNav';
 
 
 function UserPage() {
@@ -24,12 +25,16 @@ function UserPage() {
 
 
   return (
-    <div>
+    <div style={{display: 'flex'}}>
+        <CategoryNav style={{position: 'absolute', top: '0', left: '0'}}/>
+        <div>
         {Array.isArray(userList) && userList.map((post) =>(
             <MypagePost key={post.postId} post={post}/>
         ))}
     </div>
+    </div>
   )
+    
 }
 
 export default UserPage;

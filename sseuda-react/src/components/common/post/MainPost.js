@@ -22,6 +22,10 @@ function Post({
     
     const firstImage = extractFirstImageSrc(postContent);
 
+    const removeImageTags = (html) => {
+  return html.replace(/<img[^>]*>/gi, '');
+};
+
   return (
     <div className={MainPost.postBox} onClick={() => onClickPostHandler(postId)}>
         <div className={MainPost.box}>
@@ -34,7 +38,7 @@ function Post({
 
                 <div className={MainPost.contentBox}>
                     <h2>{postTitle}</h2>
-                    <p>{postContent}</p>
+                      <div dangerouslySetInnerHTML={{ __html: removeImageTags(postContent) }} />
                 </div>
             </div>
             <div className={MainPost.imgBox}>

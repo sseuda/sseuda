@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { callUserPostsListApi } from '../../../apis/PostAPICalls';
 import { useDispatch } from 'react-redux';
 import './css/PostTextEditor.css';
-
+import Global from '../Global/Button.module.css';
 
 function TextEditor() {
 
@@ -187,6 +187,8 @@ const modules = useMemo(() => ({
     } catch (err) {
       console.error('저장 실패', err);
     }
+
+    navigate(`/post/mypage/${username}`, {replace:false});
   };
 
   console.log(post.image);
@@ -203,25 +205,33 @@ const modules = useMemo(() => ({
       </div>
 
       <div className={Editor.titleBox}>
-        {/* 대분류 셀렉트박스 */}
-        <select value={post.categoryBig} onChange={handleCategoryBigChange}>
-          <option value="">대분류 선택</option>
-          {Object.keys(category).map(big => (
-            <option key={big} value={big}>{big}</option>
-          ))}
-        </select>
 
-        {/* 소분류 셀렉트박스 */}
-        <select
-          value={post.categorySmall}
-          onChange={handleCategorySmallChange}
-          disabled={!post.categoryBig}
-          >
-          <option value="">소분류 선택</option>
-          {smallCategory.map(small => (
-            <option key={small.id} value={small.id}>{small.name}</option>
-          ))}
-        </select>
+        <div className={Editor.selectBox}>
+          {/* 대분류 셀렉트박스 */}
+            <select value={post.categoryBig} onChange={handleCategoryBigChange}>
+              <option value="">대분류 선택</option>
+              {Object.keys(category).map(big => (
+                <option key={big} value={big}>{big}</option>
+              ))}
+            </select>
+
+            {/* 소분류 셀렉트박스 */}
+            <select
+              value={post.categorySmall}
+              onChange={handleCategorySmallChange}
+              disabled={!post.categoryBig}
+              >
+              <option value="">소분류 선택</option>
+              {smallCategory.map(small => (
+                <option key={small.id} value={small.id}>{small.name}</option>
+              ))}
+            </select>
+        </div>
+        
+
+        <div>
+          <button onClick={handleSave} className={Global.headerBTN}>저장</button>
+        </div>
       </div>
 
       <input
@@ -251,12 +261,8 @@ const modules = useMemo(() => ({
         value={post.postContent}
         onChange={value => setPost({ ...post, postContent: value })}
         // modules={modules}
-        style={{ width: '1280px'}}
+        className={Editor.quill}
       />
-
-      <div>
-        <button onClick={handleSave}>저장</button>
-      </div>
     </div>
   );
 }
