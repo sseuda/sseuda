@@ -77,6 +77,15 @@ public class PostController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "카테고리별 게시글 전체 조회 성공", postService.findUserCategoryPostList(userCode, smallCategoryId)));
     }
 
+
+    // 검색용
+    @Operation(summary = "검색", description = "검색 키워드에 따라 게시글 조회가 진행됩니다.", tags = {"PostController"})
+    @GetMapping("/search")
+    public ResponseEntity<ResponseDTO> searchPosts(@RequestParam("keyword") String keyword) {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "키워드 검색 성공", postService.searchPosts(keyword)));
+    }
+
+
 //    React에서 axios로 넘겨준다
     @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
     @PostMapping("/{username}/posting")
