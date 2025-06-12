@@ -2,6 +2,7 @@ package com.sseuda.sseuda_server.function.member.dao;
 
 import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
 import com.sseuda.sseuda_server.function.member.dto.PasswordTokenDTO;
+import com.sseuda.sseuda_server.function.member.dto.UserRoleDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -38,4 +39,7 @@ public interface MemberMapper {
 
 //    post에서 필요한 username 가져오기
     String findUsernameByUserId(int userId);
+
+    // user_role 변경
+    int updateUserRole(UserRoleDTO userRoleDTO);
 }

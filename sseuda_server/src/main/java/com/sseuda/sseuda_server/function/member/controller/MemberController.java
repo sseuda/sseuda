@@ -4,6 +4,7 @@ import com.sseuda.sseuda_server.function.member.dao.MemberMapper;
 import com.sseuda.sseuda_server.function.member.dto.MailRequestDTO;
 import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
 import com.sseuda.sseuda_server.function.member.dto.PasswordTokenDTO;
+import com.sseuda.sseuda_server.function.member.dto.UserRoleDTO;
 import com.sseuda.sseuda_server.function.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -166,5 +167,16 @@ public class MemberController {
         memberService.deleteByToken(token);
 
         return "redirect:/login?resetSuccess";  // 로그인 페이지로 이동
+    }
+
+    // user_role 변경
+    @PutMapping("/role")
+    public ResponseEntity<?> updateUserRole(@RequestBody UserRoleDTO userRole) {
+        boolean result = memberService.updateUserRole(userRole);
+        if (result) {
+            return ResponseEntity.ok("권한이 변경되었습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("변경 실패: 해당 유저를 찾을 수 없습니다.");
+        }
     }
 }
