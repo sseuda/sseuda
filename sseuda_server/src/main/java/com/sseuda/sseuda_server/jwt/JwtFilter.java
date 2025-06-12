@@ -17,7 +17,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
-    private AuthService authService;
+    private final AuthService authService;
 
     private static final Logger log = LoggerFactory.getLogger(JwtFilter.class);
     public static final String AUTHORIZATION_HEADER = "Authorization";
