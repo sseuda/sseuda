@@ -3,6 +3,7 @@ package com.sseuda.sseuda_server.function.member.service;
 import com.sseuda.sseuda_server.function.member.dao.MemberMapper;
 import com.sseuda.sseuda_server.function.member.UserStatus;
 import com.sseuda.sseuda_server.function.member.dto.PasswordTokenDTO;
+import com.sseuda.sseuda_server.function.member.dto.UserRoleDTO;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -173,4 +174,9 @@ public class MemberService {
         mailService.sendPasswordEmail(email, token);
     }
 
+    // user_role 변경
+    public boolean updateUserRole(UserRoleDTO userRole) {
+        int updated = memberMapper.updateUserRole(userRole);
+        return updated > 0;
+    }
 }

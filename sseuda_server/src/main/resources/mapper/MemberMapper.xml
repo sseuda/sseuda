@@ -16,6 +16,11 @@
         <result property="userStatus" column="user_status"/>
     </resultMap>
 
+    <resultMap id="userRoleResultMap" type="com.sseuda.sseuda_server.function.member.dto.UserRoleDTO">
+        <id property="userId" column="user_id"/>
+        <result property="userRole" column="user_role"/>
+    </resultMap>
+
     <!-- 전체 회원 조회 -->
     <select id="findAllMembers" resultMap="memberResultMap">
         SELECT * FROM tbl_member
@@ -26,7 +31,7 @@
     SELECT * FROM tbl_member WHERE username = #{username}
     </select>
 
-    <!--  특정 회원 조회 (email  -->
+    <!--  특정 회원 조회 (email)  -->
     <select id="findMemberByEmail" resultMap="memberResultMap" parameterType="string">
         SELECT * FROM tbl_member WHERE user_email = #{email}
     </select>
@@ -55,6 +60,13 @@
             <if test="userEmail != null">user_email = #{userEmail},</if>
             <if test="userPhone != null">user_phone = #{userPhone},</if>
         </set>
+        WHERE user_id = #{userId}
+    </update>
+
+<!--  유저 롤 변경(super 권한)  -->
+    <update id="updateUserRole" parameterType="com.sseuda.sseuda_server.function.member.dto.UserRoleDTO">
+        UPDATE tbl_user_role
+        SET user_role = #{userRole}
         WHERE user_id = #{userId}
     </update>
 
