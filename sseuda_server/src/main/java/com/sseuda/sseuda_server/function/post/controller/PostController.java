@@ -82,6 +82,7 @@ public class PostController {
     @Operation(summary = "검색", description = "검색 키워드에 따라 게시글 조회가 진행됩니다.", tags = {"PostController"})
     @GetMapping("/search")
     public ResponseEntity<ResponseDTO> searchPosts(@RequestParam("keyword") String keyword) {
+        System.out.println("뭐 검색함? " + keyword);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "키워드 검색 성공", postService.searchPosts(keyword)));
     }
 

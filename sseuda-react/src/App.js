@@ -3,7 +3,7 @@ import MypageLayout from "./layouts/MypageLayout";
 import Layout from "./layouts/Layout";
 import PostLayout from "./layouts/PostLayout";
 import PostDetail from "./pages/post/PostDetail";
-import PostMypage from "./pages/post/PostMypage";
+// import PostMypage from "./pages/post/PostMypage";
 import MyPage from "./pages/myPage/MyPage";
 import Login from "./pages/member/Login";
 import Main from "./pages/Main";
@@ -11,9 +11,9 @@ import Signup from "./pages/member/Signup";
 import FindUsername from "./pages/member/FindUsername";
 import ResetPasswordRequest from "./pages/member/ResetPasswordRequest";
 import ResetPassword from "./pages/member/ResetPassword";
-import TextEditor from "./components/common/post/TextEditor";
 import PostTextEditor from "./pages/post/PostTextEditor";
 import UserPage from "./pages/post/UserPage";
+import PostSearchResult from "./pages/post/PostSearchResult";
 
 function App() {
   return (
@@ -27,6 +27,7 @@ function App() {
           <Route path="member/find-username" element={<FindUsername/>}/>
           <Route path="member/reset-password-request" element={<ResetPasswordRequest/>}/>
           <Route path="member/reset-password" element={<ResetPassword/>}/>
+          <Route path="post/search" element={<PostSearchResult/>} />
         </Route>
 
         {/* 마이페이지를 위한 Route */}

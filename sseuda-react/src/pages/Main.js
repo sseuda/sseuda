@@ -23,13 +23,13 @@ function Main() {
   const isLogin = accessToken && decodedToken && !isTokenExpired(decodedToken);
   const username = isLogin ? decodedToken.sub : null;
 
-  // const handleSearch = () => {
-  //   if (searchTerm.trim() === "") {
-  //     alert("검색어를 입력해주세요.");
-  //     return;
-  //   }
-  //   navigate(`/search?query=${encodeURIComponent(searchTerm)}`);
-  // };
+  const handleSearch = () => {
+    if (searchTerm.trim() === "") {
+      alert("검색어를 입력해주세요.");
+      return;
+    }
+    navigate(`/post/search?keyword=${encodeURIComponent(searchTerm)}`);
+  };
 
   const userMyPageList = () => {
     if (username) {
@@ -51,11 +51,11 @@ function Main() {
         type="text"
         className={MainCSS.searchInput}
         placeholder="검색어를 입력하세요"
-        // value={searchTerm}
-        // onChange={(e) => setSearchTerm(e.target.value)}
-        // onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
-      <button className={MainCSS.searchBtn}>
+      <button className={MainCSS.searchBtn} onClick={handleSearch}>
         <FontAwesomeIcon icon={faMagnifyingGlass} className={MainCSS.searchIcon} />
       </button>
     </div>
