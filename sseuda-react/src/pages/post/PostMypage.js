@@ -34,7 +34,8 @@ function PostMypage() {
       alert("카테고리 정보가 없습니다.");
       return;
     }
-    navigate(`/post/mypage/${username}/${smallCategoryId}`);
+    // navigate(`/post/mypage/${username}/${smallCategoryId}`);
+    navigate(`/post/mypage/${username}/1`);
   }
 
   return (

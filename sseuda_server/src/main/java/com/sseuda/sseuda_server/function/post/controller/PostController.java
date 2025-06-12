@@ -64,10 +64,15 @@ public class PostController {
     }
 
     @Operation(summary = "회원별 카테고리 게시글 전체 조회", description = "회원별 카테고리 게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
-    @GetMapping("/mypage/{userCode}/{smallCategoryId}")
-    public ResponseEntity<ResponseDTO> findUserCategoryPostList(@PathVariable("userCode") int userCode,
+    @GetMapping("/mypage/{username}/{smallCategoryId}")
+    public ResponseEntity<ResponseDTO> findUserCategoryPostList(@PathVariable("username") String username,
 //                                                            @PathVariable("bigCategoryId") int bigCategoryId,
                                                             @PathVariable("smallCategoryId") int smallCategoryId){
+
+        int userCode = 0;
+        if(username != null){
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "카테고리별 게시글 전체 조회 성공", postService.findUserCategoryPostList(userCode, smallCategoryId)));
     }
