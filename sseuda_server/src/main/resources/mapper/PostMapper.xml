@@ -39,7 +39,7 @@
 <!--    게시글 전체 조회 -->
     <select id="findPostList" resultMap="postResultMap">
         SELECT
-        b.username,
+        b.user_nickname,
         a.post_title,
         a.post_content,
         a.post_create_at,
@@ -53,7 +53,7 @@
 <!--    게시글 상세 조회-->
     <select id="findPost" resultMap="postResultMap">
         SELECT
-            b.username,
+            b.user_nickname,
             a.post_title,
             a.post_content,
             a.post_create_at,
@@ -85,12 +85,13 @@
 <!--    회원별 게시글 전체 조회 -->
     <select id="findUserPostList" resultMap="postResultMap">
         SELECT
-            b.username,
+            b.user_nickname,
             a.post_title,
             a.post_content,
             a.post_create_at,
             a.view_count,
-            a.post_id
+            a.post_id,
+            a.small_category_id
         FROM
             tbl_post a
         JOIN tbl_member b ON a.user_id = b.user_id
@@ -122,13 +123,15 @@
             post_title,
             post_content,
             post_create_at,
-            small_category_id
+            small_category_id,
+            user_id
         )
         VALUES (
             #{dto.postTitle},
             #{dto.postContent},
             #{dto.postCreateAt},
-            #{dto.smallCategoryId}
+            #{dto.smallCategoryId},
+            #{userCode}
         )
     </insert>
 

@@ -82,10 +82,11 @@ public class SecurityConfig {
                                 "/member/reset-password-request",
                                 "/member/reset-password",
                                 "/post/**",
+                                "/mypage/**",
                                 "/api/**",
-                                "/mypage/**"
+                                "/sseudaimgs/**" 
                         ).permitAll()
-                        .anyRequest().authenticated()
+                                .anyRequest().authenticated()
                 ).cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterBefore(new JwtFilter(tokenProvider, authService), UsernamePasswordAuthenticationFilter.class);
         return http.build();
