@@ -13,6 +13,7 @@ import ResetPasswordRequest from "./pages/member/ResetPasswordRequest";
 import ResetPassword from "./pages/member/ResetPassword";
 import TextEditor from "./components/common/post/TextEditor";
 import PostTextEditor from "./pages/post/PostTextEditor";
+import UserPage from "./pages/post/UserPage";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="post" element={<PostLayout/>}>
           <Route path=":postId" element={<PostDetail/>}/>
           <Route path=":paramUsername/posting" element={<PostTextEditor/>}/>
+          <Route path="mypage/:username/:smallCategoryId" element={<UserPage/>}/>
         </Route>
         
       </Routes>

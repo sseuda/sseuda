@@ -90,7 +90,8 @@
             a.post_content,
             a.post_create_at,
             a.view_count,
-            a.post_id
+            a.post_id,
+            a.small_category_id
         FROM
             tbl_post a
         JOIN tbl_member b ON a.user_id = b.user_id

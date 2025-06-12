@@ -23,7 +23,7 @@ public interface PostMapper {
     List<PostDTO> findUserPostList(int userCode);
 
 //    회원별 카테고리 게시글 전체 조회
-    List<PostDTO> findUserCategoryPostList(int userCode, int bigCategoryId, int smallCategoryId);
+    List<PostDTO> findUserCategoryPostList(int userCode, int smallCategoryId);
 
 //    회원별 게시글 등록
     void saveUserPosting(@Param("dto") PostDTO dto, int userCode);

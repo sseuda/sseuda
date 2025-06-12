@@ -50,9 +50,9 @@ public class PostService {
     }
 
 //    카테고리별 게시글 전체 조회
-    public List<PostDTO> findUserCategoryPostList(int userCode, int bigCategoryId, int smallCategoryId) {
+    public List<PostDTO> findUserCategoryPostList(int userCode, int smallCategoryId) {
 
-        return postMapper.findUserCategoryPostList(userCode, bigCategoryId, smallCategoryId);
+        return postMapper.findUserCategoryPostList(userCode, smallCategoryId);
     }
 
 //    회원별 게시글 등록
