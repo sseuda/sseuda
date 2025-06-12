@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { callUserCategoryPostsListApi } from '../../apis/PostAPICalls';
 import MypagePost from '../../components/common/post/MypagePost';
 
+
 function UserPage() {
 
     const dispatch = useDispatch();

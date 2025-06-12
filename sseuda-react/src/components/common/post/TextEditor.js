@@ -7,7 +7,7 @@ import { decodeJwt } from '../../../utils/tokenUtils';
 import { useNavigate, useParams } from 'react-router-dom';
 import { callUserPostsListApi } from '../../../apis/PostAPICalls';
 import { useDispatch } from 'react-redux';
-
+import './css/PostTextEditor.css';
 
 
 function TextEditor() {
@@ -251,7 +251,7 @@ const modules = useMemo(() => ({
         value={post.postContent}
         onChange={value => setPost({ ...post, postContent: value })}
         // modules={modules}
-        style={{ width: '1280px' }}
+        style={{ width: '1280px'}}
       />
 
       <div>
