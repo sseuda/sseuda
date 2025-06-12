@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/mypage/*")
+//@RequestMapping("/mypage/*")
 public class CategoryController {
 
     private static final Logger log = LoggerFactory.getLogger(CategoryController.class);
@@ -25,7 +25,7 @@ public class CategoryController {
     }
 
     @Operation(summary = "카테고리 전체 조회", description = "카테고리 전체 조회가 진행됩니다.", tags = { "CategoryController" })
-    @GetMapping("/userpage")
+    @GetMapping("post/userpage")
     public ResponseEntity<ResponseDTO> findCategoryList(){
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "카테고리 조회 성공", categoryService.findCategoryList()));

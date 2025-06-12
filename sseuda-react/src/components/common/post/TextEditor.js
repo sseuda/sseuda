@@ -72,7 +72,7 @@ function TextEditor() {
         />
       </div>
       
-      <ReactQuill value={content} onChange={handleChange} />
+      <ReactQuill style={{width: "1280px"}} value={content} onChange={handleChange} />
       <div>
         <button onClick={handleSave}>저장</button>
       </div>
