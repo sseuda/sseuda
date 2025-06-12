@@ -9,8 +9,17 @@
         <result property="commentText" column="comment_text"/>
         <result property="commentCreateAt" column="comment_create_at"/>
         <result property="commentUpdateAt" column="comment_update_at"/>
+        <result property="commentDelete" column="comment_delete"/>
         <result property="postId" column="post_id"/>
         <result property="userId" column="user_id"/>
     </resultMap>
 
+    <select id="findPostComment" resultMap="commentResultMap">
+        SELECT
+            *
+        FROM
+            tbl_comment
+        WHERE
+            post_id = #{postId}
+    </select>
 </mapper>
