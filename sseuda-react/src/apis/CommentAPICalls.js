@@ -3,9 +3,9 @@ import { DELETE_USER_COMMENT, GET_COMMENTS, POST_USER_COMMENT, PUT_USER_COMMENT 
 const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 
 // 게시글별 댓글 전체 조회
-export const callPostCommentListApi = () =>{
+export const callPostCommentListApi = (postId) =>{
 
-    let requestURL = `${prefix}/post/comment`;
+    let requestURL = `${prefix}/post/comment?postId=${postId}`;
     console.log('[CommentAPICalls] requestURL : ', requestURL);
 
     return async (dispatch, getState) =>{

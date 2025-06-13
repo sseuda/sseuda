@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { callPostsListApi } from '../../../apis/PostAPICalls';
 import MainPost from './css/MainPost.module.css';
+import PostComment from '../../../pages/comment/PostComment';
 
 function Post({
   post: {postId, postTitle, postContent, memberDTO}

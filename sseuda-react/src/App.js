@@ -14,6 +14,7 @@ import ResetPassword from "./pages/member/ResetPassword";
 import PostTextEditor from "./pages/post/PostTextEditor";
 import UserPage from "./pages/post/UserPage";
 import PostSearchResult from "./pages/post/PostSearchResult";
+import PostComment from "./pages/comment/PostComment";
 
 function App() {
   return (

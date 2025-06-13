@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { callPostApi } from '../../apis/PostAPICalls';
 import Detail from './css/PostDetail.module.css';
+import PostComment from '../comment/PostComment';
 
 function PostDetail() {
 
@@ -51,6 +52,7 @@ if(!post){
         </div>
         <div className={Detail.contentBox} dangerouslySetInnerHTML={{ __html: post.postContent }}/>
       </div>
+      <PostComment/>
     </>
   )
 }
