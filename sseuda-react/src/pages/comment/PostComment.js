@@ -19,8 +19,7 @@ function PostComment() {
 
     useEffect(() =>{
         fetchData();
-        console.log(commentList, "확인");
-    }, [commentList]);
+    }, []);
     
   return (
     <>

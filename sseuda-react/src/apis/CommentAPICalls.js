@@ -25,10 +25,10 @@ export const callPostCommentListApi = (postId) =>{
 
 
 // 게시글별 특정 회원 댓글 등록
-export const callPostCommentRegistApi = ({form, username}) =>{
+export const callPostCommentRegistApi = ({postId, form, username}) =>{
     console.log('[CommentAPICalls] callPostCommentRegistApi');
 
-    const requestURL = `${prefix}/post/comment/${username}/input`;
+    const requestURL = `${prefix}/post/comment/${username}/input?postId=${postId}`;
 
     return async(dispatch, getState) =>{
         const result = await fetch(requestURL,{
@@ -48,14 +48,14 @@ export const callPostCommentRegistApi = ({form, username}) =>{
 
 
 // 게시글별 특정 회원 댓글 수정
-export const callPostCommentUpdateApi = ({ form, username }) =>{
+export const callPostCommentUpdateApi = ({ postId, form, username }) =>{
     console.log('[CommentAPICalls] callPostCommentUpdateApi');
 
     for(let [key, value] of form.entries()){
         console.log(`??${key}: ${value}`);
     }
 
-    const requestURL = `${prefix}/post/comment/${username}/update`;
+    const requestURL = `${prefix}/post/comment/${username}/update?postId=${postId}`;
     console.log("requestURL: ", requestURL);
 
     return async(dispatch, getState) =>{
@@ -82,10 +82,10 @@ export const callPostCommentUpdateApi = ({ form, username }) =>{
 
 
 // 게시글별 특정 회원 댓글 삭제
-export const callPostCommentDeleteApi = ({form, username}) =>{
+export const callPostCommentDeleteApi = ({postId, form, username}) =>{
     console.log('[CommentAPICalls] callPostCommentDeleteApi');
 
-    const requestURL = `${prefix}/post/comment/${username}/delete`;
+    const requestURL = `${prefix}/post/comment/${username}/delete?postId=${postId}`;
 
     return async(dispatch, getState) =>{
         const result = await fetch(requestURL, {
