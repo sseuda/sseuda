@@ -1,7 +1,8 @@
 .detailBox{
     width: 1280px;
-    height: 1568px;
-    margin: 100px auto;
+    height: 1300px;
+    margin: 100px auto 0 auto;
+    border-bottom: 1px solid var(--text02);
 }
 
 .titleBox{

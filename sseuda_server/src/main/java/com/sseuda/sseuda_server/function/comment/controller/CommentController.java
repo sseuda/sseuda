@@ -35,7 +35,7 @@ public class CommentController {
 
     @Operation(summary = "게시물별 특정 회원 댓글 등록", description = "게시물별 특정 회원 댓글 등록이 진행됩니다.", tags = { "CommentController" })
     @PostMapping("/comment/{username}/input")
-    public ResponseEntity<String> insertComment(@ModelAttribute CommentDTO dto,
+    public ResponseEntity<ResponseDTO> insertComment(@ModelAttribute CommentDTO dto,
                                                      @RequestParam("postId") int postId,
                                                      @PathVariable("username") String username){
 
@@ -45,15 +45,21 @@ public class CommentController {
         }
         System.out.println("아이디는?? " + userCode);
 
-        commentService.insertComment(dto, userCode, postId);
-        System.out.println("받은 CommentDTO: " + dto);
 
-        return ResponseEntity.ok("댓글 등록 성공");
+        // 댓글 등록 후 결과 받기 (예: 등록된 댓글 객체, 등록 성공 여부 등)
+        int result = commentService.insertComment(dto, userCode, postId);
+
+        if(result > 0){
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "댓글 등록 성공", null));
+        }else{
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류로 인한 댓글 등록 실패", null));
+        }
+
     }
 
     @Operation(summary = "게시물별 특정 회원 댓글 수정", description = "게시물별 특정 회원의 댓글 수정이 진행됩니다.", tags = { "CommentController" })
     @PutMapping("/comment/{username}/update")
-    public ResponseEntity<String> updateComment(@ModelAttribute CommentDTO dto,
+    public ResponseEntity<ResponseDTO> updateComment(@ModelAttribute CommentDTO dto,
                                                 @RequestParam("postId") int postId,
                                                 @PathVariable("username") String username){
 
@@ -63,15 +69,19 @@ public class CommentController {
         }
         System.out.println("아이디는?? " + userCode);
 
-        commentService.updateComment(dto, userCode, postId);
+        int result = commentService.updateComment(dto, userCode, postId);
         System.out.println("받은 CommentDTO: " + dto);
 
-        return ResponseEntity.ok("댓글 수정 성공");
+        if(result > 0) {
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "댓글 수정 성공", null));
+        }else{
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류로 인한 댓글 수정 실패", null));
+        }
     }
 
     @Operation(summary = "게시물별 특정 회원 댓글 삭제", description = "게시물별 특정 회원 댓글 삭제 진행중", tags = { "CommentController" })
     @DeleteMapping("/comment/{username}/delete")
-    public ResponseEntity<String> deleteComment(@ModelAttribute CommentDTO dto,
+    public ResponseEntity<ResponseDTO> deleteComment(@ModelAttribute CommentDTO dto,
                                                 @RequestParam("postId") int postId,
                                                 @PathVariable("username") String username){
         int userCode = 0;
@@ -80,10 +90,14 @@ public class CommentController {
         }
         System.out.println("아이디는?? " + userCode);
 
-        commentService.deleteComment(dto, userCode, postId);
+        int result = commentService.deleteComment(dto, userCode, postId);
         System.out.println("받은 CommentDTO: " + dto);
 
-        return ResponseEntity.ok("댓글 삭제 성공");
+        if(result > 0){
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "댓글 삭제 성공", null));
+        }else{
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류로 인한 댓글 삭제 실패", null));
+        }
     }
 
 }

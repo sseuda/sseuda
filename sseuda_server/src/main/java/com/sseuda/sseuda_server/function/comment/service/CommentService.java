@@ -27,20 +27,20 @@ public class CommentService {
     }
 
     @Transactional
-    public void insertComment(CommentDTO dto, int userCode, int postId) {
+    public int insertComment(CommentDTO dto, int userCode, int postId) {
 
-        commentMapper.insertComment(dto, userCode, postId);
+        return commentMapper.insertComment(dto, userCode, postId);
     }
 
     @Transactional
-    public void updateComment(CommentDTO dto, int userCode, int postId) {
+    public int updateComment(CommentDTO dto, int userCode, int postId) {
 
-        commentMapper.updateComment(dto, userCode, postId);
+        return commentMapper.updateComment(dto, userCode, postId);
     }
 
     @Transactional
-    public void deleteComment(CommentDTO dto, int userCode, int postId) {
+    public int deleteComment(CommentDTO dto, int userCode, int postId) {
 
-        commentMapper.deleteComment(dto, userCode, postId);
+        return commentMapper.deleteComment(dto, userCode, postId);
     }
 }
