@@ -1,0 +1,53 @@
+.admin-container {
+	padding: 40px;
+}
+
+.admin-title {
+	margin-bottom: 30px;
+	font-size: 28px;
+	color: #333;
+}
+
+.section-title {
+	margin-bottom: 15px;
+	font-size: 22px;
+	color: #444;
+}
+
+.table-container {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.member-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.member-table th,
+.member-table td {
+	border: 1px solid #ddd;
+	padding: 10px 14px;
+	text-align: center;
+}
+
+.member-table th {
+	background-color: #A9CDD7;
+	color: #fff;
+}
+
+.edit-btn {
+	background-color: #F5C3A4;
+	color: white;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.edit-btn:hover {
+	background-color: #A9CDD7;
+}
