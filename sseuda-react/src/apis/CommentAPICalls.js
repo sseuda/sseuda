@@ -90,10 +90,10 @@ export const callPostCommentUpdateApi = ({ commentId, form, username }) =>{
 
 
 // 게시글별 특정 회원 댓글 삭제
-export const callPostCommentDeleteApi = ({postId, form, username}) =>{
+export const callPostCommentDeleteApi = ({commentId, username}) =>{
     console.log('[CommentAPICalls] callPostCommentDeleteApi');
 
-    const requestURL = `${prefix}/post/comment/${username}/delete?postId=${postId}`;
+    const requestURL = `${prefix}/post/comment/${username}/delete?commentId=${commentId}`;
 
     return async(dispatch, getState) =>{
         const result = await fetch(requestURL, {
@@ -102,12 +102,12 @@ export const callPostCommentDeleteApi = ({postId, form, username}) =>{
                 Accept: '*/*',
                 Authorization:
                     'Bearer: ' + window.localStorage.getItem("accessToken")
-            },
-            body: form
+            }
         }).then((response) => response.json());
 
         console.log('[CommentAPICalls] callPostCommentDeleteApi RESULT: ', result);
 
         dispatch({type: DELETE_USER_COMMENT, payload: result});
+        return result;
     };
 };

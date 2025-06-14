@@ -1,27 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CommentCSS from './css/Comment.module.css';
 import { useNavigate } from 'react-router-dom';
 import { decodeJwt } from '../../../utils/tokenUtils';
 import CommentUpdate from './CommentUpdate';
+import { useDispatch } from 'react-redux';
+import { callPostCommentDeleteApi } from '../../../apis/CommentAPICalls';
 
 function Comment({
     comment: {commentId, commentText, commentCreateAt, commentUpdateAt, commentDelete, postDTO, memberDTO},
-    onEdit
+    onEdit, onCommentAdded
 }) {
-
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const accessToken = localStorage.getItem('accessToken');
     const decodedToken = accessToken ? decodeJwt(accessToken) : null;
 
     const isOwner = decodedToken?.sub === memberDTO?.username;
 
-    const updateHandler = ({commentId, username}) =>{
-        navigate(`/post/comment/${username}/update?commentId=${commentId}`);
-    } 
-
     console.log("memberDTO:", memberDTO);
     console.log(decodedToken?.sub);
+
+    const commentDeleteHandler = async () => {
+        const username = decodedToken?.sub;  // ✅ username 정의
+
+        const result = await dispatch(callPostCommentDeleteApi({
+        commentId,
+        username
+        }));
+
+        if (result?.status === 200) {
+        alert("댓글이 삭제되었습니다.");
+        onCommentAdded && onCommentAdded();  // 댓글 목록 다시 불러오기
+        } else {
+        alert("댓글 삭제 실패");
+        }
+
+    }
 
   return (
     <>
@@ -41,11 +55,18 @@ function Comment({
                     {commentCreateAt}
                 </h5>
             </div>
+
+            {isOwner && (
             <div>
-                {isOwner && (
+                <div>
                     <button onClick={onEdit}>수정</button>
-                )}
+                </div>
+                <div>
+                    <button onClick={commentDeleteHandler}>삭제</button>
+                </div>
             </div>
+            )}
+            
             
         </div>
     </>

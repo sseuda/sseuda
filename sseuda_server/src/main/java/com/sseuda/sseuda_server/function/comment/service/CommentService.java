@@ -39,8 +39,8 @@ public class CommentService {
     }
 
     @Transactional
-    public int deleteComment(CommentDTO dto, int userCode, int postId) {
+    public int deleteComment(CommentDTO dto, int userCode, int commentId) {
 
-        return commentMapper.deleteComment(dto, userCode, postId);
+        return commentMapper.deleteComment(dto, userCode, commentId);
     }
 }

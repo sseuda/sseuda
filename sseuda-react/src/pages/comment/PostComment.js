@@ -17,6 +17,7 @@ function PostComment() {
     console.log("commentList: ", commentList);
 
     const [editingCommentId, setEditingCommentId] = useState(null);
+    const [deleteCommentId, setDeleteCommentId] = useState(null);
 
     const fetchData =() =>{
         dispatch(callPostCommentListApi(postId));
@@ -33,9 +34,12 @@ function PostComment() {
                 {Array.isArray(commentList) && commentList.map((comment) =>(
                     <div key={comment.commentId}>
                         <Comment 
-                    comment={comment}
-                    onEdit={() => setEditingCommentId(comment.commentId)}
-                    />
+                        comment={comment}
+                        onEdit={() => setEditingCommentId(comment.commentId)}
+                        onCommentAdded={() =>{
+                            setEditingCommentId(null);
+                            fetchData();
+                        }}/>
 
                     {editingCommentId === comment.commentId && (
                         <CommentUpdate
