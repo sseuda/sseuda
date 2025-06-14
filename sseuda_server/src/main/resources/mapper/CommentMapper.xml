@@ -49,7 +49,8 @@
             a.comment_update_at,
             a.comment_delete,
             a.post_id,
-            b.user_nickname
+            b.user_nickname,
+            b.username
         FROM
             tbl_comment a
         JOIN tbl_member b ON a.user_id = b.user_id
@@ -81,7 +82,6 @@
             comment_create_at = #{dto.commentCreateAt}
         WHERE
             user_id = #{userCode} AND
-            post_id = #{dto.postId} AND
             comment_id = #{dto.commentId}
     </update>
 
@@ -89,7 +89,6 @@
         DELETE
         FROM tbl_comment
         WHERE user_id = #{userCode} AND
-        post_id = #{dto.postId} AND
         comment_id = #{dto.commentId}
     </delete>
 </mapper>

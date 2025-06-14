@@ -12,7 +12,7 @@ public interface CommentMapper {
 
     int insertComment(CommentDTO dto, int userCode, int postId);
 
-    int updateComment(CommentDTO dto, int userCode, int postId);
+    int updateComment(CommentDTO dto, int userCode, int commentId);
 
-    int deleteComment(CommentDTO dto, int userCode, int postId);
+    int deleteComment(CommentDTO dto, int userCode, int commentId);
 }

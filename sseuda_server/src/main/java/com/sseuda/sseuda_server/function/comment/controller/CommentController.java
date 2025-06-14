@@ -60,7 +60,7 @@ public class CommentController {
     @Operation(summary = "게시물별 특정 회원 댓글 수정", description = "게시물별 특정 회원의 댓글 수정이 진행됩니다.", tags = { "CommentController" })
     @PutMapping("/comment/{username}/update")
     public ResponseEntity<ResponseDTO> updateComment(@ModelAttribute CommentDTO dto,
-                                                @RequestParam("postId") int postId,
+                                                @RequestParam("commentId") int commentId,
                                                 @PathVariable("username") String username){
 
         int userCode = 0;
@@ -69,7 +69,7 @@ public class CommentController {
         }
         System.out.println("아이디는?? " + userCode);
 
-        int result = commentService.updateComment(dto, userCode, postId);
+        int result = commentService.updateComment(dto, userCode, commentId);
         System.out.println("받은 CommentDTO: " + dto);
 
         if(result > 0) {
@@ -82,7 +82,7 @@ public class CommentController {
     @Operation(summary = "게시물별 특정 회원 댓글 삭제", description = "게시물별 특정 회원 댓글 삭제 진행중", tags = { "CommentController" })
     @DeleteMapping("/comment/{username}/delete")
     public ResponseEntity<ResponseDTO> deleteComment(@ModelAttribute CommentDTO dto,
-                                                @RequestParam("postId") int postId,
+                                                @RequestParam("commentId") int commentId,
                                                 @PathVariable("username") String username){
         int userCode = 0;
         if(username != null){
@@ -90,7 +90,7 @@ public class CommentController {
         }
         System.out.println("아이디는?? " + userCode);
 
-        int result = commentService.deleteComment(dto, userCode, postId);
+        int result = commentService.deleteComment(dto, userCode, commentId);
         System.out.println("받은 CommentDTO: " + dto);
 
         if(result > 0){
