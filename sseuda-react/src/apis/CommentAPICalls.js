@@ -25,26 +25,33 @@ export const callPostCommentListApi = (postId) =>{
 
 
 // 게시글별 특정 회원 댓글 등록
-export const callPostCommentRegistApi = ({postId, form, username}) =>{
-    console.log('[CommentAPICalls] callPostCommentRegistApi');
+export const callPostCommentRegistApi = ({ postId, form, username }) => {
+  return async (dispatch) => {
+    try {
+      const requestURL = `${prefix}/post/comment/${username}/input?postId=${postId}`;
+      const response = await fetch(requestURL, {
+        method: 'POST',
+        headers: {
+          Accept: '*/*',
+          Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
+        },
+        body: form
+      });
 
-    const requestURL = `${prefix}/post/comment/${username}/input?postId=${postId}`;
+      const result = await response.json();
+      console.log('[API RESULT]', result);
 
-    return async(dispatch, getState) =>{
-        const result = await fetch(requestURL,{
-            method: 'POST',
-            headers: {
-                Accept: '*/*',
-                Authorization:
-                    'Bearer ' + window.localStorage.getItem('accessToken')
-            },
-            body: form
-        }).then((response) => response.json());
+      dispatch({ type: POST_USER_COMMENT, payload: result });
 
-        console.log('[CommentAPICalls] callPostCommentRegistApi RESULT : ', result);
-        dispatch({type: POST_USER_COMMENT, payload: result});
-    };
+      return result; // ✅ 꼭 반환
+    } catch (error) {
+      console.error('API ERROR:', error);
+      // 직접 throw 해줘야 try-catch에서 catch로 감지됨
+      throw error;
+    }
+  };
 };
+
 
 
 // 게시글별 특정 회원 댓글 수정

@@ -27,9 +27,9 @@ public class CommentService {
     }
 
     @Transactional
-    public void insertComment(CommentDTO dto, int userCode, int postId) {
+    public int insertComment(CommentDTO dto, int userCode, int postId) {
 
-        commentMapper.insertComment(dto, userCode, postId);
+        return commentMapper.insertComment(dto, userCode, postId);
     }
 
     @Transactional
