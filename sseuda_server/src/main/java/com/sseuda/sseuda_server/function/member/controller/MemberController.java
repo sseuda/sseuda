@@ -1,5 +1,6 @@
 package com.sseuda.sseuda_server.function.member.controller;
 
+import com.sseuda.sseuda_server.common.ResponseDTO;
 import com.sseuda.sseuda_server.function.member.dao.MemberMapper;
 import com.sseuda.sseuda_server.function.member.dto.MailRequestDTO;
 import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
@@ -178,5 +179,13 @@ public class MemberController {
         } else {
             return ResponseEntity.badRequest().body("변경 실패: 해당 유저를 찾을 수 없습니다.");
         }
+    }
+
+
+    // 회원 검색
+    @GetMapping("/search")
+    public ResponseEntity<ResponseDTO> searchMember(@RequestParam("keyword") String keyword) {
+        List<MemberDTO> members = memberService.searchMember(keyword);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원 검색 성공", members));
     }
 }

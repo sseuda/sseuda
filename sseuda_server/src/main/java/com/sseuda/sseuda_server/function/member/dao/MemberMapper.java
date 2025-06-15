@@ -42,4 +42,7 @@ public interface MemberMapper {
 
     // user_role 변경
     int updateUserRole(UserRoleDTO userRoleDTO);
+
+    // 회원 검색
+    List<MemberDTO> searchMember(String keyword);
 }

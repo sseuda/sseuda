@@ -20,7 +20,7 @@ export const GET_MEMBER_ALL = 'member/all';			// 회원 전체 조회
 export const GET_MEMBER = 'member/{username}';		// 특정 회원 조회
 export const PUT_USER_INFO = 'member/{id}/update';	// 회원 정보 수정
 export const PUT_DEACTIVATE = 'member/{id}/deactivate';		// 탈퇴
-
+export const GET_MEMBER_SEARCH = 'member/search';			// 회원 검색
 
 
 const actions = createActions({
@@ -34,7 +34,8 @@ const actions = createActions({
 	[GET_MEMBER_ALL]: () => {},
 	[GET_MEMBER]: () => {},
 	[PUT_USER_INFO]: () => {},
-	[PUT_DEACTIVATE]: () => {}
+	[PUT_DEACTIVATE]: () => {},
+	[GET_MEMBER_SEARCH]: () => {}
 })
 
 
@@ -78,6 +79,9 @@ const memberReducer = handleActions(
 			return payload;
 		},
 		[PUT_DEACTIVATE]: (state, { payload }) => {
+			return payload;
+		},
+		[GET_MEMBER_SEARCH]: (state, { payload }) => {
 			return payload;
 		}
 	},

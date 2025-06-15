@@ -31,6 +31,15 @@
     SELECT * FROM tbl_member WHERE username = #{username}
     </select>
 
+    <!--  회원 검색  -->
+    <select id="searchMember" parameterType="String" resultMap="memberResultMap">
+        SELECT *
+        FROM tbl_member
+        WHERE username
+        LIKE CONCAT('%', #{keyword}, '%')
+            OR user_fullname LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
     <!--  특정 회원 조회 (email)  -->
     <select id="findMemberByEmail" resultMap="memberResultMap" parameterType="string">
         SELECT * FROM tbl_member WHERE user_email = #{email}

@@ -179,4 +179,9 @@ public class MemberService {
         int updated = memberMapper.updateUserRole(userRole);
         return updated > 0;
     }
+
+    // 회원 검색
+    public List<MemberDTO> searchMember(String keyword) {
+        return memberMapper.searchMember(keyword);
+    }
 }

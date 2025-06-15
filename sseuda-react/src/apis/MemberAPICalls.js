@@ -1,5 +1,5 @@
 // 멤버api
-import { GET_MEMBER, GET_MEMBER_ALL, POST_LOGIN, POST_LOGOUT, PUT_DEACTIVATE, PUT_USER_INFO } from "../modules/MemberModule";
+import { GET_MEMBER, GET_MEMBER_ALL, GET_MEMBER_SEARCH, POST_LOGIN, POST_LOGOUT, PUT_DEACTIVATE, PUT_USER_INFO } from "../modules/MemberModule";
 
 const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 
@@ -220,6 +220,8 @@ export const callMembersApi = () => {
 		}
 	};
 };
+
+
 // 특정 회원 조회
 export const callMemberApi = () => {
 
@@ -227,16 +229,35 @@ export const callMemberApi = () => {
 	console.log('[멤버api]요청url: ' ,requestURL);
 
 	return async (dispatch, getState) => {
-		const result = await fetch(requestURL, {
+		const response = await fetch(requestURL, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
                 Accept: '*/*'
 			}
-		}).then((response) => response.json());
-		if(result.status === 200){
-			console.log('[멤버api]결과: ', result);
-			dispatch({type: GET_MEMBER, payload: result.data});
+		});
+		if (!response.ok) {
+            // 404 또는 500 에러 대응
+            console.error(`서버 응답 오류: ${response.status}`);
+            alert("회원 정보를 찾을 수 없습니다.");
+            return null;
+        }
+
+        const text = await response.text();
+
+        // 빈 응답 대응
+        if (!text) {
+            alert("회원 정보를 찾을 수 없습니다.");
+            return null;
+        }
+
+        const result = JSON.parse(text);
+        if (result.status === 200) {
+            dispatch({ type: GET_MEMBER, payload: result.data });
+            return { payload: result.data };
+        } else {
+            alert("회원 조회에 실패했습니다.");
+            return null;
 		}
 	};
 };
@@ -309,4 +330,42 @@ export const callDeactivateApi = (userId) => {
 			console.error('[회원 탈퇴 API] 요청 실패:', error);
 		}
 	};
+};
+
+// 회원 검색 [api]
+export const CallMemberSearchApi = (keyword) => {
+    const requestURL = `${prefix}/member/search?keyword=${encodeURIComponent(keyword)}`;
+
+    console.log('[CallMemberSearchApi] 요청 URL:', requestURL);
+
+    return async (dispatch, getState) => {
+        try {
+            const response = await fetch(requestURL, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: '*/*'
+                }
+            });
+
+            if (!response.ok) {
+                console.error(`[CallMemberSearchApi] 에러 응답: ${response.status}`);
+                alert("회원 검색 실패");
+                return;
+            }
+
+            const result = await response.json();
+
+            if (result.status === 200) {
+                console.log('[CallMemberSearchApi] 검색 결과:', result.data);
+                dispatch({ type: GET_MEMBER_SEARCH, payload: result.data });
+				return { payload: result.data };
+            } else {
+                alert("회원 검색 실패: " + result.message);
+            }
+        } catch (error) {
+            console.error('[CallMemberSearchApi] 예외 발생:', error);
+            alert("검색 중 오류가 발생했습니다.");
+        }
+    };
 };
