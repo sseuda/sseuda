@@ -301,13 +301,40 @@ export const callUpdateUserInfoApi = (form) => {
 };
 
 // 회원 탈퇴
-export const callDeactivateApi = (userId) => {
-	const requestURL = `${prefix}/member/{id}/deactivate`;
+// export const callDeactivateApi = (userId) => {
+// 	const requestURL = `${prefix}/member/{id}/deactivate`;
 
-	console.log('[회원 탈퇴 API] 요청 URL:', requestURL);
-	console.log('[회원 탈퇴 API] 탈퇴할 사용자 ID:', userId);
+// 	console.log('[회원 탈퇴 API] 요청 URL:', requestURL);
+// 	console.log('[회원 탈퇴 API] 탈퇴할 사용자 ID:', userId);
 
-	return async (dispatch, getState) => {
+// 	return async (dispatch, getState) => {
+// 		try {
+// 			const response = await fetch(requestURL, {
+// 				method: 'PUT',
+// 				headers: {
+// 					'Content-Type': 'application/json',
+// 					Accept: '*/*'
+// 				},
+// 				body: JSON.stringify({ userId: userId })
+// 			});
+
+// 			const result = await response.json();
+
+// 			if (response.ok) {
+// 				console.log('[회원 탈퇴 API] 성공:', result);
+// 				dispatch({ type: PUT_DEACTIVATE, payload: result.data });
+// 			} else {
+// 				console.error('[회원 탈퇴 API] 실패 상태 코드:', response.status);
+// 			}
+// 		} catch (error) {
+// 			console.error('[회원 탈퇴 API] 요청 실패:', error);
+// 		}
+// 	};
+// };
+export const callUpdateStatusApi = (userId, userStatus) => {
+	const requestURL = `${prefix}/member/${userId}/status`;
+
+	return async (dispatch) => {
 		try {
 			const response = await fetch(requestURL, {
 				method: 'PUT',
@@ -315,19 +342,18 @@ export const callDeactivateApi = (userId) => {
 					'Content-Type': 'application/json',
 					Accept: '*/*'
 				},
-				body: JSON.stringify({ userId: userId })
+				body: JSON.stringify({ userId, userStatus })
 			});
 
 			const result = await response.json();
 
 			if (response.ok) {
-				console.log('[회원 탈퇴 API] 성공:', result);
 				dispatch({ type: PUT_DEACTIVATE, payload: result.data });
 			} else {
-				console.error('[회원 탈퇴 API] 실패 상태 코드:', response.status);
+				console.error("회원 상태 변경 실패:", result.message);
 			}
 		} catch (error) {
-			console.error('[회원 탈퇴 API] 요청 실패:', error);
+			console.error("회원 상태 변경 중 예외 발생:", error);
 		}
 	};
 };

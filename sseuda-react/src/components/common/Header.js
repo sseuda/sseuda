@@ -41,7 +41,7 @@ function Header() {
 		<div className={HeaderCSS.headerBox}>
 			<div className={HeaderCSS.box}>
 				<Link to='/' className={HeaderCSS.headerLogo} />
-				<Link to={"/admin"}>관리자 페이지 가기</Link>
+				<Link to={"/admin/members"}>관리자 페이지 가기</Link>
 				{!isLogin ? (
 					<Link to="/auth/login" className={ButtonCSS.headerBTN}>로그인</Link>
 				) : (

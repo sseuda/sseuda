@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
 	CallMemberSearchApi,
 	callMembersApi,
+	callUpdateStatusApi,
 } from "../../apis/MemberAPICalls";
 import "./AdminPage.css";
 
@@ -36,17 +37,32 @@ function AdminPage() {
     }
 	};
 
+	// 상태 변경 함수 (토글 시 호출)
+	const toggleUserStatus = (userId, currentStatus) => {
+		const newStatus = currentStatus === "활성" ? "비활성" : "활성";
+	
+		// API 호출해서 상태 변경 요청
+		dispatch(callUpdateStatusApi(userId, newStatus))
+			.then(() => {
+			alert(`회원 상태가 '${newStatus}'로 변경되었습니다.`);
+			// 상태 변경 후 회원 목록 다시 불러오기
+			dispatch(callMembersApi());
+			// 만약 검색결과 상태에 있다면, 검색 결과도 다시 불러오거나 갱신 필요
+			})
+			.catch(() => {
+			alert("회원 상태 변경에 실패했습니다.");
+			});
+		};
+
 	return (
     <div className="admin-container">
-    	<h1 className="admin-title">👑 관리자 전용 페이지</h1>
-
     	<div className="table-container">
-        <h2 className="section-title">회원 목록</h2>
+        <h2 className="section-title">▶︎ 회원 관리</h2>
 
         <div className="search-member-container">
         	<input
             className="search-member-input"
-            placeholder="username 또는 이름 입력"
+            placeholder="username 또는 이름"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
         	/>
@@ -64,12 +80,13 @@ function AdminPage() {
 				<th>닉네임</th>
 				<th>이메일</th>
 				<th>상태</th>
-				<th>변경</th>
+				<th>상태 변경</th>
             </tr>
 			</thead>
 			<tbody>
 				{(searchResult ?? members)?.map((member, index) => (
-					<tr key={member.userId}>
+					<tr key={member.userId}
+						style={{ backgroundColor: index % 2 === 0 ? "rgba(252, 239, 159, 0.5)" : "rgba(251, 245, 204, 0.5)" }}>
 					<td>{index + 1}</td>
 					<td>{member.userFullname}</td>
 					<td>{member.username}</td>
@@ -77,8 +94,17 @@ function AdminPage() {
 					<td>{member.userEmail}</td>
 					<td>{member.userStatus}</td>
 					<td>
-					<button className="edit-btn">수정</button>
-					</td>
+					<label className="switch">
+						<input
+						type="checkbox"
+						checked={member.userStatus === "활성"}
+						onChange={() =>
+							toggleUserStatus(member.userId, member.userStatus)
+						}
+						/>
+						<span className="slider round"></span>
+					</label>
+                </td>
 				</tr>
             ))}
 

@@ -16,6 +16,7 @@ import UserPage from "./pages/post/UserPage";
 import PostSearchResult from "./pages/post/PostSearchResult";
 import AdminPage from "./pages/admin/AdminPage";
 import AdminPageLayout from "./layouts/AdminPageLayout";
+import AdminReports from "./pages/admin/AdminReports";
 
 function App() {
   return (
@@ -34,7 +35,8 @@ function App() {
 
         {/* 관리자 페이지를 위한 Route */}
         <Route path="admin" element={<AdminPageLayout/>}>
-        <Route index element={<AdminPage/>}/>
+        <Route path="members" element={<AdminPage/>}/>
+        <Route path="reports" element={<AdminReports/>}/>
         </Route>
 
         {/* 마이페이지를 위한 Route */}

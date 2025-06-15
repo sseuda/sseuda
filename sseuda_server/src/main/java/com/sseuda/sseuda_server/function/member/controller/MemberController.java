@@ -61,14 +61,14 @@ public class MemberController {
     }
 
     // 회원 탈퇴 (비활성화)
-    @PutMapping("/{id}/deactivate")
+    @PutMapping("/{id}/status")
     public ResponseEntity<String> deactivateMember(@PathVariable int id, @RequestBody MemberDTO dto) {
         dto.setUserId(id);
         int result = memberService.deactivateUser(dto);
         if (result > 0) {
-            return ResponseEntity.ok("탈퇴 완료");
+            return ResponseEntity.ok("상태변경 완료");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴안돼ㅜㅠ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("상태변경 불가");
         }
     }
 
