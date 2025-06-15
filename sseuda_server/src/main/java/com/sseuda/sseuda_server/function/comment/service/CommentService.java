@@ -33,14 +33,14 @@ public class CommentService {
     }
 
     @Transactional
-    public int updateComment(CommentDTO dto, int userCode, int postId) {
+    public int updateComment(CommentDTO dto, int userCode, int commentId) {
 
-        return commentMapper.updateComment(dto, userCode, postId);
+        return commentMapper.updateComment(dto, userCode, commentId);
     }
 
     @Transactional
-    public int deleteComment(CommentDTO dto, int userCode, int postId) {
+    public int deleteComment(CommentDTO dto, int userCode, int commentId) {
 
-        return commentMapper.deleteComment(dto, userCode, postId);
+        return commentMapper.deleteComment(dto, userCode, commentId);
     }
 }
