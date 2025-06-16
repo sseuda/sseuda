@@ -32,9 +32,11 @@ public interface PostMapper {
 //    회원별 게시글 등록
     int saveUserPosting(@Param("dto") PostDTO dto, int userCode);
 
+//    회원별 게시글 수정
+    int updateUserPosting(Map<String, Object> map);
+
 //    회원별 게시글 삭제
     int deleteUserPosting(Map<String, Object> map);
-
 
 
 }

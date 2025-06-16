@@ -155,6 +155,18 @@
         )
     </insert>
 
+    <update id="updateUserPosting" parameterType="map">
+        UPDATE tbl_post
+        SET
+            post_title = #{postTitle},
+            post_content = #{postContent},
+            post_update_at = NOW(),
+            small_category_id = #{smallCategoryId}
+        WHERE
+            user_id = #{userCode} AND
+            post_id = #{postId}
+    </update>
+
     <delete id="deleteUserPosting" parameterType="map">
         DELETE
         FROM

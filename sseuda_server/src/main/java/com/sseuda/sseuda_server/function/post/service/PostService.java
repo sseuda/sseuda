@@ -71,6 +71,20 @@ public class PostService {
         return postMapper.saveUserPosting(dto, userCode);
     }
 
+//    회원별 게시글 수정
+    @Transactional
+    public int updateUserPosting(PostDTO dto) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("postTitle", dto.getPostTitle());
+        paramMap.put("postContent", dto.getPostContent());
+        paramMap.put("smallCategoryId", dto.getSmallCategoryId());
+
+        paramMap.put("userCode", dto.getUserId());
+        paramMap.put("postId", dto.getPostId());
+
+        return postMapper.updateUserPosting(paramMap);
+    }
+
 //  회원별 게시글 삭제
     @Transactional
     public int deleteUserPosting(int postId, int userCode) {

@@ -107,8 +107,34 @@ public class PostController {
         }else{
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류로 인한 게시글 등록 실패",null));
         }
-
     }
+
+    @Operation(summary = "회원별 게시글 수정", description = "회원별 카테고리 게시글 수정이 진행됩니다.", tags = {"PostController"})
+    @PutMapping("/{username}/update")
+    public ResponseEntity<ResponseDTO> updateUserPosting(@ModelAttribute PostDTO dto,
+                                                       @PathVariable("username") String username,
+                                                         @RequestParam("postId") int postId){
+
+        int userCode = memberService.getMemberByUsername(username).getUserId();
+        dto.setPostId(postId);
+        dto.setUserId(userCode); // 권한 확인을 위해
+
+        System.out.println("너의 아이디는? " + userCode);
+
+        int result = postService.updateUserPosting(dto);
+
+        System.out.println("dto!!!!!!!!!!!!!!!! " + dto);
+        System.out.println("result!!!!!!!!!! " + result);
+
+
+        if(result > 0){
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", null));
+        }else{
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류로 인한 게시글 등록 실패",null));
+        }
+    }
+
+
 
     @Operation(summary = "회원별 게시글 삭제", description = "회원별 게시글 삭제가 진행됩니다.", tags = {"PostController"})
     @DeleteMapping("/mypage/{username}/delete")
