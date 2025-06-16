@@ -1,0 +1,35 @@
+.admin-reports-container {
+	padding: 20px;
+}
+
+.report-title {
+	margin-top: 20px;
+	font-size: 22px;
+	margin-bottom: 20px;
+	color: #444;
+}
+
+.report-table {
+	width: 100%;
+	border-collapse: collapse;
+	background-color: rgba(255, 255, 255, 0.9);
+}
+
+.report-table th,
+.report-table td {
+	border: 1px solid #ddd;
+	padding: 12px;
+	text-align: center;
+}
+
+.report-table th {
+	background-color: #FCEF9F;
+}
+
+.report-table tr:nth-child(even) {
+	background-color: rgba(252, 239, 159, 0.5);
+}
+
+.report-table tr:nth-child(odd) {
+	background-color: rgba(251, 245, 204, 0.5);
+}

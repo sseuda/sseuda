@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS tbl_member (
     user_email VARCHAR(255) NOT NULL UNIQUE COMMENT '이메일',
     user_phone VARCHAR(20) NOT NULL COMMENT '전화번호',
     enroll_date DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '가입일',
-    user_status ENUM('탈퇴', '활성') DEFAULT '활성' COMMENT '탈퇴여부'
+    user_status ENUM('탈퇴', '활성', '비활성') DEFAULT '활성' COMMENT '탈퇴여부'
 );
 
 -- 회원권한 테이블
