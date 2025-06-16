@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { callPostApi } from '../../apis/PostAPICalls';
+import { callPostApi, callUpdateViewCountApi } from '../../apis/PostAPICalls';
 import Detail from './css/PostDetail.module.css';
 import PostComment from '../comment/PostComment';
 import ButtonCSS from '../../components/common/Global/Button.module.css';
@@ -15,12 +15,14 @@ function PostDetail() {
   const accessToken = localStorage.getItem('accessToken');
   const username = accessToken ? decodeJwt(accessToken).sub : null;
 
+  
   console.log("게시글 상세 조회 시작");
   const postDetail = useSelector(state => state.postReducer);
   console.log("postDetail : ", postDetail);
 
   useEffect(() =>{
     dispatch(callPostApi(params.postId));
+    dispatch(callUpdateViewCountApi({ postId: params.postId }));
   },[params.postId]);
 
   // const fetchData=()=>{

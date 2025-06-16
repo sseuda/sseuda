@@ -82,9 +82,12 @@ public class SecurityConfig {
                                 "/member/reset-password-request",
                                 "/member/reset-password",
                                 "/post/**",
+                                "/post/viewCount/update/**",
                                 "/mypage/**",
                                 "/api/**",
-                                "/sseudaimgs/**"
+                                "/sseudaimgs/**",
+                                "/main.*.hot-update.js",
+                                "/sockjs-node/**"
                         ).permitAll()
                                 .anyRequest().authenticated()
                 ).cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -110,6 +113,8 @@ public class SecurityConfig {
 
         //  허용할 메서드
         configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE", "OPTIONS"));
+
+
 
         //  허용할 헤더
         configuration.setAllowedHeaders(

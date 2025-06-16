@@ -267,30 +267,42 @@ export const callDeletePostsApi = ({form}) =>{
 };
 
 // 게시글별 조회수 증가
-    export const callUpdateViewCountApi = ({ postId }) =>{
-    console.log('[PostAPICalls] callUpdateViewCountApi');
+export const callUpdateViewCountApi = ({ postId }) => {
+  console.log('[PostAPICalls] callUpdateViewCountApi');
 
-    const requestURL = `${prefix}/post/viewCount/update/postId=${postId}`;
-    console.log("requestURL: ", requestURL);
+  const requestURL = `${prefix}/post/viewCount/update/postId=${postId}`;
+  console.log("requestURL: ", requestURL);
 
-    return async(dispatch, getState) =>{
-        const result = await fetch(requestURL, {
-            method: "PUT",
-            headers: {
-                Accept: '*/*',
-                Authorization:
-                    'Bearer ' + window.localStorage.getItem("accessToken")
-            }
-        }).then((response) => response.json())
-        .catch((error) =>{
-            console.error("[PostAPICalls] Error: ", error);
-            throw error;
-        });
+  return async (dispatch, getState) => {
+    try {
+      const response = await fetch(requestURL, {
+        method: "PUT"
+      });
 
-        if(result.status === 200){
-            console.log("[CommentAPICalls] callUpdateViewCountApi RESULT: ", result);
-            dispatch({type: PUT_VIEW_COUNT, payload: result});
-        }
-        return result;
-    };
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("[PostAPICalls] 서버 응답 오류:", errorText);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const contentType = response.headers.get("content-type");
+      let result = null;
+
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      }
+
+      console.log("[PostAPICalls] callUpdateViewCountApi RESULT:", result);
+
+      // 응답에 따라 dispatch 실행
+      if (result && result.status === 200) {
+        dispatch({ type: PUT_VIEW_COUNT, payload: result });
+      }
+
+      return result;
+    } catch (error) {
+      console.error("[PostAPICalls] Error: ", error);
+      throw error;
+    }
+  };
 };
