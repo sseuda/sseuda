@@ -8,9 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PostService {
@@ -62,15 +65,19 @@ public class PostService {
     }
 
 //    회원별 게시글 등록
+    @Transactional
     public int saveUserPosting(PostDTO dto, int userCode) {
 
         return postMapper.saveUserPosting(dto, userCode);
     }
 
 //  회원별 게시글 삭제
-    public int deleteUserPosting(PostDTO post, int userCode, int postId) {
-
-        return postMapper.deleteUserPosting(post, userCode, postId);
+    @Transactional
+    public int deleteUserPosting(int postId, int userCode) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("postId", postId);
+        map.put("userCode", userCode);
+        return postMapper.deleteUserPosting(map);
     }
 
 

@@ -155,7 +155,7 @@
         )
     </insert>
 
-    <delete id="deleteUserPosting" parameterType="com.sseuda.sseuda_server.function.post.dto.PostDTO">
+    <delete id="deleteUserPosting" parameterType="map">
         DELETE
         FROM
             tbl_post

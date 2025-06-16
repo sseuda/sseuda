@@ -87,8 +87,10 @@
 
     <delete id="deleteComment" parameterType="map">
         DELETE
-        FROM tbl_comment
-        WHERE user_id = #{userCode} AND
-        comment_id = #{dto.commentId}
+        FROM
+            tbl_comment
+        WHERE
+            user_id = #{userCode} AND
+            comment_id = #{dto.commentId}
     </delete>
 </mapper>

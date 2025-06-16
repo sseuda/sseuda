@@ -111,17 +111,25 @@ public class PostController {
     }
 
     @Operation(summary = "회원별 게시글 삭제", description = "회원별 게시글 삭제가 진행됩니다.", tags = {"PostController"})
-    @DeleteMapping("/mypage/{userCode}/{postId}/delete")
-    public ResponseEntity<String> deleteUserPosting(@ModelAttribute PostDTO post,
-                                                    @PathVariable("userCode") int userCode,
-                                                    @PathVariable("postId") int postId){
+    @DeleteMapping("/mypage/{username}/delete")
+    public ResponseEntity<ResponseDTO> deleteUserPosting(
+                                                         @PathVariable("username") String username,
+                                                         @RequestParam("postId") int postId){
 
-        int result = postService.deleteUserPosting(post, userCode, postId);
+        int userCode = 0;
+        if(username != null){
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
+
+        System.out.println("너의 아이디는? " + userCode);
+
+        int result = postService.deleteUserPosting(postId, userCode);
+//        System.out.println("받은 CommentDTO: " + dto);
 
         if(result > 0){
-            return ResponseEntity.ok("해당 게시글이 삭제되었습니다.");
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "해당 게시글이 삭제되었습니다.", null));
         }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 게시글을 찾을 수 없습니다.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(HttpStatus.NOT_FOUND, "해당 게시글을 찾을 수 없습니다.", null));
         }
     }
 
