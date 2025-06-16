@@ -4,12 +4,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { callPostApi } from '../../apis/PostAPICalls';
 import Detail from './css/PostDetail.module.css';
 import PostComment from '../comment/PostComment';
+import ButtonCSS from '../../components/common/Global/Button.module.css';
+import { decodeJwt } from '../../utils/tokenUtils';
 
 function PostDetail() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
+  const accessToken = localStorage.getItem('accessToken');
+  const username = accessToken ? decodeJwt(accessToken).sub : null;
 
   console.log("게시글 상세 조회 시작");
   const postDetail = useSelector(state => state.postReducer);
@@ -47,6 +51,11 @@ if(!post){
             <p>{post.postCreateAt}</p>
           </div>
           <div className={Detail.userView}>
+            <button 
+            className={ButtonCSS.headerBTN}
+            onClick={() => navigate(`/post/${username}/update/${params.postId}`)}
+            >수정하기
+            </button>
             <p>{post.viewCount}</p>
           </div>
         </div>
