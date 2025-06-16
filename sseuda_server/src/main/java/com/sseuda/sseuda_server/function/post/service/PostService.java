@@ -96,8 +96,8 @@ public class PostService {
 
 
 //    게시물별 조회수 증가
-    public List<PostDTO> viewCountUpdate() {
+    public int viewCountUpdate(int postId) {
 
-        return postMapper.viewCountUpdate();
+        return postMapper.viewCountUpdate(postId);
     }
 }

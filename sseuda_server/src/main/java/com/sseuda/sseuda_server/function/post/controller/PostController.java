@@ -164,7 +164,13 @@ public class PostController {
     @PutMapping("/viewCount/update")
     public ResponseEntity<ResponseDTO> viewCountUpdate(@RequestParam("postId") int postId){
 
-        return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "조회수 증가 성공", postService.viewCountUpdate()));
+        int result = postService.viewCountUpdate(postId);
+
+        if(result > 0){
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "조회수 증가 성공", null));
+        }else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "해당 게시글을 찾을 수 없습니다.", null));
+        }
     }
 
 }
