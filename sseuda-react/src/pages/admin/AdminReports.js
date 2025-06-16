@@ -33,6 +33,14 @@ function AdminReports() {
 					if (reasonA > reasonB) return sortOrder === 'asc' ? 1 : -1;
 					return 0;
 				});
+			} else if (sortBy === 'status') {
+				sorted.sort((a, b) => {
+					const statusA = a.reportsStatus.toLowerCase();
+					const statusB = b.reportsStatus.toLowerCase();
+					if (statusA < statusB) return sortOrder === 'asc' ? -1 : 1;
+					if (statusA > statusB) return sortOrder === 'asc' ? 1 : -1;
+					return 0;
+				});
 			}
 			setSortedReports(sorted);
 		}
@@ -80,7 +88,9 @@ function AdminReports() {
 						<th onClick={() => toggleSort('date')} style={{ cursor: "pointer" }}>
 							신고 일자 {sortBy === 'date' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}
 						</th>
-						<th>상태</th>
+						<th onClick={() => toggleSort('status')} style={{ cursor: "pointer" }}>
+							상태 {sortBy === 'status' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}
+						</th>
 					</tr>
 				</thead>
 				<tbody>
