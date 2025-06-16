@@ -30,26 +30,12 @@ function TextEditor() {
   
   const quillRef = useRef(null);
 
-  const isLogin = window.localStorage.getItem('accessToken');
-  const decodedToken = isLogin ? decodeJwt(isLogin) : null;
-  const username = decodedToken?.sub ?? null;
+  const accessToken = window.localStorage.getItem("accessToken");
+  const username = accessToken ? decodeJwt(accessToken).sub : null;
 
-  function isTokenExpired(decodedToken) {
-    const currentTime = Math.floor(Date.now() / 1000);
-    return decodedToken.exp < currentTime;
-  }
-
-  useEffect(() => {
-      if (!isLogin || !decodedToken || isTokenExpired(decodedToken)) {
-          alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
-          navigate("/auth/login");
-          return;
-      }
   
-    }, []);
-
     console.log("username : ", username);
-    console.log("token : ", isLogin);
+    console.log("token : ", accessToken);
 
     
 const imageHandler = () => {
@@ -69,7 +55,7 @@ const imageHandler = () => {
       const res = await axios.post('http://localhost:8080/sseudaimgs', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${isLogin}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
       });
 
@@ -208,7 +194,7 @@ const modules = useMemo(() => ({
     const response = await axios.post(`http://localhost:8080/post/${username}/posting`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${isLogin}`,
+        'Authorization': `Bearer ${accessToken}`,
       },
     });
 

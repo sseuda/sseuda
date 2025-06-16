@@ -15,6 +15,7 @@ import PostTextEditor from "./pages/post/PostTextEditor";
 import UserPage from "./pages/post/UserPage";
 import PostSearchResult from "./pages/post/PostSearchResult";
 import PostComment from "./pages/comment/PostComment";
+import TextEditorUpdate from "./components/common/post/TextEditorUpdate";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         {/* 게시글 관련 Route */}
         <Route path="post" element={<PostLayout/>}>
           <Route path=":postId" element={<PostDetail/>}/>
+          <Route path=":username/update/:postId" element={<TextEditorUpdate/>}/>
           <Route path=":paramUsername/posting" element={<PostTextEditor/>}/>
           <Route path="mypage/:username/:smallCategoryId" element={<UserPage/>}/>
         </Route>
