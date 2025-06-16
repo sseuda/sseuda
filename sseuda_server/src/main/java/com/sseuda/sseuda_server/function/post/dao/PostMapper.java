@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PostMapper {
@@ -29,10 +30,13 @@ public interface PostMapper {
     List<PostDTO> searchPosts(@Param("keywords") String[] keywords);
 
 //    회원별 게시글 등록
-    void saveUserPosting(@Param("dto") PostDTO dto, int userCode);
+    int saveUserPosting(@Param("dto") PostDTO dto, int userCode);
+
+//    회원별 게시글 수정
+    int updateUserPosting(Map<String, Object> map);
 
 //    회원별 게시글 삭제
-    int deleteUserPosting(PostDTO post, int userCode, int postId);
+    int deleteUserPosting(Map<String, Object> map);
 
 
 }

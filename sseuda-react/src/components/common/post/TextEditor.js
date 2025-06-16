@@ -13,7 +13,7 @@ import Global from '../Global/Button.module.css';
 function TextEditor() {
 
   const navigate = useNavigate();
-  const {paramUsername} = useParams();
+  // const username = useParams();
   
   const [category, setCategory] = useState([]);
   const [smallCategory, setSmallCategory] = useState([]);
@@ -48,7 +48,7 @@ function TextEditor() {
   
     }, []);
 
-    console.log("username : ", paramUsername);
+    console.log("username : ", username);
     console.log("token : ", isLogin);
 
     
@@ -166,30 +166,61 @@ const modules = useMemo(() => ({
   
 
   const handleSave = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('paramUsername', paramUsername);
-      formData.append('postTitle', post.postTitle);
-      formData.append('postContent', post.postContent);
-      formData.append('createAt', post.createAt);
-      formData.append('categoryBig', post.categoryBig);
-      formData.append('smallCategoryId', post.categorySmall);
+  const quill = quillRef.current?.getEditor?.();
+  const postContent = post.postContent || ''; // null 방지
+
+  // ✅ 필수 입력값 검증
+  if (!post.postTitle.trim()) {
+    alert('제목을 입력해주세요.');
+    return;
+  }
+
+  if (!post.categoryBig) {
+    alert('대분류 카테고리를 선택해주세요.');
+    return;
+  }
+
+  if (!post.categorySmall) {
+    alert('소분류 카테고리를 선택해주세요.');
+    return;
+  }
+
+  // ✅ 이미지가 포함되지 않았는지 검사 (quill content 안에 <img ...> 있는지 체크)
+  const hasImage = /<img[^>]+src="([^">]+)"/.test(postContent);
+  if (!hasImage) {
+    alert('이미지를 한 장 이상 첨부해주세요.');
+    return;
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('postTitle', post.postTitle);
+    formData.append('postContent', postContent);
+    formData.append('createAt', post.createAt);
+    formData.append('categoryBig', post.categoryBig);
+    formData.append('smallCategoryId', post.categorySmall);
+
+    if (post.image) {
       formData.append('image', post.image);
-
-      const response = await axios.post(`http://localhost:8080/post/${paramUsername}/posting`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${isLogin}`,  // ✅ 반드시 이 헤더 포함!
-        },
-      });
-
-      console.log('저장 성공', response.data);
-    } catch (err) {
-      console.error('저장 실패', err);
     }
 
-    navigate(`/post/mypage/${username}`, {replace:false});
-  };
+    const response = await axios.post(`http://localhost:8080/post/${username}/posting`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${isLogin}`,
+      },
+    });
+
+    console.log('저장 성공', response.data);
+    navigate(`/post/mypage/${username}`, { replace: false });
+  } catch (err) {
+    console.error('저장 실패', err);
+    alert('서버 오류가 발생했습니다.');
+  }
+};
+
+
 
   console.log(post.image);
 

@@ -90,7 +90,7 @@ public class PostController {
 //    React에서 axios로 넘겨준다
     @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
     @PostMapping("/{username}/posting")
-    public ResponseEntity<String> saveUserPosting(@ModelAttribute PostDTO dto,
+    public ResponseEntity<ResponseDTO> saveUserPosting(@ModelAttribute PostDTO dto,
                                                   @PathVariable("username") String username){
 
         int userCode = 0;
@@ -100,27 +100,62 @@ public class PostController {
 
         System.out.println("너의 아이디는? " + userCode);
 
-        postService.saveUserPosting(dto, userCode);
-
-        System.out.println("받은 postDTO: " + dto);
-        System.out.println("user_id :" + dto.getUserId());
-        System.out.println("image: " + dto.getImage());
-        return ResponseEntity.ok("게시글 저장 완료");
-
-    }
-
-    @Operation(summary = "회원별 게시글 삭제", description = "회원별 게시글 삭제가 진행됩니다.", tags = {"PostController"})
-    @DeleteMapping("/mypage/{userCode}/{postId}/delete")
-    public ResponseEntity<String> deleteUserPosting(@ModelAttribute PostDTO post,
-                                                    @PathVariable("userCode") int userCode,
-                                                    @PathVariable("postId") int postId){
-
-        int result = postService.deleteUserPosting(post, userCode, postId);
+        int result = postService.saveUserPosting(dto, userCode);
 
         if(result > 0){
-            return ResponseEntity.ok("해당 게시글이 삭제되었습니다.");
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", null));
+        }else{
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류로 인한 게시글 등록 실패",null));
+        }
+    }
+
+    @Operation(summary = "회원별 게시글 수정", description = "회원별 카테고리 게시글 수정이 진행됩니다.", tags = {"PostController"})
+    @PutMapping("/{username}/update")
+    public ResponseEntity<ResponseDTO> updateUserPosting(@ModelAttribute PostDTO dto,
+                                                       @PathVariable("username") String username,
+                                                         @RequestParam("postId") int postId){
+
+        int userCode = memberService.getMemberByUsername(username).getUserId();
+        dto.setPostId(postId);
+        dto.setUserId(userCode); // 권한 확인을 위해
+
+        System.out.println("너의 아이디는? " + userCode);
+
+        int result = postService.updateUserPosting(dto);
+
+        System.out.println("dto!!!!!!!!!!!!!!!! " + dto);
+        System.out.println("result!!!!!!!!!! " + result);
+
+
+        if(result > 0){
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", null));
+        }else{
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류로 인한 게시글 등록 실패",null));
+        }
+    }
+
+
+
+    @Operation(summary = "회원별 게시글 삭제", description = "회원별 게시글 삭제가 진행됩니다.", tags = {"PostController"})
+    @DeleteMapping("/mypage/{username}/delete")
+    public ResponseEntity<ResponseDTO> deleteUserPosting(
+                                                         @PathVariable("username") String username,
+                                                         @RequestParam("postId") int postId){
+
+        int userCode = 0;
+        if(username != null){
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
+
+        System.out.println("너의 아이디는? " + userCode);
+
+        int result = postService.deleteUserPosting(postId, userCode);
+//        System.out.println("받은 CommentDTO: " + dto);
+
+        if(result > 0){
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "해당 게시글이 삭제되었습니다.", null));
         }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 게시글을 찾을 수 없습니다.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(HttpStatus.NOT_FOUND, "해당 게시글을 찾을 수 없습니다.", null));
         }
     }
 
