@@ -26,9 +26,23 @@
         SELECT * FROM tbl_member
     </select>
 
+    <!--  특정 회원 조회 (userId)  -->
+    <select id="findMemberByUserId" parameterType="int" resultMap="memberResultMap">
+        SELECT * FROM tbl_member WHERE user_id = #{userID}
+    </select>
+
     <!--  특정 회원 조회 (username)  -->
     <select id="findMemberByUsername" parameterType="String" resultMap="memberResultMap">
     SELECT * FROM tbl_member WHERE username = #{username}
+    </select>
+
+    <!--  회원 검색  -->
+    <select id="searchMember" parameterType="String" resultMap="memberResultMap">
+        SELECT *
+        FROM tbl_member
+        WHERE username
+        LIKE CONCAT('%', #{keyword}, '%')
+            OR user_fullname LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <!--  특정 회원 조회 (email)  -->
@@ -73,7 +87,7 @@
     <!-- 회원탈퇴 (상태변경) -->
     <update id="deactivateUser" parameterType="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
         UPDATE tbl_member
-        SET user_status = '탈퇴'
+        SET user_status = #{userStatus}
         WHERE user_id = #{userId}
     </update>
     

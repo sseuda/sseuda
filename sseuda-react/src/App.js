@@ -14,6 +14,9 @@ import ResetPassword from "./pages/member/ResetPassword";
 import PostTextEditor from "./pages/post/PostTextEditor";
 import UserPage from "./pages/post/UserPage";
 import PostSearchResult from "./pages/post/PostSearchResult";
+import AdminPage from "./pages/admin/AdminPage";
+import AdminPageLayout from "./layouts/AdminPageLayout";
+import AdminReports from "./pages/admin/AdminReports";
 import PostComment from "./pages/comment/PostComment";
 import TextEditorUpdate from "./components/common/post/TextEditorUpdate";
 
@@ -30,6 +33,12 @@ function App() {
           <Route path="member/reset-password-request" element={<ResetPasswordRequest/>}/>
           <Route path="member/reset-password" element={<ResetPassword/>}/>
           <Route path="post/search" element={<PostSearchResult/>} />
+        </Route>
+
+        {/* 관리자 페이지를 위한 Route */}
+        <Route path="admin" element={<AdminPageLayout/>}>
+        <Route path="members" element={<AdminPage/>}/>
+        <Route path="reports" element={<AdminReports/>}/>
         </Route>
 
         {/* 마이페이지를 위한 Route */}

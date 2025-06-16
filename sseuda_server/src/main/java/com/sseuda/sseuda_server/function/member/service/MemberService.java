@@ -59,6 +59,11 @@ public class MemberService {
         return memberMapper.findAllMembers();
     }
 
+    // 특정 회원 조회 (userId)
+    public MemberDTO findMemberByUserId(int userId) {
+        return memberMapper.findMemberByUserId(userId);
+    }
+
     // 특정 회원 조회 (username)
     public MemberDTO getMemberByUsername(String username) {
 
@@ -178,5 +183,10 @@ public class MemberService {
     public boolean updateUserRole(UserRoleDTO userRole) {
         int updated = memberMapper.updateUserRole(userRole);
         return updated > 0;
+    }
+
+    // 회원 검색
+    public List<MemberDTO> searchMember(String keyword) {
+        return memberMapper.searchMember(keyword);
     }
 }

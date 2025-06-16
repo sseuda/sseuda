@@ -1,5 +1,5 @@
 // 멤버api
-import { POST_LOGIN, POST_LOGOUT } from "../modules/MemberModule";
+import { GET_MEMBER, GET_MEMBER_ALL, GET_MEMBER_BY_ID, GET_MEMBER_SEARCH, POST_LOGIN, POST_LOGOUT, PUT_DEACTIVATE, PUT_USER_INFO } from "../modules/MemberModule";
 
 const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 
@@ -189,4 +189,248 @@ export const callResetPasswordRequestAPI = (email, username) => {
 
 		return result;
 	};
+};
+
+// 전체 회원 조회
+export const callMembersApi = () => {
+	let requestURL = `${prefix}/member/all`;
+	console.log('[멤버api]요청url: ', requestURL);
+
+	return async (dispatch, getState) => {
+		try {
+			const response = await fetch(requestURL, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: '*/*'
+				}
+			});
+
+			const result = await response.json();
+
+			console.log('[멤버api] 전체 result: ', result);
+
+			// result가 배열이라면 그대로, 아니라면 data 필드로
+			const members = Array.isArray(result) ? result : result.data;
+
+			dispatch({ type: GET_MEMBER_ALL, payload: members });
+
+		} catch (error) {
+			console.error('[멤버api] 오류 발생:', error);
+		}
+	};
+};
+
+
+// 특정 회원 조회 (username)
+export const callMemberApi = () => {
+
+	let requestURL = `${prefix}/member/{username}`;
+	console.log('[멤버api]요청url: ' ,requestURL);
+
+	return async (dispatch, getState) => {
+		const response = await fetch(requestURL, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+                Accept: '*/*'
+			}
+		});
+		if (!response.ok) {
+            // 404 또는 500 에러 대응
+            console.error(`서버 응답 오류: ${response.status}`);
+            alert("회원 정보를 찾을 수 없습니다.");
+            return null;
+        }
+
+        const text = await response.text();
+
+        // 빈 응답 대응
+        if (!text) {
+            alert("회원 정보를 찾을 수 없습니다.");
+            return null;
+        }
+
+        const result = JSON.parse(text);
+        if (result.status === 200) {
+            dispatch({ type: GET_MEMBER, payload: result.data });
+            return { payload: result.data };
+        } else {
+            alert("회원 조회에 실패했습니다.");
+            return null;
+		}
+	};
+};
+
+// 특정 회원 조회 (userId)
+export const callMemberByIdApi = (userId) => {
+
+	let requestURL = `${prefix}/member/user/${userId}`;
+	console.log('[멤버api]요청url: ' ,requestURL);
+
+	return async (dispatch, getState) => {
+		const response = await fetch(requestURL, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+                Accept: '*/*'
+			}
+		});
+		if (!response.ok) {
+            console.error(`서버 응답 오류: ${response.status}`);
+            alert("회원 정보를 찾을 수 없습니다.");
+            return null;
+        }
+
+        const text = await response.text();
+        if (!text) {
+            alert("회원 정보를 찾을 수 없습니다.");
+            return null;
+        }
+
+        const result = JSON.parse(text);
+        console.log("회원 응답 결과:", result);
+
+        if (result && result.userId) {
+            dispatch({ type: GET_MEMBER_BY_ID, payload: result });
+            return { payload: result };
+        } else {
+            alert("회원 조회에 실패했습니다.");
+            return null;
+        }
+    };
+};
+
+// 회원 정보 수정
+export const callUpdateUserInfoApi = (form) => {
+	const requestURL = `${prefix}/member/{id}/update`;
+
+	console.log('[회원정보 수정 API] 요청 URL:', requestURL);
+	console.log('[회원정보 수정 API] 수정할 데이터:', form);
+
+	return async (dispatch, getState) => {
+		try {
+			const response = await fetch(requestURL, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: '*/*'
+				},
+				body: JSON.stringify({
+					userId: form.userId,
+					userFullname: form.userFullname,
+					userNickname: form.userNickname,
+					userEmail: form.userEmail,
+					userPhone: form.userPhone
+				})
+			});
+
+			const result = await response.json();
+
+			if (response.ok) {
+				console.log('[회원정보 수정 API] 성공:', result);
+				dispatch({ type: PUT_USER_INFO, payload: result.data });
+			} else {
+				console.error('[회원정보 수정 API] 실패 상태 코드:', response.status);
+			}
+		} catch (error) {
+			console.error('[회원정보 수정 API] 요청 실패:', error);
+		}
+	};
+};
+
+// 회원 탈퇴
+// export const callDeactivateApi = (userId) => {
+// 	const requestURL = `${prefix}/member/{id}/deactivate`;
+
+// 	console.log('[회원 탈퇴 API] 요청 URL:', requestURL);
+// 	console.log('[회원 탈퇴 API] 탈퇴할 사용자 ID:', userId);
+
+// 	return async (dispatch, getState) => {
+// 		try {
+// 			const response = await fetch(requestURL, {
+// 				method: 'PUT',
+// 				headers: {
+// 					'Content-Type': 'application/json',
+// 					Accept: '*/*'
+// 				},
+// 				body: JSON.stringify({ userId: userId })
+// 			});
+
+// 			const result = await response.json();
+
+// 			if (response.ok) {
+// 				console.log('[회원 탈퇴 API] 성공:', result);
+// 				dispatch({ type: PUT_DEACTIVATE, payload: result.data });
+// 			} else {
+// 				console.error('[회원 탈퇴 API] 실패 상태 코드:', response.status);
+// 			}
+// 		} catch (error) {
+// 			console.error('[회원 탈퇴 API] 요청 실패:', error);
+// 		}
+// 	};
+// };
+export const callUpdateStatusApi = (userId, userStatus) => {
+	const requestURL = `${prefix}/member/${userId}/status`;
+
+	return async (dispatch) => {
+		try {
+			const response = await fetch(requestURL, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: '*/*'
+				},
+				body: JSON.stringify({ userId, userStatus })
+			});
+
+			const result = await response.json();
+
+			if (response.ok) {
+				dispatch({ type: PUT_DEACTIVATE, payload: result.data });
+			} else {
+				console.error("회원 상태 변경 실패:", result.message);
+			}
+		} catch (error) {
+			console.error("회원 상태 변경 중 예외 발생:", error);
+		}
+	};
+};
+
+// 회원 검색 [api]
+export const CallMemberSearchApi = (keyword) => {
+    const requestURL = `${prefix}/member/search?keyword=${encodeURIComponent(keyword)}`;
+
+    console.log('[CallMemberSearchApi] 요청 URL:', requestURL);
+
+    return async (dispatch, getState) => {
+        try {
+            const response = await fetch(requestURL, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: '*/*'
+                }
+            });
+
+            if (!response.ok) {
+                console.error(`[CallMemberSearchApi] 에러 응답: ${response.status}`);
+                alert("회원 검색 실패");
+                return;
+            }
+
+            const result = await response.json();
+
+            if (result.status === 200) {
+                console.log('[CallMemberSearchApi] 검색 결과:', result.data);
+                dispatch({ type: GET_MEMBER_SEARCH, payload: result.data });
+				return { payload: result.data };
+            } else {
+                alert("회원 검색 실패: " + result.message);
+            }
+        } catch (error) {
+            console.error('[CallMemberSearchApi] 예외 발생:', error);
+            alert("검색 중 오류가 발생했습니다.");
+        }
+    };
 };

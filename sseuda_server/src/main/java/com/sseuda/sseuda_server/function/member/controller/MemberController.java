@@ -1,5 +1,6 @@
 package com.sseuda.sseuda_server.function.member.controller;
 
+import com.sseuda.sseuda_server.common.ResponseDTO;
 import com.sseuda.sseuda_server.function.member.dao.MemberMapper;
 import com.sseuda.sseuda_server.function.member.dto.MailRequestDTO;
 import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -41,6 +43,12 @@ public class MemberController {
         return memberService.getAllMembers();
     }
 
+    // 특정 회원 조회 (userId)
+    @GetMapping("/user/{userId}")
+    public MemberDTO findMemberByUserId(@PathVariable int userId) {
+        return memberService.findMemberByUserId(userId);
+    }
+
     // 특정 회원 조회 (username)
     @GetMapping("/{username}")
     public MemberDTO getMemberByUsername(@PathVariable("username") String username) {
@@ -60,14 +68,14 @@ public class MemberController {
     }
 
     // 회원 탈퇴 (비활성화)
-    @PutMapping("/{id}/deactivate")
+    @PutMapping("/{id}/status")
     public ResponseEntity<String> deactivateMember(@PathVariable int id, @RequestBody MemberDTO dto) {
         dto.setUserId(id);
         int result = memberService.deactivateUser(dto);
         if (result > 0) {
-            return ResponseEntity.ok("탈퇴 완료");
+            return ResponseEntity.ok("상태변경 완료");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴안돼ㅜㅠ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("상태변경 불가");
         }
     }
 
@@ -178,5 +186,13 @@ public class MemberController {
         } else {
             return ResponseEntity.badRequest().body("변경 실패: 해당 유저를 찾을 수 없습니다.");
         }
+    }
+
+
+    // 회원 검색
+    @GetMapping("/search")
+    public ResponseEntity<ResponseDTO> searchMember(@RequestParam("keyword") String keyword) {
+        List<MemberDTO> members = memberService.searchMember(keyword);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원 검색 성공", members));
     }
 }
