@@ -95,7 +95,7 @@ export const callReportedReportsApi = () => {
 
 // 신고등록
 export const callAddReportApi = (form) => {
-	const requestURL = `${prefix}/api/reports/`;
+	const requestURL = `${prefix}/api/reports`;
 	console.log('[관리자api] 요청 URL: ', requestURL);
 	console.log('신고 접수 폼 데이터: ', form);
 
