@@ -39,20 +39,21 @@
 <!--    게시글 전체 조회 -->
     <select id="findPostList" resultMap="postResultMap">
         SELECT
-        b.user_nickname,
-        a.post_title,
-        a.post_content,
-        a.post_create_at,
-        a.view_count,
-        a.post_id
+            b.user_nickname,
+            a.post_title,
+            a.post_content,
+            a.post_create_at,
+            a.view_count,
+            a.post_id
         FROM
-        tbl_post a
+            tbl_post a
         JOIN tbl_member b ON a.user_id = b.user_id
     </select>
 
 <!--    게시글 상세 조회-->
     <select id="findPost" resultMap="postResultMap">
         SELECT
+            a.post_id,
             b.user_nickname,
             a.post_title,
             a.post_content,
@@ -164,6 +165,15 @@
             small_category_id = #{smallCategoryId}
         WHERE
             user_id = #{userCode} AND
+            post_id = #{postId}
+    </update>
+
+    <update id="viewCountUpdate" parameterType="com.sseuda.sseuda_server.function.post.dto">
+        UPDATE
+            tbl_post
+        SET
+            view_count = viewCount + 1
+        WHERE
             post_id = #{postId}
     </update>
 

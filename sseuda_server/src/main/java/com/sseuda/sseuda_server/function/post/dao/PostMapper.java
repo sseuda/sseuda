@@ -38,5 +38,6 @@ public interface PostMapper {
 //    회원별 게시글 삭제
     int deleteUserPosting(Map<String, Object> map);
 
-
+//    게시글별 조회수 증가
+    List<PostDTO> viewCountUpdate();
 }
