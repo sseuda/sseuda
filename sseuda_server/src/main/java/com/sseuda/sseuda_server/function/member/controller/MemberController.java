@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,6 +41,12 @@ public class MemberController {
     @GetMapping("/all")
     public List<MemberDTO> getAllMembers() {
         return memberService.getAllMembers();
+    }
+
+    // 특정 회원 조회 (userId)
+    @GetMapping("/user/{userId}")
+    public MemberDTO findMemberByUserId(@PathVariable int userId) {
+        return memberService.findMemberByUserId(userId);
     }
 
     // 특정 회원 조회 (username)

@@ -16,6 +16,9 @@ public interface MemberMapper {
 
     List<MemberDTO> findAllMembers();
 
+    // 회원 조회( userId )
+    MemberDTO findMemberByUserId(int userId);
+
     MemberDTO findMemberByUsername(String username);
 
     MemberDTO findMemberByEmail(String email);
@@ -45,4 +48,5 @@ public interface MemberMapper {
 
     // 회원 검색
     List<MemberDTO> searchMember(String keyword);
+
 }

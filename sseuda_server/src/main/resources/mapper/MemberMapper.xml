@@ -26,6 +26,11 @@
         SELECT * FROM tbl_member
     </select>
 
+    <!--  특정 회원 조회 (userId)  -->
+    <select id="findMemberByUserId" parameterType="int" resultMap="memberResultMap">
+        SELECT * FROM tbl_member WHERE user_id = #{userID}
+    </select>
+
     <!--  특정 회원 조회 (username)  -->
     <select id="findMemberByUsername" parameterType="String" resultMap="memberResultMap">
     SELECT * FROM tbl_member WHERE username = #{username}

@@ -59,6 +59,11 @@ public class MemberService {
         return memberMapper.findAllMembers();
     }
 
+    // 특정 회원 조회 (userId)
+    public MemberDTO findMemberByUserId(int userId) {
+        return memberMapper.findMemberByUserId(userId);
+    }
+
     // 특정 회원 조회 (username)
     public MemberDTO getMemberByUsername(String username) {
 
