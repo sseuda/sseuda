@@ -167,15 +167,6 @@
             post_id = #{postId}
     </update>
 
-    <update id="viewCountUpdate" parameterType="com.sseuda.sseuda_server.function.post.dto">
-        UPDATE
-            tbl_post
-        SET
-            view_count = viewCount + 1
-        WHERE
-            post_id = #{postId}
-    </update>
-
     <delete id="deleteUserPosting" parameterType="map">
         DELETE
         FROM

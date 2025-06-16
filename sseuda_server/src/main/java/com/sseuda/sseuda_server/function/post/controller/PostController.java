@@ -159,12 +159,4 @@ public class PostController {
         }
     }
 
-//    게시글별 조회수 증가
-    @Operation(summary = "게시글별 조회수가 증가됩니다.", description = "게시글별 조회수 증가가 진행됩니다.", tags = {"PostController"})
-    @PutMapping("/viewCount/update")
-    public ResponseEntity<ResponseDTO> viewCountUpdate(@RequestParam("postId") int postId){
-
-        return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "조회수 증가 성공", postService.viewCountUpdate()));
-    }
-
 }
