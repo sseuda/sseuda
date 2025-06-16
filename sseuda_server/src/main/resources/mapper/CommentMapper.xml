@@ -14,11 +14,46 @@
         <result property="userId" column="user_id"/>
     </resultMap>
 
-    <select id="findPostComment" resultMap="commentResultMap">
+    <resultMap id="postResultMap" type="com.sseuda.sseuda_server.function.post.dto.PostDTO">
+        <id property="postId" column="post_id" />
+        <result property="userId" column="user_id"/>
+        <result property="postDelete" column="post_delete"/>
+        <result property="smallCategoryId" column="small_category_id"/>
+     </resultMap>
+
+    <resultMap id="memberResultMap" type="com.sseuda.sseuda_server.function.member.dto.MemberDTO">
+        <id property="userId" column="user_id"/>
+        <result property="userFullname" column="user_fullname"/>
+        <result property="username" column="username"/>
+        <result property="userNickname" column="user_nickname"/>
+        <result property="userStatus" column="user_status"/>
+    </resultMap>
+
+
+    <!--    comment와 post, member join-->
+    <resultMap id="commentJoinResultMap" type="com.sseuda.sseuda_server.function.comment.dto.CommentJoinDTO">
+        <id property="commentId" column="comment_id"/>
+        <result property="commentText" column="comment_text"/>
+        <result property="commentCreateAt" column="comment_create_at"/>
+        <result property="commentUpdateAt" column="comment_update_at"/>
+        <result property="commentDelete" column="comment_delete"/>
+        <collection property="postDTO" resultMap="postResultMap"/>
+        <collection property="memberDTO" resultMap="memberResultMap"/>
+    </resultMap>
+
+    <select id="findPostComment" resultMap="commentJoinResultMap">
         SELECT
-            *
+            a.comment_id,
+            a.comment_text,
+            a.comment_create_at,
+            a.comment_update_at,
+            a.comment_delete,
+            a.post_id,
+            b.user_nickname,
+            b.username
         FROM
-            tbl_comment
+            tbl_comment a
+        JOIN tbl_member b ON a.user_id = b.user_id
         WHERE
             post_id = #{postId}
     </select>
@@ -47,15 +82,15 @@
             comment_create_at = #{dto.commentCreateAt}
         WHERE
             user_id = #{userCode} AND
-            post_id = #{dto.postId} AND
             comment_id = #{dto.commentId}
     </update>
 
     <delete id="deleteComment" parameterType="map">
         DELETE
-        FROM tbl_comment
-        WHERE user_id = #{userCode} AND
-        post_id = #{dto.postId} AND
-        comment_id = #{dto.commentId}
+        FROM
+            tbl_comment
+        WHERE
+            user_id = #{userCode} AND
+            comment_id = #{dto.commentId}
     </delete>
 </mapper>

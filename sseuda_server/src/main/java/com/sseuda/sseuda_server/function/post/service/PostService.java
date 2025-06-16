@@ -8,9 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PostService {
@@ -62,21 +65,33 @@ public class PostService {
     }
 
 //    회원별 게시글 등록
-    public void saveUserPosting(PostDTO dto, int userCode) {
-//
-//        String username = memberMapper.findUsernameByUserId(dto.getUserId());
-//
-//        MemberDTO memberDTO = new MemberDTO();
-//        memberDTO.setUsername(username);
-//        dto.setMemberDTO(memberDTO);
+    @Transactional
+    public int saveUserPosting(PostDTO dto, int userCode) {
 
-        postMapper.saveUserPosting(dto, userCode);
+        return postMapper.saveUserPosting(dto, userCode);
+    }
+
+//    회원별 게시글 수정
+    @Transactional
+    public int updateUserPosting(PostDTO dto) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("postTitle", dto.getPostTitle());
+        paramMap.put("postContent", dto.getPostContent());
+        paramMap.put("smallCategoryId", dto.getSmallCategoryId());
+
+        paramMap.put("userCode", dto.getUserId());
+        paramMap.put("postId", dto.getPostId());
+
+        return postMapper.updateUserPosting(paramMap);
     }
 
 //  회원별 게시글 삭제
-    public int deleteUserPosting(PostDTO post, int userCode, int postId) {
-
-        return postMapper.deleteUserPosting(post, userCode, postId);
+    @Transactional
+    public int deleteUserPosting(int postId, int userCode) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("postId", postId);
+        map.put("userCode", userCode);
+        return postMapper.deleteUserPosting(map);
     }
 
 
