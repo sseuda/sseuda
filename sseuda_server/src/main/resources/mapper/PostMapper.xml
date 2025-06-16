@@ -149,7 +149,7 @@
         VALUES (
             #{dto.postTitle},
             #{dto.postContent},
-            #{dto.postCreateAt},
+            NOW(),
             #{dto.smallCategoryId},
             #{userCode}
         )
