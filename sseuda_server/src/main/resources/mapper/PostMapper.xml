@@ -167,7 +167,7 @@
             post_id = #{postId}
     </update>
 
-    <update id="viewCountUpdate" parameterType="com.sseuda.sseuda_server.function.post.dto">
+    <update id="viewCountUpdate" parameterType="map">
         UPDATE
             tbl_post
         SET
