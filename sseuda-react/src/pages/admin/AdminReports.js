@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { callReportsApi, callUpdateReportStatusApi } from "../../apis/ReportsAPICalls";
 import "./AdminReports.css";
+import { callMemberByIdApi } from "../../apis/MemberAPICalls";
 
 const STATUS_LIST = ['신고접수', '처리중', '처리완료'];
 
@@ -11,6 +12,7 @@ function AdminReports() {
 	const [sortedReports, setSortedReports] = useState([]);
 	const [sortBy, setSortBy] = useState(null); // 'date' or 'reason'
 	const [sortOrder, setSortOrder] = useState('asc'); // or 'desc'
+	const [usernames, setUsernames] = useState({});
 
 	useEffect(() => {
 		dispatch(callReportsApi());
@@ -72,6 +74,27 @@ function AdminReports() {
 		dispatch(callUpdateReportStatusApi( reportsId, reportsStatus ));
 	};
 
+	useEffect(() => {
+		if (reports && reports.length > 0) {
+			// 중복 제거된 userId 목록 만들기
+			const userIds = [...new Set(reports.flatMap(report => [report.reporterId, report.reportedId]))];
+	
+			// 각 userId로 username 불러오기
+			const fetchUsernames = async () => {
+				const resultMap = {};
+				for (const userId of userIds) {
+					const result = await dispatch(callMemberByIdApi(userId));
+					if (result && result.payload) {
+						resultMap[userId] = result.payload.username;
+					}
+				}
+				setUsernames(resultMap);
+			};
+	
+			fetchUsernames();
+		}
+	}, [reports]);
+
 	return (
 		<div className="admin-reports-container">
 			<h4 className="report-title">▶︎ 신고 관리</h4>
@@ -98,8 +121,8 @@ function AdminReports() {
 						sortedReports.map((report, index) => (
 							<tr key={report.reportsId}>
 								<td>{index + 1}</td>
-								<td>{report.reporterId}</td>
-								<td>{report.reportedId}</td>
+								<td>{usernames[report.reporterId] || report.reporterId}</td>
+								<td>{usernames[report.reportedId] || report.reportedId}</td>
 								<td>{report.reasonCode}</td>
 								<td>{report.reasonDetail}</td>
 								<td>{formatDate(report.reportsCreateAt)}</td>
