@@ -7,20 +7,25 @@ const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 export const callReportsApi = () => {
 
 	let requestURL = `${prefix}/api/reports`;
-	console.log('[관리자api]요청url: ' ,requestURL);
+	console.log('[신고 api] 요청 url: ' ,requestURL);
 
 	return async (dispatch, getState) => {
-		const result = await fetch(requestURL, {
+		const response = await fetch(requestURL, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
                 Accept: '*/*'
 			}
-		}).then((response) => response.json());
-		if(result.status === 200){
-			console.log('[관리자api]결과: ', result);
-			dispatch({type: GET_REPORTS, payload: result.data});
-		}
+		});
+
+		const result = await response.json();
+
+		console.log('[신고 api] 전체 결과: ', result);
+		
+		const reports = Array.isArray(result) ? result : result.data;
+
+		dispatch({type: GET_REPORTS, payload: reports});
+		
 	};
 };
 
@@ -129,12 +134,12 @@ export const callAddReportApi = (form) => {
 
 
 // 신고 상태 변경
-export const callUpdateReportStatusApi = (form) => {
+export const callUpdateReportStatusApi = (reportsId, reportsStatus) => {
 	const requestURL = `${prefix}/api/reports/status`;
 	console.log('[관리자api] 요청 URL: ', requestURL);
-	console.log('신고 상태 변경 폼 데이터: ', form);
+	console.log('신고 상태 변경 폼 데이터: ', reportsId, reportsStatus);
 
-	return async (dispatch, getState) => {
+	return async (dispatch) => {
 		try {
 			const response = await fetch(requestURL, {
 				method: 'PUT',
@@ -143,18 +148,18 @@ export const callUpdateReportStatusApi = (form) => {
 					Accept: '*/*'
 				},
 				body: JSON.stringify({
-					reportId: form.reportId,
-					reportsStatus: form.reportsStatus
+					reportsId,
+					reportsStatus
 				})
 			});
 
-			const result = await response.json();
+			const text = await response.text();
 
 			if (response.ok) {
-				console.log('[관리자api] 결과: ', result);
-				dispatch({ type: PUT_REPORTS_STATUS, payload: result.data });
+				console.log('[관리자api] 서버 응답 메시지:', text);
+				dispatch(callReportsApi());
 			} else {
-				console.error('[관리자api] 에러 상태 코드: ', response.status);
+				console.error('[관리자api] 에러 상태 코드:', response.status);
 			}
 		} catch (error) {
 			console.error('[관리자api] 요청 실패: ', error);
