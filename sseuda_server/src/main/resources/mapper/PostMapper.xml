@@ -167,6 +167,15 @@
             post_id = #{postId}
     </update>
 
+    <update id="viewCountUpdate" parameterType="map">
+        UPDATE
+            tbl_post
+        SET
+            view_count = #{viewCount} + 1
+        WHERE
+            post_id = #{postId}
+    </update>
+
     <delete id="deleteUserPosting" parameterType="map">
         DELETE
         FROM

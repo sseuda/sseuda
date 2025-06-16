@@ -93,4 +93,11 @@ public class PostService {
         map.put("userCode", userCode);
         return postMapper.deleteUserPosting(map);
     }
+
+
+//    게시물별 조회수 증가
+    public int viewCountUpdate(int postId) {
+
+        return postMapper.viewCountUpdate(postId);
+    }
 }
