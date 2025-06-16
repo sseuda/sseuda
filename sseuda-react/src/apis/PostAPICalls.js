@@ -186,15 +186,16 @@ export const callSearchPostsApi = (keyword) =>{
 
 
 //  회원별 게시글 등록
-export const callPostRegistApi = ({form}) =>{
+export const callPostRegistApi = ({form, username}) =>{
 
-    let requestURL = `${prefix}/post/{userCode}/posting`;
+    let requestURL = `${prefix}/post/${username}/posting`;
     console.log('[PostApiCalls] callPostRegistApi Call');
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 Accept: '*/*',
                 Authorization:
                     'Bearer ' + window.localStorage.getItem('accessToken')

@@ -62,15 +62,9 @@ public class PostService {
     }
 
 //    회원별 게시글 등록
-    public void saveUserPosting(PostDTO dto, int userCode) {
-//
-//        String username = memberMapper.findUsernameByUserId(dto.getUserId());
-//
-//        MemberDTO memberDTO = new MemberDTO();
-//        memberDTO.setUsername(username);
-//        dto.setMemberDTO(memberDTO);
+    public int saveUserPosting(PostDTO dto, int userCode) {
 
-        postMapper.saveUserPosting(dto, userCode);
+        return postMapper.saveUserPosting(dto, userCode);
     }
 
 //  회원별 게시글 삭제

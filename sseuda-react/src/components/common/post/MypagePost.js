@@ -22,7 +22,7 @@ function MypagePost({
     };
 
     const firstImage = extractFirstImageSrc(postContent);
-    console.log("이미지 :", firstImage);
+    // console.log("이미지 :", firstImage);
 
   return (
     <>

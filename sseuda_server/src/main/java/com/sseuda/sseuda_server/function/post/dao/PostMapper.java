@@ -29,7 +29,7 @@ public interface PostMapper {
     List<PostDTO> searchPosts(@Param("keywords") String[] keywords);
 
 //    회원별 게시글 등록
-    void saveUserPosting(@Param("dto") PostDTO dto, int userCode);
+    int saveUserPosting(@Param("dto") PostDTO dto, int userCode);
 
 //    회원별 게시글 삭제
     int deleteUserPosting(PostDTO post, int userCode, int postId);

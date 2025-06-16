@@ -90,7 +90,7 @@ public class PostController {
 //    React에서 axios로 넘겨준다
     @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
     @PostMapping("/{username}/posting")
-    public ResponseEntity<String> saveUserPosting(@ModelAttribute PostDTO dto,
+    public ResponseEntity<ResponseDTO> saveUserPosting(@ModelAttribute PostDTO dto,
                                                   @PathVariable("username") String username){
 
         int userCode = 0;
@@ -100,12 +100,13 @@ public class PostController {
 
         System.out.println("너의 아이디는? " + userCode);
 
-        postService.saveUserPosting(dto, userCode);
+        int result = postService.saveUserPosting(dto, userCode);
 
-        System.out.println("받은 postDTO: " + dto);
-        System.out.println("user_id :" + dto.getUserId());
-        System.out.println("image: " + dto.getImage());
-        return ResponseEntity.ok("게시글 저장 완료");
+        if(result > 0){
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", null));
+        }else{
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류로 인한 게시글 등록 실패",null));
+        }
 
     }
 
