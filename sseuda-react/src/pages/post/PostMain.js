@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { callPostsListApi } from '../../apis/PostAPICalls';
 import MainPost from '../../components/common/post/MainPost';
-
+import pagiNation from '../../components/common/Global/Pagination.module.css';
 
 function PostMain() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function PostMain() {
 
     // 페이지네이션 상태
     const [currentPage, setCurrentPage] = useState(1);
-    const postsPerPage = 5;
+    const postsPerPage = 3;
 
     // 현재 페이지에 표시할 게시글 계산
     const indexOfLastPost = currentPage * postsPerPage;
@@ -28,6 +28,8 @@ function PostMain() {
     const totalPages = Math.ceil(posts.length / postsPerPage);
     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+    // 배경색
+    const backgroundColors = ['#FFE3D3', '#FFF6A3', '#DFF3E3', '#D6EBFF'];
 
     const fetchData=() =>{
         dispatch(callPostsListApi(postId))
@@ -50,16 +52,21 @@ function PostMain() {
     },[postList]);
 
     
-  return (
+    return (
     <div>
-        <div>
-            {Array.isArray(currentPosts) && currentPosts.map((post) => (
-              <div key={post.postId}>
-                <MainPost  post={post}/>
-              </div>
-            ))}
+      <div>
+        {Array.isArray(currentPosts) && currentPosts.map((post, index) => (
+          <div
+            key={post.postId}
+            style={{
+              backgroundColor: backgroundColors[index % backgroundColors.length]
+            }}
+          >
+            <MainPost post={post} />
+          </div>
+        ))}
 
-            <div>
+            <div className={pagiNation.pagination}>
             {pageNumbers.map(number => (
               <button key={number} onClick={() => setCurrentPage(number)}>
                 {number}

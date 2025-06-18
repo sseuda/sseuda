@@ -6,7 +6,7 @@ import MainPost from './css/MainPost.module.css';
 import PostComment from '../../../pages/comment/PostComment';
 
 function Post({
-  post: {postId, postTitle, postContent, memberDTO}
+  post: {postId, postTitle, postContent, memberDTO}, index
 }){
 
     const navigate = useNavigate();
@@ -23,12 +23,19 @@ function Post({
     
     const firstImage = extractFirstImageSrc(postContent);
 
+    // 배경색
+    const backgroundColors = ['#FFE3D3', '#FFF6A3', '#DFF3E3', '#D6EBFF'];
+    const bgColor = backgroundColors[index % backgroundColors.length];
+
     const removeImageTags = (html) => {
   return html.replace(/<img[^>]*>/gi, '');
 };
 
   return (
-    <div className={MainPost.postBox} onClick={() => onClickPostHandler(postId)}>
+    <div 
+    className={MainPost.postBox} 
+    onClick={() => onClickPostHandler(postId)}
+    style={{ backgroundColor: bgColor }}>
         <div className={MainPost.box}>
             <div className={MainPost.textBox}>
                 <div className={MainPost.userBox}>

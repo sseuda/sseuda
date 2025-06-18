@@ -43,7 +43,7 @@ function Main() {
 
     
   return (
-    <div style={{height: '2100px'}}>
+    <div>
   {/* 검색창 */}
   <div className={MainCSS.searchBox}>
     <div className={MainCSS.searchWrapper}>
