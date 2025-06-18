@@ -31,7 +31,7 @@ function ReportPopup({ reporterId, reportedId, postId = null, commentId = null, 
 	<div className={styles.popupBox}>
         <h3>{targetLabel}</h3>
 
-        <label>신고 사유</label>
+        {/* <label>신고 사유</label> */}
         <select value={reasonCode} onChange={(e) => setReasonCode(e.target.value)}>
 			<option value="" disabled hidden>신고 사유 선택</option>
 			<option value="ABUSE">욕설/비방</option>

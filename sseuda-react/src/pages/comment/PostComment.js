@@ -98,13 +98,13 @@ function PostComment() {
             ))}
             
                 <CommentInsert postId={postId} onCommentAdded={fetchData} />
-          
+            
             </div>
                     
             
         </div>
     </>
-  )
+    )
 }
 
 export default PostComment;
