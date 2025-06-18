@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { callPostApi, callUpdateViewCountApi } from '../../apis/PostAPICalls';
+import { callPostApi } from '../../apis/PostAPICalls';
 import Detail from './css/PostDetail.module.css';
 import PostComment from '../comment/PostComment';
 import ButtonCSS from '../../components/common/Global/Button.module.css';
 import { decodeJwt } from '../../utils/tokenUtils';
 import { callMemberApi } from '../../apis/MemberAPICalls';
-import PostReport from '../report/PostReport';
+import ReportPopup from '../report/ReportPopup';
 
 function PostDetail() {
   const dispatch = useDispatch();
@@ -31,14 +31,12 @@ function PostDetail() {
     fetchLoginUser();
   }, [decoded, dispatch]);
 
-  console.log("게시글 상세 조회 시작");
   const postDetail = useSelector(state => state.postReducer);
   const post = postDetail[0];
 
   useEffect(() => {
     dispatch(callPostApi(params.postId));
-    dispatch(callUpdateViewCountApi({ postId: params.postId }));
-  },[params.postId]);
+  }, [params.postId]);
 
   // 신고 팝업 관련
   const [showReportPopup, setShowReportPopup] = useState(false);
@@ -54,11 +52,12 @@ function PostDetail() {
         <button onClick={handleReportClick}>🚨신고하기</button>
 
         {showReportPopup && (
-          <PostReport
-            reporterId={loginUserId}
-            reportedId={post.userId}
-            postId={post.postId}
-            onClose={handleClosePopup}
+          <ReportPopup
+          reporterId={loginUserId}
+          reportedId={post.userId}
+          postId={post.postId}
+          // commentId={null}
+          onClose={() => handleClosePopup(false)}
           />
         )}
 
