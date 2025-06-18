@@ -19,17 +19,21 @@ function PostDetail() {
 
   useEffect(() => {
     const fetchLoginUser = async () => {
-      if (decoded?.sub) {
-        try {
-          const response = await dispatch(callMemberApi(decoded.sub));
-          if (response) setLoginUserId(response.userId);
-        } catch (error) {
-          console.error("로그인 유저 정보 가져오기 실패: ", error);
+        if (!accessToken || !decoded?.sub) {
+            console.log("로그인 되어 있지 않아 유저 정보 불러오지 않음");
+            return;
         }
-      }
+
+        try {
+            const response = await dispatch(callMemberApi(decoded.sub));
+            if (response) setLoginUserId(response.userId);
+        } catch (error) {
+            console.error("로그인 유저 정보 가져오기 실패: ", error);
+        }
     };
+
     fetchLoginUser();
-  }, [decoded, dispatch]);
+}, [accessToken, decoded, dispatch]);
 
   const postDetail = useSelector(state => state.postReducer);
   const post = postDetail[0];
@@ -40,7 +44,12 @@ function PostDetail() {
 
   // 신고 팝업 관련
   const [showReportPopup, setShowReportPopup] = useState(false);
-  const handleReportClick = () => setShowReportPopup(true);
+  const handleReportClick = () => {
+    if (!loginUserId) {
+      alert("로그인 후 신고가 가능합니다!");
+      return;
+    }
+    setShowReportPopup(true)};
   const handleClosePopup = () => setShowReportPopup(false);
 
   if (!post) return <p>게시글을 불러오는 중입니다...</p>;
