@@ -33,10 +33,10 @@ function UserInfo() {
         <div className={myUser.infoCard}>
             <div className={myUser.user_a}>
                 <div className={myUser.a1}>
-                    <div>
+                    <div style={{width: '250px'}}>
                         <p>{userInfo?.userFullname}</p>
                     </div>
-                    <div>
+                    <div style={{width: '90px'}}>
                         <p>{userInfo?.userStatus}</p>
                     </div>
                 </div>
@@ -56,7 +56,7 @@ function UserInfo() {
                 
             </div>
             
-            <div className={myUser.user_c}>
+            {/* <div className={myUser.user_c}>
                 <div className={myUser.c1}>
                     <div>
                         <p>우편번호</p>
@@ -69,7 +69,7 @@ function UserInfo() {
                 <div className={myUser.c3}>
                     <p>나머지 주소</p>
                 </div>
-            </div>
+            </div> */}
         </div>
     </div>
   )

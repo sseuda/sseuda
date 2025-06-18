@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { callPostMemberApi } from '../../apis/PostAPICalls';
 import { callMemberApi, callMemberByIdApi } from '../../apis/MemberAPICalls';
 import UserInfo from '../../components/member/UserInfo';
+import UesrBlog from '../../components/member/UesrBlog';
 
 function MyInformation() {
 
@@ -38,6 +39,9 @@ function MyInformation() {
     <>
         <div style={{padding: '50px 0'}}>
             <UserInfo/>
+        </div>
+        <div>
+            <UesrBlog/>
         </div>
     </>
     
