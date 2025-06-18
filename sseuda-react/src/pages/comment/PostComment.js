@@ -18,7 +18,15 @@ function PostComment() {
     // 신고 팝업 관련
     const [showReportPopup, setShowReportPopup] = useState(false);
     const [reportTarget, setReportTarget] = useState(null);
-    const handleReportClick = (commentId, userId) => setReportTarget({commentId, userId});
+    const handleReportClick = (commentId, userId) => {
+        if (!loginUserId) {
+        alert("로그인 후 신고가 가능합니다!");
+        return;
+        }
+    
+        setReportTarget({ commentId, userId });
+        setShowReportPopup(true);
+    };
     const handleClosePopup = () => setReportTarget(null);
 
     // console.log("게시글별 댓글 전체 조회");

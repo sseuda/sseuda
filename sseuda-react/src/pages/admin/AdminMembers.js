@@ -6,9 +6,9 @@ import {
 	callMembersApi,
 	callUpdateStatusApi,
 } from "../../apis/MemberAPICalls";
-import "./AdminPage.css";
+import "./AdminMembers.css";
 
-function AdminPage() {
+function AdminMembers() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -123,4 +123,4 @@ function AdminPage() {
 	);
 }
 
-export default AdminPage;
+export default AdminMembers;
