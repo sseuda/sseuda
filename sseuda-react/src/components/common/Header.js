@@ -43,7 +43,7 @@ function Header() {
 				<Link to='/' className={HeaderCSS.headerLogo} />
 
 				{(decodedToken?.auth === "ADMIN" || decodedToken?.auth === "SUPER") && (
-				<Link to="/admin/members">관리자 페이지</Link>)}
+				<Link to="/admin/members" className={ButtonCSS.adminBTN}>관리자 페이지</Link>)}
 
 				{!isLogin ? (
 					<Link to="/auth/login" className={ButtonCSS.headerBTN}>로그인</Link>
