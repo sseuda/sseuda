@@ -268,7 +268,7 @@ export const callDeletePostsApi = ({form}) =>{
 // ===============
 
 // 특정 회원 조회 (username)
-export const callMemberApi = (username) => {
+export const callPostMemberApi = (username) => {
 
     const requestURL = `${prefix}/post/member/${username}`;
     console.log('[멤버api] 요청 URL:', requestURL);
