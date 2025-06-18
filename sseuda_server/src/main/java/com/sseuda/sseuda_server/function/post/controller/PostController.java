@@ -1,6 +1,7 @@
 package com.sseuda.sseuda_server.function.post.controller;
 
 import com.sseuda.sseuda_server.common.ResponseDTO;
+import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
 import com.sseuda.sseuda_server.function.member.service.MemberService;
 import com.sseuda.sseuda_server.function.post.dto.PostDTO;
 import com.sseuda.sseuda_server.function.post.service.PostService;
@@ -171,6 +172,12 @@ public class PostController {
         }else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "해당 게시글을 찾을 수 없습니다.", null));
         }
+    }
+
+    // 마이페이지 특정 회원 조회 (username)
+    @GetMapping("/member/{username}")
+    public MemberDTO getMemberByUsername(@PathVariable("username") String username) {
+        return memberService.getMemberByUsername(username);
     }
 
 }

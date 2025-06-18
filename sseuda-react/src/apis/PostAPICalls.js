@@ -264,3 +264,39 @@ export const callDeletePostsApi = ({form}) =>{
         
     };
 };
+
+// ===============
+
+// 특정 회원 조회 (username)
+export const callMemberApi = (username) => {
+
+    const requestURL = `${prefix}/post/member/${username}`;
+    console.log('[멤버api] 요청 URL:', requestURL);
+    
+        return async (dispatch, getState) => {
+        try {
+            const response = await fetch(requestURL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*'
+            }
+            });
+    
+            if (!response.ok) {
+            console.error(`서버 응답 오류: ${response.status}`);
+            alert("회원 정보를 찾을 수 없습니다.");
+            return;
+            }
+    
+        const data = await response.json();
+        console.log('[멤버api] 받은 데이터:', data);
+
+            return data; // 필요하면 이걸 리턴하세요
+    
+        } catch (error) {
+            console.error("회원 정보 호출 실패:", error);
+            alert("회원 정보를 불러오는 중 오류가 발생했습니다.");
+        }
+        };
+    };

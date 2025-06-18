@@ -19,6 +19,7 @@ import AdminPageLayout from "./layouts/AdminPageLayout";
 import AdminReports from "./pages/admin/AdminReports";
 import PostComment from "./pages/comment/PostComment";
 import TextEditorUpdate from "./components/common/post/TextEditorUpdate";
+import MyInformation from "./pages/myPage/MyInformation";
 
 function App() {
   return (
@@ -42,8 +43,10 @@ function App() {
         </Route>
 
         {/* 마이페이지를 위한 Route */}
-        <Route path="post/mypage" element={<MypageLayout/>}>
-        <Route path=":username" element={<MyPage/>}/>
+        <Route path="post" element={<MypageLayout/>}>
+        <Route path="mypage/:username" element={<MyPage/>}/>
+        <Route path="member/:username" element={<MyInformation/>}/>
+
         </Route>
 
         {/* 게시글 관련 Route */}
