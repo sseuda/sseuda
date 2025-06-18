@@ -247,7 +247,8 @@ export const callMemberApi = (username) => {
 		const data = await response.json();
 		console.log('[멤버api] 받은 데이터:', data);
 
-			return data; // 필요하면 이걸 리턴하세요
+			// return data; // 필요하면 이걸 리턴하세요
+			dispatch({ type: GET_MEMBER, payload: data });
 	
 		} catch (error) {
 			console.error("회원 정보 호출 실패:", error);

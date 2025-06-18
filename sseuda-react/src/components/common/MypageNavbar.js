@@ -10,11 +10,11 @@ function MypageNavbar() {
     const {username} = useParams();
     
     const myPageHandler = () =>{
-        navigate(`/post/mypage/${username}`, {replace:false});
+        navigate(`/mypage/${username}`, {replace:false});
     };
 
     const myInformationHandler = () => {
-        navigate(`/post/member/${username}`, {replace:false});
+        navigate(`/mypage/member/${username}`, {replace:false});
     };
 
   return (

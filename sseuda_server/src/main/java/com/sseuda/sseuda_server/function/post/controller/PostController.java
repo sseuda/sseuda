@@ -174,10 +174,4 @@ public class PostController {
         }
     }
 
-    // 마이페이지 특정 회원 조회 (username)
-    @GetMapping("/member/{username}")
-    public MemberDTO getMemberByUsername(@PathVariable("username") String username) {
-        return memberService.getMemberByUsername(username);
-    }
-
 }

@@ -43,9 +43,9 @@ function App() {
         </Route>
 
         {/* 마이페이지를 위한 Route */}
-        <Route path="post" element={<MypageLayout/>}>
-        <Route path="mypage/:username" element={<MyPage/>}/>
-        <Route path="member/:username" element={<MyInformation/>}/>
+        <Route path="mypage" element={<MypageLayout/>}>
+          <Route path=":username" element={<MyPage/>}/>
+          <Route path="member/:username" element={<MyInformation/>}/>
 
         </Route>
 
