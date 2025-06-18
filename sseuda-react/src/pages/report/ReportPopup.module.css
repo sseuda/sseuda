@@ -1,0 +1,98 @@
+.popupOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+
+.popupBox {
+background-color: #fff;
+padding: 30px 25px;
+border-radius: 12px;
+width: 400px;
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+animation: fadeIn 0.3s ease-in-out;
+}
+
+.popupBox h3 {
+margin-bottom: 15px;
+font-size: 20px;
+color: #333;
+}
+
+label {
+display: block;
+margin-bottom: 8px;
+font-weight: 600;
+color: #555;
+}
+
+select {
+width: 100%;
+padding: 10px;
+border-radius: 6px;
+border: 1px solid #ccc;
+margin-bottom: 15px;
+font-size: 14px;
+}
+
+textarea {
+width: 100%;
+height: 100px;
+resize: none;
+padding: 10px;
+font-size: 14px;
+border: 1px solid #ccc;
+border-radius: 6px;
+margin-bottom: 20px;
+}
+
+.popupButtons {
+display: flex;
+justify-content: flex-end;
+gap: 10px;
+}
+
+.popupButtons button {
+padding: 8px 16px;
+border: none;
+border-radius: 6px;
+font-size: 14px;
+cursor: pointer;
+transition: background-color 0.2s;
+}
+
+.popupButtons button:first-child {
+background-color: #ddd;
+color: #333;
+}
+
+.popupButtons button:last-child {
+background-color: #F5C3A4;
+color: white;
+}
+
+.popupButtons button:first-child:hover {
+background-color: #ccc;
+}
+
+.popupButtons button:last-child:hover {
+background-color: #A9CDD7;
+}
+
+@keyframes fadeIn {
+from {
+	opacity: 0;
+	transform: scale(0.95);
+}
+to {
+	opacity: 1;
+	transform: scale(1);
+}
+}

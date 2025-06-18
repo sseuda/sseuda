@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Detail from '../post/css/PostDetail.module.css';
+import styles from './ReportPopup.module.css';
 import { callAddReportApi } from '../../apis/ReportsAPICalls';
 
-function PostReport({ reporterId, reportedId, postId, onClose }) {
+function ReportPopup({ reporterId, reportedId, postId = null, commentId = null, onClose }) {
 	const dispatch = useDispatch();
 	const [reasonCode, setReasonCode] = useState('');
 	const [reasonDetail, setReasonDetail] = useState('');
@@ -13,22 +13,24 @@ function PostReport({ reporterId, reportedId, postId, onClose }) {
 		reporterId,
 		reportedId,
 		postId,
-		commentId: null,
+		commentId,
 		reasonCode,
 		reasonDetail,
     };
 
-    console.log('내가 작성한 신고 폼: ', form);
-
+    console.log('신고 폼 제출:', form);
     dispatch(callAddReportApi(form));
     alert('신고가 접수되었습니다.');
-    onClose(); // 팝업 닫기
+    onClose();
 	};
 
+	const targetLabel = commentId ? '댓글 신고' : '게시글 신고';
+
 	return (
-    <div className={Detail.popupOverlay}>
-    	<div className={Detail.popupBox}>
-        <h3>게시글 신고</h3>
+    <div className={styles.popupOverlay}>
+	<div className={styles.popupBox}>
+        <h3>{targetLabel}</h3>
+
         <label>신고 사유</label>
         <select value={reasonCode} onChange={(e) => setReasonCode(e.target.value)}>
 			<option value="" disabled hidden>신고 사유 선택</option>
@@ -40,18 +42,20 @@ function PostReport({ reporterId, reportedId, postId, onClose }) {
 			<option value="HATE">혐오/차별</option>
 			<option value="ETC">기타</option>
         </select>
+
         <textarea
 			placeholder="신고 상세 내용을 입력해주세요"
 			value={reasonDetail}
 			onChange={(e) => setReasonDetail(e.target.value)}
         />
-        <div className={Detail.popupButtons}>
+
+        <div className={styles.popupButtons}>
 			<button onClick={onClose}>취소</button>
 			<button onClick={handleSubmit}>신고 제출</button>
-        </div>
-   	 	</div>
-    </div>
+			</div>
+		</div>
+		</div>
 	);
 }
 
-export default PostReport;
+export default ReportPopup;
