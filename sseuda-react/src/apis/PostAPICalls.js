@@ -268,40 +268,57 @@ export const callDeletePostsApi = ({form}) =>{
 
 // 게시글별 조회수 증가
 export const callUpdateViewCountApi = ({ postId }) => {
-  console.log('[PostAPICalls] callUpdateViewCountApi');
 
-  const requestURL = `${prefix}/post/viewCount/update/postId=${postId}`;
-  console.log("requestURL: ", requestURL);
+  const requestURL = `${prefix}/post/viewCount/update?postId=${postId}`;
+  console.log('requestURL:', requestURL);
 
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
+    
+
     try {
       const response = await fetch(requestURL, {
-        method: "PUT"
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: '*/*',
+        },
       });
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("[PostAPICalls] 서버 응답 오류:", errorText);
-        throw new Error(`HTTP error! status: ${response.status}`);
+        console.error("서버 응답 오류:", errorText);
+        throw new Error(`HTTP 에러! status: ${response.status}`);
       }
 
+      // 응답이 없거나 JSON이 아닐 수도 있으므로 체크
       const contentType = response.headers.get("content-type");
       let result = null;
 
       if (contentType && contentType.includes("application/json")) {
-        result = await response.json();
+        // JSON 응답일 때만 파싱
+        const text = await response.text();
+        if (text) {
+          result = JSON.parse(text);
+        } else {
+          result = null; // 빈 응답일 때
+        }
       }
 
-      console.log("[PostAPICalls] callUpdateViewCountApi RESULT:", result);
+      console.log("조회수 증가 API 응답:", result);
 
-      // 응답에 따라 dispatch 실행
-      if (result && result.status === 200) {
-        dispatch({ type: PUT_VIEW_COUNT, payload: result });
+      if (result && result.status === 200 && result.data !== null) {
+        dispatch({
+          type: PUT_VIEW_COUNT,
+          payload: {
+            postId,
+            viewCount: result.data,
+          },
+        });
       }
 
       return result;
     } catch (error) {
-      console.error("[PostAPICalls] Error: ", error);
+      console.error("조회수 증가 API 실패:", error);
       throw error;
     }
   };

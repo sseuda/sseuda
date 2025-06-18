@@ -85,9 +85,7 @@ public class SecurityConfig {
                                 "/post/viewCount/update/**",
                                 "/mypage/**",
                                 "/api/**",
-                                "/sseudaimgs/**",
-                                "/main.*.hot-update.js",
-                                "/sockjs-node/**"
+                                "/sseudaimgs/**"
                         ).permitAll()
                                 .anyRequest().authenticated()
                 ).cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -138,5 +136,5 @@ public class SecurityConfig {
 
         return source;
     }
-
+ 
 }
