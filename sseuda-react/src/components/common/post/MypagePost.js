@@ -25,7 +25,7 @@ function MypagePost({
     // console.log("이미지 :", firstImage);
 
   return (
-    <>
+    <div style={{width: '100%'}}>
         {firstImage && (
             <div className={Post.postBox} style={{ backgroundImage: `url(${firstImage})` }} onClick={() => onClickPostHandler(postId)}>
                 <div className={Post.blurBox}>
@@ -39,7 +39,7 @@ function MypagePost({
                 </div>
             </div>
         )}
-    </>
+    </div>
   )
 }
 
