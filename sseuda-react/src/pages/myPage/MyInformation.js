@@ -4,6 +4,7 @@ import { decodeJwt } from '../../utils/tokenUtils';
 import { useNavigate, useParams } from 'react-router-dom';
 import { callPostMemberApi } from '../../apis/PostAPICalls';
 import { callMemberApi, callMemberByIdApi } from '../../apis/MemberAPICalls';
+import UserInfo from '../../components/member/UserInfo';
 
 function MyInformation() {
 
@@ -34,33 +35,14 @@ function MyInformation() {
 
 
   return (
-    
     <>
-        <div>
-            <div>
-                <div>
-                    <h3>Profile</h3>
-                </div>
-                <div>
-                    <button>수정하기</button>
-                </div>
-            </div>
-            
-            <div>
-                <div>
-                    <div>
-                        <div>
-                            <p>{userInfo?.userFullname}</p>
-                        </div>
-                        <div>
-                            <p>{userInfo?.userStatus}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div style={{padding: '50px 0'}}>
+            <UserInfo/>
         </div>
     </>
+    
   )
 }
+
 
 export default MyInformation;
