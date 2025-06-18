@@ -6,10 +6,10 @@ const AdminRoute = () => {
 	const accessToken = localStorage.getItem("accessToken");
 	const decodedToken = accessToken ? decodeJwt(accessToken) : null;
 
-	const isTokenExpired = (decodedToken) => {
-		if (!decodedToken) return true;
+	const isTokenExpired = (token) => {
+		if (!token) return true;
 		const currentTime = Math.floor(Date.now() / 1000);
-		return decodedToken.exp < currentTime;
+		return token.exp < currentTime;
 	};
 
 	const isLogin = accessToken && decodedToken && !isTokenExpired(decodedToken);
@@ -18,12 +18,12 @@ const AdminRoute = () => {
 	const [showRedirect, setShowRedirect] = useState(false);
 
 	useEffect(() => {
-		if (!isAdmin) {
+		if (!isAdmin || !isLogin) {
 			console.log("관리자 권한 없음 - alert 실행");
 			alert("페이지 권한이 없습니다. 메인 화면으로 이동합니다 :-)");
 			setShowRedirect(true);
 		}
-		}, [isAdmin]);
+		}, [isAdmin, isLogin]);
 
 		if (showRedirect) {
 		return <Navigate to="/" replace />;
