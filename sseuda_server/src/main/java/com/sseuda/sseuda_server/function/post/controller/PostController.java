@@ -1,6 +1,7 @@
 package com.sseuda.sseuda_server.function.post.controller;
 
 import com.sseuda.sseuda_server.common.ResponseDTO;
+import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
 import com.sseuda.sseuda_server.function.member.service.MemberService;
 import com.sseuda.sseuda_server.function.post.dto.PostDTO;
 import com.sseuda.sseuda_server.function.post.service.PostService;

@@ -199,7 +199,7 @@ const modules = useMemo(() => ({
     });
 
     console.log('저장 성공', response.data);
-    navigate(`/post/mypage/${username}`, { replace: false });
+    navigate(`/mypage/${username}`, { replace: false });
   } catch (err) {
     console.error('저장 실패', err);
     alert('서버 오류가 발생했습니다.');

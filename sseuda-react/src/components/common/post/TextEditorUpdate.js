@@ -136,7 +136,7 @@ function TextEditorUpdate() {
       });
 
       alert('게시글 수정 성공');
-      navigate(`/post/mypage/${username}`);
+      navigate(`/mypage/${username}`);
     } catch (err) {
       console.error('게시글 수정 실패', err);
       alert('서버 오류로 게시글 수정 실패');

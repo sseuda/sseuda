@@ -5,6 +5,15 @@ import { callUserPostsListApi } from '../../apis/PostAPICalls';
 import MypagePost from '../../components/common/post/MypagePost';
 import Button from '../../components/common/Global/Button.module.css';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+// import './styles.css';
+// import required modules
+import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
+
 function PostMypage() {
 
     const dispatch = useDispatch();
@@ -41,18 +50,33 @@ function PostMypage() {
   return (
     <>
       {Array.isArray(myPostList) && myPostList.length > 0 ? (
-        <div style={{marginTop: '50px' ,position: 'relative'}}>
+        <div style={{marginTop: '50px', position: 'relative'}}>
           <button 
+            style={{position: 'absolute', top: '0px', right: '0'}}
             className={Button.allPostBTN} 
             onClick={() => onClickUserPageListHandler(username, firstSmallCategoryId)}
           >
             전체보기
           </button>
-          <div>
+          <Swiper 
+          slidesPerView={3}
+          spaceBetween={30}
+          // cssMode={true}
+          navigation={true}
+          pagination={{
+          clickable: true,
+          }}
+          mousewheel={true}
+          // keyboard={true}
+          modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+          className="mySwiper"
+          style={{display: 'flex', flexWrap: 'nowrap', overflow: 'hidden'}}>
             {myPostList.map((post) => (
-              <MypagePost key={post.postId} post={post} />
+              <SwiperSlide>
+                <MypagePost key={post.postId} post={post} />
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       ) : null}
     </>

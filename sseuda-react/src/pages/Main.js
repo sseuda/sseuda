@@ -33,7 +33,7 @@ function Main() {
 
   const userMyPageList = () => {
     if (username) {
-      navigate(`/post/mypage/${username}`, {replace:false});
+      navigate(`/mypage/${username}`, {replace:false});
     } else {
       alert("로그인이 필요합니다.");
       navigate("/auth/login");
@@ -43,7 +43,7 @@ function Main() {
 
     
   return (
-    <>
+    <div>
   {/* 검색창 */}
   <div className={MainCSS.searchBox}>
     <div className={MainCSS.searchWrapper}>
@@ -95,7 +95,7 @@ function Main() {
       )}
     </div>
   </div>
-</>
+</div>
   )
 }
 

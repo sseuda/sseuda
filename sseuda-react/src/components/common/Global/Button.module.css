@@ -24,9 +24,16 @@
     color: var(--text01);
     background-color: var(--main-color01);
     /* 검색 기능 들어오기 전 임시 */
-    position: absolute; 
+    /* position: absolute; 
     top: 0;
-    right: 0;
+    right: 0; */
+}
+
+.userBtn{
+    width: 120px;
+    height: 35px;
+    border-radius: 30px;
+    font-size: 18px;
 }
 
 .adminBTN{
