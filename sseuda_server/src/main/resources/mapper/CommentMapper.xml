@@ -50,7 +50,8 @@
             a.comment_delete,
             a.post_id,
             b.user_nickname,
-            b.username
+            b.username,
+            b.user_id
         FROM
             tbl_comment a
         JOIN tbl_member b ON a.user_id = b.user_id

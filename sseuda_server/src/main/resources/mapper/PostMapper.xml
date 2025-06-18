@@ -54,10 +54,7 @@
     <select id="findPost" resultMap="postResultMap">
         SELECT
             b.user_nickname,
-            a.post_title,
-            a.post_content,
-            a.post_create_at,
-            a.view_count
+            a.*
         FROM
             tbl_post a
         JOIN tbl_member b ON a.user_id = b.user_id
