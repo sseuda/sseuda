@@ -7,7 +7,7 @@ import PostComment from '../comment/PostComment';
 import ButtonCSS from '../../components/common/Global/Button.module.css';
 import { decodeJwt } from '../../utils/tokenUtils';
 import { callMemberApi } from '../../apis/MemberAPICalls';
-import PostReport from '../report/PostReport';
+import ReportPopup from '../report/ReportPopup';
 
 function PostDetail() {
   const dispatch = useDispatch();
@@ -52,11 +52,12 @@ function PostDetail() {
         <button onClick={handleReportClick}>🚨신고하기</button>
 
         {showReportPopup && (
-          <PostReport
-            reporterId={loginUserId}
-            reportedId={post.userId}
-            postId={post.postId}
-            onClose={handleClosePopup}
+          <ReportPopup
+          reporterId={loginUserId}
+          reportedId={post.userId}
+          postId={post.postId}
+          // commentId={null}
+          onClose={() => handleClosePopup(false)}
           />
         )}
 

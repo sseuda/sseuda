@@ -39,5 +39,8 @@ public interface PostMapper {
     int deleteUserPosting(Map<String, Object> map);
 
 //    게시글별 조회수 증가
-    int viewCountUpdate(int postId);
+    int viewCountUpdate(PostDTO dto, int postId);
+
+//    viewCount만 가지고오기
+    int findViewCount(@Param("postId") int postId);
 }

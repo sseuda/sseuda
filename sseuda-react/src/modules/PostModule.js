@@ -12,6 +12,7 @@ export const GET_USER_INFORMATION = 'post/GET_USER_INFORMATION';                
 
 export const POST_USER_POSTING = 'post/POST_USER_POSTING';               //  회원별 게시글 등록
 export const PUT_USER_POSTING = 'post/PUT_USER_POSTING';               //  회원별 게시글 등록
+export const PUT_VIEW_COUNT = 'post/PUT_VIEW_COUNT';               //  회원별 게시글 등록
 export const DELETE_USER_POST = 'post/DELETE_USER_POST' ;                //  회원별 게시글 삭제
 
 const actions = createActions({
@@ -24,6 +25,7 @@ const actions = createActions({
     [GET_USER_INFORMATION]: () => {},
     [POST_USER_POSTING]: () =>{},
     [PUT_USER_POSTING]: () =>{},
+    [PUT_VIEW_COUNT]: () =>{},
     [DELETE_USER_POST]: () =>{},
 })
 
@@ -53,6 +55,9 @@ const postReducer = handleActions({
         return payload
     },
     [PUT_USER_POSTING]: (state, {payload}) => {
+        return payload
+    },
+    [PUT_VIEW_COUNT]: (state, {payload}) => {
         return payload
     },
     [DELETE_USER_POST]: (state, {payload}) => {

@@ -135,6 +135,16 @@
         ORDER BY a.post_create_at DESC
     </select>
 
+<!--    viewCount만 가지고오기 -->
+    <select id="findViewCount" parameterType="int" resultType="int">
+        SELECT
+            view_count
+        FROM
+            tbl_post
+        WHERE
+            post_id = #{postId}
+    </select>
+
     <insert id="saveUserPosting" parameterType="map">
         INSERT INTO tbl_post (
             post_title,
@@ -168,7 +178,7 @@
         UPDATE
             tbl_post
         SET
-            view_count = #{viewCount} + 1
+            view_count = view_count + 1
         WHERE
             post_id = #{postId}
     </update>

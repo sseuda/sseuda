@@ -1,4 +1,4 @@
-import { DELETE_USER_POST, GET_CATEGORY_POST, GET_POST, GET_POSTS, GET_SEARCH_POSTS, GET_USER_CATEGORY_POSTS, GET_USER_INFORMATION, GET_USER_POSTS, POST_USER_POSTING, PUT_USER_POSTING } from "../modules/PostModule";
+import { DELETE_USER_POST, GET_CATEGORY_POST, GET_POST, GET_POSTS, GET_SEARCH_POSTS, GET_USER_CATEGORY_POSTS, GET_USER_POSTS, POST_USER_POSTING, PUT_USER_POSTING, PUT_VIEW_COUNT } from "../modules/PostModule";
 
 const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 
@@ -263,4 +263,63 @@ export const callDeletePostsApi = ({form}) =>{
         dispatch({type: DELETE_USER_POST, payload: result});
         
     };
+ 
+};
+
+// 게시글별 조회수 증가
+export const callUpdateViewCountApi = ({ postId }) => {
+
+  const requestURL = `${prefix}/post/viewCount/update?postId=${postId}`;
+  console.log('requestURL:', requestURL);
+
+  return async (dispatch) => {
+    
+
+    try {
+      const response = await fetch(requestURL, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: '*/*',
+        },
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("서버 응답 오류:", errorText);
+        throw new Error(`HTTP 에러! status: ${response.status}`);
+      }
+
+      // 응답이 없거나 JSON이 아닐 수도 있으므로 체크
+      const contentType = response.headers.get("content-type");
+      let result = null;
+
+      if (contentType && contentType.includes("application/json")) {
+        // JSON 응답일 때만 파싱
+        const text = await response.text();
+        if (text) {
+          result = JSON.parse(text);
+        } else {
+          result = null; // 빈 응답일 때
+        }
+      }
+
+      console.log("조회수 증가 API 응답:", result);
+
+      if (result && result.status === 200 && result.data !== null) {
+        dispatch({
+          type: PUT_VIEW_COUNT,
+          payload: {
+            postId,
+            viewCount: result.data,
+          },
+        });
+      }
+
+      return result;
+    } catch (error) {
+      console.error("조회수 증가 API 실패:", error);
+      throw error;
+    }
+  };
 };

@@ -96,8 +96,18 @@ public class PostService {
 
 
 //    게시물별 조회수 증가
-    public int viewCountUpdate(int postId) {
+    @Transactional
+    public int viewCountUpdate(PostDTO dto, int postId) {
 
-        return postMapper.viewCountUpdate(postId);
+        int result = postMapper.viewCountUpdate(dto, postId);
+        System.out.println("[PostService] 여기는 뭐야 ?? " + result);
+
+        if(result > 0){
+            System.out.println("[PostService] 여기느은?!!!! " + result);
+            return postMapper.findViewCount(postId);
+        }else {
+            return -1;
+        }
     }
+
 }
