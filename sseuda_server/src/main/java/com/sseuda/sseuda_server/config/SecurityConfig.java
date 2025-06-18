@@ -82,6 +82,7 @@ public class SecurityConfig {
                                 "/member/reset-password-request",
                                 "/member/reset-password",
                                 "/post/**",
+                                "/post/viewCount/update/**",
                                 "/mypage/**",
                                 "/api/**",
                                 "/sseudaimgs/**"
@@ -111,6 +112,8 @@ public class SecurityConfig {
         //  허용할 메서드
         configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE", "OPTIONS"));
 
+
+
         //  허용할 헤더
         configuration.setAllowedHeaders(
                 Arrays.asList(
@@ -133,5 +136,5 @@ public class SecurityConfig {
 
         return source;
     }
-
+ 
 }

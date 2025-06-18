@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { callPostApi } from '../../apis/PostAPICalls';
+import { callPostApi, callUpdateViewCountApi } from '../../apis/PostAPICalls';
 import Detail from './css/PostDetail.module.css';
 import PostComment from '../comment/PostComment';
 import ButtonCSS from '../../components/common/Global/Button.module.css';
@@ -31,12 +31,14 @@ function PostDetail() {
     fetchLoginUser();
   }, [decoded, dispatch]);
 
+  console.log("게시글 상세 조회 시작");
   const postDetail = useSelector(state => state.postReducer);
   const post = postDetail[0];
 
   useEffect(() => {
     dispatch(callPostApi(params.postId));
-  }, [params.postId]);
+    dispatch(callUpdateViewCountApi({ postId: params.postId }));
+  },[params.postId]);
 
   // 신고 팝업 관련
   const [showReportPopup, setShowReportPopup] = useState(false);
