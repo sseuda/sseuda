@@ -1,4 +1,6 @@
 .admin-reports-container {
+	max-width: 1500px;
+	margin: 0 auto;
 	padding: 20px;
 }
 
@@ -13,13 +15,16 @@
 	width: 100%;
 	border-collapse: collapse;
 	background-color: rgba(255, 255, 255, 0.9);
+	table-layout: fixed;
 }
 
 .report-table th,
 .report-table td {
 	border: 1px solid #ddd;
-	padding: 12px;
+	padding: 12px 10px;
 	text-align: center;
+	word-break: break-word; /* 너무 긴 단어 줄바꿈 */
+	font-size: 14px;
 }
 
 .report-table th {
@@ -62,4 +67,25 @@
 .report-table td a:hover {
 	color: #F5C3A4;
 	text-decoration: underline;
+}
+
+.pagination {
+	margin-top: 16px;
+	text-align: center;
+}
+
+.pagination button {
+	margin: 0 4px;
+	padding: 6px 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: white;
+	cursor: pointer;
+}
+
+.pagination .active-page {
+	background-color: #F5C3A4;
+	color: white;
+	font-weight: bold;
+	border-color: #F5C3A4;
 }
