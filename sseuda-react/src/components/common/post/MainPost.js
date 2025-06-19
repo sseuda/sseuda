@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { callPostsListApi } from '../../../apis/PostAPICalls';
+import { callPostsListApi, callUpdateViewCountApi } from '../../../apis/PostAPICalls';
 import MainPost from './css/MainPost.module.css';
 import PostComment from '../../../pages/comment/PostComment';
 
@@ -9,10 +9,13 @@ function Post({
   post: {postId, postTitle, postContent, memberDTO}, index
 }){
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const onClickPostHandler = postId => {
+    const onClickPostHandler = async postId => {
+      await dispatch(callUpdateViewCountApi({postId}));
       navigate(`/post/${postId}`, {replace:false});
     };
+    console.log("postId???? ", postId);
 
     // quill Api 사용 첫번째 이미지 추출 함수 
     const extractFirstImageSrc = (html) => {
