@@ -1,12 +1,12 @@
-import { handleActions } from "redux-actions";
+import { createActions, handleActions } from "redux-actions";
 
 const initialState = [];
 
-export const GET_ALARM = 'alarm/GET_ALARM';
+export const GET_ALARM = 'api/alarm/GET_ALARM';
 
-const actions = createActions({
-	[GET_ALARM]: () => {}
-})
+// const actions = createActions({
+// 	[GET_ALARM]: () => {}
+// })
 
 const alarmReducer = handleActions({
 	[GET_ALARM]: (state, {payload}) => {

@@ -4,13 +4,15 @@ import memberReducer from './MemberModule';
 import categoryReducer from './CategoryModule';
 import reportsReducer from './ReportsModule';
 import commentReducer from './CommentModule';
+import alarmReducer from './AlarmModule';
 
 const rootReducer = combineReducers({
     postReducer,
     categoryReducer,
     memberReducer,
     reportsReducer,
-    commentReducer
+    commentReducer,
+    alarmReducer
 })
 
 export default rootReducer;

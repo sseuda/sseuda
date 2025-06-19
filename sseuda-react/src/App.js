@@ -36,7 +36,7 @@ function App() {
           <Route path="member/reset-password-request" element={<ResetPasswordRequest/>}/>
           <Route path="member/reset-password" element={<ResetPassword/>}/>
           <Route path="post/search" element={<PostSearchResult/>} />
-          <Route path="alarm" element={<Alarm/>}/>
+          <Route element={<Alarm/>}/>
         </Route>
 
         {/* 관리자 페이지를 위한 Route */}

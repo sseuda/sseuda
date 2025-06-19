@@ -6,6 +6,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { decodeJwt } from "../utils/tokenUtils";
 import { useState } from "react";
+import Alarm from "./alarm/Alarm";
 
 function Main() {
   const navigate = useNavigate();
@@ -40,6 +41,8 @@ function Main() {
     }
   }
 
+  // 알람 모달창 
+  const [showAlarm, setShowAlarm] = useState(false);
 
     
   return (
@@ -87,7 +90,7 @@ function Main() {
         </div>
       ) : (
         <div className={MainCSS.myBlog}>
-          <Link to="/alarm">내 알람</Link>
+          <button onClick={() => setShowAlarm(true)}>🔔 알림</button>
           <p><b>쓰다</b>에 일상을 기록해보세요 😊</p>
           <div onClick={userMyPageList} className={MainCSS.myBlogBTN}>
             내블로그 바로가기
@@ -96,6 +99,8 @@ function Main() {
       )}
     </div>
   </div>
+  {/* 알람 모달 팝업 */}
+  {showAlarm && <Alarm onClose={() => setShowAlarm(false)} />}
 </div>
   )
 }
