@@ -21,6 +21,7 @@ import PostComment from "./pages/comment/PostComment";
 import TextEditorUpdate from "./components/common/post/TextEditorUpdate";
 import MyInformation from "./pages/myPage/MyInformation";
 import AdminRoute from "./components/common/auth/AdminRoute";
+import Alarm from "./pages/alarm/Alarm";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="member/reset-password-request" element={<ResetPasswordRequest/>}/>
           <Route path="member/reset-password" element={<ResetPassword/>}/>
           <Route path="post/search" element={<PostSearchResult/>} />
+          <Route path="alarm" element={<Alarm/>}/>
         </Route>
 
         {/* 관리자 페이지를 위한 Route */}

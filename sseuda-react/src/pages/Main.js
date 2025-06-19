@@ -87,6 +87,7 @@ function Main() {
         </div>
       ) : (
         <div className={MainCSS.myBlog}>
+          <Link to="/alarm">내 알람</Link>
           <p><b>쓰다</b>에 일상을 기록해보세요 😊</p>
           <div onClick={userMyPageList} className={MainCSS.myBlogBTN}>
             내블로그 바로가기
