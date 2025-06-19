@@ -28,9 +28,6 @@ function PostMain() {
     const totalPages = Math.ceil(posts.length / postsPerPage);
     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-    // 배경색
-    const backgroundColors = ['#FFE3D3', '#FFF6A3', '#DFF3E3', '#D6EBFF'];
-
     const fetchData=() =>{
         dispatch(callPostsListApi(postId))
     }
@@ -58,11 +55,8 @@ function PostMain() {
         {Array.isArray(currentPosts) && currentPosts.map((post, index) => (
           <div
             key={post.postId}
-            style={{
-              backgroundColor: backgroundColors[index % backgroundColors.length]
-            }}
           >
-            <MainPost post={post} />
+            <MainPost post={post} index={index}/>
           </div>
         ))}
 
