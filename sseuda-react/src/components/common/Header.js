@@ -1,7 +1,7 @@
 import HeaderCSS from "./Global/Header.module.css";
 import ButtonCSS from "./Global/Button.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { callLogoutAPI } from "../../apis/MemberAPICalls";
 import { decodeJwt } from "../../utils/tokenUtils";
 
@@ -17,9 +17,9 @@ function Header() {
 		const currentTime = Math.floor(Date.now() / 1000);
 		return decodedToken.exp < currentTime;
 	};
-
+	
 	const isLogin = accessToken && decodedToken && !isTokenExpired(decodedToken);
-
+	
 	const handleLogout = async () => {
 		if (!isLogin) {
 			alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
@@ -41,7 +41,10 @@ function Header() {
 		<div className={HeaderCSS.headerBox}>
 			<div className={HeaderCSS.box}>
 				<Link to='/' className={HeaderCSS.headerLogo} />
-				<Link to={"/admin/members"}>관리자 페이지 가기</Link>
+
+				{isLogin && (decodedToken?.auth === "ADMIN" || decodedToken?.auth === "SUPER") && (
+				<Link to="/admin/members" className={ButtonCSS.adminBTN}>관리자 페이지</Link>)}
+
 				{!isLogin ? (
 					<Link to="/auth/login" className={ButtonCSS.headerBTN}>로그인</Link>
 				) : (

@@ -14,12 +14,13 @@ import ResetPassword from "./pages/member/ResetPassword";
 import PostTextEditor from "./pages/post/PostTextEditor";
 import UserPage from "./pages/post/UserPage";
 import PostSearchResult from "./pages/post/PostSearchResult";
-import AdminPage from "./pages/admin/AdminPage";
+import AdminMembers from "./pages/admin/AdminMembers";
 import AdminPageLayout from "./layouts/AdminPageLayout";
 import AdminReports from "./pages/admin/AdminReports";
 import PostComment from "./pages/comment/PostComment";
 import TextEditorUpdate from "./components/common/post/TextEditorUpdate";
 import MyInformation from "./pages/myPage/MyInformation";
+import AdminRoute from "./components/common/auth/AdminRoute";
 
 function App() {
   return (
@@ -37,9 +38,11 @@ function App() {
         </Route>
 
         {/* 관리자 페이지를 위한 Route */}
-        <Route path="admin" element={<AdminPageLayout/>}>
-        <Route path="members" element={<AdminPage/>}/>
-        <Route path="reports" element={<AdminReports/>}/>
+        <Route path="admin" element={<AdminRoute/>}>
+          <Route element={<AdminPageLayout/>}>
+            <Route path="members" element={<AdminMembers/>}/>
+            <Route path="reports" element={<AdminReports/>}/>
+          </Route>
         </Route>
 
         {/* 마이페이지를 위한 Route */}

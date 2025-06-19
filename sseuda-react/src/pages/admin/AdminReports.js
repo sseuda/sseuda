@@ -13,6 +13,7 @@ function AdminReports() {
 	const [sortBy, setSortBy] = useState(null); // 'date' or 'reason'
 	const [sortOrder, setSortOrder] = useState('asc'); // or 'desc'
 	const [usernames, setUsernames] = useState({});
+	const [reportType, setReportType] = useState('post'); // 'post' or 'comment'
 
 	useEffect(() => {
 		dispatch(callReportsApi());
@@ -98,12 +99,30 @@ function AdminReports() {
 	return (
 		<div className="admin-reports-container">
 			<h4 className="report-title">▶︎ 신고 관리</h4>
+
+			<div className="report-tabs">
+				<button
+					className={reportType === 'post' ? 'active' : ''}
+					onClick={() => setReportType('post')}
+				>
+					📄 게시글 신고
+				</button>
+				<button
+					className={reportType === 'comment' ? 'active' : ''}
+					onClick={() => setReportType('comment')}
+				>
+					💬 댓글 신고
+				</button>
+			</div>
+
 			<table className="report-table">
 				<thead>
 					<tr>
 						<th>번호</th>
 						<th>신고자</th>
 						<th>신고 대상</th>
+						<th>게시글</th>
+						<th>댓글</th>
 						<th onClick={() => toggleSort('reason')} style={{ cursor: "pointer" }}>
 							사유 대분류 {sortBy === 'reason' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}
 						</th>
@@ -117,36 +136,52 @@ function AdminReports() {
 					</tr>
 				</thead>
 				<tbody>
-					{sortedReports && sortedReports.length > 0 ? (
-						sortedReports.map((report, index) => (
-							<tr key={report.reportsId}>
-								<td>{index + 1}</td>
-								<td>{usernames[report.reporterId] || report.reporterId}</td>
-								<td>{usernames[report.reportedId] || report.reportedId}</td>
-								<td>{report.reasonCode}</td>
-								<td>{report.reasonDetail}</td>
-								<td>{formatDate(report.reportsCreateAt)}</td>
-								<td>
-									<select
-										value={report.reportsStatus}
-										onChange={(e) => handleStatusChange(report.reportsId, e.target.value)}
-									>
-										{STATUS_LIST.map(status => (
-											<option key={status} value={status}>
-												{status}
-											</option>
-										))}
-									</select>
-								</td>
-							</tr>
-						))
-					) : (
-						<tr>
-							<td colSpan="7" style={{ textAlign: "center" }}>
-								🚫 신고 내역이 없습니다.
-							</td>
-						</tr>
-					)}
+				{sortedReports && sortedReports.length > 0 ? (
+				sortedReports
+					.filter(report => {
+					if (reportType === 'post') return report.commentId == null;
+					if (reportType === 'comment') return report.commentId !== null;
+					return true;
+					})
+					.map((report, index) => (
+					<tr key={report.reportsId}>
+						<td>{index + 1}</td>
+						<td>{usernames[report.reporterId] || report.reporterId}</td>
+						<td>{usernames[report.reportedId] || report.reportedId}</td>
+						<td>
+							{report.postId ? (
+								<a href={`/post/${report.postId}`} target="_blank" rel="noopener noreferrer">
+								{report.postId}
+								</a>
+							) : (
+								"-"
+							)}
+						</td>
+						<td>{report.commentId}</td>
+						<td>{report.reasonCode}</td>
+						<td>{report.reasonDetail}</td>
+						<td>{formatDate(report.reportsCreateAt)}</td>
+						<td>
+						<select
+							value={report.reportsStatus}
+							onChange={(e) => handleStatusChange(report.reportsId, e.target.value)}
+						>
+							{STATUS_LIST.map(status => (
+							<option key={status} value={status}>
+								{status}
+							</option>
+							))}
+						</select>
+						</td>
+					</tr>
+					))
+				) : (
+				<tr>
+					<td colSpan="9" style={{ textAlign: "center" }}>
+					🚫 신고 내역이 없습니다.
+					</td>
+				</tr>
+				)}
 				</tbody>
 			</table>
 		</div>
