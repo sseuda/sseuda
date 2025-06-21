@@ -59,18 +59,22 @@ export const callLogoutAPI = () => {
 				}
 			});
 
+			// 서버 응답이 정상일 경우
 			if (response.ok) {
-				localStorage.removeItem('accessToken');
-				dispatch({ type: 'POST_LOGOUT', payload: { member: null } });
 				alert("로그아웃 되었습니다.");
-				return true;
 			} else {
 				const msg = await response.text();
-				alert(`로그아웃 실패: ${msg}`);
+				console.warn(`서버 로그아웃 실패: ${msg}`);
+				alert("서버 로그아웃 실패, 클라이언트에서 강제 로그아웃합니다.");
 			}
 		} catch (error) {
-			alert("로그아웃 요청 중 오류 발생");
-			console.error("로그아웃 오류:", error);
+			console.error("로그아웃 요청 중 오류 발생:", error);
+			alert("로그아웃 오류, 클라이언트에서 강제 로그아웃합니다.");
+		} finally {
+			// 서버 응답 성공/실패 관계 없이 클라이언트에서는 강제로 로그아웃 처리
+			localStorage.removeItem('accessToken');
+			dispatch({ type: 'POST_LOGOUT', payload: { member: null } });
+			window.location.reload();
 		}
 	};
 };

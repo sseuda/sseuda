@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS tbl_reports (
     reporter_id INT NOT NULL COMMENT '신고자 ID',
     reported_id INT NOT NULL COMMENT '신고된 유저 ID',
     post_id INT DEFAULT NULL COMMENT '신고된 게시글 ID (nullable)',
-    comment_id INT DEFAULT NULL COMMENT '신고된 댓글 ID (nullable)',
+    comment_id INTEGER DEFAULT NULL COMMENT '신고된 댓글 ID (nullable)',
     reports_create_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '신고일',
     reason_code VARCHAR(20) COMMENT '신고사유 코드',
     reason_detail VARCHAR(300) COMMENT '신고사유 상세',

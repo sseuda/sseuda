@@ -3,17 +3,20 @@ import { replace, useNavigate } from 'react-router-dom';
 import Post from './css/MypagePost.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { callUpdateViewCountApi } from '../../../apis/PostAPICalls';
 
 
 function MypagePost({
     post: {postId, postTitle, postContent, memberDTO, viewCount}
 }) {
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const onClickPostHandler = postId => {
-        navigate(`/post/${postId}`, {replace:false});
-    }
+    const onClickPostHandler = async postId => {
+          await dispatch(callUpdateViewCountApi({postId}));
+          navigate(`/post/${postId}`, {replace:false});
+        };
 
     // quill Api 사용 첫번째 이미지 추출 함수 
     const extractFirstImageSrc = (html) => {
