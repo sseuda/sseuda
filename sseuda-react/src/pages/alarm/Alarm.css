@@ -52,3 +52,11 @@
     font-size: 0.8rem;
     color: #999;
 }
+
+.alarm-item.read {
+    background-color: #f5f5f5; /* 확인한 알람: 밝은 회색 */
+}
+
+.alarm-item.unread {
+    background-color: #fff3cd; /* 확인 안한 알람: 연한 노랑 */
+}

@@ -37,32 +37,49 @@ function Alarm({ onClose }) {
         }
     };
 
+    const unreadCount = alarms.filter(alarm => alarm.alarmCheck === 'N').length;
+
     return (
         <div className="alarm-modal-overlay">
-        <div className="alarm-modal">
-            <button className="alarm-close-btn" onClick={onClose}>×</button>
-            <h2>🔔 내 알림 목록</h2>
-            {alarms.length > 0 ? (
-            <ul className="alarm-list">
-                {alarms.map((alarm) => (
-                <li key={alarm.alarmId} className="alarm-item">
-                    {alarm.userId}님이 회원님의 게시글에 {alarm.alarmType}을 남겼습니다.
-                    <br />
-                    <span className="alarm-date">
-                    {new Date(alarm.createdAt).toLocaleString()}
-                    </span>
-                    <br />
-                    <button onClick={() => handleCheck(alarm.alarmId)}>확인</button>
-                    <button onClick={() => handleDelete(alarm.alarmId)} style={{ marginLeft: '8px' }}>삭제</button>
-                </li>
-                ))}
-            </ul>
-            ) : (
-            <p>📭 알림이 없습니다.</p>
-            )}
-        </div>
-        </div>
-    );
+            <div className="alarm-modal">
+                <button className="alarm-close-btn" onClick={onClose}>×</button>
+                <h2>🔔 내 알림 목록</h2>
+        
+                {unreadCount > 0 && (
+                <p style={{ color: 'tomato', fontWeight: 'bold' }}>
+                    📌 확인하지 않은 알림: {unreadCount}개
+                </p>
+                )}
+        
+                {alarms.length > 0 ? (
+                <ul className="alarm-list">
+                    {alarms.map((alarm) => (
+                    <li
+                        key={alarm.alarmId}
+                        className={`alarm-item ${alarm.alarmCheck === 'Y' ? 'read' : 'unread'}`}
+                    >
+                        {alarm.userId}님이 회원님의 게시글에 {alarm.alarmType}을 남겼습니다.
+                        <br />
+                        <span className="alarm-date">
+                        {new Date(alarm.createdAt).toLocaleString()}
+                        </span>
+                        <br />
+                        <button onClick={() => handleCheck(alarm.alarmId)}>확인</button>
+                        <button
+                        onClick={() => handleDelete(alarm.alarmId)}
+                        style={{ marginLeft: '8px' }}
+                        >
+                        삭제
+                        </button>
+                    </li>
+                    ))}
+                </ul>
+                ) : (
+                <p>📭 알림이 없습니다.</p>
+                )}
+            </div>
+            </div>
+        );
 }
 
 export default Alarm;
