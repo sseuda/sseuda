@@ -74,6 +74,7 @@ export const callLogoutAPI = () => {
 			// 서버 응답 성공/실패 관계 없이 클라이언트에서는 강제로 로그아웃 처리
 			localStorage.removeItem('accessToken');
 			dispatch({ type: 'POST_LOGOUT', payload: { member: null } });
+			window.location.reload();
 		}
 	};
 };
