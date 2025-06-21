@@ -42,7 +42,7 @@
         (
             NOW(),
             #{postId},
-            #{userId}
+            #{userCode}
         )
     </insert>
 
