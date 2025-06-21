@@ -30,7 +30,7 @@ function Alarm({ onClose }) {
                     <ul className="alarm-list">
                         {alarms.map((alarm, index) => (
                             <li key={index} className="alarm-item">
-                                {alarm.alarmDetail}
+                                {alarm.userId}님이 회원님의 게시글에 {alarm.alarmType}을 남겼습니다.
                                 <br />
                                 <span className="alarm-date">
                                     {new Date(alarm.createdAt).toLocaleString()}
