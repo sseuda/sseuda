@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { callUserPostsListApi } from '../../apis/PostAPICalls';
@@ -13,12 +13,17 @@ import 'swiper/css/pagination';
 // import './styles.css';
 // import required modules
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import MainCSS from "../Main.module.css";
+
 
 function PostMypage() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {username, postId} = useParams();
+    const [searchTerm, setSearchTerm] = useState("");
 
     console.log("마이페이지 게시글 전체 조회 시작");
     const myPostList = useSelector(state => state.postReducer);
@@ -47,17 +52,45 @@ function PostMypage() {
     navigate(`/post/mypage/${username}/1`);
   }
 
+  const handleSearch = () => {
+    if (searchTerm.trim() === "") {
+      alert("검색어를 입력해주세요.");
+      return;
+    }
+    navigate(`/post/search?keyword=${encodeURIComponent(searchTerm)}`);
+  };
+
   return (
     <>
     {Array.isArray(myPostList) && myPostList.length > 0 ? (
-        <div style={{marginTop: '50px', position: 'relative'}}>
-          <button 
-            style={{position: 'absolute', top: '0px', right: '0', zIndex: '10'}}
-            className={Button.allPostBTN} 
-            onClick={() => onClickUserPageListHandler(username, firstSmallCategoryId)}
-            >
-            전체보기
-          </button>
+      <div>
+          <div style={{marginTop: '50px', display: 'flex', justifyContent: "space-between"}}>
+            {/* 검색창 */}
+            <div className={MainCSS.searchBox}>
+              <div className={MainCSS.searchWrapper}>
+                <input
+                  type="text"
+                  className={MainCSS.searchInput}
+                  placeholder="검색어를 입력하세요"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                />
+                <button className={MainCSS.searchBtn} onClick={handleSearch}>
+                  <FontAwesomeIcon icon={faMagnifyingGlass} className={MainCSS.searchIcon} />
+                </button>
+              </div>
+            </div>
+            
+            <button 
+              style={{position: 'absolute', top: '0px', right: '0', zIndex: '10'}}
+              className={Button.allPostBTN} 
+              onClick={() => onClickUserPageListHandler(username, firstSmallCategoryId)}
+              >
+              전체보기
+            </button>
+          </div>
+
           <Swiper 
           slidesPerView={3}
           spaceBetween={30}

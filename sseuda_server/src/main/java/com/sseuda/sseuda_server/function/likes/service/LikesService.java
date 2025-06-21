@@ -35,8 +35,8 @@ public class LikesService {
     }
 
     @Transactional
-    public int deleteLike(int postId, int userCode, LikesDTO dto) {
+    public int deleteLike(int postId, int userCode) {
 
-        return likesMapper.deleteLike(postId, userCode, dto);
+        return likesMapper.deleteLike(postId, userCode);
     }
 }

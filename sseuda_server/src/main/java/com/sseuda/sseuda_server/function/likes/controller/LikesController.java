@@ -69,15 +69,14 @@ public class LikesController {
     @Operation(summary = "회원별 게시글 좋아요 삭제", description = "회원별 게시글 좋아요 삭제 진행중", tags = {"LikesController"})
     @DeleteMapping("/delete/{username}")
     public ResponseEntity<ResponseDTO> deleteLike(@PathVariable("username") String username,
-                                                  @RequestParam("postId") int postId,
-                                                  @ModelAttribute LikesDTO dto){
+                                                  @RequestParam("postId") int postId){
 
         int userCode = 0;
         if(username != null){
             userCode = memberService.getMemberByUsername(username).getUserId();
         }
 
-        int result = likesService.deleteLike(postId, userCode, dto);
+        int result = likesService.deleteLike(postId, userCode);
 
         if(result > 0){
             return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "좋아요가 삭제되었습니다.", result));

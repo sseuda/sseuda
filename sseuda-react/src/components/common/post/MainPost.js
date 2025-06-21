@@ -27,7 +27,7 @@ function Post({
     const firstImage = extractFirstImageSrc(postContent);
 
     // 배경색
-    const backgroundColors = ['#FFE3D3', '#FFF6A3', '#DFF3E3', '#D6EBFF'];
+    const backgroundColors = ['#F5C3A4', '#FCEF9F', '#A9CDD7'];
     const bgColor = backgroundColors[index % backgroundColors.length];
 
     const removeImageTags = (html) => {

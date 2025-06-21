@@ -5,6 +5,7 @@ import categoryReducer from './CategoryModule';
 import reportsReducer from './ReportsModule';
 import commentReducer from './CommentModule';
 import alarmReducer from './AlarmModule';
+import likesReducer from './LikesModule';
 
 const rootReducer = combineReducers({
     postReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     memberReducer,
     reportsReducer,
     commentReducer,
-    alarmReducer
+    alarmReducer,
+    likesReducer
 })
 
 export default rootReducer;
