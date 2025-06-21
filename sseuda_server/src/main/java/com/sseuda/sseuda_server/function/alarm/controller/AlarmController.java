@@ -26,7 +26,7 @@ public class AlarmController {
     }
 
     @Operation(summary = "알람 확인 상태 변경", description = "알람 확인 상태를 'Y'로 변경합니다.")
-    @PutMapping("/check")
+    @PutMapping("/{alarmId}/check")
     public ResponseEntity<ResponseDTO> updateAlarmCheck(@RequestBody AlarmDTO alarmDTO) {
         int result = alarmService.updateAlarmCheck(alarmDTO);
         if (result > 0) {
