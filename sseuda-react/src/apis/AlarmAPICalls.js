@@ -37,3 +37,73 @@ export const callAlarmApi = (userId) => {
     };
 };
 
+// 알람 상태 변경 (N -> Y)
+export const callUpdateAlarmCheckApi = (alarmId) => {
+    return async (dispatch) => {
+        const requestURL = `${prefix}/api/alarm/${alarmId}/check`;
+        console.log("📡 [callUpdateAlarmCheckApi] 호출됨. alarmId:", alarmId);
+        console.log("🔗 요청 주소:", requestURL);
+    
+        const body = JSON.stringify({ alarmId }); // ✅ alarmId만 JSON으로 보냄
+    
+        try {
+            const response = await fetch(requestURL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*',
+                Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
+            },
+            body: body
+            });
+    
+            const result = await response.json();
+            console.log("📦 알람 상태 변경 응답:", result);
+    
+            if (response.status === 200) {
+            dispatch({ type: 'UPDATE_ALARM_CHECK_SUCCESS', payload: alarmId });
+            return result;
+            } else {
+            console.warn("알람 상태 변경 실패 상태 코드:", response.status);
+            throw new Error('알람 상태 변경 실패');
+            }
+        } catch (e) {
+            console.error("❌ 알람 상태 변경 API 실패:", e);
+            throw e;
+        }
+        };
+    };
+
+// 알람 삭제
+export const callDeleteAlarmApi = (alarmId) => {
+    return async (dispatch) => {
+        const requestURL = `${prefix}/api/alarm/delete/${alarmId}`;
+        console.log("📡 [callDeleteAlarmApi] 호출됨. alarmId:", alarmId);
+        console.log("🔗 요청 주소:", requestURL);
+    
+        try {
+            const response = await fetch(requestURL, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*',
+                Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
+            }
+            });
+    
+            const result = await response.json();
+            console.log("📦 알람 삭제 응답:", result);
+    
+            if (response.status === 200) {
+            dispatch({ type: 'DELETE_ALARM_SUCCESS', payload: alarmId });
+            return result;
+            } else {
+            console.warn("알람 삭제 실패 상태 코드:", response.status);
+            throw new Error('알람 삭제 실패');
+            }
+        } catch (e) {
+            console.error("❌ 알람 삭제 API 실패:", e);
+            throw e;
+        }
+        };
+    };
