@@ -9,4 +9,6 @@ import java.util.List;
 public interface AlarmMapper {
 
     List<AlarmDTO> selectAlarmsByUserId(int userId);
+
+    int insertAlarmForComment(AlarmDTO alarmDTO);
 }

@@ -25,4 +25,14 @@
         WHERE p.user_id = #{userId}
         ORDER BY a.created_at DESC
     </select>
+
+<!--  알람 등록 (댓글)  -->
+    <insert id="insertAlarmForComment" parameterType="com.sseuda.sseuda_server.function.alarm.dto.AlarmDTO">
+        INSERT INTO tbl_alarm (
+        alarm_type, user_id, post_id, comment_id
+        ) VALUES (
+        'COMMENT', #{userId}, #{postId}, #{commentId}
+        );
+    </insert>
+
 </mapper>
