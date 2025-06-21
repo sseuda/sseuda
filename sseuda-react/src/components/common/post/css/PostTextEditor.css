@@ -1,19 +1,27 @@
+.quill {
+  width: 1280px;
+}
+
+.ql-editor {
+  min-height: 900px; /* 원하는 최소 높이 */
+  max-height: 900px; /* 최대 높이 */
+  overflow-y: auto;  /* 내용 넘치면 스크롤 생김 */
+}
+
 .ql-editor img {
-  max-width: 50px;
+  max-width: 20%;
   height: auto;
 }
 
-.ql-snow .ql-editor img {
-    max-width: 20%;
+.ql-editor > * {
+  cursor: text;
 }
 
-/* write section 용도. 스크롤 바로 동작! */
-/* .ql-container.ql-snow { */
-  /* border-style: none !important; 기본적으로 있는 border 지정. */
-  /* height: 1390px; */
-/* } */
+.quill .ql-editor p {
+  margin: 0;
+  line-height: 1.5;
+}
 
-.ql-editor > * {
-    cursor: text;
-    height: 900px;
+.quill img {
+  width: 20%;
 }

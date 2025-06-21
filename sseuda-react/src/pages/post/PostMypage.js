@@ -49,13 +49,13 @@ function PostMypage() {
 
   return (
     <>
-      {Array.isArray(myPostList) && myPostList.length > 0 ? (
+    {Array.isArray(myPostList) && myPostList.length > 0 ? (
         <div style={{marginTop: '50px', position: 'relative'}}>
           <button 
-            style={{position: 'absolute', top: '0px', right: '0'}}
+            style={{position: 'absolute', top: '0px', right: '0', zIndex: '10'}}
             className={Button.allPostBTN} 
             onClick={() => onClickUserPageListHandler(username, firstSmallCategoryId)}
-          >
+            >
             전체보기
           </button>
           <Swiper 

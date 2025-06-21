@@ -85,7 +85,8 @@ public class SecurityConfig {
                                 "/post/viewCount/update/**",
                                 "/mypage/**",
                                 "/api/**",
-                                "/sseudaimgs/**"
+                                "/sseudaimgs/**",
+                                "/like/**"
                         ).permitAll()
                                 .anyRequest().authenticated()
                 ).cors(cors -> cors.configurationSource(corsConfigurationSource()))

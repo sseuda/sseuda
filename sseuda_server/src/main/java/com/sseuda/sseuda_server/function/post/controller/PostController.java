@@ -1,7 +1,6 @@
 package com.sseuda.sseuda_server.function.post.controller;
 
 import com.sseuda.sseuda_server.common.ResponseDTO;
-import com.sseuda.sseuda_server.function.member.dto.MemberDTO;
 import com.sseuda.sseuda_server.function.member.service.MemberService;
 import com.sseuda.sseuda_server.function.post.dto.PostDTO;
 import com.sseuda.sseuda_server.function.post.service.PostService;
@@ -12,10 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.*;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/post/*")

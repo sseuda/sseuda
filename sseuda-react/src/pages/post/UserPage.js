@@ -25,9 +25,9 @@ function UserPage() {
 
 
   return (
-    <div style={{display: 'flex'}}>
+    <div style={{display: 'flex', height: '1500px'}}>
         <CategoryNav style={{position: 'absolute', top: '0', left: '0'}}/>
-        <div>
+        <div style={{display: 'flex', flexWrap: 'initial'}}>
         {Array.isArray(userList) && userList.map((post) =>(
             <MypagePost key={post.postId} post={post}/>
         ))}
