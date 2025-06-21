@@ -53,9 +53,7 @@ function PostMain() {
     <div>
       <div>
         {Array.isArray(currentPosts) && currentPosts.map((post, index) => (
-          <div
-            key={post.postId}
-          >
+          <div key={post.postId}>
             <MainPost post={post} index={index}/>
           </div>
         ))}

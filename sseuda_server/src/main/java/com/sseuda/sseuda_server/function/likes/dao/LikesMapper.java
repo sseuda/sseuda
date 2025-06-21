@@ -14,5 +14,5 @@ public interface LikesMapper {
 
     int insertLike(int postId, int userCode, LikesDTO dto);
 
-    int deleteLike(int postId, int userCode, LikesDTO dto);
+    int deleteLike(int postId, int userCode);
 }
