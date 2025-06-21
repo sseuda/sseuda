@@ -12,38 +12,40 @@ function CommentInsert({ postId, onCommentAdded }) {
   const [commentText, setCommentText] = useState('');
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if (!commentText.trim()) {
-    alert('댓글을 입력해주세요.');
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("commentText", commentText);
-
-  try {
-    const actionResult = await dispatch(callPostCommentRegistApi({
-      postId,
-      form: formData,
-      username
-    }));
-
-    console.log('📦 등록 결과:', actionResult);  // 여기를 꼭 확인!
-
-    // 여기가 핵심! 응답 결과 검사
-    if (actionResult?.status === 200) {
-      alert("댓글이 등록되었습니다!");
-      setCommentText('');
-      onCommentAdded && onCommentAdded(); // 새로고침 트리거
-    } else {
-      alert("댓글 등록에 실패했습니다. [서버 응답 오류]");
+    e.preventDefault();
+  
+    if (!commentText.trim()) {
+      alert('댓글을 입력해주세요.');
+      return;
     }
-  } catch (error) {
-    console.error("댓글 등록 중 예외 발생:", error);
-    alert("댓글 등록에 실패했습니다. [예외]");
-  }
-};
+  
+    // JSON 객체로 작성
+    const form = {
+      commentText: commentText,
+      commentCreateAt: new Date().toISOString() // 서버에서 LocalDateTime 받을 경우 필요
+    };
+  
+    try {
+      const actionResult = await dispatch(callPostCommentRegistApi({
+        postId,
+        form,
+        username
+      }));
+  
+      console.log('📦 등록 결과:', actionResult);
+  
+      if (actionResult?.status === 200) {
+        alert("댓글이 등록되었습니다!");
+        setCommentText('');
+        onCommentAdded && onCommentAdded();
+      } else {
+        alert("댓글 등록에 실패했습니다. [서버 응답 오류]");
+      }
+    } catch (error) {
+      console.error("댓글 등록 중 예외 발생:", error);
+      alert("댓글 등록에 실패했습니다. [예외]");
+    }
+  };
     
     
 

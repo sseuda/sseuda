@@ -11,4 +11,9 @@ public interface AlarmMapper {
     List<AlarmDTO> selectAlarmsByUserId(int userId);
 
     int insertAlarmForComment(AlarmDTO alarmDTO);
+
+    int updateAlarmCheck(AlarmDTO alarmDTO);
+
+    int deleteAlarm(int alarmId);
+
 }

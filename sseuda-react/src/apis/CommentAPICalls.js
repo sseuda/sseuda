@@ -26,32 +26,36 @@ export const callPostCommentListApi = (postId) =>{
 
 // 게시글별 특정 회원 댓글 등록
 export const callPostCommentRegistApi = ({ postId, form, username }) => {
-  return async (dispatch) => {
-    try {
-      const requestURL = `${prefix}/post/comment/${username}/input?postId=${postId}`;
-      const response = await fetch(requestURL, {
-        method: 'POST',
-        headers: {
-          Accept: '*/*',
-          Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
-        },
-        body: form
-      });
-
-      const result = await response.json();
-      console.log('[API RESULT]', result);
-
-      dispatch({ type: POST_USER_COMMENT, payload: result });
-
-      return result; // ✅ 꼭 반환
-    } catch (error) {
-      console.error('API ERROR:', error);
-      // 직접 throw 해줘야 try-catch에서 catch로 감지됨
-      throw error;
-    }
-  };
-};
-
+    return async (dispatch) => {
+        try {
+            console.log('🔥 보내는 form:', form);
+    
+            const response = await fetch(
+            `${prefix}/post/comment/${username}/input?postId=${postId}`,
+            {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
+                },
+                body: JSON.stringify(form)
+            }
+            );
+    
+            console.log("건네는 폼??? " , form);
+            console.log("요청 url???? " , response);
+            const result = await response.json();
+            console.log('[🔥 API RESULT]', result);
+    
+            dispatch({ type: POST_USER_COMMENT, payload: result });
+    
+            return result;
+        } catch (error) {
+            console.error('❌ API ERROR:', error);
+            throw error;
+        }
+        };
+    };
 
 
 // 게시글별 특정 회원 댓글 수정
