@@ -31,10 +31,10 @@ function UserPage() {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
+    <div style={{ display: 'flex', minHeight: '100vh'}}>
       <CategoryNav style={{ position: 'absolute', top: '0', left: '0' }} />
 
-      <div style={{ margin: '0 auto', flexDirection: 'column', padding: '2rem', width: '100%' }}>
+      <div style={{ margin: '0 auto', flexDirection: 'column', padding: '2rem', width: '100%',  minHeight: '1500px', position: 'relative' }}>
         {/* 게시물 리스트 */}
         <div
           style={{
@@ -50,7 +50,7 @@ function UserPage() {
         </div>
 
         {/* 페이지네이션 */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', position: 'absolute', bottom: '50px', left: '50%' }}>
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i + 1}
