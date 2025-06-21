@@ -60,6 +60,10 @@
     </select>
 
     <insert id="insertComment" parameterType="map">
+        <selectKey keyProperty="commentId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
         INSERT INTO tbl_comment
         (
             comment_text,

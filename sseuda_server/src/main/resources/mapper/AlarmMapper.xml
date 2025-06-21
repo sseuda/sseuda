@@ -7,12 +7,12 @@
     <resultMap id="alarmResultMap" type="com.sseuda.sseuda_server.function.alarm.dto.AlarmDTO">
         <id property="alarmId" column="alarm_id"/>
         <result property="alarmType" column="alarm_type"/>
-        <result property="alarmDetail" column="alarm_detail"/>
         <result property="userId" column="user_id"/>
         <result property="postId" column="post_id"/>
         <result property="commentId" column="comment_id"/>
         <result property="likesId" column="likes_id"/>
         <result property="createdAt" column="created_at"/>
+        <result property="alarmCheck" column="alarm_check"/>
         <result property="userNickname" column="user_nickname"/>
     </resultMap>
 
@@ -25,4 +25,27 @@
         WHERE p.user_id = #{userId}
         ORDER BY a.created_at DESC
     </select>
+
+<!--  알람 등록 (댓글)  -->
+    <insert id="insertAlarmForComment" parameterType="com.sseuda.sseuda_server.function.alarm.dto.AlarmDTO">
+        INSERT INTO tbl_alarm (
+        alarm_type, user_id, post_id, comment_id
+        ) VALUES (
+        'COMMENT', #{userId}, #{postId}, #{commentId}
+        );
+    </insert>
+
+    <!-- 알람 상태 변경 -->
+    <update id="updateAlarmCheck" parameterType="com.sseuda.sseuda_server.function.alarm.dto.AlarmDTO">
+        UPDATE tbl_alarm
+        SET alarm_check = 'Y'
+        WHERE alarm_id = #{alarmId}
+    </update>
+
+    <!-- 알람 삭제 -->
+    <delete id="deleteAlarm" parameterType="int">
+        DELETE FROM tbl_alarm
+        WHERE alarm_id = #{alarmId}
+    </delete>
+
 </mapper>

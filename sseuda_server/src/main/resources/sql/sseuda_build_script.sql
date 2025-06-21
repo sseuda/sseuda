@@ -102,18 +102,19 @@ CREATE TABLE IF NOT EXISTS tbl_likes (
 
 -- 알림 테이블
 CREATE TABLE IF NOT EXISTS tbl_alarm (
-    alarm_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '알림번호',
-    alarm_type VARCHAR(10) NOT NULL COMMENT '알림 유형',
-    alarm_detail VARCHAR(255) NOT NULL COMMENT '알림 내용',
-    user_id INT NOT NULL COMMENT '알림 받을 회원 ID',
-    post_id INT NOT NULL COMMENT '알림 대상 게시글 ID',
-    comment_id INT DEFAULT NULL COMMENT '알림 대상 댓글 ID',
-    likes_id INT DEFAULT NULL COMMENT '알림 대상 반응 ID',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '알림 생성 시간',
-    FOREIGN KEY (user_id) REFERENCES tbl_member(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (post_id) REFERENCES tbl_post(post_id) ON DELETE CASCADE,
-    FOREIGN KEY (comment_id) REFERENCES tbl_comment(comment_id) ON DELETE CASCADE,
-    FOREIGN KEY (likes_id) REFERENCES tbl_likes(likes_id) ON DELETE CASCADE
+     alarm_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '알림번호',
+     alarm_type VARCHAR(10) NOT NULL COMMENT '알림 유형',
+     user_id INT NOT NULL COMMENT '알림 받을 회원 ID',
+     post_id INT DEFAULT NULL COMMENT '알림 대상 게시글 ID',
+     comment_id INT DEFAULT NULL COMMENT '알림 대상 댓글 ID',
+     likes_id INT DEFAULT NULL COMMENT '알림 대상 반응 ID',
+     created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '알림 생성 시간',
+     alarm_check CHAR(1) DEFAULT 'N' COMMENT '알림 확인 여부',
+
+     FOREIGN KEY (user_id) REFERENCES tbl_member(user_id) ON DELETE CASCADE,
+     FOREIGN KEY (post_id) REFERENCES tbl_post(post_id) ON DELETE CASCADE,
+     FOREIGN KEY (comment_id) REFERENCES tbl_comment(comment_id) ON DELETE CASCADE,
+     FOREIGN KEY (likes_id) REFERENCES tbl_likes(likes_id) ON DELETE CASCADE
 );
 
 -- 태그 테이블
@@ -483,30 +484,41 @@ VALUES
 
 
 -- 알림 더미데이터
-INSERT INTO tbl_alarm (alarm_type, alarm_detail, user_id, post_id, comment_id, likes_id, created_at)
+INSERT INTO tbl_alarm (alarm_type, user_id, post_id, comment_id, likes_id, alarm_check)
 VALUES
-    ('COMMENT', '3번 회원님이 회원님의 게시글에 댓글을 남겼습니다.', 3, 1, 1, NULL, '2025-01-05 10:20:00'),
-    ('COMMENT', '4번 회원님이 회원님의 게시글에 댓글을 남겼습니다.', 4, 1, 2, NULL, '2025-01-05 10:21:00'),
-    ('COMMENT', '5번 회원님이 회원님의 게시글에 댓글을 남겼습니다.', 5, 2, 3, NULL, '2025-01-06 11:00:00'),
-    ('COMMENT', '3번 회원님이 회원님의 게시글에 댓글을 남겼습니다.', 3, 3, 4, NULL, '2025-01-07 12:00:00'),
-    ('COMMENT', '4번 회원님이 회원님의 게시글에 댓글을 남겼습니다.', 4, 4, 5, NULL, '2025-01-08 13:00:00'),
-    ('COMMENT', '5번 회원님이 회원님의 게시글에 댓글을 남겼습니다.', 5, 5, 6, NULL, '2025-01-09 14:00:00'),
-    ('COMMENT', '6번 회원님이 회원님의 게시글에 댓글을 남겼습니다.', 6, 6, 7, NULL, '2025-01-10 15:00:00'),
-    ('COMMENT', '7번 회원님이 회원님의 게시글에 댓글을 남겼습니다.', 7, 7, 8, NULL, '2025-01-11 16:00:00'),
-    ('COMMENT', '3번 회원님이 회원님의 게시글에 댓글을 남겼습니다.', 3, 8, 9, NULL, '2025-01-12 17:00:00'),
-    ('COMMENT', '5번 회원님이 회원님의 게시글에 댓글을 남겼습니다.', 5, 10, 10, NULL, '2025-01-13 18:00:00'),
+    -- 댓글 알림 (comment_id: 1~10)
+    ('COMMENT', 1, 1, 1, NULL, 'N'),
+    ('COMMENT', 2, 1, 2, NULL, 'Y'),
+    ('COMMENT', 3, 2, 3, NULL, 'N'),
+    ('COMMENT', 4, 3, 4, NULL, 'N'),
+    ('COMMENT', 5, 4, 5, NULL, 'Y'),
+    ('COMMENT', 6, 5, 6, NULL, 'N'),
+    ('COMMENT', 7, 6, 7, NULL, 'N'),
+    ('COMMENT', 8, 7, 8, NULL, 'Y'),
+    ('COMMENT', 9, 8, 9, NULL, 'N'),
+    ('COMMENT', 10, 10, 10, NULL, 'N'),
 
-    ('LIKE', '6번 회원님이 회원님의 게시글을 좋아합니다.', 6, 1, NULL, 1, '2025-01-05 10:15:00'),
-    ('LIKE', '7번 회원님이 회원님의 게시글을 좋아합니다.', 7, 2, NULL, 2, '2025-01-06 12:20:00'),
-    ('LIKE', '8번 회원님이 회원님의 게시글을 좋아합니다.', 8, 3, NULL, 3, '2025-01-07 14:00:00'),
-    ('LIKE', '4번 회원님이 회원님의 게시글을 좋아합니다.', 4, 4, NULL, 4, '2025-01-08 09:30:00'),
-    ('LIKE', '5번 회원님이 회원님의 게시글을 좋아합니다.', 5, 5, NULL, 5, '2025-01-09 11:45:00'),
-    ('LIKE', '6번 회원님이 회원님의 게시글을 좋아합니다.', 6, 6, NULL, 6, '2025-01-10 15:10:00'),
-    ('LIKE', '7번 회원님이 회원님의 게시글을 좋아합니다.', 7, 7, NULL, 7, '2025-01-11 17:25:00'),
-    ('LIKE', '3번 회원님이 회원님의 게시글을 좋아합니다.', 3, 8, NULL, 8, '2025-01-12 19:50:00'),
-    ('LIKE', '4번 회원님이 회원님의 게시글을 좋아합니다.', 4, 9, NULL, 9, '2025-01-13 21:00:00'),
-    ('LIKE', '5번 회원님이 회원님의 게시글을 좋아합니다.', 5, 10, NULL, 10, '2025-01-14 22:30:00');
-
+    -- 좋아요 알림 (likes_id: 1~25)
+    ('LIKE', 1, 1, NULL, 1, 'N'),
+    ('LIKE', 2, 2, NULL, 2, 'Y'),
+    ('LIKE', 3, 3, NULL, 3, 'N'),
+    ('LIKE', 4, 4, NULL, 4, 'N'),
+    ('LIKE', 5, 5, NULL, 5, 'Y'),
+    ('LIKE', 6, 6, NULL, 6, 'N'),
+    ('LIKE', 7, 7, NULL, 7, 'N'),
+    ('LIKE', 8, 8, NULL, 8, 'Y'),
+    ('LIKE', 9, 9, NULL, 9, 'N'),
+    ('LIKE', 10, 10, NULL, 10, 'N'),
+    ('LIKE', 10, 11, NULL, 11, 'Y'),
+    ('LIKE', 1, 12, NULL, 12, 'N'),
+    ('LIKE', 2, 13, NULL, 13, 'N'),
+    ('LIKE', 3, 14, NULL, 14, 'Y'),
+    ('LIKE', 4, 15, NULL, 15, 'N'),
+    ('LIKE', 5, 16, NULL, 16, 'Y'),
+    ('LIKE', 6, 17, NULL, 17, 'N'),
+    ('LIKE', 7, 18, NULL, 18, 'Y'),
+    ('LIKE', 8, 19, NULL, 19, 'N'),
+    ('LIKE', 9, 20, NULL, 20, 'N');
 
 -- 태그 더미데이터
 INSERT INTO tbl_tag (tag_id, tag_name, post_id) VALUES
