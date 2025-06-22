@@ -15,6 +15,16 @@ function Alarm({ onClose }) {
         }
     }, [loading, loginUserId, dispatch]);
 
+    // 알람 정렬
+    const sortedAlarms = [...alarms].sort((a, b) => {
+        // 1순위: 읽지 않은 것 먼저 (alarmCheck: 'N')
+        if (a.alarmCheck !== b.alarmCheck) {
+            return a.alarmCheck === 'N' ? -1 : 1;
+        }
+        // 2순위: 생성 시간 최신 순
+        return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
     // 알람 확인 처리 함수
     const handleCheck = async (alarmId) => {
         try {
@@ -39,6 +49,29 @@ function Alarm({ onClose }) {
 
     const unreadCount = alarms.filter(alarm => alarm.alarmCheck === 'N').length;
 
+    // 모두 확인
+    const handleAllCheck = async () => {
+        const unchecked = alarms.filter(alarm => alarm.alarmCheck === 'N');
+        try {
+            await Promise.all(unchecked.map(alarm => dispatch(callUpdateAlarmCheckApi(alarm.alarmId))));
+            alert("모든 알림을 확인 처리했습니다.");
+            dispatch(callAlarmApi(loginUserId));
+            } catch (error) {
+            alert("모두 확인 실패");
+            }
+        };
+        
+        // 모두 삭제
+        const handleAllDelete = async () => {
+            try {
+            await Promise.all(alarms.map(alarm => dispatch(callDeleteAlarmApi(alarm.alarmId))));
+            alert("모든 알림을 삭제했습니다.");
+            dispatch(callAlarmApi(loginUserId));
+            } catch (error) {
+            alert("모두 삭제 실패");
+            }
+        };
+
     return (
         <div className="alarm-modal-overlay">
             <div className="alarm-modal">
@@ -50,6 +83,17 @@ function Alarm({ onClose }) {
                     📌 확인하지 않은 알림: {unreadCount}개
                 </p>
                 )}
+
+                <div style={{ marginBottom: '10px', textAlign: 'right' }}>
+                {alarms.length > 0 && (
+                    <>
+                    <button onClick={handleAllCheck} style={{ marginRight: '10px' }}>
+                        ✅ 모두 확인
+                    </button>
+                    <button onClick={handleAllDelete}>🗑️ 모두 삭제</button>
+                    </>
+                )}
+                </div>
         
                 {alarms.length > 0 ? (
                 <ul className="alarm-list">
@@ -64,7 +108,9 @@ function Alarm({ onClose }) {
                         {new Date(alarm.createdAt).toLocaleString()}
                         </span>
                         <br />
+                        {alarm.alarmCheck === 'N' && (
                         <button onClick={() => handleCheck(alarm.alarmId)}>확인</button>
+                        )}
                         <button
                         onClick={() => handleDelete(alarm.alarmId)}
                         style={{ marginLeft: '8px' }}
