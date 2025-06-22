@@ -1,5 +1,7 @@
 package com.sseuda.sseuda_server.function.likes.dto;
 
+import com.sseuda.sseuda_server.function.post.dto.PostDTO;
+
 import java.sql.Timestamp;
 
 public class LikesDTO {
@@ -7,16 +9,18 @@ public class LikesDTO {
     private int likesId;
     private Timestamp likesCreateAt;
     private int postId;
-    private  int userId;
+    private int userId;
+    private PostDTO postDTO;
 
     public LikesDTO() {
     }
 
-    public LikesDTO(int likesId, Timestamp likesCreateAt, int postId, int userId) {
+    public LikesDTO(int likesId, Timestamp likesCreateAt, int postId, int userId, PostDTO postDTO) {
         this.likesId = likesId;
         this.likesCreateAt = likesCreateAt;
         this.postId = postId;
         this.userId = userId;
+        this.postDTO = postDTO;
     }
 
     public int getLikesId() {
@@ -51,6 +55,14 @@ public class LikesDTO {
         this.userId = userId;
     }
 
+    public PostDTO getPostDTO() {
+        return postDTO;
+    }
+
+    public void setPostDTO(PostDTO postDTO) {
+        this.postDTO = postDTO;
+    }
+
     @Override
     public String toString() {
         return "LikesDTO{" +
@@ -58,6 +70,7 @@ public class LikesDTO {
                 ", likesCreateAt=" + likesCreateAt +
                 ", postId=" + postId +
                 ", userId=" + userId +
+                ", postDTO=" + postDTO +
                 '}';
     }
 }

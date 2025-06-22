@@ -9,6 +9,13 @@
         <result property="likesCreateAt" column="likes_create_at"/>
         <result property="postId" column="post_id"/>
         <result property="userId" column="userId"/>
+        <collection property="postDTO" resultMap="postResultMap"/>
+    </resultMap>
+    
+    <resultMap id="postResultMap" type="com.sseuda.sseuda_server.function.post.dto.PostDTO">
+        <id property="postId" column="post_id"/>
+        <result property="postTitle" column="post_title"/>
+        <result property="postContent" column="post_content"/>
     </resultMap>
 
     <select id="findLikesList" resultMap="LikesResultMap">
@@ -29,6 +36,21 @@
         JOIN tbl_post b ON a.post_id = b.post_id
         WHERE
             a.post_id = #{postId}
+    </select>
+    
+    <select id="findBannerLikeList" resultMap="LikesResultMap">
+        SELECT
+            b.post_id,
+            COUNT(a.likes_id) as likeView,
+            b.post_title,
+            b.post_content
+        FROM
+            tbl_likes a
+            JOIN tbl_post b ON a.post_id = b.post_id
+        GROUP BY
+            b.post_id, b.post_title, b.post_content
+        ORDER BY
+            likeView DESC
     </select>
 
     <insert id="insertLike" parameterType="map">

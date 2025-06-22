@@ -35,13 +35,20 @@ public class LikesController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "좋아요 리스트 전체 조회 성공", likesService.findLikesList(postId)));
     }
 
-
 //    게시글에 대한 조회수만
     @Operation(summary = "좋아요 전체 조회", description = "좋아요 전체 조회가 진행됩니다.", tags = {"LikesController"})
     @GetMapping("/all")
     public ResponseEntity<ResponseDTO> findLikes(@RequestParam("postId") int postId){
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "좋아요 전체 조회 성공", likesService.findLikes(postId)));
+    }
+
+//    배너 조회
+    @Operation(summary = "배너 조회", description = "배너 조회가 진행됩니다.", tags = {"PostController"})
+    @GetMapping("/banner")
+    public ResponseEntity<ResponseDTO> findBannerLikeList(){
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "배너 조회 성공", likesService.findBannerLikeList()));
     }
 
 //    좋아요 등록
@@ -84,4 +91,6 @@ public class LikesController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(HttpStatus.NOT_FOUND, "해당 게시글을 찾을 수 없습니다.", null));
         }
     }
+
+
 }

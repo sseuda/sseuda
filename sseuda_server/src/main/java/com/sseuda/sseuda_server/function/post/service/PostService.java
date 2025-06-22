@@ -34,12 +34,6 @@ public class PostService {
         return postMapper.findPostList();
     }
 
-//    배너 조회
-//    public List<PostDTO> findBannerPostList(){
-//
-//        return postMapper.findBannerPostList();
-//    }
-
 //    게시글 상세 조회
     public List<PostDTO> findPost(int postId) {
 

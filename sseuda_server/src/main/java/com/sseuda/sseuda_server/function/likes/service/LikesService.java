@@ -28,6 +28,12 @@ public class LikesService {
         return likesMapper.findLikes(postId);
     }
 
+    //    배너 조회
+    public List<LikesDTO> findBannerLikeList(){
+
+        return likesMapper.findBannerLikeList();
+    }
+
     @Transactional
     public int insertLike(int postId, int userCode, LikesDTO dto) {
 
@@ -39,4 +45,6 @@ public class LikesService {
 
         return likesMapper.deleteLike(postId, userCode);
     }
+
+
 }

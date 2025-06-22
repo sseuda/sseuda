@@ -23,27 +23,6 @@ export const callPostsListApi = () =>{
     };
 };
 
-//  배너 조회
-export const callBannerPostApi = () =>{
-
-    let requestURL = `${prefix}/post/banner`;
-    console.log('[PostApiCalls] requestURL : ', requestURL);
-
-    return async (dispatch, getState) => {
-        const result = await fetch(requestURL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: '*/*'
-            }
-        }).then((response) => response.json());
-        if(result.status === 200){
-            console.log('[PostApiCalls] callBannerPostApi RESULT : ', result);
-            dispatch({type: GET_POSTS, payload: result.data});
-        }
-    };
-};
-
 //  게시글 상세 조회
 export const callPostApi = (postId) =>{
 
