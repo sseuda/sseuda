@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { callAlarmApi, callUpdateAlarmCheckApi, callDeleteAlarmApi } from "../../apis/AlarmAPICalls";
 import useLoginInfo from "../../hooks/useLoginInfo";
 import './Alarm.css'; 
+import { useNavigate } from "react-router-dom";
 
 function Alarm({ onClose }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const alarms = useSelector(state => state.alarmReducer);
     const { loginUserId, loading } = useLoginInfo();
 
@@ -73,6 +75,11 @@ function Alarm({ onClose }) {
         }
     };
 
+    // 알림 클릭시 해당 게시글로 이동
+    const handleNavigateToPost = (postId) => {
+        navigate(`/post/${postId}`);
+    };
+
     return (
         <div className="alarm-modal-overlay">
             <div className="alarm-modal">
@@ -99,25 +106,41 @@ function Alarm({ onClose }) {
                 {alarms.length > 0 ? (
                 <ul className="alarm-list">
                     {sortedAlarms.map((alarm) => (
-                    <li
+                        <li
                         key={alarm.alarmId}
                         className={`alarm-item ${alarm.alarmCheck === 'Y' ? 'read' : 'unread'}`}
-                    >
-                        {alarm.userId}님이 회원님의 게시글에 {alarm.alarmType}을 남겼습니다.
+                        onClick={() => handleNavigateToPost(alarm.postId)}
+                        style={{ cursor: 'pointer' }}
+                        >
+
+                        <button
+                        onClick={(e) => {
+                            e.stopPropagation(); // 부모 클릭 방지
+                            handleDelete(alarm.alarmId);
+                        }}
+                        className="alarm-delete-btn"
+                        >
+                        ×
+                        </button>
+                    
+                        <b>{alarm.userNickname}</b>님이&nbsp;
+                        <b>{alarm.alarmType === 'LIKE' ? '좋아요' : '댓글'}</b>을 남겼습니다.          
                         <br />
                         <span className="alarm-date">
                         {new Date(alarm.createdAt).toLocaleString()}
                         </span>
-                        <br />
+                    
                         {alarm.alarmCheck === 'N' && (
-                        <button onClick={() => handleCheck(alarm.alarmId)}>확인</button>
-                        )}
                         <button
-                        onClick={() => handleDelete(alarm.alarmId)}
-                        style={{ marginLeft: '8px' }}
+                            onClick={(e) => {
+                            e.stopPropagation(); // 부모 클릭 방지
+                            handleCheck(alarm.alarmId);
+                            }}
+                            className="alarm-confirm-btn"
                         >
-                        삭제
+                            확인
                         </button>
+                        )}
                     </li>
                     ))}
                 </ul>
