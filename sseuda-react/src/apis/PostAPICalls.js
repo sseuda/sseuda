@@ -267,9 +267,9 @@ export const callDeletePostsApi = ({form}) =>{
 };
 
 // 게시글별 조회수 증가
-export const callUpdateViewCountApi = ({ postId }) => {
+export const callUpdateViewCountApi = ({ postId, username }) => {
 
-  const requestURL = `${prefix}/post/viewCount/update?postId=${postId}`;
+  const requestURL = `${prefix}/post/viewCount/${username}/update?postId=${postId}`;
   console.log('requestURL:', requestURL);
 
   return async (dispatch) => {
@@ -281,6 +281,7 @@ export const callUpdateViewCountApi = ({ postId }) => {
         headers: {
           'Content-Type': 'application/json',
           Accept: '*/*',
+          Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
         },
       });
 

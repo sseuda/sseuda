@@ -40,6 +40,7 @@
     <select id="findPostList" resultMap="postResultMap">
         SELECT
             b.user_nickname,
+            b.username,
             a.post_title,
             a.post_content,
             a.post_create_at,
@@ -183,6 +184,7 @@
             view_count = view_count + 1
         WHERE
             post_id = #{postId}
+            AND (user_id IS NULL OR user_id != #{userCode})
     </update>
 
     <delete id="deleteUserPosting" parameterType="map">

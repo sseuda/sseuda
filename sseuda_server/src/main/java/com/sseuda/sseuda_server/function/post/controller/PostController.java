@@ -157,10 +157,20 @@ public class PostController {
     }
 
 //    게시글별 조회수 증가
-@PutMapping("/viewCount/update")
+@PutMapping("/viewCount/{username}/update")
 public ResponseEntity<ResponseDTO> viewCountUpdate(@ModelAttribute PostDTO dto,
+                                                   @PathVariable("username") String username,
                                                    @RequestParam("postId") int postId) {
-    int result = postService.viewCountUpdate(dto, postId);
+
+    int userCode = 0;
+    System.out.println("조회수증가 username????? " + username + "userCode?????" + userCode);
+    if(username != null) {
+        userCode = memberService.getMemberByUsername(username).getUserId();
+    }
+
+    System.out.println("조회수증가 username????? " + username + "userCode?????" + userCode);
+
+    int result = postService.viewCountUpdate(dto, postId, userCode);
     System.out.println("result????????????? " + result);
 
     if (result > 0) {
