@@ -47,6 +47,7 @@ function Alarm({ onClose }) {
         }
     };
 
+    // 읽지 않은 알람 갯수 카운트
     const unreadCount = alarms.filter(alarm => alarm.alarmCheck === 'N').length;
 
     // 모두 확인
@@ -58,19 +59,19 @@ function Alarm({ onClose }) {
             dispatch(callAlarmApi(loginUserId));
             } catch (error) {
             alert("모두 확인 실패");
-            }
-        };
+        }
+    };
         
-        // 모두 삭제
-        const handleAllDelete = async () => {
-            try {
-            await Promise.all(alarms.map(alarm => dispatch(callDeleteAlarmApi(alarm.alarmId))));
-            alert("모든 알림을 삭제했습니다.");
-            dispatch(callAlarmApi(loginUserId));
-            } catch (error) {
-            alert("모두 삭제 실패");
-            }
-        };
+    // 모두 삭제
+    const handleAllDelete = async () => {
+        try {
+        await Promise.all(alarms.map(alarm => dispatch(callDeleteAlarmApi(alarm.alarmId))));
+        alert("모든 알림을 삭제했습니다.");
+        dispatch(callAlarmApi(loginUserId));
+        } catch (error) {
+        alert("모두 삭제 실패");
+        }
+    };
 
     return (
         <div className="alarm-modal-overlay">
@@ -97,7 +98,7 @@ function Alarm({ onClose }) {
         
                 {alarms.length > 0 ? (
                 <ul className="alarm-list">
-                    {alarms.map((alarm) => (
+                    {sortedAlarms.map((alarm) => (
                     <li
                         key={alarm.alarmId}
                         className={`alarm-item ${alarm.alarmCheck === 'Y' ? 'read' : 'unread'}`}
