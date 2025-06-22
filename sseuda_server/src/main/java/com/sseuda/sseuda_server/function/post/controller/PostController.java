@@ -135,8 +135,7 @@ public class PostController {
 
     @Operation(summary = "회원별 게시글 삭제", description = "회원별 게시글 삭제가 진행됩니다.", tags = {"PostController"})
     @DeleteMapping("/mypage/{username}/delete")
-    public ResponseEntity<ResponseDTO> deleteUserPosting(
-                                                         @PathVariable("username") String username,
+    public ResponseEntity<ResponseDTO> deleteUserPosting(@PathVariable("username") String username,
                                                          @RequestParam("postId") int postId){
 
         int userCode = 0;

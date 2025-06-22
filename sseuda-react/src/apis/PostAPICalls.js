@@ -242,11 +242,11 @@ export const callPostRegistApi = ({form, username}) =>{
 };
 
 //  회원별 게시글 삭제
-export const callDeletePostsApi = ({form}) =>{
+export const callDeletePostsApi = ({username, postId}) =>{
 
     console.log('[PostApiCalls] callDeletePostsApi Call');
 
-    let requestURL = `${prefix}/post/mypage/{userCode}/{postId}/delete`;
+    let requestURL = `${prefix}/post/mypage/${username}/delete?postId=${postId}`;
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -256,7 +256,6 @@ export const callDeletePostsApi = ({form}) =>{
                 Authorization:
                     'Bearer ' + window.localStorage.getItem('accessToken')
             },
-            body: form
         }).then((response) => response.json());
         
         console.log('[PostApiCalls] callDeletePostsApi RESULT : ', result);

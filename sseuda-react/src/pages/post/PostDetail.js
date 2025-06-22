@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { callPostApi } from '../../apis/PostAPICalls';
+import { callDeletePostsApi, callPostApi } from '../../apis/PostAPICalls';
 import Detail from './css/PostDetail.module.css';
 import PostComment from '../comment/PostComment';
 import ButtonCSS from '../../components/common/Global/Button.module.css';
@@ -15,6 +15,7 @@ function PostDetail() {
   const params = useParams();
   const accessToken = localStorage.getItem('accessToken');
   const decoded = accessToken ? decodeJwt(accessToken) : null;
+  const username = decoded?.sub;  // 또는 decoded?.username 등
   const [loginUserId, setLoginUserId] = useState(null);
 
   useEffect(() => {
@@ -52,6 +53,19 @@ function PostDetail() {
     setShowReportPopup(true)};
   const handleClosePopup = () => setShowReportPopup(false);
 
+
+  const onClickDeleteHandler = (postId) => {
+    try{
+      dispatch(callDeletePostsApi({ postId, username }));
+      alert("게시글이 삭제되었습니다.");
+      navigate('/');
+    }catch(e){
+      console.warn("삭제 실패: ", e);
+      alert("삭제 실패되었습니다.");
+    }
+  };
+
+
   if (!post) return <p>게시글을 불러오는 중입니다...</p>;
 
   return (
@@ -82,12 +96,22 @@ function PostDetail() {
             <p>{post.postCreateAt}</p>
           </div>
           <div className={Detail.userView}>
-            <button
-              className={ButtonCSS.headerBTN}
-              onClick={() => navigate(`/post/${post.memberDTO?.username}/update/${params.postId}`)}
-            >
-              수정하기
-            </button>
+            {post.userId === loginUserId && (
+            <div>
+                <button
+                className={ButtonCSS.headerBTN}
+                onClick={() => navigate(`/post/${post.memberDTO?.username}/update/${params.postId}`)}
+              >
+                수정하기
+              </button>
+              <button
+                className={ButtonCSS.headerBTN}
+                onClick={() => onClickDeleteHandler(post.postId)}
+              >
+                삭제하기
+              </button>
+              </div>
+            )}
             <p>{post.viewCount}</p>
           </div>
         </div>
