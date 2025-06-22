@@ -33,12 +33,12 @@ public class PostController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findPostList()));
     }
 
-    @Operation(summary = "배너 조회", description = "배너 조회가 진행됩니다.", tags = {"PostController"})
-    @GetMapping("/banner")
-    public ResponseEntity<ResponseDTO> findBannerPostList(){
-
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "배너 조회 성공", postService.findBannerPostList()));
-    }
+//    @Operation(summary = "배너 조회", description = "배너 조회가 진행됩니다.", tags = {"PostController"})
+//    @GetMapping("/banner")
+//    public ResponseEntity<ResponseDTO> findBannerPostList(){
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "배너 조회 성공", postService.findBannerPostList()));
+//    }
 
     @Operation(summary = "게시글 상세 조회", description = "게시글 상세 조회가 진행됩니다.", tags = {"PostController"})
     @GetMapping("/{postId}")
