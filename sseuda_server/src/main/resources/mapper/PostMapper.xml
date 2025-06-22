@@ -50,6 +50,18 @@
         JOIN tbl_member b ON a.user_id = b.user_id
     </select>
 
+<!--    배너 조회 -->
+    <select id="findBannerPostList" resultMap="postResultMap">
+        SELECT
+            post_title,
+            post_content,
+            view_count
+        FROM
+            tbl_post
+        ORDER BY
+            view_count DESC
+    </select>
+
 <!--    게시글 상세 조회-->
     <select id="findPost" resultMap="postResultMap">
         SELECT

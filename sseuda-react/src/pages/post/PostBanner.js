@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { callPostApi } from '../../apis/PostAPICalls';
+import { callBannerPostApi, callPostApi, callPostsListApi } from '../../apis/PostAPICalls';
 import BannerPost from '../../components/common/post/BannerPost';
 
 import { Autoplay, Navigation } from 'swiper/modules';
@@ -16,10 +16,10 @@ function PostBanner() {
     
     console.log("메인페이지 배너 조회 시작");
     const bannerList = useSelector(state => state.postReducer);
-    console.log("bannerList : ", bannerList);
+    console.log("callBannerPostApi : ", bannerList);
 
     const fetchData = () => {
-        dispatch(callPostApi)
+        dispatch(callBannerPostApi());
     }
 
     useEffect(() => {
@@ -28,7 +28,7 @@ function PostBanner() {
 
     useEffect(() => {
         console.log(bannerList, "확인");
-    }, [bannerList]);
+    }, [bannerList]);   
 
   return (
     <div>
