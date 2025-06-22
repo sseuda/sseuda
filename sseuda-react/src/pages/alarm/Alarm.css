@@ -22,6 +22,16 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+.alarm-item {
+    position: relative; /* 내부 버튼 위치 조정 가능하게 */
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
 .alarm-close-btn {
     position: absolute;
     top: 10px;
@@ -33,10 +43,26 @@
     color: #666;
 }
 
+.alarm-delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s ease;
+}
+
+.alarm-delete-btn:hover {
+color: crimson;
+}
+
 .alarm-list {
     list-style: none;
     padding: 0;
-    margin-top: 1rem;
+    margin-top: 10px;
 }
 
 .alarm-item {
@@ -45,7 +71,9 @@
     border-radius: 8px;
     padding: 1rem;
     margin-bottom: 0.8rem;
-    font-size: 0.95rem;
+    font-size: 16px;
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 .alarm-date {
@@ -59,4 +87,22 @@
 
 .alarm-item.unread {
     background-color: #fff3cd; /* 확인 안한 알람: 연한 노랑 */
+}
+
+.alarm-confirm-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.9rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.alarm-confirm-btn:hover {
+background-color: #ffe08c;
+color: #333;
 }

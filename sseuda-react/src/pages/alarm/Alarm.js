@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { callAlarmApi, callUpdateAlarmCheckApi, callDeleteAlarmApi } from "../../apis/AlarmAPICalls";
 import useLoginInfo from "../../hooks/useLoginInfo";
 import './Alarm.css'; 
+import { useNavigate } from "react-router-dom";
 
 function Alarm({ onClose }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const alarms = useSelector(state => state.alarmReducer);
     const { loginUserId, loading } = useLoginInfo();
 
@@ -14,6 +16,16 @@ function Alarm({ onClose }) {
         dispatch(callAlarmApi(loginUserId));
         }
     }, [loading, loginUserId, dispatch]);
+
+    // 알람 정렬
+    const sortedAlarms = [...alarms].sort((a, b) => {
+        // 1순위: 읽지 않은 것 먼저 (alarmCheck: 'N')
+        if (a.alarmCheck !== b.alarmCheck) {
+            return a.alarmCheck === 'N' ? -1 : 1;
+        }
+        // 2순위: 생성 시간 최신 순
+        return new Date(b.createdAt) - new Date(a.createdAt);
+    });
 
     // 알람 확인 처리 함수
     const handleCheck = async (alarmId) => {
@@ -37,7 +49,36 @@ function Alarm({ onClose }) {
         }
     };
 
+    // 읽지 않은 알람 갯수 카운트
     const unreadCount = alarms.filter(alarm => alarm.alarmCheck === 'N').length;
+
+    // 모두 확인
+    const handleAllCheck = async () => {
+        const unchecked = alarms.filter(alarm => alarm.alarmCheck === 'N');
+        try {
+            await Promise.all(unchecked.map(alarm => dispatch(callUpdateAlarmCheckApi(alarm.alarmId))));
+            alert("모든 알림을 확인 처리했습니다.");
+            dispatch(callAlarmApi(loginUserId));
+            } catch (error) {
+            alert("모두 확인 실패");
+        }
+    };
+        
+    // 모두 삭제
+    const handleAllDelete = async () => {
+        try {
+        await Promise.all(alarms.map(alarm => dispatch(callDeleteAlarmApi(alarm.alarmId))));
+        alert("모든 알림을 삭제했습니다.");
+        dispatch(callAlarmApi(loginUserId));
+        } catch (error) {
+        alert("모두 삭제 실패");
+        }
+    };
+
+    // 알림 클릭시 해당 게시글로 이동
+    const handleNavigateToPost = (postId) => {
+        navigate(`/post/${postId}`);
+    };
 
     return (
         <div className="alarm-modal-overlay">
@@ -50,27 +91,56 @@ function Alarm({ onClose }) {
                     📌 확인하지 않은 알림: {unreadCount}개
                 </p>
                 )}
+
+                <div style={{ marginBottom: '10px', textAlign: 'right' }}>
+                {alarms.length > 0 && (
+                    <>
+                    <button onClick={handleAllCheck} style={{ marginRight: '10px' }}>
+                        ✅ 모두 확인
+                    </button>
+                    <button onClick={handleAllDelete}>🗑️ 모두 삭제</button>
+                    </>
+                )}
+                </div>
         
                 {alarms.length > 0 ? (
                 <ul className="alarm-list">
-                    {alarms.map((alarm) => (
-                    <li
+                    {sortedAlarms.map((alarm) => (
+                        <li
                         key={alarm.alarmId}
                         className={`alarm-item ${alarm.alarmCheck === 'Y' ? 'read' : 'unread'}`}
-                    >
-                        {alarm.userId}님이 회원님의 게시글에 {alarm.alarmType}을 남겼습니다.
+                        onClick={() => handleNavigateToPost(alarm.postId)}
+                        style={{ cursor: 'pointer' }}
+                        >
+
+                        <button
+                        onClick={(e) => {
+                            e.stopPropagation(); // 부모 클릭 방지
+                            handleDelete(alarm.alarmId);
+                        }}
+                        className="alarm-delete-btn"
+                        >
+                        ×
+                        </button>
+                    
+                        <b>{alarm.userNickname}</b>님이&nbsp;
+                        <b>{alarm.alarmType === 'LIKE' ? '좋아요' : '댓글'}</b>을 남겼습니다.          
                         <br />
                         <span className="alarm-date">
                         {new Date(alarm.createdAt).toLocaleString()}
                         </span>
-                        <br />
-                        <button onClick={() => handleCheck(alarm.alarmId)}>확인</button>
+                    
+                        {alarm.alarmCheck === 'N' && (
                         <button
-                        onClick={() => handleDelete(alarm.alarmId)}
-                        style={{ marginLeft: '8px' }}
+                            onClick={(e) => {
+                            e.stopPropagation(); // 부모 클릭 방지
+                            handleCheck(alarm.alarmId);
+                            }}
+                            className="alarm-confirm-btn"
                         >
-                        삭제
+                            확인
                         </button>
+                        )}
                     </li>
                     ))}
                 </ul>
