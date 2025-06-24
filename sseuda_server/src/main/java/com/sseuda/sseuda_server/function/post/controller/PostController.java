@@ -83,6 +83,21 @@ public class PostController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "키워드 검색 성공", postService.searchPosts(keyword)));
     }
 
+    // 마이페이지 게시글 검색용
+    @Operation(summary = "검색", description = "검색 키워드에 따라 게시글 조회가 진행됩니다.", tags = {"PostController"})
+    @GetMapping("/{username}/search")
+    public ResponseEntity<ResponseDTO> userSearchPosts(@RequestParam("keyword") String keyword,
+                                                       @PathVariable("username") String username) {
+
+        int userCode = 0;
+        if(username != null){
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
+
+        System.out.println("뭐 검색함? " + keyword);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "키워드 검색 성공", postService.userSearchPosts(keyword, userCode)));
+    }
+
 
 //    React에서 axios로 넘겨준다
     @Operation(summary = "회원별 게시글 등록", description = "회원별 카테고리 게시글 등록이 진행됩니다.", tags = {"PostController"})
@@ -131,8 +146,6 @@ public class PostController {
         }
     }
 
-
-
     @Operation(summary = "회원별 게시글 삭제", description = "회원별 게시글 삭제가 진행됩니다.", tags = {"PostController"})
     @DeleteMapping("/mypage/{username}/delete")
     public ResponseEntity<ResponseDTO> deleteUserPosting(@PathVariable("username") String username,
@@ -155,31 +168,31 @@ public class PostController {
         }
     }
 
-//    게시글별 조회수 증가
-@PutMapping("/viewCount/{username}/update")
-public ResponseEntity<ResponseDTO> viewCountUpdate(@ModelAttribute PostDTO dto,
-                                                   @PathVariable("username") String username,
-                                                   @RequestParam("postId") int postId) {
+    //    게시글별 조회수 증가
+    @PutMapping("/viewCount/{username}/update")
+    public ResponseEntity<ResponseDTO> viewCountUpdate(@ModelAttribute PostDTO dto,
+                                                       @PathVariable("username") String username,
+                                                       @RequestParam("postId") int postId) {
 
-    int userCode = 0;
-    System.out.println("조회수증가 username????? " + username + "userCode?????" + userCode);
-    if(username != null) {
-        userCode = memberService.getMemberByUsername(username).getUserId();
+        int userCode = 0;
+        System.out.println("조회수증가 username????? " + username + "userCode?????" + userCode);
+        if(username != null) {
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
+
+        System.out.println("조회수증가 username????? " + username + "userCode?????" + userCode);
+
+        int result = postService.viewCountUpdate(dto, postId, userCode);
+        System.out.println("result????????????? " + result);
+
+        if (result > 0) {
+            System.out.println("여기 안왔어??? " + result);
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "조회수 증가 성공", result));
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "조회수 증가 실패", null));
+        }
     }
-
-    System.out.println("조회수증가 username????? " + username + "userCode?????" + userCode);
-
-    int result = postService.viewCountUpdate(dto, postId, userCode);
-    System.out.println("result????????????? " + result);
-
-    if (result > 0) {
-        System.out.println("여기 안왔어??? " + result);
-        return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "조회수 증가 성공", result));
-    } else {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "조회수 증가 실패", null));
-    }
-}
 
 
 

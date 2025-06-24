@@ -22,6 +22,7 @@ import TextEditorUpdate from "./components/common/post/TextEditorUpdate";
 import MyInformation from "./pages/myPage/MyInformation";
 import AdminRoute from "./components/common/auth/AdminRoute";
 import Alarm from "./pages/alarm/Alarm";
+import PostUserSearch from "./pages/post/PostUserSearch";
 
 function App() {
   return (
@@ -51,7 +52,7 @@ function App() {
         <Route path="mypage" element={<MypageLayout/>}>
           <Route path=":username" element={<MyPage/>}/>
           <Route path="member/:username" element={<MyInformation/>}/>
-
+          <Route path=":username/search" element={<PostUserSearch/>}/>
         </Route>
 
         {/* 게시글 관련 Route */}

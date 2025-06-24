@@ -1,4 +1,4 @@
-import { DELETE_USER_POST, GET_CATEGORY_POST, GET_POST, GET_POSTS, GET_SEARCH_POSTS, GET_USER_CATEGORY_POSTS, GET_USER_POSTS, POST_USER_POSTING, PUT_USER_POSTING, PUT_VIEW_COUNT } from "../modules/PostModule";
+import { DELETE_USER_POST, GET_CATEGORY_POST, GET_POST, GET_POSTS, GET_SEARCH_POSTS, GET_USER_CATEGORY_POSTS, GET_USER_POSTS, GET_USER_SEARCH_POSTS, POST_USER_POSTING, PUT_USER_POSTING, PUT_VIEW_COUNT } from "../modules/PostModule";
 
 const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 
@@ -182,6 +182,44 @@ export const callSearchPostsApi = (keyword) =>{
           dispatch({type: GET_SEARCH_POSTS, payload: result.data});
       }
   };
+};
+
+// 회원별 게시글 검색
+export const callUserSearchPostsApi = (keyword, username) =>{
+  const requestURL = `${prefix}/post/${username}/search?keyword=${encodeURIComponent(keyword)}`;
+  console.log('[PostApiCalls] requestURL : ', requestURL);
+
+  return async (dispatch, getState) => {
+    try {
+        const response = await fetch(requestURL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*',
+                Authorization:
+                    'Bearer ' + window.localStorage.getItem("accessToken")
+            }
+        });
+
+        const text = await response.text();  // ← 먼저 텍스트로 읽음
+
+        if (!text) {
+            console.warn("[PostApiCalls] 응답 본문이 비어 있습니다.");
+            return;
+        }
+
+        const result = JSON.parse(text); // 본문이 있을 때만 파싱
+
+        if (result.status === 200) {
+            console.log('[PostApiCalls] callUserSearchPostsApi RESULT : ', result);
+            dispatch({ type: GET_USER_SEARCH_POSTS, payload: result.data });
+        } else {
+            console.warn("[PostApiCalls] 상태코드가 200이 아닙니다:", result.status);
+        }
+    } catch (error) {
+        console.error("callUserSearchPostsApi 에러 발생:", error);
+    }
+};
 };
 
 // 회원별 게시글 수정

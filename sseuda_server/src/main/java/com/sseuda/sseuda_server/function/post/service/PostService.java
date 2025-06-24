@@ -64,6 +64,12 @@ public class PostService {
         return postMapper.searchPosts(keywords);
     }
 
+    public List<PostDTO> userSearchPosts(String keyword, int userCode) {
+
+        String[] keywords = keyword.trim().split("\\s+");
+        return postMapper.userSearchPosts(keywords, userCode);
+    }
+
 //    회원별 게시글 등록
     @Transactional
     public int saveUserPosting(PostDTO dto, int userCode) {
@@ -109,5 +115,6 @@ public class PostService {
             return -1;
         }
     }
+
 
 }
