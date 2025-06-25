@@ -23,6 +23,7 @@ import MyInformation from "./pages/myPage/MyInformation";
 import AdminRoute from "./components/common/auth/AdminRoute";
 import Alarm from "./pages/alarm/Alarm";
 import PostUserSearch from "./pages/post/PostUserSearch";
+import AdminCategory from "./pages/admin/AdminCategory";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route element={<AdminPageLayout/>}>
             <Route path="members" element={<AdminMembers/>}/>
             <Route path="reports" element={<AdminReports/>}/>
+            <Route path="category" element={<AdminCategory/>}/>
           </Route>
         </Route>
 
