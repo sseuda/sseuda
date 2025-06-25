@@ -4,6 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { callLogoutAPI } from "../../apis/MemberAPICalls";
 import { decodeJwt } from "../../utils/tokenUtils";
+import { useState } from "react";
+import Alarm from "../../pages/alarm/Alarm";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { useEffect } from "react";
+import { callAlarmApi } from "../../apis/AlarmAPICalls";
+import useLoginInfo from "../../hooks/useLoginInfo";
 
 function Header() {
 	const dispatch = useDispatch();
@@ -11,6 +18,22 @@ function Header() {
 
 	const accessToken = localStorage.getItem('accessToken');
 	const decodedToken = accessToken ? decodeJwt(accessToken) : null;
+
+	// 알람관련
+	const alarms = useSelector(state => state.alarmReducer);
+	const unreadCount = alarms.filter(alarm => alarm.alarmCheck === 'N').length;
+	const [showAlarm, setShowAlarm] = useState(false);
+	const { loginUserId, loading } = useLoginInfo();
+
+    useEffect(() => {
+        if (!loading && loginUserId) {
+        dispatch(callAlarmApi(loginUserId));
+        }
+    }, [loading, loginUserId, dispatch]);
+
+	const handleAlarmClick = () => {
+	setShowAlarm(!showAlarm);
+	};
 
 	const isTokenExpired = (decodedToken) => {
 		if (!decodedToken) return true;
@@ -45,6 +68,13 @@ function Header() {
 				{isLogin && (decodedToken?.auth === "ADMIN" || decodedToken?.auth === "SUPER") && (
 				<Link to="/admin/members" className={ButtonCSS.adminBTN}>관리자 페이지</Link>)}
 
+				<div className={HeaderCSS.alarmIconWrapper} onClick={handleAlarmClick}>
+				<FontAwesomeIcon icon={faBell} className={HeaderCSS.alarmIcon} />
+				{unreadCount > 0 && (
+					<span className={HeaderCSS.alarmBadge}>{unreadCount}</span>
+				)}
+				</div>
+
 				{!isLogin ? (
 					<Link to="/auth/login" className={ButtonCSS.headerBTN}>로그인</Link>
 				) : (
@@ -57,6 +87,8 @@ function Header() {
 					</button>
 				)}
 			</div>
+			{/* 🔔 알림 모달 조건부 렌더링 */}
+			{showAlarm && <Alarm onClose={() => setShowAlarm(false)} />}
 		</div>
 	);
 }
