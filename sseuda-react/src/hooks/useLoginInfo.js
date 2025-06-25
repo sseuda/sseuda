@@ -8,6 +8,7 @@ const useLoginInfo = () => {
 	const [loginUserId, setLoginUserId] = useState(null);
 	const [loginUsername, setLoginUsername] = useState(null);
 	const [loginUserNickname, setLoginUserNickname] = useState(null);
+	const [loginUserAuth, setLoginUserAuth] = useState(null);
 	const [loading, setLoading] = useState(true);
 
 	const accessToken = localStorage.getItem('accessToken');
@@ -22,11 +23,12 @@ const useLoginInfo = () => {
 
 		try {
 			const response = await dispatch(callMemberApi(decoded.sub));
-			console.log("로그인한 사람? ", loginUserId, loginUsername, loginUserNickname);
+			// console.log("로그인한 사람? ", loginUserId, loginUsername, loginUserNickname, loginUserAuth);
 			if (response) {
 			setLoginUserId(response.userId);
 			setLoginUsername(response.username);
 			setLoginUserNickname(response.userNickname);
+			setLoginUserAuth(decoded.auth);
 			}
 		} catch (e) {
 			console.error('유저 정보 가져오기 실패', e);
@@ -38,7 +40,7 @@ const useLoginInfo = () => {
 		fetchLoginUser();
 	}, [accessToken, decoded, dispatch]);
 
-	return { loginUserId, loginUsername, loginUserNickname, loading };
+	return { loginUserId, loginUsername, loginUserNickname, loginUserAuth, loading };
 	};
 
 export default useLoginInfo;

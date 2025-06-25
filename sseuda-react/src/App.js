@@ -22,6 +22,7 @@ import TextEditorUpdate from "./components/common/post/TextEditorUpdate";
 import MyInformation from "./pages/myPage/MyInformation";
 import AdminRoute from "./components/common/auth/AdminRoute";
 import Alarm from "./pages/alarm/Alarm";
+import SuperAdminPage from "./pages/admin/SuperAdminPage";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route element={<AdminPageLayout/>}>
             <Route path="members" element={<AdminMembers/>}/>
             <Route path="reports" element={<AdminReports/>}/>
+            <Route path="super" element={<SuperAdminPage/>}/>
           </Route>
         </Route>
 

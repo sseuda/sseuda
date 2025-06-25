@@ -23,7 +23,7 @@ export const callAlarmApi = (userId) => {
             console.log("🌐 response:", response);
 
             const result = await response.json();
-            console.log("📦 result:", result);
+            // console.log("📦 result:", result);
 
             if (response.status === 200) {
                 console.log("[알람api] 정상 응답 도착");

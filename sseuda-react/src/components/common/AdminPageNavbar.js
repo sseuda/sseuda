@@ -3,9 +3,12 @@ import MyNav from './Global/MypageNavbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserGear, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { faKey } from '@fortawesome/free-solid-svg-icons';
+import useLoginInfo from '../../hooks/useLoginInfo';
 
 function AdminPageNavbar() {
     const navigate = useNavigate();
+    const { loginUserAuth } = useLoginInfo();
 
     return (
         <div className={MyNav.navBox}>
@@ -29,6 +32,18 @@ function AdminPageNavbar() {
                     <span className={MyNav.label}></span>
                 </div>
             </div>
+
+            {loginUserAuth === "SUPER" && (
+            <div
+                className={MyNav.user}
+                onClick={() => navigate('/admin/super')}
+                style={{ cursor: 'pointer' }}
+            >
+                <div className={MyNav.iconBox}>
+                <FontAwesomeIcon className={MyNav.addressBookIcon} icon={faKey} />
+                </div>
+            </div>
+            )}
 
         </div>
     );

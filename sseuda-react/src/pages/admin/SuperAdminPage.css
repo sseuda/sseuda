@@ -1,0 +1,32 @@
+.super-admin-container {
+	padding: 20px;
+}
+
+.super-admin-table {
+width: 100%;
+border-collapse: collapse;
+}
+
+.super-admin-table th,
+.super-admin-table td {
+padding: 12px;
+border: 1px solid #ccc;
+text-align: center;
+}
+
+.super-admin-table select {
+padding: 5px;
+}
+
+.super-admin-table button {
+padding: 6px 12px;
+background-color: #ffa500;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+}
+
+.super-admin-table button:hover {
+background-color: #ff8600;
+color: white;
+}

@@ -197,30 +197,39 @@ export const callResetPasswordRequestAPI = (email, username) => {
 
 // 전체 회원 조회
 export const callMembersApi = () => {
-	let requestURL = `${prefix}/member/all`;
-	console.log('[멤버api]요청url: ', requestURL);
+	const requestURL = `${prefix}/member/all`;
+	console.log('[멤버api] 요청 URL:', requestURL);
 
-	return async (dispatch, getState) => {
+	return async (dispatch) => {
 		try {
 			const response = await fetch(requestURL, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					Accept: '*/*'
-				}
+					Accept: '*/*',
+				},
 			});
 
 			const result = await response.json();
+			console.log('[멤버api] raw result:', result);
 
-			console.log('[멤버api] 전체 result: ', result);
+			let members = [];
 
-			// result가 배열이라면 그대로, 아니라면 data 필드로
-			const members = Array.isArray(result) ? result : result.data;
+			if (Array.isArray(result)) {
+				members = result;
+			} else if (Array.isArray(result?.data)) {
+				members = result.data;
+			} else {
+				console.warn('[멤버api] 응답이 배열 형식이 아님. 빈 배열로 대체합니다.');
+			}
+
+			console.log('[멤버api] 최종 members:', members);
 
 			dispatch({ type: GET_MEMBER_ALL, payload: members });
 
 		} catch (error) {
 			console.error('[멤버api] 오류 발생:', error);
+			dispatch({ type: GET_MEMBER_ALL, payload: [] }); // 실패 시에도 안전하게 빈 배열
 		}
 	};
 };
@@ -230,7 +239,7 @@ export const callMembersApi = () => {
 export const callMemberApi = (username) => {
 
 	const requestURL = `${prefix}/member/${username}`;
-	console.log('[멤버api] 요청 URL:', requestURL);
+	// console.log('[멤버api] 요청 URL:', requestURL);
 	
 		return async (dispatch, getState) => {
 		try {
@@ -249,7 +258,7 @@ export const callMemberApi = (username) => {
 			}
 	
 		const data = await response.json();
-		console.log('[멤버api] 받은 데이터:', data);
+		// console.log('[멤버api] 받은 데이터:', data);
 
 			dispatch({ type: GET_MEMBER, payload: data });
 
@@ -289,7 +298,7 @@ export const callMemberByIdApi = (userId) => {
         }
 
         const result = JSON.parse(text);
-        console.log("회원 응답 결과:", result);
+        // console.log("회원 응답 결과:", result);
 
         if (result && result.userId) {
             dispatch({ type: GET_MEMBER_BY_ID, payload: result });
