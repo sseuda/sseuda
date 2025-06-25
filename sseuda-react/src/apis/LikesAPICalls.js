@@ -23,6 +23,7 @@ export const callLikesListApi = (postId) =>{
     };
 };
 
+
 //  배너 조회
 export const callLikeBannerApi = () =>{
 
