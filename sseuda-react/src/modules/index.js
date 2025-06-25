@@ -6,6 +6,7 @@ import reportsReducer from './ReportsModule';
 import commentReducer from './CommentModule';
 import alarmReducer from './AlarmModule';
 import likesReducer from './LikesModule';
+import userRoleReducer from './UserRoleModule';
 
 const rootReducer = combineReducers({
     postReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     reportsReducer,
     commentReducer,
     alarmReducer,
-    likesReducer
+    likesReducer,
+    userRoleReducer
 })
 
 export default rootReducer;

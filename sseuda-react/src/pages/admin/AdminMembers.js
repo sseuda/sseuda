@@ -12,13 +12,18 @@ function AdminMembers() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const members = useSelector((state) => state.memberReducer.GET_MEMBER_ALL);
 	const [keyword, setKeyword] = useState("");
 	const [searchResult, setSearchResult] = useState(null);
 
+	// 회원 전체 목록 불러오기
 	useEffect(() => {
-    dispatch(callMembersApi());
+		dispatch(callMembersApi());
 	}, [dispatch]);
+
+	const members = useSelector((state) => 
+		state.memberReducer.GET_MEMBER_ALL);
+	console.log("멤버들??? " , members)
+	console.log("멤버들???", members?.length, members);
 
   // 회원 검색
 	const searchMemberHandler = async () => {
