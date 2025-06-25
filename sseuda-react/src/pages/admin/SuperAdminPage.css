@@ -2,31 +2,50 @@
 	padding: 20px;
 }
 
+.super-table-container {
+	padding: 20px;
+	border-radius: 8px;
+}
+
+.super-title {
+	margin-left: 30px;
+	margin-bottom: 15px;
+	font-size: 22px;
+	color: #444;
+}
+
 .super-admin-table {
-width: 100%;
-border-collapse: collapse;
+	width: 100%;
+	border-collapse: collapse;
 }
 
 .super-admin-table th,
 .super-admin-table td {
-padding: 12px;
-border: 1px solid #ccc;
-text-align: center;
+	border: 1px solid #ddd;
+	padding: 10px 14px;
+	text-align: center;
+}
+
+.super-admin-table th {
+	background-color: #A9CDD7;
+	color: #fff;
 }
 
 .super-admin-table select {
-padding: 5px;
+	padding: 5px;
 }
 
 .super-admin-table button {
-padding: 6px 12px;
-background-color: #ffa500;
-border: none;
-border-radius: 6px;
-cursor: pointer;
+	background-color: #F5C3A4;
+	color: white;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
 }
 
 .super-admin-table button:hover {
-background-color: #ff8600;
+background-color: #A9CDD7;
 color: white;
 }
