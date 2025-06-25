@@ -14,6 +14,7 @@
         <result property="userPhone" column="user_phone"/>
         <result property="enrollDate" column="enroll_date"/>
         <result property="userStatus" column="user_status"/>
+        <result property="userRole" column="user_role"/>
     </resultMap>
 
     <resultMap id="userRoleResultMap" type="com.sseuda.sseuda_server.function.member.dto.UserRoleDTO">
@@ -23,7 +24,9 @@
 
     <!-- 전체 회원 조회 -->
     <select id="findAllMembers" resultMap="memberResultMap">
-        SELECT * FROM tbl_member
+        SELECT m.*, r.user_role
+        FROM tbl_member m
+        JOIN tbl_user_role r ON m.user_id = r.user_id
     </select>
 
     <!--  특정 회원 조회 (userId)  -->
