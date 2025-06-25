@@ -96,7 +96,7 @@ function SuperAdminPage() {
 			<table className="super-admin-table">
 				<thead>
 					<tr>
-						<th>ID</th>
+						<th>번호</th>
 						<th>이름</th>
 						<th>아이디</th>
 						<th>닉네임</th>
@@ -105,55 +105,55 @@ function SuperAdminPage() {
 					</tr>
 				</thead>
 				<tbody>
-	{pagedMembers.length > 0 ? (
-		pagedMembers.map((member) => (
-			<tr
-				key={member.userId}
-				style={{
-					backgroundColor:
-						member.userRole === "ADMIN"
-							? "rgba(251, 245, 204, 0.5)"
-							: "rgba(252, 239, 159, 0.5)",
-				}}
-			>
-				<td>{member.userId}</td>
-				<td>{member.userFullname}</td>
-				<td>{member.username}</td>
-				<td>{member.userNickname}</td>
-				<td>{member.userRole}</td>
-				<td>
-					<button
-						onClick={() =>
-							handleRoleToggle(
-								member.userId,
-								member.userRole,
-								member.userFullname
-							)
-						}
-						style={{
-							padding: "5px 10px",
-							borderRadius: "6px",
-							border: "1px solid #ccc",
-							cursor: "pointer",
-							backgroundColor:
-								member.userRole === "ADMIN" ? "#ffd54f" : "#90caf9",
-						}}
-					>
-						{member.userRole === "ADMIN"
-							? "USER로 변경"
-							: "ADMIN으로 변경"}
-					</button>
-				</td>
-			</tr>
-		))
-	) : (
-		<tr>
-			<td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
-				🔍 일치하는 회원이 없습니다.
-			</td>
-		</tr>
-	)}
-</tbody>
+					{pagedMembers.length > 0 ? (
+						pagedMembers.map((member, index) => (
+						<tr
+							key={member.userId}
+							style={{
+								backgroundColor:
+									member.userRole === "ADMIN"
+										? "rgba(251, 245, 204, 0.5)"
+										: "rgba(252, 239, 159, 0.5)",
+							}}
+						>
+							<td>{startIndex + index + 1}</td>
+							<td>{member.userFullname}</td>
+							<td>{member.username}</td>
+							<td>{member.userNickname}</td>
+							<td>{member.userRole}</td>
+							<td>
+								<button
+									onClick={() =>
+										handleRoleToggle(
+											member.userId,
+											member.userRole,
+											member.userFullname
+										)
+									}
+									style={{
+										padding: "5px 10px",
+										borderRadius: "6px",
+										border: "1px solid #ccc",
+										cursor: "pointer",
+										backgroundColor:
+											member.userRole === "ADMIN" ? "#ffd54f" : "#90caf9",
+									}}
+								>
+									{member.userRole === "ADMIN"
+										? "USER로 변경"
+										: "ADMIN으로 변경"}
+								</button>
+							</td>
+						</tr>
+					))
+				) : (
+					<tr>
+						<td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
+							🔍 일치하는 회원이 없습니다.
+						</td>
+					</tr>
+				)}
+			</tbody>
 			</table>
 						</div>
 
