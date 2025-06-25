@@ -83,7 +83,7 @@ function SuperAdminPage() {
 						<th>현재 권한</th>
 						<th>변경</th>
 					</tr>
-				</thead>ㄴ
+				</thead>
 				<tbody>
 					{displayedMembers && displayedMembers.length > 0 ? (
 						displayedMembers
