@@ -68,12 +68,14 @@ function Header() {
 				{isLogin && (decodedToken?.auth === "ADMIN" || decodedToken?.auth === "SUPER") && (
 				<Link to="/admin/members" className={ButtonCSS.adminBTN}>관리자 페이지</Link>)}
 
+				{isLogin && (
 				<div className={HeaderCSS.alarmIconWrapper} onClick={handleAlarmClick}>
-				<FontAwesomeIcon icon={faBell} className={HeaderCSS.alarmIcon} />
-				{unreadCount > 0 && (
+					<FontAwesomeIcon icon={faBell} className={HeaderCSS.alarmIcon} />
+					{unreadCount > 0 && (
 					<span className={HeaderCSS.alarmBadge}>{unreadCount}</span>
-				)}
+					)}
 				</div>
+				)}
 
 				{!isLogin ? (
 					<Link to="/auth/login" className={ButtonCSS.headerBTN}>로그인</Link>

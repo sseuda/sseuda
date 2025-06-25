@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { callAlarmApi, callUpdateAlarmCheckApi, callDeleteAlarmApi } from "../../apis/AlarmAPICalls";
 import useLoginInfo from "../../hooks/useLoginInfo";
-import './Alarm.css'; 
+import styles from './Alarm.module.css';
 import { useNavigate } from "react-router-dom";
 
 function Alarm({ onClose }) {
@@ -81,34 +81,36 @@ function Alarm({ onClose }) {
     };
 
     return (
-        <div className="alarm-modal-overlay">
-            <div className="alarm-modal">
-                <button className="alarm-close-btn" onClick={onClose}>×</button>
+        <div className={styles.overlay}>
+            <div className={styles.modal}>
+                <button className={styles.closeButton} onClick={onClose}>×</button>
                 <h2>🔔 내 알림 목록</h2>
         
                 {unreadCount > 0 && (
-                <p style={{ color: 'tomato', fontWeight: 'bold' }}>
-                    📌 확인하지 않은 알림: {unreadCount}개
+                <p className={styles.checkC}>
+                    미확인 알림 <b>{unreadCount}</b>개
                 </p>
                 )}
 
-                <div style={{ marginBottom: '10px', textAlign: 'right' }}>
-                {alarms.length > 0 && (
-                    <>
-                    <button onClick={handleAllCheck} style={{ marginRight: '10px' }}>
-                        ✅ 모두 확인
-                    </button>
-                    <button onClick={handleAllDelete}>🗑️ 모두 삭제</button>
-                    </>
-                )}
-                </div>
+            <div className={styles.actions}>
+            {alarms.length > 0 && (
+                <>
+                <button onClick={handleAllCheck} className={styles.actionButton}>
+                    ✅ 모두 확인
+                </button>
+                <button onClick={handleAllDelete} className={styles.actionButton}>
+                    🗑️ 모두 삭제
+                </button>
+                </>
+            )}
+            </div>
         
                 {alarms.length > 0 ? (
-                <ul className="alarm-list">
+                <ul className={styles.list}>
                     {sortedAlarms.map((alarm) => (
                         <li
                         key={alarm.alarmId}
-                        className={`alarm-item ${alarm.alarmCheck === 'Y' ? 'read' : 'unread'}`}
+                        className={`${styles.item} ${alarm.alarmCheck === 'Y' ? styles.read : styles.unread}`}
                         onClick={() => handleNavigateToPost(alarm.postId)}
                         style={{ cursor: 'pointer' }}
                         >
@@ -118,7 +120,7 @@ function Alarm({ onClose }) {
                             e.stopPropagation(); // 부모 클릭 방지
                             handleDelete(alarm.alarmId);
                         }}
-                        className="alarm-delete-btn"
+                        className={styles.deleteButton}
                         >
                         ×
                         </button>
@@ -126,7 +128,7 @@ function Alarm({ onClose }) {
                         <b>{alarm.userNickname}</b>님이&nbsp;
                         <b>{alarm.alarmType === 'LIKE' ? '좋아요' : '댓글'}</b>을 남겼습니다.          
                         <br />
-                        <span className="alarm-date">
+                        <span className={styles.date}>
                         {new Date(alarm.createdAt).toLocaleString()}
                         </span>
                     
@@ -136,8 +138,8 @@ function Alarm({ onClose }) {
                             e.stopPropagation(); // 부모 클릭 방지
                             handleCheck(alarm.alarmId);
                             }}
-                            className="alarm-confirm-btn"
-                        >
+                            className={styles.confirmButton}
+                            >
                             확인
                         </button>
                         )}
