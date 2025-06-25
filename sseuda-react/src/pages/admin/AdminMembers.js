@@ -12,26 +12,18 @@ function AdminMembers() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	// const members = useSelector(state => state.memberReducer.GET_MEMBER_ALL);
-	
-	const members = useSelector(state => {
-		console.log('리덕스 상태:', state.memberReducer);
-		return state.memberReducer.GET_MEMBER_ALL;
-	});
-
-	console.log("members에는 어떤게 들어가있지? ", members);
-
 	const [keyword, setKeyword] = useState("");
 	const [searchResult, setSearchResult] = useState(null);
 
-	// const fetchData=()=>{
-	// 	dispatch(callMembersApi());
-	// }
-
+	// 회원 전체 목록 불러오기
 	useEffect(() => {
-		console.log('AdminMembers 페이지 useEffect: 회원 목록 조회 dispatch 호출');
 		dispatch(callMembersApi());
-	},[]);
+	}, [dispatch]);
+
+	const members = useSelector((state) =>
+		state.memberReducer.GET_MEMBER_ALL);
+	console.log("멤버들??? " , members)
+	console.log("멤버들???", members?.length, members);
 
   // 회원 검색
 	const searchMemberHandler = async () => {

@@ -18,10 +18,13 @@
 
 <!--  사용자별 알람 조회  -->
     <select id="selectAlarmsByUserId" resultMap="alarmResultMap" parameterType="int">
-        SELECT a.*, m.user_nickname
+        SELECT
+        a.*,
+        cmt_user.user_nickname
         FROM tbl_alarm a
         JOIN tbl_post p ON a.post_id = p.post_id
-        JOIN tbl_member m ON a.user_id = m.user_id
+        LEFT JOIN tbl_comment c ON a.comment_id = c.comment_id
+        LEFT JOIN tbl_member cmt_user ON c.user_id = cmt_user.user_id
         WHERE p.user_id = #{userId}
         ORDER BY a.created_at DESC
     </select>

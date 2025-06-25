@@ -24,6 +24,7 @@ import AdminRoute from "./components/common/auth/AdminRoute";
 import Alarm from "./pages/alarm/Alarm";
 import PostUserSearch from "./pages/post/PostUserSearch";
 import AdminCategory from "./pages/admin/AdminCategory";
+import SuperAdminPage from "./pages/admin/SuperAdminPage";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route element={<AdminPageLayout/>}>
             <Route path="members" element={<AdminMembers/>}/>
             <Route path="reports" element={<AdminReports/>}/>
+            <Route path="super" element={<SuperAdminPage/>}/>
             <Route path="category" element={<AdminCategory/>}/>
           </Route>
         </Route>

@@ -78,16 +78,28 @@ const memberReducer = handleActions(
 			return payload;
 		},
 		[GET_MEMBER_BY_ID]: (state, { payload }) => {
-			return payload;
+			return {
+				...state,
+				member: payload
+			};
+		},
+		[GET_MEMBER]: (state, { payload }) => {
+			return {
+				...state,
+				member: payload
+			};
 		},
 		[PUT_USER_INFO]: (state, { payload }) => {
-			return payload;
-		},
-		[PUT_DEACTIVATE]: (state, { payload }) => {
-			return payload;
+			return {
+				...state,
+				member: payload
+			};
 		},
 		[GET_MEMBER_SEARCH]: (state, { payload }) => {
-			return payload;
+			return {
+				...state,
+				searchResult: payload
+			};
 		}
 	},
 	initialState
