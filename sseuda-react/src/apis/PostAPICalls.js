@@ -34,7 +34,9 @@ export const callPostApi = (postId) =>{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+            'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         if(result.status === 200){

@@ -100,7 +100,7 @@ function PostDetail() {
             <div>
                 <button
                 className={ButtonCSS.headerBTN}
-                onClick={() => navigate(`/post/${post.memberDTO?.username}/update/${params.postId}`)}
+                onClick={() => navigate(`/post/${username}/update/${params.postId}`)}
               >
                 수정하기
               </button>

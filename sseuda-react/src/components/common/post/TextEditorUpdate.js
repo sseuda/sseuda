@@ -6,18 +6,18 @@ import { decodeJwt } from '../../../utils/tokenUtils';
 import { useNavigate, useParams } from 'react-router-dom';
 import Editor from './css/PostTextEditor.module.css';
 import Global from '../Global/Button.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { callPostApi } from '../../../apis/PostAPICalls';
 
 function TextEditorUpdate() {
   const navigate = useNavigate();
   const { postId } = useParams();
   const quillRef = useRef(null);
+  const dispatch = useDispatch();
+  const PostDetail = useSelector(state => state.postReducer);
 
   const [category, setCategory] = useState({});
   const [smallCategory, setSmallCategory] = useState([]);
-
-  const accessToken = localStorage.getItem('accessToken');
-  const username = accessToken ? decodeJwt(accessToken).sub : null;
-
   const [post, setPost] = useState({
     postTitle: '',
     postContent: '',
@@ -26,7 +26,62 @@ function TextEditorUpdate() {
     image: null,
   });
 
-  // 🔽 이미지 핸들러
+  const accessToken = localStorage.getItem('accessToken');
+  const username = accessToken ? decodeJwt(accessToken).sub : null;
+
+  // 🔽 게시글 상세 가져오기 (redux)
+  useEffect(() => {
+    dispatch(callPostApi(postId));
+  }, [dispatch, postId]);
+
+  // 🔽 PostDetail 리덕스 스토어 변경 시 state 업데이트
+  useEffect(() => {
+    if (PostDetail) {
+      setPost(prev => ({
+        ...prev,
+        postTitle: PostDetail.title ?? '',
+        postContent: PostDetail.content ?? '',
+        categoryBig: PostDetail.categoryBig ?? '',
+        categorySmall: PostDetail.categorySmall ?? '',
+      }));
+    }
+  }, [PostDetail]);
+
+  // 🔽 카테고리 및 게시글 데이터 가져오기 (axios 직접 호출)
+  useEffect(() => {
+    axios.get(`/post/detail/${postId}`)
+      .then(res => {
+        const data = res.data.data;
+        setPost(prev => ({
+          ...prev,
+          postTitle: data.postTitle ?? '',
+          postContent: data.postContent ?? '',
+          categoryBig: data.categoryBigName ?? '',
+          categorySmall: data.smallCategoryId ?? '',
+        }));
+      })
+      .catch(err => console.error('게시글 로딩 실패', err));
+
+    axios.get('/post/userpage')
+      .then(res => {
+        const categoryMap = {};
+        res.data.data.forEach(item => {
+          const big = item.categoryBigDTO.bigCategoryName;
+          const small = { id: item.smallCategoryId, name: item.smallCategoryName };
+          if (!categoryMap[big]) categoryMap[big] = [];
+          categoryMap[big].push(small);
+        });
+        setCategory(categoryMap);
+      });
+  }, [postId]);
+
+  useEffect(() => {
+    if (post.categoryBig && category[post.categoryBig]) {
+      setSmallCategory(category[post.categoryBig]);
+    }
+  }, [post.categoryBig, category]);
+
+  // 🔽 Quill 이미지 핸들러
   const imageHandler = () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -75,39 +130,7 @@ function TextEditorUpdate() {
     },
   }), []);
 
-  // 🔽 기존 게시글 정보, 카테고리 정보 불러오기
-  useEffect(() => {
-    axios.get(`/post/detail/${postId}`)
-      .then(res => {
-        const data = res.data.data;
-        setPost({
-          postTitle: data.postTitle,
-          postContent: data.postContent,
-          categoryBig: data.categoryBigName,
-          categorySmall: data.smallCategoryId,
-        });
-      })
-      .catch(err => console.error('게시글 로딩 실패', err));
-
-    axios.get('/post/userpage')
-      .then(res => {
-        const categoryMap = {};
-        res.data.data.forEach(item => {
-          const big = item.categoryBigDTO.bigCategoryName;
-          const small = { id: item.smallCategoryId, name: item.smallCategoryName };
-          if (!categoryMap[big]) categoryMap[big] = [];
-          categoryMap[big].push(small);
-        });
-        setCategory(categoryMap);
-      });
-  }, [postId]);
-
-  useEffect(() => {
-    if (post.categoryBig && category[post.categoryBig]) {
-      setSmallCategory(category[post.categoryBig]);
-    }
-  }, [post.categoryBig, category]);
-
+  // 🔽 게시글 수정 저장
   const handleSave = async () => {
     const postContent = post.postContent || '';
     if (!post.postTitle.trim()) return alert('제목을 입력해주세요.');
@@ -128,7 +151,7 @@ function TextEditorUpdate() {
         formData.append('image', post.image);
       }
 
-      const response = await axios.put(`http://localhost:8080/post/${username}/update?postId=${postId}`, formData, {
+      await axios.put(`http://localhost:8080/post/${username}/update?postId=${postId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${accessToken}`,
@@ -149,18 +172,21 @@ function TextEditorUpdate() {
         <input
           type="text"
           placeholder="제목을 입력하세요"
-          value={post.postTitle}
+          value={post.postTitle ?? ''}
           onChange={e => setPost({ ...post, postTitle: e.target.value })}
         />
       </div>
 
       <div className={Editor.titleBox}>
         <div className={Editor.selectBox}>
-          <select value={post.categoryBig} onChange={e => {
-            const selected = e.target.value;
-            setPost(prev => ({ ...prev, categoryBig: selected, categorySmall: '' }));
-            setSmallCategory(category[selected] || []);
-          }}>
+          <select
+            value={post.categoryBig ?? ''}
+            onChange={e => {
+              const selected = e.target.value;
+              setPost(prev => ({ ...prev, categoryBig: selected, categorySmall: '' }));
+              setSmallCategory(category[selected] || []);
+            }}
+          >
             <option value="">대분류 선택</option>
             {Object.keys(category).map(big => (
               <option key={big} value={big}>{big}</option>
@@ -168,7 +194,7 @@ function TextEditorUpdate() {
           </select>
 
           <select
-            value={post.categorySmall}
+            value={post.categorySmall ?? ''}
             onChange={e => setPost({ ...post, categorySmall: e.target.value })}
             disabled={!post.categoryBig}
           >
@@ -204,7 +230,7 @@ function TextEditorUpdate() {
 
       <ReactQuill
         ref={quillRef}
-        value={post.postContent}
+        value={post.postContent ?? ''}
         onChange={value => setPost({ ...post, postContent: value })}
         modules={modules}
         className={Editor.quill}
