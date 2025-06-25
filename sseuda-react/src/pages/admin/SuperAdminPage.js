@@ -4,6 +4,8 @@ import { CallMemberSearchApi, callMembersApi } from "../../apis/MemberAPICalls";
 import { callUpdateUserRoleApi } from "../../apis/UserRoleAPICalls";
 import "./SuperAdminPage.css";
 
+const ITEMS_PER_PAGE = 10;	// 페이징
+
 function SuperAdminPage() {
 	const dispatch = useDispatch();
 	const members = useSelector((state) => state.memberReducer.GET_MEMBER_ALL);
@@ -33,7 +35,7 @@ function SuperAdminPage() {
 		};
 
 	// 검색결과 저장
-	const displayedMembers = searchResult ?? members;
+	// const displayedMembers = searchResult ?? members;
 
 	// 역할 변경 처리
 	const handleRoleToggle = async (userId, currentRole, userFullname) => {
@@ -54,6 +56,24 @@ function SuperAdminPage() {
 			alert("역할 변경 중 오류가 발생했습니다.");
 		}
 	};
+
+	// 페이징
+	const [currentPage, setCurrentPage] = useState(1);
+	const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
+	const handlePageChange = (page) => {
+		setCurrentPage(page);
+	};
+
+	const displayedMembers = (searchResult ?? members)?.filter(
+		member => member.userRole !== "SUPER"
+	) || [];
+	
+	const totalPages = Math.ceil(displayedMembers.length / ITEMS_PER_PAGE);
+	const pagedMembers = displayedMembers.slice(
+		(currentPage - 1) * ITEMS_PER_PAGE,
+		currentPage * ITEMS_PER_PAGE
+	);
 
 	return (
 		<div className="super-admin-container">
@@ -85,53 +105,82 @@ function SuperAdminPage() {
 					</tr>
 				</thead>
 				<tbody>
-					{displayedMembers && displayedMembers.length > 0 ? (
-						displayedMembers
-							.filter((member) => member.userRole !== "SUPER")
-							.map((member) => (
-								<tr
-									key={member.userId}
-									style={{
-										backgroundColor:
-											member.userRole === "ADMIN"
-												? "rgba(251, 245, 204, 0.5)"
-												: "rgba(252, 239, 159, 0.5)"
-									}}
-								>
-									<td>{member.userId}</td>
-									<td>{member.userFullname}</td>
-									<td>{member.username}</td>
-									<td>{member.userNickname}</td>
-									<td>{member.userRole}</td>
-									<td>
-										<button
-											onClick={() =>
-												handleRoleToggle(member.userId, member.userRole, member.userFullname)
-											}
-											style={{
-												padding: "5px 10px",
-												borderRadius: "6px",
-												border: "1px solid #ccc",
-												cursor: "pointer",
-												backgroundColor:
-													member.userRole === "ADMIN" ? "#ffd54f" : "#90caf9"
-											}}
-										>
-											{member.userRole === "ADMIN" ? "USER로 변경" : "ADMIN으로 변경"}
-										</button>
-									</td>
-								</tr>
-							))
-					) : (
-						<tr>
-							<td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
-								🔍 일치하는 회원이 없습니다.
-							</td>
-						</tr>
-					)}
-				</tbody>
+	{pagedMembers.length > 0 ? (
+		pagedMembers.map((member) => (
+			<tr
+				key={member.userId}
+				style={{
+					backgroundColor:
+						member.userRole === "ADMIN"
+							? "rgba(251, 245, 204, 0.5)"
+							: "rgba(252, 239, 159, 0.5)",
+				}}
+			>
+				<td>{member.userId}</td>
+				<td>{member.userFullname}</td>
+				<td>{member.username}</td>
+				<td>{member.userNickname}</td>
+				<td>{member.userRole}</td>
+				<td>
+					<button
+						onClick={() =>
+							handleRoleToggle(
+								member.userId,
+								member.userRole,
+								member.userFullname
+							)
+						}
+						style={{
+							padding: "5px 10px",
+							borderRadius: "6px",
+							border: "1px solid #ccc",
+							cursor: "pointer",
+							backgroundColor:
+								member.userRole === "ADMIN" ? "#ffd54f" : "#90caf9",
+						}}
+					>
+						{member.userRole === "ADMIN"
+							? "USER로 변경"
+							: "ADMIN으로 변경"}
+					</button>
+				</td>
+			</tr>
+		))
+	) : (
+		<tr>
+			<td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
+				🔍 일치하는 회원이 없습니다.
+			</td>
+		</tr>
+	)}
+</tbody>
 			</table>
 						</div>
+
+						{/* 📌 페이지네이션 */}
+			<div className="pagination">
+			{currentPage > 1 && (
+				<button onClick={() => handlePageChange(currentPage - 1)}>
+				« 이전
+				</button>
+			)}
+
+			{Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+				<button
+				key={page}
+				className={page === currentPage ? "active-page" : ""}
+				onClick={() => handlePageChange(page)}
+				>
+				{page}
+				</button>
+			))}
+
+			{currentPage < totalPages && (
+				<button onClick={() => handlePageChange(currentPage + 1)}>
+				다음 »
+				</button>
+			)}
+			</div>
 		</div>
 	);
 }
