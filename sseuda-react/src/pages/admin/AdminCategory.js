@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { callCategoryApi } from "../../apis/CategoryAPICalls";
+import { callCategoryApi, callDeleteCategoryApi, callDeleteSmallCategoryApi, callUpdateCategoryApi, callUpdateSmallCategoryApi } from "../../apis/CategoryAPICalls";
 import "./AdminCategory.css";
 import CategoryBigInsert from "../../components/common/category/CategoryBigInsert";
 import CategorySmallInsert from "../../components/common/category/CategorySmallInsert";
@@ -18,50 +18,50 @@ function AdminCategory() {
 
 
 
-  // // ✅ 상위 카테고리 수정
-  // const handleUpdateBigCategory = async (bigCategoryId, newName) => {
-  //   if (newName) {
-  //     const form = new FormData();
-  //     form.append("bigCategoryId", bigCategoryId);
-  //     form.append("bigCategoryName", newName);
-  //     await dispatch(callUpdateCategoryApi({ form }));
-  //     dispatch(callCategoryApi());
-  //   }
-  // };
+  // ✅ 상위 카테고리 수정
+  const handleUpdateBigCategory = async (bigCategoryId, newName) => {
+    if (newName) {
+      const form = new FormData();
+      form.append("bigCategoryId", bigCategoryId);
+      form.append("bigCategoryName", newName);
+      await dispatch(callUpdateCategoryApi({ form }));
+      dispatch(callCategoryApi());
+    }
+  };
 
-  // // ✅ 하위 카테고리 수정
-  // const handleUpdateSmallCategory = async (smallCategoryId, newName) => {
-  //   if (newName) {
-  //     const form = new FormData();
-  //     form.append("smallCategoryId", smallCategoryId);
-  //     form.append("smallCategoryName", newName);
-  //     await dispatch(callUpdateSmallCategoryApi({ form }));
-  //     dispatch(callCategoryApi());
-  //   }
-  // };
+  // ✅ 하위 카테고리 수정
+  const handleUpdateSmallCategory = async (smallCategoryId, newName) => {
+    if (newName) {
+      const form = new FormData();
+      form.append("smallCategoryId", smallCategoryId);
+      form.append("smallCategoryName", newName);
+      await dispatch(callUpdateSmallCategoryApi({ form }));
+      dispatch(callCategoryApi());
+    }
+  };
 
-  // // ✅ 상위 카테고리 삭제
-  // const handleDeleteBigCategory = async (bigCategoryId) => {
-  //   const form = new FormData();
-  //   form.append("bigCategoryId", bigCategoryId);
-  //   await dispatch(callDeleteCategoryApi({ form }));
-  //   dispatch(callCategoryApi());
-  // };
+  // ✅ 상위 카테고리 삭제
+  const handleDeleteBigCategory = async (bigCategoryId) => {
+    const form = new FormData();
+    form.append("bigCategoryId", bigCategoryId);
+    await dispatch(callDeleteCategoryApi({ form }));
+    dispatch(callCategoryApi());
+  };
 
-  // // ✅ 하위 카테고리 삭제
-  // const handleDeleteSmallCategory = async (smallCategoryId) => {
-  //   const form = new FormData();
-  //   form.append("smallCategoryId", smallCategoryId);
-  //   await dispatch(callDeleteSmallCategoryApi({ form }));
-  //   dispatch(callCategoryApi());
-  // };
+  // ✅ 하위 카테고리 삭제
+  const handleDeleteSmallCategory = async (smallCategoryId) => {
+    const form = new FormData();
+    form.append("smallCategoryId", smallCategoryId);
+    await dispatch(callDeleteSmallCategoryApi({ form }));
+    dispatch(callCategoryApi());
+  };
 
-  // // ✅ 드롭다운에 중복 없는 대분류만
-  // const uniqueBigCategories = [
-  //   ...new Map(
-  //     categories.map(cat => [cat.categoryBigDTO.bigCategoryId, cat.categoryBigDTO])
-  //   ).values()
-  // ];
+  // ✅ 드롭다운에 중복 없는 대분류만
+  const uniqueBigCategories = [
+    ...new Map(
+      categories.map(cat => [cat.categoryBigDTO.bigCategoryId, cat.categoryBigDTO])
+    ).values()
+  ];
 
   return (
     <div className="admin-category-container">
@@ -91,7 +91,7 @@ function AdminCategory() {
         <td>{cat.categoryBigDTO.bigCategoryId}</td>
         <td>{cat.smallCategoryName}</td>
         <td>{cat.smallCategoryId}</td>
-        {/* <td>
+        <td>
           <button
             onClick={() => handleUpdateBigCategory(cat.categoryBigDTO.bigCategoryId, prompt("대분류 새 이름 입력"))}
           >
@@ -112,7 +112,7 @@ function AdminCategory() {
           >
             소분류 삭제
           </button>
-        </td> */}
+        </td>
       </tr>
     ))}
 </tbody>

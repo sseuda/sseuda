@@ -57,6 +57,8 @@ public class PostController {
             userCode = memberService.getMemberByUsername(username).getUserId();
         }
 
+
+
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 전체 조회 성공", postService.findUserPostList(userCode)));
     }
 
