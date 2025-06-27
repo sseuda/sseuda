@@ -7,7 +7,7 @@ import { decodeJwt } from "../../utils/tokenUtils";
 import { useState } from "react";
 import Alarm from "../../pages/alarm/Alarm";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faUserShield, faRightToBracket, faRightFromBracket, faBold } from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from "react";
 import { callAlarmApi } from "../../apis/AlarmAPICalls";
 import useLoginInfo from "../../hooks/useLoginInfo";
@@ -60,39 +60,66 @@ function Header() {
 		}
 	};
 
+	// 내 블로그 버튼 관련
+	const username = isLogin ? decodedToken.sub : null;
+
+	const userMyPageList = () => {
+		if (username) {
+			navigate(`/mypage/${username}`, {replace:false});
+		} else {
+			alert("로그인이 필요합니다.");
+			navigate("/auth/login");
+			}
+		}
+
 	return (
 		<div className={HeaderCSS.headerBox}>
 			<div className={HeaderCSS.box}>
 				<Link to='/' className={HeaderCSS.headerLogo} />
 
-				{isLogin && (decodedToken?.auth === "ADMIN" || decodedToken?.auth === "SUPER") && (
-				<Link to="/admin/members" className={ButtonCSS.adminBTN}>관리자 페이지</Link>)}
+				{/* 오른쪽 아이콘 모음 */}
+				<div className={HeaderCSS.rightControls}>
+					{/* 관리자 아이콘 */}
+					{isLogin && (decodedToken?.auth === "ADMIN" || decodedToken?.auth === "SUPER") && (
+						<Link to="/admin/members" className={HeaderCSS.iconButton} title="관리자 페이지">
+							<FontAwesomeIcon icon={faUserShield} />
+						</Link>
+					)}
 
-				{isLogin && (
-				<div className={HeaderCSS.alarmIconWrapper} onClick={handleAlarmClick}>
-					<FontAwesomeIcon icon={faBell} className={HeaderCSS.alarmIcon} />
-					{unreadCount > 0 && (
-					<span className={HeaderCSS.alarmBadge}>{unreadCount}</span>
+					{/* 내블로그 바로가기 아이콘 */}
+					{isLogin && (
+						<button className={HeaderCSS.iconButton} onClick={userMyPageList} title="내 블로그">
+							<FontAwesomeIcon icon={faBold} />
+						</button>
+					)}
+
+					{/* 알림 아이콘 */}
+					{isLogin && (
+						<div className={HeaderCSS.iconButton} onClick={handleAlarmClick} title="알림">
+							<FontAwesomeIcon icon={faBell} className={HeaderCSS.alarmIcon} />
+							{unreadCount > 0 && (
+								<span className={HeaderCSS.alarmBadge}>{unreadCount}</span>
+							)}
+						</div>
+					)}
+
+					{/* 로그인 / 로그아웃 */}
+					{!isLogin ? (
+						<Link to="/auth/login" className={HeaderCSS.iconButton} title="로그인">
+							<FontAwesomeIcon icon={faRightToBracket} />
+						</Link>
+					) : (
+						<button type="button" className={HeaderCSS.iconButton} onClick={handleLogout} title="로그아웃">
+							<FontAwesomeIcon icon={faRightFromBracket} />
+						</button>
 					)}
 				</div>
-				)}
-
-				{!isLogin ? (
-					<Link to="/auth/login" className={ButtonCSS.headerBTN}>로그인</Link>
-				) : (
-					<button
-						type="button"
-						className={ButtonCSS.headerBTN}
-						onClick={handleLogout}
-					>
-						로그아웃
-					</button>
-				)}
 			</div>
-			{/* 🔔 알림 모달 조건부 렌더링 */}
+
+			{/* 알림 모달 */}
 			{showAlarm && <Alarm onClose={() => setShowAlarm(false)} />}
 		</div>
-	);
+			);
 }
 
 export default Header;
