@@ -2,133 +2,85 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   callCategoryApi,
-  callInsertBigCategoryApi,
   callInsertSmallCategoryApi,
   callUpdateCategoryApi,
   callUpdateSmallCategoryApi,
   callDeleteCategoryApi,
-  callDeleteSmallCategoryApi
+  callDeleteSmallCategoryApi,
+  callBigCategoryApi
 } from "../../apis/CategoryAPICalls";
 import "./AdminCategory.css";
+import CategoryBigInsert from "../../components/common/category/CategoryBigInsert";
+import CategorySmallInsert from "../../components/common/category/CategorySmallInsert";
 
 function AdminCategory() {
   const dispatch = useDispatch();
   const categories = useSelector(state => state.categoryReducer);
-  console.log("categories에는 어떤게 있을까~ ", categories);
+  console.log("categories 상태 확인 👉", categories);
 
-  const [bigCategoryName, setBigCategoryName] = useState("");
-  const [smallCategoryName, setSmallCategoryName] = useState("");
-  const [selectedBigCategoryId, setSelectedBigCategoryId] = useState(null);
+  
+  // const [bigCategoryList, setBigCategoryList] = useState([]);
 
-  // ✅ 전체 카테고리 조회
-  useEffect(() => {
-    dispatch(callCategoryApi());
-  }, [dispatch]);
 
-  console.log("전체 카테고리 상태:", categories);
 
-  // ✅ 상위 카테고리 추가
-  const handleAddBigCategory = () => {
-    const form = new FormData();
-    form.append("bigCategoryName", bigCategoryName);
+  // // ✅ 전체 카테고리 조회 (초기 로딩)
+  // useEffect(() => {
+  //   dispatch(callCategoryApi());
+  // }, [dispatch]);
 
-    dispatch(callInsertBigCategoryApi({ form }));
-    setBigCategoryName("");
-  };
+  // // ✅ 상위 카테고리 수정
+  // const handleUpdateBigCategory = async (bigCategoryId, newName) => {
+  //   if (newName) {
+  //     const form = new FormData();
+  //     form.append("bigCategoryId", bigCategoryId);
+  //     form.append("bigCategoryName", newName);
+  //     await dispatch(callUpdateCategoryApi({ form }));
+  //     dispatch(callCategoryApi());
+  //   }
+  // };
 
-  // ✅ 하위 카테고리 추가
-  const handleAddSmallCategory = () => {
-    if (!selectedBigCategoryId) {
-      alert("상위 카테고리를 먼저 선택하세요.");
-      return;
-    }
+  // // ✅ 하위 카테고리 수정
+  // const handleUpdateSmallCategory = async (smallCategoryId, newName) => {
+  //   if (newName) {
+  //     const form = new FormData();
+  //     form.append("smallCategoryId", smallCategoryId);
+  //     form.append("smallCategoryName", newName);
+  //     await dispatch(callUpdateSmallCategoryApi({ form }));
+  //     dispatch(callCategoryApi());
+  //   }
+  // };
 
-    const form = new FormData();
-    form.append("smallCategoryName", smallCategoryName);
-    form.append("bigCategoryId", selectedBigCategoryId);
+  // // ✅ 상위 카테고리 삭제
+  // const handleDeleteBigCategory = async (bigCategoryId) => {
+  //   const form = new FormData();
+  //   form.append("bigCategoryId", bigCategoryId);
+  //   await dispatch(callDeleteCategoryApi({ form }));
+  //   dispatch(callCategoryApi());
+  // };
 
-    dispatch(callInsertSmallCategoryApi({ form }));
-    setSmallCategoryName("");
-  };
+  // // ✅ 하위 카테고리 삭제
+  // const handleDeleteSmallCategory = async (smallCategoryId) => {
+  //   const form = new FormData();
+  //   form.append("smallCategoryId", smallCategoryId);
+  //   await dispatch(callDeleteSmallCategoryApi({ form }));
+  //   dispatch(callCategoryApi());
+  // };
 
-  // ✅ 상위 카테고리 수정
-  const handleUpdateBigCategory = (bigCategoryId, newName) => {
-    const form = new FormData();
-    form.append("bigCategoryId", bigCategoryId);
-    form.append("bigCategoryName", newName);
-
-    dispatch(callUpdateCategoryApi({ form }));
-  };
-
-  // ✅ 하위 카테고리 수정
-  const handleUpdateSmallCategory = (smallCategoryId, newName) => {
-    const form = new FormData();
-    form.append("smallCategoryId", smallCategoryId);
-    form.append("smallCategoryName", newName);
-
-    dispatch(callUpdateSmallCategoryApi({ form }));
-  };
-
-  // ✅ 상위 카테고리 삭제
-  const handleDeleteBigCategory = (bigCategoryId) => {
-    const form = new FormData();
-    form.append("bigCategoryId", bigCategoryId);
-
-    dispatch(callDeleteCategoryApi({ form }));
-  };
-
-  // ✅ 하위 카테고리 삭제
-  const handleDeleteSmallCategory = (smallCategoryId) => {
-    const form = new FormData();
-    form.append("smallCategoryId", smallCategoryId);
-
-    dispatch(callDeleteSmallCategoryApi({ form }));
-  };
+  // // ✅ 드롭다운에 중복 없는 대분류만
+  // const uniqueBigCategories = [
+  //   ...new Map(
+  //     categories.map(cat => [cat.categoryBigDTO.bigCategoryId, cat.categoryBigDTO])
+  //   ).values()
+  // ];
 
   return (
     <div className="admin-category-container">
       <h2>카테고리 관리</h2>
-
-      {/* 상위 카테고리 추가 */}
-      <div className="admin-category-section">
-        <h3>상위 카테고리 추가</h3>
-        <input
-          type="text"
-          placeholder="대분류 이름"
-          value={bigCategoryName}
-          onChange={(e) => setBigCategoryName(e.target.value)}
-        />
-        <button onClick={handleAddBigCategory}>등록</button>
-      </div>
-
-      {/* 하위 카테고리 추가 */}
-      <div className="admin-category-section">
-        <h3>하위 카테고리 추가</h3>
-        <select
-          onChange={(e) => setSelectedBigCategoryId(e.target.value)}
-          defaultValue=""
-        >
-          <option value="" disabled>상위 카테고리 선택</option>
-          {categories?.map((cat) => (
-            <option
-              key={cat.categoryBigDTO.bigCategoryId}
-              value={cat.categoryBigDTO.bigCategoryId}
-            >
-              {cat.categoryBigDTO.bigCategoryName}
-            </option>
-          ))}
-        </select>
-        <input
-          type="text"
-          placeholder="소분류 이름"
-          value={smallCategoryName}
-          onChange={(e) => setSmallCategoryName(e.target.value)}
-        />
-        <button onClick={handleAddSmallCategory}>등록</button>
-      </div>
+      <CategoryBigInsert/>
+      <CategorySmallInsert/>
 
       {/* 카테고리 목록 */}
-      <div className="admin-category-section">
+      {/* <div className="admin-category-section">
         <h3>카테고리 목록</h3>
         <table className="category-table">
           <thead>
@@ -140,54 +92,43 @@ function AdminCategory() {
               <th>관리</th>
             </tr>
           </thead>
-          <tbody>
-            {categories?.map((cat) => (
-              <tr key={cat.smallCategoryId}>
-                <td>{cat.categoryBigDTO.bigCategoryName}</td>
-                <td>{cat.bigCategoryId}</td>
-                <td>{cat.smallCategoryName}</td>
-                <td>{cat.smallCategoryId}</td>
-                <td>
-                  <button
-                    className="category-action-btn"
-                    onClick={() =>
-                      handleUpdateBigCategory(
-                        cat.bigCategoryId,
-                        prompt("대분류 새 이름 입력")
-                      )
-                    }
-                  >
-                    대분류 수정
-                  </button>
-                  <button
-                    className="category-action-btn"
-                    onClick={() => handleDeleteBigCategory(cat.bigCategoryId)}
-                  >
-                    대분류 삭제
-                  </button>
-                  <button
-                    className="category-action-btn"
-                    onClick={() =>
-                      handleUpdateSmallCategory(
-                        cat.smallCategoryId,
-                        prompt("소분류 새 이름 입력")
-                      )
-                    }
-                  >
-                    소분류 수정
-                  </button>
-                  <button
-                    className="category-action-btn"
-                    onClick={() => handleDeleteSmallCategory(cat.smallCategoryId)}
-                  >
-                    소분류 삭제
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          <tbody> */}
+  {/* {categories
+    ?.filter(cat => cat.categoryBigDTO)
+    .map((cat, index) => (
+      <tr key={`cat-${cat.categoryBigDTO.bigCategoryId}-${cat.smallCategoryId}-${index}`}>
+        <td>{cat.categoryBigDTO.bigCategoryName}</td>
+        <td>{cat.categoryBigDTO.bigCategoryId}</td>
+        <td>{cat.smallCategoryName}</td>
+        <td>{cat.smallCategoryId}</td>
+        <td>
+          <button
+            onClick={() => handleUpdateBigCategory(cat.categoryBigDTO.bigCategoryId, prompt("대분류 새 이름 입력"))}
+          >
+            대분류 수정
+          </button>
+          <button
+            onClick={() => handleDeleteBigCategory(cat.categoryBigDTO.bigCategoryId)}
+          >
+            대분류 삭제
+          </button>
+          <button
+            onClick={() => handleUpdateSmallCategory(cat.smallCategoryId, prompt("소분류 새 이름 입력"))}
+          >
+            소분류 수정
+          </button>
+          <button
+            onClick={() => handleDeleteSmallCategory(cat.smallCategoryId)}
+          >
+            소분류 삭제
+          </button>
+        </td>
+      </tr>
+    ))} */}
+{/* </tbody> */}
+
+        {/* </table>
+      </div> */}
     </div>
   );
 }

@@ -86,7 +86,8 @@ public class SecurityConfig {
                                 "/mypage/**",
                                 "/api/**",
                                 "/sseudaimgs/**",
-                                "/like/**"
+                                "/like/**",
+                                "/category/**"
                         ).permitAll()
                                 .anyRequest().authenticated()
                 ).cors(cors -> cors.configurationSource(corsConfigurationSource()))

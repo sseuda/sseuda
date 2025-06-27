@@ -28,6 +28,12 @@ public class CategoryService {
         return categoryMapper.findCategoryList();
     }
 
+//    상위 카테고리 전체 조회
+    public List<CategoryBigDTO> findBigCategoryList() {
+
+        log.info("[CService] 전체 카테고리 조회중...");
+        return categoryMapper.findBigCategoryList();
+    }
 
 //    상위 카테고리 등록
     public int insertBigCategory(CategoryBigDTO category){
@@ -72,4 +78,6 @@ public class CategoryService {
         log.info("[CBService] 하위 카테고리 삭제 진행중...");
         return categoryMapper.deleteSmallCategory(category);
     }
+
+
 }
