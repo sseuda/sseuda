@@ -1,5 +1,6 @@
 package com.sseuda.sseuda_server.function.member.dto;
 
+import com.sseuda.sseuda_server.function.member.UserRole;
 import com.sseuda.sseuda_server.function.member.UserStatus;
 
 import java.sql.Timestamp;
@@ -15,11 +16,12 @@ public class MemberDTO {
     private String userPhone;
     private Timestamp enrollDate;
     private UserStatus userStatus;
+    private UserRole userRole;
 
     public MemberDTO() {
     }
 
-    public MemberDTO(int userId, String userFullname, String username, String password, String userNickname, String userEmail, String userPhone, Timestamp enrollDate, UserStatus userStatus) {
+    public MemberDTO(int userId, String userFullname, String username, String password, String userNickname, String userEmail, String userPhone, Timestamp enrollDate, UserStatus userStatus, UserRole userRole) {
         this.userId = userId;
         this.userFullname = userFullname;
         this.username = username;
@@ -29,6 +31,7 @@ public class MemberDTO {
         this.userPhone = userPhone;
         this.enrollDate = enrollDate;
         this.userStatus = userStatus;
+        this.userRole = userRole;
     }
 
     public int getUserId() {
@@ -103,6 +106,14 @@ public class MemberDTO {
         this.userStatus = userStatus;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
     @Override
     public String toString() {
         return "MemberDTO{" +
@@ -115,6 +126,7 @@ public class MemberDTO {
                 ", userPhone='" + userPhone + '\'' +
                 ", enrollDate=" + enrollDate +
                 ", userStatus=" + userStatus +
+                ", userRole='" + userRole + '\'' +
                 '}';
     }
 }
