@@ -21,6 +21,7 @@ import PostComment from "./pages/comment/PostComment";
 import TextEditorUpdate from "./components/common/post/TextEditorUpdate";
 import MyInformation from "./pages/myPage/MyInformation";
 import AdminRoute from "./components/common/auth/AdminRoute";
+import SuperRoute from "./components/common/auth/SuperRoute";
 import Alarm from "./pages/alarm/Alarm";
 import SuperAdminPage from "./pages/admin/SuperAdminPage";
 
@@ -41,11 +42,16 @@ function App() {
         </Route>
 
         {/* 관리자 페이지를 위한 Route */}
-        <Route path="admin" element={<AdminRoute/>}>
-          <Route element={<AdminPageLayout/>}>
-            <Route path="members" element={<AdminMembers/>}/>
-            <Route path="reports" element={<AdminReports/>}/>
-            <Route path="super" element={<SuperAdminPage/>}/>
+        <Route path="admin" element={<AdminRoute />}>
+          <Route element={<AdminPageLayout />}>
+            <Route path="members" element={<AdminMembers />} />
+            <Route path="reports" element={<AdminReports />} />
+          </Route>
+        </Route>
+
+        <Route path="admin/super" element={<SuperRoute />}>
+          <Route element={<AdminPageLayout />}>
+            <Route index element={<SuperAdminPage />} />
           </Route>
         </Route>
 
