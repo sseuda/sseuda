@@ -8,7 +8,7 @@ import { callPostCommentDeleteApi } from '../../../apis/CommentAPICalls';
 
 function Comment({
     comment: {commentId, commentText, commentCreateAt, commentUpdateAt, commentDelete, postDTO, memberDTO},
-    onEdit, onCommentAdded
+    onEdit, onCommentAdded, onReport
 }) {
     const dispatch = useDispatch();
 
@@ -37,40 +37,39 @@ function Comment({
 
     }
 
-  return (
-    <>
-        <div className={CommentCSS.userBox}>
-            <div className={CommentCSS.nickBox}>
-                <h4>
-                    {memberDTO?.userNickname}
-                </h4>
-            </div>
-            <div className={CommentCSS.textBox}>
-                <p>
-                    {commentText}
-                </p>
-            </div>
-            <div className={CommentCSS.createAtBox}>
-                <h5>
-                    {commentCreateAt}
-                </h5>
-            </div>
+    return (
+        <div className={CommentCSS.commentContainer}>
+			{/* 상단: 닉네임 + 신고버튼 + 작성일 */}
+			<div className={CommentCSS.header}>
+				<div className={CommentCSS.leftHeader}>
+					<span className={CommentCSS.nickname}>{memberDTO?.userNickname}</span>
+					<button
+						className={CommentCSS.reportBtn}
+						onClick={() => onReport?.(commentId, memberDTO?.userId)}
+					>
+						🚨신고
+					</button>
+				</div>
+				<span className={CommentCSS.createdAt}>{commentCreateAt}</span>
+			</div>
 
-            {isOwner && (
-            <div>
-                <div>
-                    <button onClick={onEdit}>수정</button>
-                </div>
-                <div>
-                    <button onClick={commentDeleteHandler}>삭제</button>
-                </div>
-            </div>
-            )}
-            
-            
-        </div>
-    </>
-  )
+			{/* 본문: 댓글 + 수정/삭제 */}
+			<div className={CommentCSS.bodyRow}>
+				<div className={CommentCSS.content}>{commentText}</div>
+
+				{isOwner && (
+					<div className={CommentCSS.buttonGroup}>
+						<button className={CommentCSS.editBtn} onClick={onEdit}>
+							수정
+						</button>
+						<button className={CommentCSS.deleteBtn} onClick={commentDeleteHandler}>
+							삭제
+						</button>
+					</div>
+				)}
+			</div>
+		</div>
+    )
 }
 
 export default Comment;

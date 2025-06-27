@@ -71,9 +71,9 @@ function PostComment() {
                 {Array.isArray(commentList) && commentList.map((comment) =>(
                     <div key={comment.commentId}>
                         
-                        <div className='report-button'>
-                        <button onClick={() => handleReportClick(comment.commentId, comment.memberDTO.userId)}>🚨신고하기</button>
-                        </div>
+                        {/* <div>
+                        <button onClick={() => handleReportClick(comment.commentId, comment.memberDTO.userId)} className={CommentCSS.reportBTN}>🚨신고하기</button>
+                        </div> */}
 
                             {reportTarget && reportTarget.commentId === comment.commentId && (
                                 <ReportPopup
@@ -91,15 +91,18 @@ function PostComment() {
                         onCommentAdded={() =>{
                             setEditingCommentId(null);
                             fetchData();
-                        }}/>
+                        }}
+                        onReport={handleReportClick}/>
 
                     {editingCommentId === comment.commentId && (
                         <CommentUpdate
                         commentId={comment.commentId}
+                        originalText={comment.commentText}
                         onCommentAdded={() =>{
                             setEditingCommentId(null);
                             fetchData();
                         }}
+                        onCancel={() => setEditingCommentId(null)}
                         />
                     )}
             </div>
