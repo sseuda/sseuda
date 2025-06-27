@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { decodeJwt } from '../../../utils/tokenUtils';
 import { callPostCommentRegistApi } from '../../../apis/CommentAPICalls';
+import CommentCSS from './css/Comment.module.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 function CommentInsert({ postId, onCommentAdded }) {
   const dispatch = useDispatch();
@@ -50,16 +53,22 @@ function CommentInsert({ postId, onCommentAdded }) {
     
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
-      <textarea
-        value={commentText}
-        onChange={(e) => setCommentText(e.target.value)}
-        placeholder="댓글을 입력하세요"
-        rows="3"
-        style={{ width: '100%', padding: '10px' }}
-      />
-      <button type="submit" style={{ marginTop: '10px' }}>댓글 등록</button>
+    <div className={CommentCSS.commentInsertLine}>
+    <form onSubmit={handleSubmit} className={CommentCSS.commentForm}>
+      <div className={CommentCSS.textareaWrapper}>
+        <textarea
+          value={commentText}
+          onChange={(e) => setCommentText(e.target.value)}
+          placeholder="댓글을 입력하세요..."
+          rows="4"
+          className={CommentCSS.commentTextarea}
+        />
+        <button type="submit" className={CommentCSS.submitButton} title="댓글 등록">
+          <FontAwesomeIcon icon={faPaperPlane} />
+        </button>
+      </div>
     </form>
+    </div>
   );
 }
 
