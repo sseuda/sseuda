@@ -1,10 +1,189 @@
-.userBox{
+.commentContainer {
     width: 100%;
-    height: 124px;
-    padding: 10px 20px;
-    border-bottom: 1px solid var(--text02);
+    padding: 16px 20px;
+    border: solid 1px var(--main-color01);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
 }
 
-.nickBox, .textBox{
-    margin-bottom: 5px;
+.header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.nickname {
+font-weight: 600;
+font-size: 1rem;
+color: #333;
+}
+
+.createdAt {
+font-size: 0.85rem;
+color: #999;
+}
+
+/* ✅ 댓글 + 버튼 한 줄 정렬 */
+.bodyRow {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+gap: 12px;
+}
+
+.content {
+font-size: 1rem;
+color: #444;
+white-space: pre-wrap;
+word-break: break-word;
+flex: 1;
+}
+
+.buttonGroup {
+display: flex;
+gap: 8px;
+flex-shrink: 0;
+}
+
+.editBtn,
+.deleteBtn {
+padding: 4px 10px;
+font-size: 0.85rem;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+transition: background-color 0.2s;
+}
+
+.editBtn {
+background-color: var(--main-color04);
+color: #fff;
+}
+
+.editBtn:hover {
+background-color: var(--main-color02);
+color: #3e3e3e;
+}
+
+.deleteBtn {
+background-color: var(--main-color01);
+color: #fff;
+}
+
+.deleteBtn:hover {
+background-color: var(--main-color02);
+color: #3e3e3e;
+}
+
+.leftHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reportBtn {
+font-size: 0.8rem;
+background: none;
+color: tomato;
+border: none;
+cursor: pointer;
+padding: 2px 6px;
+border-radius: 4px;
+transition: background-color 0.2s;
+}
+
+.reportBtn:hover {
+background-color: #ffe6e6;
+}
+
+.commentInsertLine {
+    border-top: 2px dashed var(--main-color04);
+}
+
+.commentForm {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.textareaWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.commentTextarea {
+    width: 100%;
+    padding: 12px 80px 4px 12px; /* 오른쪽 공간 확보 */
+    border: 1px solid var(--main-color01);
+    background-color: rgba(251, 245, 204, 0.5);
+    border-radius: 8px;
+    resize: none;
+    font-size: 16px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: border-color 0.2s ease;
+    min-height: 100px;
+}
+
+.commentTextarea:focus {
+    outline: none;
+    border-color: var(--main-color04);
+}
+
+.submitButton {
+    position: absolute;
+    bottom: 35px;
+    right: 12px;
+    padding: 8px;
+    background-color: var(--main-color04);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.submitButton:hover {
+    background-color: var(--main-color02);
+    color: #3e3e3e;
+}
+
+/* 수정 버튼: 우측 하단 */
+.updateButton {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: var(--main-color04);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.updateButton:hover {
+    background-color: var(--main-color02);
+}
+
+  /* 취소 버튼: 우측 상단 */
+.cancelButton {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #333;
+    background: none;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.cancelButton:hover {
+    color: tomato;
 }
