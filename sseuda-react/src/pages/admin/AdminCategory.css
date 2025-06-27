@@ -1,0 +1,101 @@
+.admin-category-container {
+  padding: 20px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.admin-category-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.admin-category-section {
+  margin-bottom: 30px;
+}
+
+.admin-category-section h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.admin-category-section input,
+.admin-category-section select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.admin-category-section button {
+  background-color: #f4a261;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.admin-category-section button:hover {
+  background-color: #e76f51;
+}
+
+.category-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.category-table th,
+.category-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.category-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.category-table tr:nth-child(even) {
+  background-color: #fefae0;
+}
+
+.category-table tr:hover {
+  background-color: #faedcd;
+}
+
+.category-action-btn {
+  background-color: #457b9d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.category-action-btn:hover {
+  background-color: #1d3557;
+}
+
+.category-pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.category-pagination button {
+  background-color: #f4a261;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin: 0 2px;
+  cursor: pointer;
+}
+
+.category-pagination button:hover {
+  background-color: #e76f51;
+}

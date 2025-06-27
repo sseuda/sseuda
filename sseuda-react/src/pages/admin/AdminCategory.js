@@ -9,6 +9,7 @@ import {
   callDeleteCategoryApi,
   callDeleteSmallCategoryApi
 } from "../../apis/CategoryAPICalls";
+import "./AdminCategory.css";
 
 function AdminCategory() {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ function AdminCategory() {
     setSmallCategoryName("");
   };
 
-  // 상위 카테고리 수정
+  // ✅ 상위 카테고리 수정
   const handleUpdateBigCategory = (bigCategoryId, newName) => {
     const form = new FormData();
     form.append("bigCategoryId", bigCategoryId);
@@ -59,7 +60,7 @@ function AdminCategory() {
     dispatch(callUpdateCategoryApi({ form }));
   };
 
-  // 하위 카테고리 수정
+  // ✅ 하위 카테고리 수정
   const handleUpdateSmallCategory = (smallCategoryId, newName) => {
     const form = new FormData();
     form.append("smallCategoryId", smallCategoryId);
@@ -68,7 +69,7 @@ function AdminCategory() {
     dispatch(callUpdateSmallCategoryApi({ form }));
   };
 
-  // 상위 카테고리 삭제
+  // ✅ 상위 카테고리 삭제
   const handleDeleteBigCategory = (bigCategoryId) => {
     const form = new FormData();
     form.append("bigCategoryId", bigCategoryId);
@@ -76,7 +77,7 @@ function AdminCategory() {
     dispatch(callDeleteCategoryApi({ form }));
   };
 
-  // 하위 카테고리 삭제
+  // ✅ 하위 카테고리 삭제
   const handleDeleteSmallCategory = (smallCategoryId) => {
     const form = new FormData();
     form.append("smallCategoryId", smallCategoryId);
@@ -85,11 +86,11 @@ function AdminCategory() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="admin-category-container">
       <h2>카테고리 관리</h2>
 
       {/* 상위 카테고리 추가 */}
-      <div>
+      <div className="admin-category-section">
         <h3>상위 카테고리 추가</h3>
         <input
           type="text"
@@ -101,12 +102,18 @@ function AdminCategory() {
       </div>
 
       {/* 하위 카테고리 추가 */}
-      <div>
+      <div className="admin-category-section">
         <h3>하위 카테고리 추가</h3>
-        <select onChange={(e) => setSelectedBigCategoryId(e.target.value)} defaultValue="">
+        <select
+          onChange={(e) => setSelectedBigCategoryId(e.target.value)}
+          defaultValue=""
+        >
           <option value="" disabled>상위 카테고리 선택</option>
           {categories?.map((cat) => (
-            <option key={cat.categoryBigDTO.bigCategoryId} value={cat.categoryBigDTO.bigCategoryId}>
+            <option
+              key={cat.categoryBigDTO.bigCategoryId}
+              value={cat.categoryBigDTO.bigCategoryId}
+            >
               {cat.categoryBigDTO.bigCategoryName}
             </option>
           ))}
@@ -120,22 +127,66 @@ function AdminCategory() {
         <button onClick={handleAddSmallCategory}>등록</button>
       </div>
 
-      {/* 전체 카테고리 목록 */}
-      <div style={{ marginTop: "20px" }}>
+      {/* 카테고리 목록 */}
+      <div className="admin-category-section">
         <h3>카테고리 목록</h3>
-        {categories?.map((cat) => (
-          <div key={cat.smallCategoryId} style={{ borderBottom: "1px solid #ccc", padding: "10px" }}>
-            <strong>대분류: {cat.categoryBigDTO.bigCategoryName}</strong> (ID: {cat.bigCategoryId})
-            <button onClick={() => handleUpdateBigCategory(cat.bigCategoryId, prompt("대분류 새 이름 입력"))}>수정</button>
-            <button onClick={() => handleDeleteBigCategory(cat.bigCategoryId)}>삭제</button>
-
-            <div style={{ marginLeft: "20px", marginTop: "5px" }}>
-              소분류: {cat.smallCategoryName} (ID: {cat.smallCategoryId})
-              <button onClick={() => handleUpdateSmallCategory(cat.smallCategoryId, prompt("소분류 새 이름 입력"))}>수정</button>
-              <button onClick={() => handleDeleteSmallCategory(cat.smallCategoryId)}>삭제</button>
-            </div>
-          </div>
-        ))}
+        <table className="category-table">
+          <thead>
+            <tr>
+              <th>대분류 이름</th>
+              <th>대분류 ID</th>
+              <th>소분류 이름</th>
+              <th>소분류 ID</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories?.map((cat) => (
+              <tr key={cat.smallCategoryId}>
+                <td>{cat.categoryBigDTO.bigCategoryName}</td>
+                <td>{cat.bigCategoryId}</td>
+                <td>{cat.smallCategoryName}</td>
+                <td>{cat.smallCategoryId}</td>
+                <td>
+                  <button
+                    className="category-action-btn"
+                    onClick={() =>
+                      handleUpdateBigCategory(
+                        cat.bigCategoryId,
+                        prompt("대분류 새 이름 입력")
+                      )
+                    }
+                  >
+                    대분류 수정
+                  </button>
+                  <button
+                    className="category-action-btn"
+                    onClick={() => handleDeleteBigCategory(cat.bigCategoryId)}
+                  >
+                    대분류 삭제
+                  </button>
+                  <button
+                    className="category-action-btn"
+                    onClick={() =>
+                      handleUpdateSmallCategory(
+                        cat.smallCategoryId,
+                        prompt("소분류 새 이름 입력")
+                      )
+                    }
+                  >
+                    소분류 수정
+                  </button>
+                  <button
+                    className="category-action-btn"
+                    onClick={() => handleDeleteSmallCategory(cat.smallCategoryId)}
+                  >
+                    소분류 삭제
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
