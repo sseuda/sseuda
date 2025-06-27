@@ -320,7 +320,8 @@ export const callUpdateViewCountApi = ({ postId, username }) => {
         headers: {
           'Content-Type': 'application/json',
           Accept: '*/*',
-          Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
+          Authorization:
+                    'Bearer ' + window.localStorage.getItem('accessToken')
         },
       });
 
