@@ -6,12 +6,22 @@ function CategorySmallInsert() {
 
     const dispatch = useDispatch();
     // const bigCategory = useSelector(state => state.categoryReducer);
-    const bigCategory = useSelector(state => state.categoryReducer) || [];
+    const bigCategory = useSelector(state => state.categoryReducer.bigCategoryList) || [];
     console.log("bigCategory : ", bigCategory);
 
     const [smallCategoryName, setSmallCategoryName] = useState("");
     const [selectedBigCategoryId, setSelectedBigCategoryId] = useState(null);
 
+    // 드롭다운용 대분류 리스트
+    // const uniqueBigCategories = categories
+     //   // ? [
+    //         ...new Map(
+    //         categories
+    //             .filter(cat => cat.categoryBigDTO)
+    //             .map(cat => [cat.categoryBigDTO.bigCategoryId, cat.categoryBigDTO])
+    //         ).values()
+    //     ]
+    //     : [];
 
     useEffect(() => {
         dispatch(callBigCategoryApi());
@@ -42,12 +52,12 @@ function CategorySmallInsert() {
         <div className="admin-category-section">
             <h3>하위 카테고리 추가</h3>
             <select
-  onChange={(e) => setSelectedBigCategoryId(Number(e.target.value))}
-  defaultValue=""
+  value={selectedBigCategoryId || ""}   // 현재 선택된 값
+  onChange={(e) => setSelectedBigCategoryId(e.target.value)}   // 선택 시 상태 업데이트
 >
-  <option value="" disabled>상위 카테고리 선택</option>
-  {Array.isArray(bigCategory) && bigCategory.map((bigCat) => (
-    <option key={`big-${bigCat.bigCategoryId}`} value={bigCat.bigCategoryId}>
+  <option value="">-- 상위 카테고리 선택 --</option>
+  {bigCategory.map(bigCat => (
+    <option key={bigCat.bigCategoryId} value={bigCat.bigCategoryId}>
       {bigCat.bigCategoryName}
     </option>
   ))}

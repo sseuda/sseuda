@@ -1,32 +1,22 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  callCategoryApi,
-  callInsertSmallCategoryApi,
-  callUpdateCategoryApi,
-  callUpdateSmallCategoryApi,
-  callDeleteCategoryApi,
-  callDeleteSmallCategoryApi,
-  callBigCategoryApi
-} from "../../apis/CategoryAPICalls";
+import { callCategoryApi } from "../../apis/CategoryAPICalls";
 import "./AdminCategory.css";
 import CategoryBigInsert from "../../components/common/category/CategoryBigInsert";
 import CategorySmallInsert from "../../components/common/category/CategorySmallInsert";
+import { useEffect } from "react";
 
 function AdminCategory() {
   const dispatch = useDispatch();
-  const categories = useSelector(state => state.categoryReducer);
+  const categories = useSelector(state => state.categoryReducer.categoryList);
   console.log("categories 상태 확인 👉", categories);
-
   
   // const [bigCategoryList, setBigCategoryList] = useState([]);
+  
+  useEffect(() =>{
+    dispatch(callCategoryApi());
+   } ,[dispatch])
 
 
-
-  // // ✅ 전체 카테고리 조회 (초기 로딩)
-  // useEffect(() => {
-  //   dispatch(callCategoryApi());
-  // }, [dispatch]);
 
   // // ✅ 상위 카테고리 수정
   // const handleUpdateBigCategory = async (bigCategoryId, newName) => {
@@ -77,10 +67,10 @@ function AdminCategory() {
     <div className="admin-category-container">
       <h2>카테고리 관리</h2>
       <CategoryBigInsert/>
-      <CategorySmallInsert/>
+      <CategorySmallInsert categories={categories}/>
 
       {/* 카테고리 목록 */}
-      {/* <div className="admin-category-section">
+      <div className="admin-category-section">
         <h3>카테고리 목록</h3>
         <table className="category-table">
           <thead>
@@ -92,8 +82,8 @@ function AdminCategory() {
               <th>관리</th>
             </tr>
           </thead>
-          <tbody> */}
-  {/* {categories
+          <tbody>
+  {categories
     ?.filter(cat => cat.categoryBigDTO)
     .map((cat, index) => (
       <tr key={`cat-${cat.categoryBigDTO.bigCategoryId}-${cat.smallCategoryId}-${index}`}>
@@ -101,7 +91,7 @@ function AdminCategory() {
         <td>{cat.categoryBigDTO.bigCategoryId}</td>
         <td>{cat.smallCategoryName}</td>
         <td>{cat.smallCategoryId}</td>
-        <td>
+        {/* <td>
           <button
             onClick={() => handleUpdateBigCategory(cat.categoryBigDTO.bigCategoryId, prompt("대분류 새 이름 입력"))}
           >
@@ -122,13 +112,13 @@ function AdminCategory() {
           >
             소분류 삭제
           </button>
-        </td>
+        </td> */}
       </tr>
-    ))} */}
-{/* </tbody> */}
+    ))}
+</tbody>
 
-        {/* </table>
-      </div> */}
+         </table>
+      </div> 
     </div>
   );
 }
