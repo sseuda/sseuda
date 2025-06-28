@@ -34,14 +34,14 @@ function Login() {
 
 	// 로그인 버튼 클릭 핸들러
 	const onClickLoginHandler = () => {
-		console.log("로그인시도: ", form)
+		// console.log("로그인시도: ", form)
 		dispatch(callLoginAPI(form));
 	};
 
 	// 로그인 성공 -> 메인페이지 이동
 	useEffect(() => {
 		if (loginResult?.accessToken) {
-			console.log("로그인 성공! 메인페이지로 이동~");
+			// console.log("로그인 성공! 메인페이지로 이동~");
 			navigate("/", { replace: true });
 		}
 	}, [loginResult]);
