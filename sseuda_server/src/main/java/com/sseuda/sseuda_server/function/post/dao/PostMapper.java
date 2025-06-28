@@ -29,6 +29,8 @@ public interface PostMapper {
 //    검색용
     List<PostDTO> searchPosts(@Param("keywords") String[] keywords);
 
+    List<PostDTO> userSearchPosts(@Param("keywords") String[] keywords, int userCode);
+
 //    회원별 게시글 등록
     int saveUserPosting(@Param("dto") PostDTO dto, int userCode);
 
@@ -39,8 +41,10 @@ public interface PostMapper {
     int deleteUserPosting(Map<String, Object> map);
 
 //    게시글별 조회수 증가
-    int viewCountUpdate(PostDTO dto, int postId);
+    int viewCountUpdate(PostDTO dto, int postId, int userCode);
 
 //    viewCount만 가지고오기
     int findViewCount(@Param("postId") int postId);
+
+
 }

@@ -23,6 +23,8 @@ import MyInformation from "./pages/myPage/MyInformation";
 import AdminRoute from "./components/common/auth/AdminRoute";
 import SuperRoute from "./components/common/auth/SuperRoute";
 import Alarm from "./pages/alarm/Alarm";
+import PostUserSearch from "./pages/post/PostUserSearch";
+import AdminCategory from "./pages/admin/AdminCategory";
 import SuperAdminPage from "./pages/admin/SuperAdminPage";
 
 function App() {
@@ -52,6 +54,7 @@ function App() {
         <Route path="admin/super" element={<SuperRoute />}>
           <Route element={<AdminPageLayout />}>
             <Route index element={<SuperAdminPage />} />
+              <Route path="category" element={<AdminCategory/>}/>
           </Route>
         </Route>
 
@@ -59,7 +62,7 @@ function App() {
         <Route path="mypage" element={<MypageLayout/>}>
           <Route path=":username" element={<MyPage/>}/>
           <Route path="member/:username" element={<MyInformation/>}/>
-
+          <Route path=":username/search" element={<PostUserSearch/>}/>
         </Route>
 
         {/* 게시글 관련 Route */}

@@ -57,7 +57,7 @@ function PostMypage() {
       alert("검색어를 입력해주세요.");
       return;
     }
-    navigate(`/post/search?keyword=${encodeURIComponent(searchTerm)}`);
+    navigate(`/mypage/${username}/search?keyword=${encodeURIComponent(searchTerm)}`);
   };
 
   return (

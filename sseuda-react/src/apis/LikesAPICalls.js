@@ -1,4 +1,4 @@
-import { DELETE_LIKE_DOWN, GET_LIKE, GET_LIKE_LIST, POST_LIKE_UP } from "../modules/LikesModule";
+import { DELETE_LIKE_DOWN, GET_LIKE, GET_LIKE_BANNER, GET_LIKE_LIST, POST_LIKE_UP } from "../modules/LikesModule";
 
 const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 
@@ -19,6 +19,28 @@ export const callLikesListApi = (postId) =>{
         if(result.status === 200){
             console.log('[LikesAPI] callLikesListApi RESULT : ', result);
             dispatch({type: GET_LIKE_LIST, payload: result.data});
+        }
+    };
+};
+
+
+//  배너 조회
+export const callLikeBannerApi = () =>{
+
+    let requestURL = `${prefix}/like/banner`;
+    console.log('[LikesApiCalls] requestURL : ', requestURL);
+
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*'
+            }
+        }).then((response) => response.json());
+        if(result.status === 200){
+            console.log('[LikesApiCalls] callLikeBannerApi RESULT : ', result);
+            dispatch({type: GET_LIKE_BANNER, payload: result.data});
         }
     };
 };

@@ -64,6 +64,12 @@ public class PostService {
         return postMapper.searchPosts(keywords);
     }
 
+    public List<PostDTO> userSearchPosts(String keyword, int userCode) {
+
+        String[] keywords = keyword.trim().split("\\s+");
+        return postMapper.userSearchPosts(keywords, userCode);
+    }
+
 //    회원별 게시글 등록
     @Transactional
     public int saveUserPosting(PostDTO dto, int userCode) {
@@ -97,9 +103,9 @@ public class PostService {
 
 //    게시물별 조회수 증가
     @Transactional
-    public int viewCountUpdate(PostDTO dto, int postId) {
+    public int viewCountUpdate(PostDTO dto, int postId, int userCode) {
 
-        int result = postMapper.viewCountUpdate(dto, postId);
+        int result = postMapper.viewCountUpdate(dto, postId, userCode);
         System.out.println("[PostService] 여기는 뭐야 ?? " + result);
 
         if(result > 0){
@@ -109,5 +115,6 @@ public class PostService {
             return -1;
         }
     }
+
 
 }

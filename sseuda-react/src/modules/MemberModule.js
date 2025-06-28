@@ -1,7 +1,7 @@
 import { createActions, handleActions } from "redux-actions";
 
 // 초기값
-const initalState = {
+const initialState = {
 	member: null,
 	GET_MEMBER_ALL: []
 };
@@ -102,7 +102,7 @@ const memberReducer = handleActions(
 			};
 		}
 	},
-	initalState
+	initialState
 );
 
 export default memberReducer;

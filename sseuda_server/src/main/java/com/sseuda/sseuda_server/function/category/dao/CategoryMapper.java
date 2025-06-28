@@ -12,6 +12,8 @@ public interface CategoryMapper {
 //    카테고리 전체 조회
     List<CategorySmallDTO> findCategoryList();
 
+//  상위 카테고리 전체 조회
+    List<CategoryBigDTO> findBigCategoryList();
 
 //    상위 카테고리 등록
     int insertBigCategory(CategoryBigDTO category);
@@ -32,4 +34,6 @@ public interface CategoryMapper {
 
 //    하위 카테고리 삭제
     int deleteSmallCategory(CategorySmallDTO category);
+
+
 }
