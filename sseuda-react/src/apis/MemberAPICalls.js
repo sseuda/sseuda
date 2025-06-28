@@ -6,7 +6,7 @@ const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 // 로그인
 export const callLoginAPI = ( form ) => {
 	let requestURL = `${prefix}/auth/login`;
-	console.log("폼데이터: ", form);
+	// console.log("폼데이터: ", form);
 
 	return async (dispatch, getState) => {
 		try{
@@ -30,17 +30,22 @@ export const callLoginAPI = ( form ) => {
 		
 			if (response.status === 200) {
 				console.log("[LoginAPI] 로그인 성공", result)
-				alert(form.username, '님, 환영합니다.')
+				alert(`${form.username}님, 환영합니다😊`);
 				window.localStorage.setItem('accessToken', result.accessToken);
 				dispatch({type: POST_LOGIN, payload:result});
 			} else if (response.status === 401) {
-				alert("아이디 또는 비밀번호가 틀렸습니다.");
+				// ✅ 서버에서 받은 에러 메시지 확인
+				if (result.message === "비활성화된 계정입니다. 관리자에게 문의하세요.") {
+					alert("해당 계정은 현재 비활성 상태입니다. 관리자에게 문의하세요.");
+				} else {
+					alert("아이디 또는 비밀번호가 틀렸습니다.");
+				}
 			} else {
 				console.error("예상치 못한 에러 발생:", response.status);
 			}
 		} catch (error) {
 			console.log("로그인 요청 실패!: ", error)
-			alert("서버 연결 실패!")
+			alert("로그인에 실패했습니다🥲")
 		}
 	};
 };

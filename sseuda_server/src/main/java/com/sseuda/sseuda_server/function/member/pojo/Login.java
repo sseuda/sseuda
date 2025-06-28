@@ -1,6 +1,7 @@
 package com.sseuda.sseuda_server.function.member.pojo;
 
 import com.sseuda.sseuda_server.function.member.UserRole;
+import com.sseuda.sseuda_server.function.member.UserStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,11 +13,13 @@ public class Login implements UserDetails {
     private final String username;
     private final String password;
     private UserRole role;
+    private UserStatus userStatus;
 
-    public Login(String username, String password, UserRole role) {
+    public Login(String username, String password, UserRole role, UserStatus userStatus) {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.userStatus = userStatus;
     }
 
     // getter만 제공 (불변성 보장)
@@ -42,4 +45,11 @@ public class Login implements UserDetails {
         this.role = role;
     }
 
+    public UserStatus getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
+    }
 }

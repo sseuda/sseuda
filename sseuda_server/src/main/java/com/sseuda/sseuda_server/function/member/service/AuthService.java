@@ -34,6 +34,11 @@ public class AuthService {
             throw new BadCredentialsException("아이디 또는 비밀번호가 잘못되었습니다.");
         }
 
+        if (!"활성".equals(login.getUserStatus().getStatus())) {
+            System.out.println("로그인 불가 계정:  " + loginDTO.getUsername());
+            throw new BadCredentialsException("비활성화된 계정");
+        }
+
         if (!passwordEncoder.matches(loginDTO.getPassword(), login.getPassword())) {
             System.out.println("비밀번호 불일치: " + loginDTO.getUsername());
             throw new BadCredentialsException("아이디 또는 비밀번호가 잘못되었습니다.");
