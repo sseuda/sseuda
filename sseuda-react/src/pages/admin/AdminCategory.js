@@ -10,15 +10,12 @@ function AdminCategory() {
   const categories = useSelector(state => state.categoryReducer.categoryList);
   console.log("categories 상태 확인 👉", categories);
   
-  // const [bigCategoryList, setBigCategoryList] = useState([]);
   
   useEffect(() =>{
     dispatch(callCategoryApi());
    } ,[dispatch])
 
-
-
-  // ✅ 상위 카테고리 수정
+  // 상위 카테고리 수정
   const handleUpdateBigCategory = async (bigCategoryId, newName) => {
     if (newName) {
       const form = new FormData();
@@ -29,18 +26,19 @@ function AdminCategory() {
     }
   };
 
-  // ✅ 하위 카테고리 수정
-  const handleUpdateSmallCategory = async (smallCategoryId, newName) => {
+  // 하위 카테고리 수정
+  const handleUpdateSmallCategory = async (smallCategoryId, bigCategoryId, newName) => {
     if (newName) {
       const form = new FormData();
       form.append("smallCategoryId", smallCategoryId);
+      form.append("bigCategoryId", bigCategoryId);
       form.append("smallCategoryName", newName);
       await dispatch(callUpdateSmallCategoryApi({ form }));
       dispatch(callCategoryApi());
     }
   };
 
-  // ✅ 상위 카테고리 삭제
+  // 상위 카테고리 삭제
   const handleDeleteBigCategory = async (bigCategoryId) => {
     const form = new FormData();
     form.append("bigCategoryId", bigCategoryId);
@@ -48,7 +46,7 @@ function AdminCategory() {
     dispatch(callCategoryApi());
   };
 
-  // ✅ 하위 카테고리 삭제
+  // 하위 카테고리 삭제
   const handleDeleteSmallCategory = async (smallCategoryId) => {
     const form = new FormData();
     form.append("smallCategoryId", smallCategoryId);
@@ -56,7 +54,7 @@ function AdminCategory() {
     dispatch(callCategoryApi());
   };
 
-  // ✅ 드롭다운에 중복 없는 대분류만
+  // 드롭다운에 중복 없는 대분류만
   const uniqueBigCategories = [
     ...new Map(
       categories.map(cat => [cat.categoryBigDTO.bigCategoryId, cat.categoryBigDTO])
@@ -103,7 +101,10 @@ function AdminCategory() {
             대분류 삭제
           </button>
           <button
-            onClick={() => handleUpdateSmallCategory(cat.smallCategoryId, prompt("소분류 새 이름 입력"))}
+            onClick={() => handleUpdateSmallCategory(
+              cat.smallCategoryId,
+              cat.categoryBigDTO.bigCategoryId,
+              prompt("소분류 새 이름 입력"))}
           >
             소분류 수정
           </button>

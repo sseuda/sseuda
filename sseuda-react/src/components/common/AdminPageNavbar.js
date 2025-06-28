@@ -48,7 +48,7 @@ function AdminPageNavbar() {
 
             {/* 카테고리 관리 */}
             <div className={MyNav.user}
-                onClick={() => navigate('/admin/category')}
+                onClick={() => navigate('/admin/super/category')}
                 style={{ cursor: 'pointer' }}>
                 <div className={MyNav.iconBox}>
                     <FontAwesomeIcon className={MyNav.addressBookIcon} icon={faLayerGroup} />

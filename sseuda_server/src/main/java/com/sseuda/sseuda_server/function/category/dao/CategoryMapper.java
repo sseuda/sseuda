@@ -12,7 +12,7 @@ public interface CategoryMapper {
 //    카테고리 전체 조회
     List<CategorySmallDTO> findCategoryList();
 
-//  상위이 카테고리 전체 조회
+//  상위 카테고리 전체 조회
     List<CategoryBigDTO> findBigCategoryList();
 
 //    상위 카테고리 등록
