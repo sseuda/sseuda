@@ -99,3 +99,12 @@
 .category-pagination button:hover {
   background-color: #e76f51;
 }
+
+.updateBtn, .deleteBtn{
+  display: flex;
+  flex-flow: column;
+}
+
+.updateBtn button:first-child, .deleteBtn button:first-child{
+  margin-bottom: 10px;
+}
