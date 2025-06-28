@@ -47,9 +47,10 @@ function AdminCategory() {
   };
 
   // 하위 카테고리 삭제
-  const handleDeleteSmallCategory = async (smallCategoryId) => {
+  const handleDeleteSmallCategory = async (smallCategoryId, bigCategoryId) => {
     const form = new FormData();
     form.append("smallCategoryId", smallCategoryId);
+    form.append("bigCategoryId", bigCategoryId);
     await dispatch(callDeleteSmallCategoryApi({ form }));
     dispatch(callCategoryApi());
   };
@@ -73,11 +74,12 @@ function AdminCategory() {
         <table className="category-table">
           <thead>
             <tr>
-              <th>대분류 이름</th>
               <th>대분류 ID</th>
-              <th>소분류 이름</th>
+              <th>대분류 이름</th>
               <th>소분류 ID</th>
-              <th>관리</th>
+              <th>소분류 이름</th>
+              <th>카테고리 수정</th>
+              <th>카테고리 삭제</th>
             </tr>
           </thead>
           <tbody>
@@ -85,20 +87,15 @@ function AdminCategory() {
     ?.filter(cat => cat.categoryBigDTO)
     .map((cat, index) => (
       <tr key={`cat-${cat.categoryBigDTO.bigCategoryId}-${cat.smallCategoryId}-${index}`}>
-        <td>{cat.categoryBigDTO.bigCategoryName}</td>
         <td>{cat.categoryBigDTO.bigCategoryId}</td>
-        <td>{cat.smallCategoryName}</td>
+        <td>{cat.categoryBigDTO.bigCategoryName}</td>
         <td>{cat.smallCategoryId}</td>
+        <td>{cat.smallCategoryName}</td>
         <td>
           <button
             onClick={() => handleUpdateBigCategory(cat.categoryBigDTO.bigCategoryId, prompt("대분류 새 이름 입력"))}
           >
             대분류 수정
-          </button>
-          <button
-            onClick={() => handleDeleteBigCategory(cat.categoryBigDTO.bigCategoryId)}
-          >
-            대분류 삭제
           </button>
           <button
             onClick={() => handleUpdateSmallCategory(
@@ -108,8 +105,18 @@ function AdminCategory() {
           >
             소분류 수정
           </button>
+        </td>
+        <td>
           <button
-            onClick={() => handleDeleteSmallCategory(cat.smallCategoryId)}
+            onClick={() => handleDeleteBigCategory(cat.categoryBigDTO.bigCategoryId)}
+          >
+            전체 삭제
+          </button>
+          <button
+            onClick={() => handleDeleteSmallCategory(
+              cat.smallCategoryId,
+              cat.categoryBigDTO.bigCategoryId
+            )}
           >
             소분류 삭제
           </button>
