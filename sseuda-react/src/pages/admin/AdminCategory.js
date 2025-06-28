@@ -40,19 +40,31 @@ function AdminCategory() {
 
   // 상위 카테고리 삭제
   const handleDeleteBigCategory = async (bigCategoryId) => {
+    const confirmDelete = window.confirm(
+      "이 대분류에 속한 소분류들과 관련 게시글도 모두 삭제됩니다. 정말 삭제하시겠습니까?"
+    );
+    
+    if (confirmDelete) {
     const form = new FormData();
-    form.append("bigCategoryId", bigCategoryId);
-    await dispatch(callDeleteCategoryApi({ form }));
-    dispatch(callCategoryApi());
+      form.append("bigCategoryId", bigCategoryId);
+      await dispatch(callDeleteCategoryApi({ form }));
+      dispatch(callCategoryApi());
+    }
   };
 
   // 하위 카테고리 삭제
   const handleDeleteSmallCategory = async (smallCategoryId, bigCategoryId) => {
-    const form = new FormData();
-    form.append("smallCategoryId", smallCategoryId);
-    form.append("bigCategoryId", bigCategoryId);
-    await dispatch(callDeleteSmallCategoryApi({ form }));
-    dispatch(callCategoryApi());
+    const confirmDelete = window.confirm(
+      "이 소분류와 관련된 게시글도 모두 삭제됩니다. 정말 삭제하시겠습니까?"
+    );
+    
+    if (confirmDelete) {
+      const form = new FormData();
+      form.append("smallCategoryId", smallCategoryId);
+      form.append("bigCategoryId", bigCategoryId);
+      await dispatch(callDeleteSmallCategoryApi({ form }));
+      dispatch(callCategoryApi());
+    }
   };
 
   // 드롭다운에 중복 없는 대분류만
