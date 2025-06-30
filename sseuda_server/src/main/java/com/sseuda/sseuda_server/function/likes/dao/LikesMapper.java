@@ -4,6 +4,7 @@ import com.sseuda.sseuda_server.function.likes.dto.LikesDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface LikesMapper {
@@ -18,7 +19,7 @@ public interface LikesMapper {
 
     List<LikesDTO> findBannerLikeList();
 
-    int insertLike(int postId, int userCode, LikesDTO dto);
-
     int deleteLike(int postId, int userCode);
+
+    int insertLike(Map<String, Object> likeMap);
 }
