@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { callUpdateViewCountApi } from '../../apis/PostAPICalls';
 import UserLikesList from '../../components/common/post/UserLikesList';
+import { Keyboard, Mousewheel, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 function LikesList() {
   const dispatch = useDispatch();
@@ -52,41 +54,52 @@ function LikesList() {
         </div>
       </div>
 
-      {userLikes && userLikes.map((like) => {
-        const post = like.postDTO;
-        if (!post) return null;
+      <Swiper
+  slidesPerView={3}
+  spaceBetween={30}
+  navigation={true}
+  pagination={{ clickable: true }}
+  mousewheel={true}
+  keyboard={true}
+  modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+  className="mySwiper"
+>
+  {userLikes && userLikes.map((like) => {
+    const post = like.postDTO;
+    if (!post) return null;
 
-        const firstImage = extractFirstImageSrc(post.postContent);
+    const firstImage = extractFirstImageSrc(post.postContent);
 
-        return (
-          <div key={like.likesId} style={{ width: '100%', marginTop: '-85px' }}>
-            {firstImage && (
-              <div
-                className={Post.postBox}
-                style={{ backgroundImage: `url(${firstImage})` }}
-                onClick={() => onClickPostHandler(post.postId)}
-              >
-                <div className={Post.blurBox}>
-                  <div className={Post.postTitle}>
-                    <h4>{post.postTitle}</h4>
-                  </div>
-                  <div className={Post.icons}>
-                    <div className={Post.viewCount}>
-                      <FontAwesomeIcon className={Post.viewIcon} icon={faEye} />
-                      <p>{post.viewCount}</p>
-                    </div>
-                    <div className={Post.likeCount}>
-                      <FontAwesomeIcon icon={faHeart} />
-                      <UserLikesList postId={post.postId} />
-                    </div>
-                  </div>
+    return (
+      <SwiperSlide key={like.likesId} style={{ width: 'auto' }}>
+        {firstImage && (
+          <div
+            className={Post.postBox}
+            style={{ backgroundImage: `url(${firstImage})` }}
+            onClick={() => onClickPostHandler(post.postId)}
+          >
+            <div className={Post.blurBox}>
+              <div className={Post.postTitle}>
+                <h4>{post.postTitle}</h4>
+              </div>
+              <div className={Post.icons}>
+                <div className={Post.viewCount}>
+                  <FontAwesomeIcon className={Post.viewIcon} icon={faEye} />
+                  <p>{post.viewCount}</p>
+                </div>
+                <div className={Post.likeCount}>
+                  <FontAwesomeIcon icon={faHeart} />
+                  <UserLikesList postId={post.postId} />
                 </div>
               </div>
-            )}
+            </div>
           </div>
-        );
-      })}
-    </div>
+        )}
+      </SwiperSlide>
+    );
+  })}
+</Swiper>
+</div>
   );
 }
 
