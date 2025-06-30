@@ -29,12 +29,21 @@
         ORDER BY a.created_at DESC
     </select>
 
-<!--  알람 등록 (댓글)  -->
+    <!--  알람 등록 (댓글)  -->
     <insert id="insertAlarmForComment" parameterType="com.sseuda.sseuda_server.function.alarm.dto.AlarmDTO">
         INSERT INTO tbl_alarm (
         alarm_type, user_id, post_id, comment_id
         ) VALUES (
         'COMMENT', #{userId}, #{postId}, #{commentId}
+        );
+    </insert>
+
+    <!--  알람 등록 (좋아요)  -->
+    <insert id="insertAlarmForLike" parameterType="com.sseuda.sseuda_server.function.alarm.dto.AlarmDTO">
+        INSERT INTO tbl_alarm (
+        alarm_type, user_id, post_id, likes_id
+        ) VALUES (
+        'LIKE', #{userId}, #{postId}, #{likesId}
         );
     </insert>
 

@@ -12,6 +12,8 @@ public interface AlarmMapper {
 
     int insertAlarmForComment(AlarmDTO alarmDTO);
 
+    int insertAlarmForLike(AlarmDTO alarmDTO);
+
     int updateAlarmCheck(AlarmDTO alarmDTO);
 
     int deleteAlarm(int alarmId);

@@ -75,17 +75,21 @@
     </select>
 
     <insert id="insertLike" parameterType="map">
+        <selectKey keyProperty="likesId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
         INSERT INTO tbl_likes
         (
-            likes_create_at,
-            post_id,
-            user_id
+        likes_create_at,
+        post_id,
+        user_id
         )
         VALUES
         (
-            NOW(),
-            #{postId},
-            #{userCode}
+        NOW(),
+        #{dto.postId},
+        #{userCode}
         )
     </insert>
 
