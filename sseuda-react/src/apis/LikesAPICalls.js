@@ -24,9 +24,9 @@ export const callLikesListApi = (postId) =>{
 };
 
 //  회원별 좋아요한 게시글 조회
-export const callUserLikesListApi = (postId, username) => {
+export const callUserLikesListApi = (username) => {
   return async (dispatch, getState) => {
-    const requestURL = `${prefix}/like/${username}/List?postId=${postId}`;
+    const requestURL = `${prefix}/like/${username}/List`;
     console.log('[LikesAPI] requestURL : ', requestURL);
 
     const response = await fetch(requestURL, {
@@ -34,7 +34,8 @@ export const callUserLikesListApi = (postId, username) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: '*/*',
-        Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
+        Authorization: 
+            'Bearer ' + window.localStorage.getItem('accessToken')
       }
     });
     const result = await response.json();

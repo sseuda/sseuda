@@ -14,6 +14,7 @@ import { callLikeInsertApi, callPostDeleteApi, callUserLikesListApi,
   
  } from '../../apis/LikesAPICalls';
 import UserLikesList from '../../components/common/post/UserLikesList';
+import LikesSave from '../../components/common/likes/LikesSave';
 
 function PostDetail() {
   const dispatch = useDispatch();
@@ -176,7 +177,8 @@ useEffect(() => {
                     color: isClick ? '#F5C3A4' : '#757575'
                   }}
                 >
-                  <FontAwesomeIcon
+                  <LikesSave
+                    postId={params.postId}
                     icon={faHeart}
                     style={{ fontSize: '20px' }}
                   />

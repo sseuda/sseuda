@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MypageCSS from './css/MyPage.module.css';
 import { decodeJwt } from '../../utils/tokenUtils';
 import { callUserPostsListApi } from '../../apis/PostAPICalls';
+import LikesList from '../likes/LikesList';
 
 function MyPage() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function MyPage() {
   return (
     <div className={MypageCSS.myPageBox}>
       <PostMypage/>
+      <LikesList/>
       <div onClick={() => userPageList(username)} className={MypageCSS.textEditorBox}>
         <FontAwesomeIcon className={MypageCSS.penIcon} icon={faPen} />
       </div>
