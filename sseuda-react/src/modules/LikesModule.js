@@ -1,6 +1,15 @@
 import { createAction, handleActions } from "redux-actions";
 
-const initialState = [];
+const initialState = {
+    likeList: [],
+    like: null,
+    userLike: null,
+    userLikes: [],
+    likeBanner: null,
+    postLikeUp: null,
+    deleteLikeDown: null,
+};
+
 
 export const GET_LIKE_LIST = 'like/GET_LIKE_LIST';
 export const GET_LIKE = 'like/GET_LIKE';
@@ -21,27 +30,35 @@ const actions = createAction({
 })
 
 const likesReducer = handleActions({
-    [GET_LIKE_LIST]: (state, {payload}) =>{
-        return payload
-    },
-    [GET_LIKE]: (state, {payload}) =>{
-        return payload
-    },
-    [GET_USER_LIKE]: (state, {payload}) =>{
-        return payload
-    },
-    [GET_USER_LIKE_LIST]: (state, {payload}) =>{
-        return payload
-    },
-    [GET_LIKE_BANNER]: (state, {payload}) =>{
-        return payload
-    },
-    [POST_LIKE_UP]: (state, {payload}) =>{
-        return payload
-    },
-    [DELETE_LIKE_DOWN]: (state, {payload}) =>{
-        return payload
-    }
+    [GET_LIKE_LIST]: (state, { payload }) => ({
+        ...state,
+        likeList: payload,
+    }),
+    [GET_LIKE]: (state, { payload }) => ({
+        ...state,
+        like: payload,
+    }),
+    [GET_USER_LIKE]: (state, { payload }) => ({
+        ...state,
+        userLike: payload,
+    }),
+    [GET_USER_LIKE_LIST]: (state, { payload }) => ({
+        ...state,
+        userLikes: payload,
+    }),
+    [GET_LIKE_BANNER]: (state, { payload }) => ({
+        ...state,
+        likeBanner: payload,
+    }),
+    [POST_LIKE_UP]: (state, { payload }) => ({
+        ...state,
+        postLikeUp: payload,
+    }),
+    [DELETE_LIKE_DOWN]: (state, { payload }) => ({
+        ...state,
+        deleteLikeDown: payload,
+    }),
 }, initialState);
+
 
 export default likesReducer;

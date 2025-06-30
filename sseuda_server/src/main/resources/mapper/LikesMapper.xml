@@ -57,6 +57,8 @@
         JOIN tbl_post b ON a.post_id = b.post_id
         WHERE
         a.user_id = #{userCode}
+        ORDER BY
+        likes_create_at DESC
     </select>
     
     <select id="findBannerLikeList" resultMap="LikesResultMap">
