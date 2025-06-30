@@ -10,7 +10,7 @@ import { callMemberApi } from '../../apis/MemberAPICalls';
 import ReportPopup from '../report/ReportPopup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { callLikeInsertApi } from '../../apis/LikesAPICalls';
+import { callLikeInsertApi, callPostDeleteApi } from '../../apis/LikesAPICalls';
 
 function PostDetail() {
   const dispatch = useDispatch();
@@ -81,6 +81,7 @@ function PostDetail() {
   }
 
   try {
+    if(!isClick){
       const form = new FormData();
       form.append('userId', loginUserId);
       form.append('postId', post.postId);
@@ -91,12 +92,23 @@ function PostDetail() {
         username: username
       }));
 
-      console.log('좋아요 등록 결과:', result);
+      // console.log('좋아요 등록 결과:', result);
 
-      setIsClick(true);  // 버튼 색 변경용 상태
-    } catch (error) {
-      console.error('좋아요 등록 실패:', error);
+      setIsClick(true);
+    } else{
+      const result = await dispatch(callPostDeleteApi({
+          postId: post.postId,
+          username: username
+        }));
+
+        // console.log('좋아요 삭제 성공:', result);
+        setIsClick(false);
     }
+      
+  }catch (error) {
+      console.error('좋아요 처리 중 오류:', error);
+      alert('좋아요 처리 중 문제가 발생했습니다.');
+  }
 }
 
 
@@ -168,8 +180,6 @@ function PostDetail() {
         )}
       </div>
 
-      
-      {/* 댓글 */}
       <PostComment />
     </div>
   );

@@ -118,7 +118,7 @@ export const callLikeInsertApi = ({ postId, form, username }) => {
 
 
 // 회원별 게시글 좋아요 삭제
-export const callPostCommentDeleteApi = ({postId, username}) =>{
+export const callPostDeleteApi = ({postId, username}) =>{
     console.log('[LikesAPI] callPostCommentDeleteApi');
 
     const requestURL = `${prefix}/like/delete/${username}?postId=${postId}`;
