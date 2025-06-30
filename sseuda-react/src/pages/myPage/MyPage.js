@@ -37,7 +37,7 @@ function MyPage() {
     navigate(`/post/${username}/posting`, {replace:false});
   }
   
-  // console.log("마이페이지 게시글 리스트 시작");
+  console.log("마이페이지 게시글 리스트 시작");
 
 
   return (

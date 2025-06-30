@@ -34,9 +34,9 @@ function PostMypage() {
         dispatch(callUserPostsListApi({ username }));
     }, [dispatch, username]);
 
-    // useEffect(()=>{
-    //   console.log(myPostList, "확인");
-    // },[myPostList]);
+    useEffect(()=>{
+      console.log(myPostList, "확인");
+    },[myPostList]);
 
   // 예: myPostList가 배열이고, 각 post 객체에 smallCategoryId가 있다고 가정
   // 전체보기 버튼에서 첫 번째 게시글의 smallCategoryId를 사용한다고 가정해봄
@@ -68,9 +68,8 @@ function PostMypage() {
 
   return (
     <>
-    {Array.isArray(myPostList) && myPostList.length > 0 ? (
-      <div>
-          <div style={{marginTop: '50px', display: 'flex', justifyContent: "space-between"}}>
+    
+      <div style={{marginTop: '50px', display: 'flex', justifyContent: "space-between"}}>
             {/* 검색창 */}
             <div>
               <div className={MainCSS.searchWrapper}>
@@ -99,6 +98,8 @@ function PostMypage() {
             </div>
           </div>
 
+      {Array.isArray(myPostList) && myPostList.length > 0 ? (
+      <div style={{minHeight: '480px'}}>
           <Swiper 
           slidesPerView={3}
           spaceBetween={30}
@@ -119,7 +120,7 @@ function PostMypage() {
             ))}
           </Swiper>
         </div>
-      ) : null}
+      ) : <div style={{minHeight: '480px'}}/>}
       
     </>
   )
