@@ -16,28 +16,29 @@ import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import MainCSS from "../Main.module.css";
+import "../post/css/SwiperSlide.css";
 
 
 function PostMypage() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {username, postId} = useParams();
-    const [searchTerm, setSearchTerm] = useState("");
-
-    console.log("마이페이지 게시글 전체 조회 시작");
+    const {username} = useParams();
+    // console.log("마이페이지 게시글 전체 조회 시작");
     const myPostList = useSelector(state => state.postReducer);
-    console.log("myPostList :", myPostList);
+    // console.log("myPostList :", myPostList);
+
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         dispatch(callUserPostsListApi({ username }));
     }, [dispatch, username]);
 
-    useEffect(()=>{
-      console.log(myPostList, "확인");
-    },[myPostList]);
+    // useEffect(()=>{
+    //   console.log(myPostList, "확인");
+    // },[myPostList]);
 
-     // 예: myPostList가 배열이고, 각 post 객체에 smallCategoryId가 있다고 가정
+  // 예: myPostList가 배열이고, 각 post 객체에 smallCategoryId가 있다고 가정
   // 전체보기 버튼에서 첫 번째 게시글의 smallCategoryId를 사용한다고 가정해봄
   const firstSmallCategoryId = myPostList && myPostList.length > 0 
     ? myPostList[0].smallCategoryId 
@@ -48,8 +49,8 @@ function PostMypage() {
       alert("카테고리 정보가 없습니다.");
       return;
     }
-    // navigate(`/post/mypage/${username}/${smallCategoryId}`);
-    navigate(`/post/mypage/${username}/1`);
+    
+    navigate(`/post/mypage/${username}/${smallCategoryId}`);
   }
 
   const handleSearch = () => {
@@ -57,7 +58,12 @@ function PostMypage() {
       alert("검색어를 입력해주세요.");
       return;
     }
+
     navigate(`/mypage/${username}/search?keyword=${encodeURIComponent(searchTerm)}`);
+  };
+
+  const wrapper ={
+    marginTop: '-50px'
   };
 
   return (
@@ -66,7 +72,7 @@ function PostMypage() {
       <div>
           <div style={{marginTop: '50px', display: 'flex', justifyContent: "space-between"}}>
             {/* 검색창 */}
-            <div className={MainCSS.searchBox}>
+            <div>
               <div className={MainCSS.searchWrapper}>
                 <input
                   type="text"
@@ -82,13 +88,15 @@ function PostMypage() {
               </div>
             </div>
             
-            <button 
-              style={{position: 'absolute', top: '0px', right: '0', zIndex: '10'}}
+            <div>
+              <button 
+              style={{marginTop: '15px', zIndex: '10'}}
               className={Button.allPostBTN} 
               onClick={() => onClickUserPageListHandler(username, firstSmallCategoryId)}
               >
-              전체보기
-            </button>
+                전체보기
+              </button>
+            </div>
           </div>
 
           <Swiper 
@@ -105,13 +113,14 @@ function PostMypage() {
           className="mySwiper"
           style={{display: 'flex', flexWrap: 'nowrap', overflow: 'hidden'}}>
             {myPostList.map((post) => (
-              <SwiperSlide>
-                <MypagePost key={post.postId} post={post} />
+              <SwiperSlide key={post.postId}>
+                <MypagePost post={post} />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       ) : null}
+      
     </>
   )
 }

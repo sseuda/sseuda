@@ -1,23 +1,21 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PostMypage from '../post/PostMypage';
-import PostTextEditor from '../post/PostTextEditor';
-import { faL, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MypageCSS from './css/MyPage.module.css';
 import { decodeJwt } from '../../utils/tokenUtils';
 import { callUserPostsListApi } from '../../apis/PostAPICalls';
+import LikesList from '../likes/LikesList';
 
 function MyPage() {
   const dispatch = useDispatch();
-  const { username: paramUsername } = useParams(); // ⬅ URL에서 받은 username
+  const { username } = useParams(); // ⬅ URL에서 받은 username
   const navigate = useNavigate();
-
 
   const isLogin = window.localStorage.getItem("accessToken");
   const decodedToken = isLogin ? decodeJwt(isLogin) : null;
-  const username = decodedToken?.sub ?? null;
 
 
   function isTokenExpired(decodedToken) {
@@ -32,19 +30,20 @@ function MyPage() {
         return;
     }
 
-    dispatch(callUserPostsListApi({ username: paramUsername }));
-  }, [paramUsername, dispatch]);
+    dispatch(callUserPostsListApi({ username }));
+  }, [username, dispatch]);
 
-  const userPageList = paramUsername => {
-    navigate(`/post/${paramUsername}/posting`, {replace:false});
+  const userPageList = username => {
+    navigate(`/post/${username}/posting`, {replace:false});
   }
   
-  console.log("마이페이지 게시글 리스트 시작");
+  // console.log("마이페이지 게시글 리스트 시작");
 
 
   return (
     <div className={MypageCSS.myPageBox}>
       <PostMypage/>
+      <LikesList/>
       <div onClick={() => userPageList(username)} className={MypageCSS.textEditorBox}>
         <FontAwesomeIcon className={MypageCSS.penIcon} icon={faPen} />
       </div>

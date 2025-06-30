@@ -97,7 +97,7 @@ const modules = useMemo(() => ({
     setPost(prev => ({ ...prev, createAt: today }));
 
 
-    axios.get('/post/userpage')
+    axios.get('/category/post/userpage')
     .then(res => {
       const rawData = res.data.data;
 

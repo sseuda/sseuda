@@ -6,7 +6,7 @@ const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 export const callPostsListApi = () =>{
 
     let requestURL = `${prefix}/post/all`;
-    console.log('[PostApiCalls] requestURL : ', requestURL);
+    // console.log('[PostApiCalls] requestURL : ', requestURL);
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -17,7 +17,7 @@ export const callPostsListApi = () =>{
             }
         }).then((response) => response.json());
         if(result.status === 200){
-            console.log('[PostApiCalls] callPostsListApi RESULT : ', result);
+            // console.log('[PostApiCalls] callPostsListApi RESULT : ', result);
             dispatch({type: GET_POSTS, payload: result.data});
         }
     };
@@ -27,7 +27,7 @@ export const callPostsListApi = () =>{
 export const callPostApi = (postId) =>{
 
     let requestURL = `${prefix}/post/${postId}`;
-    console.log('[PostApiCalls] requestURL : ', requestURL);
+    // console.log('[PostApiCalls] requestURL : ', requestURL);
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -40,7 +40,7 @@ export const callPostApi = (postId) =>{
             }
         }).then((response) => response.json());
         if(result.status === 200){
-            console.log('[PostApiCalls] callPostApi RESULT : ', result);
+            // console.log('[PostApiCalls] callPostApi RESULT : ', result);
             dispatch({type: GET_POST, payload: result.data});
         }
     };
@@ -50,7 +50,7 @@ export const callPostApi = (postId) =>{
 export const callCategoryPostsListApi = () =>{
 
     let requestURL = `${prefix}/post/all/{bigCategoryId}/{smallCategoryId}`;
-    console.log('[PostApiCalls] requestURL : ', requestURL);
+    // console.log('[PostApiCalls] requestURL : ', requestURL);
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -61,7 +61,7 @@ export const callCategoryPostsListApi = () =>{
             }
         }).then((response) => response.json());
         if(result.status === 200){
-            console.log('[PostApiCalls] callCategoryPostsListApi RESULT : ', result);
+            // console.log('[PostApiCalls] callCategoryPostsListApi RESULT : ', result);
             dispatch({type: GET_CATEGORY_POST, payload: result.data});
         }
     };
@@ -91,7 +91,7 @@ export const callCategoryPostsListApi = () =>{
 
 export const callUserPostsListApi = ({ username }) => {
   let requestURL = `${prefix}/post/mypage/${username}`;
-  console.log('[PostApiCalls] requestURL : ', requestURL);
+  // console.log('[PostApiCalls] requestURL : ', requestURL);
 
   return async (dispatch, getState) => {
     const response = await fetch(requestURL, {
@@ -113,7 +113,7 @@ export const callUserPostsListApi = ({ username }) => {
     }
 
     if (result && result.status === 200) {
-      console.log('[PostApiCalls] callUserPostsListApi RESULT : ', result);
+      // console.log('[PostApiCalls] callUserPostsListApi RESULT : ', result);
       dispatch({ type: GET_USER_POSTS, payload: result.data });
     } else {
       console.warn('API 호출 실패 또는 결과 없음:', result);
@@ -128,7 +128,7 @@ export const callUserPostsListApi = ({ username }) => {
 export const callUserCategoryPostsListApi = ({ username, smallCategoryId }) => {
 
   let requestURL = `${prefix}/post/mypage/${username}/${smallCategoryId}`;
-  console.log('[PostApiCalls] requestURL : ', requestURL);
+  // console.log('[PostApiCalls] requestURL : ', requestURL);
 
   return async (dispatch, getState) => {
     const response = await fetch(requestURL, {
@@ -153,7 +153,7 @@ export const callUserCategoryPostsListApi = ({ username, smallCategoryId }) => {
     // 빈 문자열이면 빈 객체로 처리
     const result = text ? JSON.parse(text) : {};
 
-    console.log('[PostApiCalls] callUserCategoryPostsListApi RESULT : ', result);
+    // console.log('[PostApiCalls] callUserCategoryPostsListApi RESULT : ', result);
 
     // result.data가 있다면 dispatch
     if (result.data) {
@@ -168,7 +168,7 @@ export const callUserCategoryPostsListApi = ({ username, smallCategoryId }) => {
 // 검색
 export const callSearchPostsApi = (keyword) =>{
   const requestURL = `${prefix}/post/search?keyword=${encodeURIComponent(keyword)}`;
-  console.log('[PostApiCalls] requestURL : ', requestURL);
+  // console.log('[PostApiCalls] requestURL : ', requestURL);
 
   return async (dispatch, getState) => {
       const result = await fetch(requestURL, {
@@ -179,8 +179,8 @@ export const callSearchPostsApi = (keyword) =>{
           }
       }).then((response) => response.json());
       if(result.status === 200){
-          console.log('[PostApiCalls] callPostsListApi RESULT : ', result);
-          console.log('[PostApiCalls] callPostsListApi RESULT : ', result.data);
+          // console.log('[PostApiCalls] callPostsListApi RESULT : ', result);
+          // console.log('[PostApiCalls] callPostsListApi RESULT : ', result.data);
           dispatch({type: GET_SEARCH_POSTS, payload: result.data});
       }
   };
@@ -189,7 +189,7 @@ export const callSearchPostsApi = (keyword) =>{
 // 회원별 게시글 검색
 export const callUserSearchPostsApi = (keyword, username) =>{
   const requestURL = `${prefix}/post/${username}/search?keyword=${encodeURIComponent(keyword)}`;
-  console.log('[PostApiCalls] requestURL : ', requestURL);
+  // console.log('[PostApiCalls] requestURL : ', requestURL);
 
   return async (dispatch, getState) => {
     try {
@@ -213,7 +213,7 @@ export const callUserSearchPostsApi = (keyword, username) =>{
         const result = JSON.parse(text); // 본문이 있을 때만 파싱
 
         if (result.status === 200) {
-            console.log('[PostApiCalls] callUserSearchPostsApi RESULT : ', result);
+            // console.log('[PostApiCalls] callUserSearchPostsApi RESULT : ', result);
             dispatch({ type: GET_USER_SEARCH_POSTS, payload: result.data });
         } else {
             console.warn("[PostApiCalls] 상태코드가 200이 아닙니다:", result.status);
@@ -226,14 +226,14 @@ export const callUserSearchPostsApi = (keyword, username) =>{
 
 // 회원별 게시글 수정
 export const callUpdateUserPostingApi = ({ postId, form, username }) =>{
-    console.log('[PostAPICalls] callUpdateUserPostingApi');
+    // console.log('[PostAPICalls] callUpdateUserPostingApi');
 
     for(let [key, value] of form.entries()){
         console.log(`??${key}: ${value}`);
     }
 
     const requestURL = `${prefix}/post/${username}/update?postId=${postId}`;
-    console.log("requestURL: ", requestURL);
+    // console.log("requestURL: ", requestURL);
 
     return async(dispatch, getState) =>{
         const result = await fetch(requestURL, {
@@ -251,7 +251,7 @@ export const callUpdateUserPostingApi = ({ postId, form, username }) =>{
         });
 
         if(result.status === 200){
-            console.log("[CommentAPICalls] callUpdateUserPostingApi RESULT: ", result);
+            // console.log("[CommentAPICalls] callUpdateUserPostingApi RESULT: ", result);
             dispatch({type: PUT_USER_POSTING, payload: result});
         }
         return result;
@@ -263,7 +263,7 @@ export const callUpdateUserPostingApi = ({ postId, form, username }) =>{
 export const callPostRegistApi = ({form, username}) =>{
 
     let requestURL = `${prefix}/post/${username}/posting`;
-    console.log('[PostApiCalls] callPostRegistApi Call');
+    // console.log('[PostApiCalls] callPostRegistApi Call');
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -276,7 +276,7 @@ export const callPostRegistApi = ({form, username}) =>{
             },
             body: form
         }).then((response) => response.json());
-        console.log('[PostApiCalls] callPostRegistApi RESULT : ', result);
+        // console.log('[PostApiCalls] callPostRegistApi RESULT : ', result);
         dispatch({type: POST_USER_POSTING, payload: result});
     };
 };
@@ -284,7 +284,7 @@ export const callPostRegistApi = ({form, username}) =>{
 //  회원별 게시글 삭제
 export const callDeletePostsApi = ({username, postId}) =>{
 
-    console.log('[PostApiCalls] callDeletePostsApi Call');
+    // console.log('[PostApiCalls] callDeletePostsApi Call');
 
     let requestURL = `${prefix}/post/mypage/${username}/delete?postId=${postId}`;
 
@@ -298,7 +298,7 @@ export const callDeletePostsApi = ({username, postId}) =>{
             },
         }).then((response) => response.json());
         
-        console.log('[PostApiCalls] callDeletePostsApi RESULT : ', result);
+        // console.log('[PostApiCalls] callDeletePostsApi RESULT : ', result);
         dispatch({type: DELETE_USER_POST, payload: result});
         
     };
@@ -309,7 +309,7 @@ export const callDeletePostsApi = ({username, postId}) =>{
 export const callUpdateViewCountApi = ({ postId, username }) => {
 
   const requestURL = `${prefix}/post/viewCount/${username}/update?postId=${postId}`;
-  console.log('requestURL:', requestURL);
+  // console.log('requestURL:', requestURL);
 
   return async (dispatch) => {
     
@@ -345,7 +345,7 @@ export const callUpdateViewCountApi = ({ postId, username }) => {
         }
       }
 
-      console.log("조회수 증가 API 응답:", result);
+      // console.log("조회수 증가 API 응답:", result);
 
       if (result && result.status === 200 && result.data !== null) {
         dispatch({

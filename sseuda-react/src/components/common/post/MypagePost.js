@@ -2,10 +2,11 @@ import React from 'react'
 import { replace, useNavigate } from 'react-router-dom';
 import Post from './css/MypagePost.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { callUpdateViewCountApi } from '../../../apis/PostAPICalls';
 import { decodeJwt } from '../../../utils/tokenUtils';
+import UserLikesList from './UserLikesList';
 
 
 function MypagePost({
@@ -46,9 +47,15 @@ function MypagePost({
                     <div className={Post.postTitle}>
                         <h4>{postTitle}</h4>
                     </div>
-                    <div className={Post.viewCount}>
-                        <FontAwesomeIcon className={Post.viewIcon} icon={faEye} />
-                        <p>{viewCount}</p>  
+                    <div className={Post.icons}>
+                        <div className={Post.viewCount}>
+                            <FontAwesomeIcon className={Post.viewIcon} icon={faEye} />
+                            <p>{viewCount}</p> 
+                        </div>
+                        <div className={Post.likeCount}>
+                            <FontAwesomeIcon icon={faHeart}/>
+                            <UserLikesList postId={postId}/>
+                        </div>
                     </div>
                 </div>
             </div>

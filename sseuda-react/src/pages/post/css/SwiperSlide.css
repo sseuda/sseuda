@@ -1,0 +1,4 @@
+/* 마이페이지 스와이퍼를 위한 마진 */
+.swiper-wrapper{
+    margin-top: -50px;
+}

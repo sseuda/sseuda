@@ -37,6 +37,27 @@
         WHERE
             a.post_id = #{postId}
     </select>
+
+    <select id="userLike" resultMap="LikesResultMap">
+        SELECT
+            *
+        FROM
+            tbl_likes a
+        JOIN tbl_post b ON a.post_id = b.post_id
+        WHERE
+            a.post_id = #{postId} AND
+            a.user_id = #{userCode}
+    </select>
+
+    <select id="userLikesList" resultMap="LikesResultMap">
+        SELECT
+        *
+        FROM
+        tbl_likes a
+        JOIN tbl_post b ON a.post_id = b.post_id
+        WHERE
+        a.user_id = #{userCode}
+    </select>
     
     <select id="findBannerLikeList" resultMap="LikesResultMap">
         SELECT

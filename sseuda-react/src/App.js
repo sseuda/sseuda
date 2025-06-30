@@ -1,9 +1,8 @@
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MypageLayout from "./layouts/MypageLayout";
 import Layout from "./layouts/Layout";
 import PostLayout from "./layouts/PostLayout";
 import PostDetail from "./pages/post/PostDetail";
-// import PostMypage from "./pages/post/PostMypage";
 import MyPage from "./pages/myPage/MyPage";
 import Login from "./pages/member/Login";
 import Main from "./pages/Main";
@@ -17,7 +16,6 @@ import PostSearchResult from "./pages/post/PostSearchResult";
 import AdminMembers from "./pages/admin/AdminMembers";
 import AdminPageLayout from "./layouts/AdminPageLayout";
 import AdminReports from "./pages/admin/AdminReports";
-import PostComment from "./pages/comment/PostComment";
 import TextEditorUpdate from "./components/common/post/TextEditorUpdate";
 import MyInformation from "./pages/myPage/MyInformation";
 import AdminRoute from "./components/common/auth/AdminRoute";
@@ -26,6 +24,7 @@ import Alarm from "./pages/alarm/Alarm";
 import PostUserSearch from "./pages/post/PostUserSearch";
 import AdminCategory from "./pages/admin/AdminCategory";
 import SuperAdminPage from "./pages/admin/SuperAdminPage";
+import LikesList from "./pages/likes/LikesList";
 
 function App() {
   return (
@@ -69,7 +68,7 @@ function App() {
         <Route path="post" element={<PostLayout/>}>
           <Route path=":postId" element={<PostDetail/>}/>
           <Route path=":username/update/:postId" element={<TextEditorUpdate/>}/>
-          <Route path=":paramUsername/posting" element={<PostTextEditor/>}/>
+          <Route path=":username/posting" element={<PostTextEditor/>}/>
           <Route path="mypage/:username/:smallCategoryId" element={<UserPage/>}/>
         </Route>
         
