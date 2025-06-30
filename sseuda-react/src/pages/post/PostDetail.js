@@ -11,6 +11,7 @@ import ReportPopup from '../report/ReportPopup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { callLikeInsertApi, callPostDeleteApi } from '../../apis/LikesAPICalls';
+import UserLikesList from '../../components/common/post/UserLikesList';
 
 function PostDetail() {
   const dispatch = useDispatch();
@@ -147,15 +148,19 @@ function PostDetail() {
               <p>{post.viewCount}</p>
             </div>
 
-            <div>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
               <button 
               onClick={handleLikeClick} 
               style={{
                 backgroundColor : '#fff',
                 color: isClick ? '#F5C3A4' : '#757575'
                 }}>
-                <FontAwesomeIcon icon={faHeart}/>
+                <FontAwesomeIcon 
+                icon={faHeart}
+                style={{fontSize: '20px'}}/>
               </button>
+              <UserLikesList 
+              postId={post.postId}/>
             </div>            
           </div>
         </div>
