@@ -24,27 +24,30 @@ export const callLikesListApi = (postId) =>{
 };
 
 //  회원별 좋아요한 게시글 조회
-export const callUserLikesListApi = (postId, username) =>{
-
-    let requestURL = `${prefix}/like/${username}/List?postId=${postId}`;
+export const callUserLikesListApi = (postId, username) => {
+  return async (dispatch, getState) => {
+    const requestURL = `${prefix}/like/${username}/List?postId=${postId}`;
     console.log('[LikesAPI] requestURL : ', requestURL);
 
-    return async (dispatch, getState) => {
-        const result = await fetch(requestURL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: '*/*',
-                Authorization: 
-                    'Bearer ' + window.localStorage.getItem('accessToken')
-            }
-        }).then((response) => response.json());
-        if(result.status === 200){
-            console.log('[LikesAPI] callLikesListApi RESULT : ', result);
-            dispatch({type: GET_USER_LIKE_LIST, payload: result.data});
-        }
-    };
+    const response = await fetch(requestURL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: '*/*',
+        Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
+      }
+    });
+    const result = await response.json();
+
+    if (result.status === 200) {
+      console.log('[LikesAPI] callLikesListApi RESULT : ', result);
+      dispatch({ type: GET_USER_LIKE_LIST, payload: result.data });
+    }
+
+    return result;  // ✅ 꼭 이거 리턴!
+  };
 };
+
 
 
 //  배너 조회

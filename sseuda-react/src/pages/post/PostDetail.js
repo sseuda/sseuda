@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { callDeletePostsApi, callPostApi } from '../../apis/PostAPICalls';
@@ -10,7 +10,9 @@ import { callMemberApi } from '../../apis/MemberAPICalls';
 import ReportPopup from '../report/ReportPopup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { callLikeInsertApi, callPostDeleteApi } from '../../apis/LikesAPICalls';
+import { callLikeInsertApi, callPostDeleteApi, callUserLikesListApi, 
+  
+ } from '../../apis/LikesAPICalls';
 import UserLikesList from '../../components/common/post/UserLikesList';
 
 function PostDetail() {
@@ -19,38 +21,62 @@ function PostDetail() {
   const params = useParams();
   const accessToken = localStorage.getItem('accessToken');
   const decoded = accessToken ? decodeJwt(accessToken) : null;
-  const username = decoded?.sub;  // 또는 decoded?.username 등
+  const username = decoded?.sub;
+
   const [loginUserId, setLoginUserId] = useState(null);
-  
+  const [showReportPopup, setShowReportPopup] = useState(false);
+  const [isClick, setIsClick] = useState(false);
+  const [userLikeList, setUserLikeList] = useState([]);
+
   const postDetail = useSelector(state => state.postReducer);
   const post = postDetail[0];
-  
-  const [showReportPopup, setShowReportPopup] = useState(false);
 
-  const [isClick, setIsClick] = useState(false);
+  // 게시글 내용 가져오기
+useEffect(() => {
+  if (!params.postId) return;
 
+  dispatch(callPostApi(params.postId));
+
+}, [params.postId, dispatch]);
+
+
+  // 로그인 유저 정보 가져오기
   useEffect(() => {
     const fetchLoginUser = async () => {
-        if (!accessToken || !decoded?.sub) {
-            console.log("로그인 되어 있지 않아 유저 정보 불러오지 않음");
-            return;
-        }
+      if (!accessToken || !decoded?.sub) return;
 
-        try {
-            const response = await dispatch(callMemberApi(decoded.sub));
-            if (response) setLoginUserId(response.userId);
-        } catch (error) {
-            console.error("로그인 유저 정보 가져오기 실패: ", error);
-        }
+      try {
+        const response = await dispatch(callMemberApi(decoded.sub));
+        if (response) setLoginUserId(response.userId);
+      } catch (error) {
+        console.error("로그인 유저 정보 가져오기 실패: ", error);
+      }
     };
 
     fetchLoginUser();
   }, [accessToken, decoded, dispatch]);
 
-
+  // 게시글 내용 가져오기
   useEffect(() => {
-    dispatch(callPostApi(params.postId));
-  }, [params.postId]);
+    const fetchUserLikeStatus = async () => {
+      if (!username || !params.postId) return;
+
+      try {
+        const result = await dispatch(callUserLikesListApi(params.postId, username));
+
+        if (result && result.data) {
+          // 만약 현재 글에 좋아요 했다면 true
+          const liked = result.data.some(likePost => likePost.postId == params.postId);
+          setIsClick(liked);
+        }
+      } catch (error) {
+        console.error('좋아요 상태 불러오기 실패:', error);
+      }
+    };
+
+    fetchUserLikeStatus();
+  }, [username, params.postId, dispatch]);
+
 
 
   // 신고 팝업 관련
@@ -59,22 +85,24 @@ function PostDetail() {
       alert("로그인 후 신고가 가능합니다!");
       return;
     }
-    setShowReportPopup(true)};
+    setShowReportPopup(true);
+  };
+
   const handleClosePopup = () => setShowReportPopup(false);
 
-
+  // 게시글 삭제
   const onClickDeleteHandler = (postId) => {
-    try{
+    try {
       dispatch(callDeletePostsApi({ postId, username }));
       alert("게시글이 삭제되었습니다.");
       navigate('/');
-    }catch(e){
+    } catch (e) {
       console.warn("삭제 실패: ", e);
       alert("삭제 실패되었습니다.");
     }
   };
 
-
+  // 좋아요 클릭 핸들러
   const handleLikeClick = async () => {
   if (!loginUserId) {
     alert("로그인 후 좋아요 가능합니다!");
@@ -82,36 +110,32 @@ function PostDetail() {
   }
 
   try {
-    if(!isClick){
+    if (!isClick) {
       const form = new FormData();
       form.append('userId', loginUserId);
       form.append('postId', post.postId);
 
-      const result = await dispatch(callLikeInsertApi({
+      await dispatch(callLikeInsertApi({
         postId: post.postId,
         form: form,
         username: username
       }));
 
-      // console.log('좋아요 등록 결과:', result);
+      setIsClick(true);  // 좋아요 등록 성공 후 색상 ON
 
-      setIsClick(true);
-    } else{
-      const result = await dispatch(callPostDeleteApi({
-          postId: post.postId,
-          username: username
-        }));
+    } else {
+      await dispatch(callPostDeleteApi({
+        postId: post.postId,
+        username: username
+      }));
 
-        // console.log('좋아요 삭제 성공:', result);
-        setIsClick(false);
+      setIsClick(false);  // 좋아요 취소 후 색상 OFF
     }
-      
-  }catch (error) {
-      console.error('좋아요 처리 중 오류:', error);
-      alert('좋아요 처리 중 문제가 발생했습니다.');
+  } catch (error) {
+    console.error('좋아요 처리 실패:', error);
+    alert('좋아요 처리 중 문제가 발생했습니다.');
   }
 }
-
 
 
   if (!post) return <p>게시글을 불러오는 중입니다...</p>;
@@ -124,11 +148,10 @@ function PostDetail() {
 
         {showReportPopup && (
           <ReportPopup
-          reporterId={loginUserId}
-          reportedId={post.userId}
-          postId={post.postId}
-          // commentId={null}
-          onClose={() => handleClosePopup(false)}
+            reporterId={loginUserId}
+            reportedId={post.userId}
+            postId={post.postId}
+            onClose={() => handleClosePopup(false)}
           />
         )}
 
@@ -144,44 +167,48 @@ function PostDetail() {
             <p>{post.postCreateAt}</p>
           </div>
           <div className={Detail.userView}>
+            {post.userId !== loginUserId && (
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <button
+                  onClick={handleLikeClick}
+                  style={{
+                    backgroundColor: '#fff',
+                    color: isClick ? '#F5C3A4' : '#757575'
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    style={{ fontSize: '20px' }}
+                  />
+                </button>
+              </div>
+            )}
+
             <div>
               <p>{post.viewCount}</p>
             </div>
-
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-              <button 
-              onClick={handleLikeClick} 
-              style={{
-                backgroundColor : '#fff',
-                color: isClick ? '#F5C3A4' : '#757575'
-                }}>
-                <FontAwesomeIcon 
-                icon={faHeart}
-                style={{fontSize: '20px'}}/>
-              </button>
-              <UserLikesList 
-              postId={post.postId}/>
-            </div>            
           </div>
         </div>
 
         {/* 게시글 본문 */}
         <div className={Detail.contentBox} dangerouslySetInnerHTML={{ __html: post.postContent }} />
-         {post.userId === loginUserId && (   
-        <div>
-          <button
-            className={ButtonCSS.headerBTN}
-            onClick={() => navigate(`/post/${username}/update/${params.postId}`)}
-          >
-            수정하기
-          </button>
-          <button
-            className={ButtonCSS.headerBTN}
-            onClick={() => onClickDeleteHandler(post.postId)}
-          >
-            삭제하기
-          </button>
-        </div>
+
+        {/* 수정/삭제 버튼 */}
+        {post.userId === loginUserId && (
+          <div>
+            <button
+              className={ButtonCSS.headerBTN}
+              onClick={() => navigate(`/post/${username}/update/${params.postId}`)}
+            >
+              수정하기
+            </button>
+            <button
+              className={ButtonCSS.headerBTN}
+              onClick={() => onClickDeleteHandler(post.postId)}
+            >
+              삭제하기
+            </button>
+          </div>
         )}
       </div>
 
