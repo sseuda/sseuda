@@ -8,6 +8,9 @@ import ButtonCSS from '../../components/common/Global/Button.module.css';
 import { decodeJwt } from '../../utils/tokenUtils';
 import { callMemberApi } from '../../apis/MemberAPICalls';
 import ReportPopup from '../report/ReportPopup';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { callLikeInsertApi } from '../../apis/LikesAPICalls';
 
 function PostDetail() {
   const dispatch = useDispatch();
@@ -17,6 +20,13 @@ function PostDetail() {
   const decoded = accessToken ? decodeJwt(accessToken) : null;
   const username = decoded?.sub;  // 또는 decoded?.username 등
   const [loginUserId, setLoginUserId] = useState(null);
+  
+  const postDetail = useSelector(state => state.postReducer);
+  const post = postDetail[0];
+  
+  const [showReportPopup, setShowReportPopup] = useState(false);
+
+  const [isClick, setIsClick] = useState(false);
 
   useEffect(() => {
     const fetchLoginUser = async () => {
@@ -34,17 +44,15 @@ function PostDetail() {
     };
 
     fetchLoginUser();
-}, [accessToken, decoded, dispatch]);
+  }, [accessToken, decoded, dispatch]);
 
-  const postDetail = useSelector(state => state.postReducer);
-  const post = postDetail[0];
 
   useEffect(() => {
     dispatch(callPostApi(params.postId));
   }, [params.postId]);
 
+
   // 신고 팝업 관련
-  const [showReportPopup, setShowReportPopup] = useState(false);
   const handleReportClick = () => {
     if (!loginUserId) {
       alert("로그인 후 신고가 가능합니다!");
@@ -64,6 +72,33 @@ function PostDetail() {
       alert("삭제 실패되었습니다.");
     }
   };
+
+
+  const handleLikeClick = async () => {
+  if (!loginUserId) {
+    alert("로그인 후 좋아요 가능합니다!");
+    return;
+  }
+
+  try {
+      const form = new FormData();
+      form.append('userId', loginUserId);
+      form.append('postId', post.postId);
+
+      const result = await dispatch(callLikeInsertApi({
+        postId: post.postId,
+        form: form,
+        username: username
+      }));
+
+      console.log('좋아요 등록 결과:', result);
+
+      setIsClick(true);  // 버튼 색 변경용 상태
+    } catch (error) {
+      console.error('좋아요 등록 실패:', error);
+    }
+}
+
 
 
   if (!post) return <p>게시글을 불러오는 중입니다...</p>;
@@ -96,30 +131,44 @@ function PostDetail() {
             <p>{post.postCreateAt}</p>
           </div>
           <div className={Detail.userView}>
-            {post.userId === loginUserId && (
             <div>
-                <button
-                className={ButtonCSS.headerBTN}
-                onClick={() => navigate(`/post/${username}/update/${params.postId}`)}
-              >
-                수정하기
+              <p>{post.viewCount}</p>
+            </div>
+
+            <div>
+              <button 
+              onClick={handleLikeClick} 
+              style={{
+                backgroundColor : '#fff',
+                color: isClick ? '#F5C3A4' : '#757575'
+                }}>
+                <FontAwesomeIcon icon={faHeart}/>
               </button>
-              <button
-                className={ButtonCSS.headerBTN}
-                onClick={() => onClickDeleteHandler(post.postId)}
-              >
-                삭제하기
-              </button>
-              </div>
-            )}
-            <p>{post.viewCount}</p>
+            </div>            
           </div>
         </div>
 
         {/* 게시글 본문 */}
         <div className={Detail.contentBox} dangerouslySetInnerHTML={{ __html: post.postContent }} />
+         {post.userId === loginUserId && (   
+        <div>
+          <button
+            className={ButtonCSS.headerBTN}
+            onClick={() => navigate(`/post/${username}/update/${params.postId}`)}
+          >
+            수정하기
+          </button>
+          <button
+            className={ButtonCSS.headerBTN}
+            onClick={() => onClickDeleteHandler(post.postId)}
+          >
+            삭제하기
+          </button>
+        </div>
+        )}
       </div>
 
+      
       {/* 댓글 */}
       <PostComment />
     </div>
