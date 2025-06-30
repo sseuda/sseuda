@@ -1,11 +1,11 @@
-import { DELETE_LIKE_DOWN, GET_LIKE, GET_LIKE_BANNER, GET_LIKE_LIST, POST_LIKE_UP } from "../modules/LikesModule";
+import { DELETE_LIKE_DOWN, GET_LIKE, GET_LIKE_BANNER, GET_LIKE_LIST, GET_USER_LIKE_LIST, POST_LIKE_UP } from "../modules/LikesModule";
 
 const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 
 //  좋아요 리스트 전체 조회 (알람 전용)
 export const callLikesListApi = (postId) =>{
 
-    let requestURL = `${prefix}/like/allList?${postId}`;
+    let requestURL = `${prefix}/like/allList?postId=${postId}`;
     console.log('[LikesAPI] requestURL : ', requestURL);
 
     return async (dispatch, getState) => {
@@ -19,6 +19,29 @@ export const callLikesListApi = (postId) =>{
         if(result.status === 200){
             console.log('[LikesAPI] callLikesListApi RESULT : ', result);
             dispatch({type: GET_LIKE_LIST, payload: result.data});
+        }
+    };
+};
+
+//  좋아요 리스트 전체 조회 (알람 전용)
+export const callUserLikesListApi = (postId, username) =>{
+
+    let requestURL = `${prefix}/like/${username}/List?postId=${postId}`;
+    console.log('[LikesAPI] requestURL : ', requestURL);
+
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*',
+                Authorization: 
+                    'Bearer ' + window.localStorage.getItem('accessToken')
+            }
+        }).then((response) => response.json());
+        if(result.status === 200){
+            console.log('[LikesAPI] callLikesListApi RESULT : ', result);
+            dispatch({type: GET_USER_LIKE_LIST, payload: result.data});
         }
     };
 };

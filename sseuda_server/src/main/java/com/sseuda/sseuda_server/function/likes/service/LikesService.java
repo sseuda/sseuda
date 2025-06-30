@@ -28,6 +28,11 @@ public class LikesService {
         return likesMapper.findLikes(postId);
     }
 
+    public List<LikesDTO> userLikesList(int userCode, int postId) {
+
+        return likesMapper.userLikesList(userCode, postId);
+    }
+
     //    배너 조회
     public List<LikesDTO> findBannerLikeList(){
 
@@ -45,6 +50,7 @@ public class LikesService {
 
         return likesMapper.deleteLike(postId, userCode);
     }
+
 
 
 }
