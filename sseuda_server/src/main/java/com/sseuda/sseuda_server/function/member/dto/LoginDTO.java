@@ -5,6 +5,8 @@ public class LoginDTO {
     private String username;
     private String password;
 
+    private String userStatus;
+
     // 기본 생성자 필요 (JSON -> 객체 변환 시)
     public LoginDTO() {}
 
@@ -27,5 +29,13 @@ public class LoginDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
     }
 }
