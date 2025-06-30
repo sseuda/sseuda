@@ -20,7 +20,7 @@ function UserLikesList({postId}) {
     }, [postId, dispatch]);
     
     return(
-      <p>
+      <p style={{marginLeft: '8px'}}>
         {count}
       </p>
     )
