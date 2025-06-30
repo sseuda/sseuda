@@ -13,18 +13,28 @@
         <result property="likesId" column="likes_id"/>
         <result property="createdAt" column="created_at"/>
         <result property="alarmCheck" column="alarm_check"/>
-        <result property="userNickname" column="user_nickname"/>
+<!--        <result property="userNickname" column="user_nickname"/>-->
+        <result property="commentUserNickname" column="comment_user_nickname"/>
+        <result property="likeUserNickname" column="like_user_nickname"/>
     </resultMap>
 
 <!--  사용자별 알람 조회  -->
     <select id="selectAlarmsByUserId" resultMap="alarmResultMap" parameterType="int">
         SELECT
         a.*,
-        cmt_user.user_nickname
+        cm_user.user_nickname AS comment_user_nickname,  -- 댓글 작성자
+        like_user.user_nickname AS like_user_nickname     -- 좋아요 누른 사람
         FROM tbl_alarm a
         JOIN tbl_post p ON a.post_id = p.post_id
+
+        -- 댓글 알림인 경우
         LEFT JOIN tbl_comment c ON a.comment_id = c.comment_id
-        LEFT JOIN tbl_member cmt_user ON c.user_id = cmt_user.user_id
+        LEFT JOIN tbl_member cm_user ON c.user_id = cm_user.user_id
+
+        -- 좋아요 알림인 경우
+        LEFT JOIN tbl_likes l ON a.likes_id = l.likes_id
+        LEFT JOIN tbl_member like_user ON l.user_id = like_user.user_id  -- 🔥 핵심 수정
+
         WHERE p.user_id = #{userId}
         ORDER BY a.created_at DESC
     </select>

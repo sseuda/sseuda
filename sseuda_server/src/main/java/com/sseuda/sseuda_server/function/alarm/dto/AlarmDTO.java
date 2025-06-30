@@ -11,13 +11,15 @@ public class AlarmDTO {
     private int commentId;
     private int likesId;
     private Timestamp createdAt;
-    private String userNickname;
+//    private String userNickname;
+    private String commentUserNickname;
+    private String likeUserNickname;
     private String alarmCheck;
 
     public AlarmDTO() {
     }
 
-    public AlarmDTO(int alarmId, String alarmType, int userId, int postId, int commentId, int likesId, Timestamp createdAt, String userNickname, String alarmCheck) {
+    public AlarmDTO(int alarmId, String alarmType, int userId, int postId, int commentId, int likesId, Timestamp createdAt, String commentUserNickname, String likeUserNickname, String alarmCheck) {
         this.alarmId = alarmId;
         this.alarmType = alarmType;
         this.userId = userId;
@@ -25,7 +27,8 @@ public class AlarmDTO {
         this.commentId = commentId;
         this.likesId = likesId;
         this.createdAt = createdAt;
-        this.userNickname = userNickname;
+        this.commentUserNickname = commentUserNickname;
+        this.likeUserNickname = likeUserNickname;
         this.alarmCheck = alarmCheck;
     }
 
@@ -85,12 +88,20 @@ public class AlarmDTO {
         this.createdAt = createdAt;
     }
 
-    public String getUserNickname() {
-        return userNickname;
+    public String getCommentUserNickname() {
+        return commentUserNickname;
     }
 
-    public void setUserNickname(String userNickname) {
-        this.userNickname = userNickname;
+    public void setCommentUserNickname(String commentUserNickname) {
+        this.commentUserNickname = commentUserNickname;
+    }
+
+    public String getLikeUserNickname() {
+        return likeUserNickname;
+    }
+
+    public void setLikeUserNickname(String likeUserNickname) {
+        this.likeUserNickname = likeUserNickname;
     }
 
     public String getAlarmCheck() {
@@ -111,7 +122,8 @@ public class AlarmDTO {
                 ", commentId=" + commentId +
                 ", likesId=" + likesId +
                 ", createdAt=" + createdAt +
-                ", userNickname='" + userNickname + '\'' +
+                ", commentUserNickname='" + commentUserNickname + '\'' +
+                ", likeUserNickname='" + likeUserNickname + '\'' +
                 ", alarmCheck='" + alarmCheck + '\'' +
                 '}';
     }

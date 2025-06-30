@@ -125,7 +125,7 @@ function Alarm({ onClose }) {
                         ×
                         </button>
                     
-                        <b>{alarm.userNickname}</b>님이&nbsp;
+                        <b>{alarm.alarmType === 'LIKE' ? alarm.likeUserNickname : alarm.commentUserNickname}</b>님이&nbsp;
                         <b>{alarm.alarmType === 'LIKE' ? '좋아요' : '댓글'}</b>을 남겼습니다.          
                         <br />
                         <span className={styles.date}>
