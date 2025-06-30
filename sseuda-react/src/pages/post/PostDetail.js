@@ -10,7 +10,7 @@ import { callMemberApi } from '../../apis/MemberAPICalls';
 import ReportPopup from '../report/ReportPopup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { callLikeInsertApi, callPostDeleteApi, callUserLikesListApi, 
+import { callLikeInsertApi, callPostDeleteApi, callUserLikeApi, callUserLikesListApi, 
   
  } from '../../apis/LikesAPICalls';
 import UserLikesList from '../../components/common/post/UserLikesList';
@@ -63,7 +63,7 @@ useEffect(() => {
       if (!username || !params.postId) return;
 
       try {
-        const result = await dispatch(callUserLikesListApi(username, params.postId));
+        const result = await dispatch(callUserLikeApi(username, params.postId));
 
         if (result && result.data) {
           // 만약 현재 글에 좋아요 했다면 true

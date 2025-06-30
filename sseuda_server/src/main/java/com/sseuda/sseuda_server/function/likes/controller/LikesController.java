@@ -43,18 +43,31 @@ public class LikesController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "좋아요 전체 조회 성공", likesService.findLikes(postId)));
     }
 
-//    회원별 좋아요한 게시글 조회
+//    회원별 좋아요한 게시글 조회 (활성, 비활성)
     @Operation(summary = "회원별 좋아요한 게시글 조회", description ="회원별 좋아요한 게시글의 조회가 진행됩니다.", tags = {"LikesController"})
-    @GetMapping("/{username}/List")
-    public ResponseEntity<ResponseDTO> userLikesList(@PathVariable("username") String username,
-                                                     @RequestParam("postId") int postId){
+    @GetMapping("/{username}/List/{postId}")
+    public ResponseEntity<ResponseDTO> userLike(@PathVariable("username") String username,
+                                                @PathVariable("postId") int postId){
 
         int userCode = 0;
         if(username != null){
             userCode = memberService.getMemberByUsername(username).getUserId();
         }
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원별 좋아요 전체 리스트 조회 성공", likesService.userLikesList(userCode, postId)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원별 좋아요 전체 리스트 조회 성공", likesService.userLike(userCode, postId)));
+    }
+
+    //    회원별 좋아요한 게시글 조회
+    @Operation(summary = "회원별 좋아요한 게시글 조회", description ="회원별 좋아요한 게시글의 조회가 진행됩니다.", tags = {"LikesController"})
+    @GetMapping("/{username}/List")
+    public ResponseEntity<ResponseDTO> userLikesList(@PathVariable("username") String username){
+
+        int userCode = 0;
+        if(username != null){
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원별 좋아요 전체 리스트 조회 성공", likesService.userLikesList(userCode)));
     }
 
 //    배너 조회

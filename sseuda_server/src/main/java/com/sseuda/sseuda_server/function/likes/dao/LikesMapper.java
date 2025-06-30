@@ -12,7 +12,9 @@ public interface LikesMapper {
 
     List<LikesDTO> findLikes(int postId);
 
-    List<LikesDTO> userLikesList(int userCode, int postId);
+    List<LikesDTO> userLike(int userCode, int postId);
+
+    List<LikesDTO> userLikesList(int userCode);
 
     List<LikesDTO> findBannerLikeList();
 

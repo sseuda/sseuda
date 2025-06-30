@@ -1,4 +1,4 @@
-import { DELETE_LIKE_DOWN, GET_LIKE, GET_LIKE_BANNER, GET_LIKE_LIST, GET_USER_LIKE_LIST, POST_LIKE_UP } from "../modules/LikesModule";
+import { DELETE_LIKE_DOWN, GET_LIKE, GET_LIKE_BANNER, GET_LIKE_LIST, GET_USER_LIKE, GET_USER_LIKE_LIST, POST_LIKE_UP } from "../modules/LikesModule";
 
 const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 
@@ -23,10 +23,36 @@ export const callLikesListApi = (postId) =>{
     };
 };
 
-//  회원별 좋아요한 게시글 조회
-export const callUserLikesListApi = (username, postId) => {
+//  회원별 좋아요한 게시글 조회 (활성, 비활성)
+export const callUserLikeApi = (username, postId) => {
   return async (dispatch, getState) => {
-    const requestURL = `${prefix}/like/${username}/List?postId=${postId}`;
+    const requestURL = `${prefix}/like/${username}/List/${postId}`;
+    console.log('[LikesAPI] requestURL : ', requestURL);
+
+    const response = await fetch(requestURL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: '*/*',
+        Authorization: 
+            'Bearer ' + window.localStorage.getItem('accessToken')
+      }
+    });
+    const result = await response.json();
+
+    if (result.status === 200) {
+      console.log('[LikesAPI] callLikesListApi RESULT : ', result);
+      dispatch({ type: GET_USER_LIKE, payload: result.data });
+    }
+
+    return result;  // ✅ 꼭 이거 리턴!
+  };
+};
+
+//  회원별 좋아요한 게시글 조회 (활성, 비활성)
+export const callUserLikesListApi = (username) => {
+  return async (dispatch, getState) => {
+    const requestURL = `${prefix}/like/${username}/List`;
     console.log('[LikesAPI] requestURL : ', requestURL);
 
     const response = await fetch(requestURL, {
@@ -48,7 +74,6 @@ export const callUserLikesListApi = (username, postId) => {
     return result;  // ✅ 꼭 이거 리턴!
   };
 };
-
 
 
 //  배너 조회
