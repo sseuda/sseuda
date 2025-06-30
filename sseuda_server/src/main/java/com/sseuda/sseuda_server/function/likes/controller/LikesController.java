@@ -44,18 +44,18 @@ public class LikesController {
     }
 
 //    회원별 좋아요한 게시글 조회
-//    @Operation(summary = "회원별 좋아요한 게시글 조회", description ="회원별 좋아요한 게시글의 조회가 진행됩니다.", tags = {"LikesController"})
-//    @GetMapping("/{username}/List")
-//    public ResponseEntity<ResponseDTO> userLikesList(@PathVariable("username") String username,
-//                                                     @RequestParam("postId") int postId){
-//
-//        int userCode = 0;
-//        if(username != null){
-//            userCode = memberService.getMemberByUsername(username).getUserId();
-//        }
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원별 좋아요 전체 리스트 조회 성공", likesService.userLikesList(userCode, postId)));
-//    }
+    @Operation(summary = "회원별 좋아요한 게시글 조회", description ="회원별 좋아요한 게시글의 조회가 진행됩니다.", tags = {"LikesController"})
+    @GetMapping("/{username}/List")
+    public ResponseEntity<ResponseDTO> userLikesList(@PathVariable("username") String username,
+                                                     @RequestParam("postId") int postId){
+
+        int userCode = 0;
+        if(username != null){
+            userCode = memberService.getMemberByUsername(username).getUserId();
+        }
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원별 좋아요 전체 리스트 조회 성공", likesService.userLikesList(userCode, postId)));
+    }
 
 //    배너 조회
     @Operation(summary = "배너 조회", description = "배너 조회가 진행됩니다.", tags = {"PostController"})

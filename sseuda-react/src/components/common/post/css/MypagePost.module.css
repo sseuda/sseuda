@@ -21,7 +21,12 @@
    border-radius: 20px 0 0 20px;
 }
 
-.postTitle, .viewCount{
+.icons{
+    display: flex;
+    justify-content: space-between;
+}
+
+.postTitle, .viewCount, .likeCount{
     color: var(--text01);
     position: absolute;
 }
@@ -37,6 +42,14 @@
     font-weight: 200;
     bottom: 20px;
     left: 20px;
+}
+
+.likeCount{
+    display: flex;
+    line-height: 15px;
+    font-weight: 200;
+    bottom: 20px;
+    left: 90px;
 }
 
 .viewIcon{

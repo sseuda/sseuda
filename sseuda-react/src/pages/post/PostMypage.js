@@ -120,6 +120,7 @@ function PostMypage() {
           </Swiper>
         </div>
       ) : null}
+      
     </>
   )
 }

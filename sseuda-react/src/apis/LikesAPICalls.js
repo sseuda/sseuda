@@ -23,7 +23,7 @@ export const callLikesListApi = (postId) =>{
     };
 };
 
-//  좋아요 리스트 전체 조회 (알람 전용)
+//  회원별 좋아요한 게시글 조회
 export const callUserLikesListApi = (postId, username) =>{
 
     let requestURL = `${prefix}/like/${username}/List?postId=${postId}`;
@@ -68,26 +68,34 @@ export const callLikeBannerApi = () =>{
     };
 };
 
-//  좋아요 전체 단일 조회 
-export const callLikeApi = (postId) =>{
-
-    let requestURL = `${prefix}/like/all?${postId}`;
+// 좋아요 전체 단일 조회
+export const callLikeApi = (postId) => {
+    let requestURL = `${prefix}/like/all?postId=${postId}`;
     console.log('[LikesAPI] requestURL : ', requestURL);
 
     return async (dispatch, getState) => {
-        const result = await fetch(requestURL, {
+        const response = await fetch(requestURL, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: '*/*'
             }
-        }).then((response) => response.json());
-        if(result.status === 200){
+        });
+
+        if (response.status === 200) {
+            const result = await response.json();
             console.log('[LikesAPI] callLikeApi RESULT : ', result);
-            dispatch({type: GET_LIKE, payload: result.data});
+
+            dispatch({ type: GET_LIKE, payload: result.data });
+
+            return result.data;   // ⭐⭐ 여기!!: 좋아요 개수(int) 리턴
+        } else {
+            console.error('Like API 호출 실패');
+            return null;
         }
     };
 };
+
 
 // 회원별 게시글 좋아요 등록
 export const callLikeInsertApi = ({ postId, form, username }) => {
