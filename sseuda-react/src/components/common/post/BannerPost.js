@@ -8,6 +8,7 @@ function BannerPost({
 
     // quill Api 사용 첫번째 이미지 추출 함수 
     const extractFirstImageSrc = (html) => {
+        if (!html) return null;
         const match = html.match(/<img[^>]+src="([^">]+)"/);
         return match ? match[1] : null;
     };
