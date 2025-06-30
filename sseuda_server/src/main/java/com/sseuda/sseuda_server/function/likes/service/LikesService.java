@@ -28,9 +28,9 @@ public class LikesService {
         return likesMapper.findLikes(postId);
     }
 
-    public List<LikesDTO> userLikesList(int userCode) {
+    public List<LikesDTO> userLikesList(int userCode, int postId) {
 
-        return likesMapper.userLikesList(userCode);
+        return likesMapper.userLikesList(userCode, postId);
     }
 
     //    배너 조회

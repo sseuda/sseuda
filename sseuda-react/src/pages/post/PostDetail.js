@@ -63,7 +63,7 @@ useEffect(() => {
       if (!username || !params.postId) return;
 
       try {
-        const result = await dispatch(callUserLikesListApi(params.postId, username));
+        const result = await dispatch(callUserLikesListApi(username, params.postId));
 
         if (result && result.data) {
           // 만약 현재 글에 좋아요 했다면 true
