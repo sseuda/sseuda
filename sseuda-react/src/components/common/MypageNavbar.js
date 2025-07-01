@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MyNav from './Global/MypageNavbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faAddressBook } from '@fortawesome/free-solid-svg-icons';
@@ -10,15 +10,17 @@ function MypageNavbar() {
     const navigate = useNavigate();
     const {username} = useParams();
     const {navBgColor, btnBgColor} = useSelector((state) => state.user);
-    // console.log("bgColor? ", bgColor);
+    const [activeBtn, setActiveBtn] = useState(null);
 
-    const myPageHandler = () =>{
-        navigate(`/mypage/${username}`, {replace:false});
-    };
+    const myPageHandler = () => {
+    setActiveBtn('myPage');
+    navigate(`/mypage/${username}`);
+  };
 
     const myInformationHandler = () => {
-        navigate(`/mypage/member/${username}`, {replace:false});
-    };
+    setActiveBtn('myInfo');
+    navigate(`/mypage/member/${username}`);
+  };
 
 
   return (
@@ -28,7 +30,7 @@ function MypageNavbar() {
         <div 
         className={MyNav.posting}
         onClick={myPageHandler}
-        style={{ backgroundColor: btnBgColor }}>
+        style={{ backgroundColor: activeBtn === 'myPage' ? btnBgColor : '' }}>
             <div className={MyNav.iconBox}>
                 <FontAwesomeIcon className={MyNav.plusIcon} icon={faPlus} />
             </div>
@@ -37,7 +39,7 @@ function MypageNavbar() {
         <div 
         className={MyNav.user}
         onClick={myInformationHandler}
-        style={{ backgroundColor: btnBgColor }}
+        style={{ backgroundColor: activeBtn === 'myInfo' ? btnBgColor : '' }}
         >
             <div className={MyNav.iconBox}>
                 <FontAwesomeIcon className={MyNav.addressBookIcon} icon={faAddressBook} />
