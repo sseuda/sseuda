@@ -14,13 +14,13 @@ function PostBanner() {
     const dispatch = useDispatch();
     
     console.log("메인페이지 배너 조회 시작");
-    const bannerList = useSelector(state => state.likesReducer);
+    const bannerList = useSelector(state => state.likesReducer.likeBanner);
     console.log("callLikeBannerApi : ", bannerList);
     
     
     useEffect(() => {
         dispatch(callLikeBannerApi());
-    },[]);
+    },[dispatch]);
 
     // useEffect(() => {
     //     console.log(bannerList, "확인");
@@ -41,7 +41,7 @@ function PostBanner() {
         >
             
             {Array.isArray(bannerList) && bannerList.map((banner) =>(
-                <SwiperSlide>
+                <SwiperSlide key={banner.bannerId}>
                     <BannerPost banner={banner}/>
                 </SwiperSlide>
             ))}

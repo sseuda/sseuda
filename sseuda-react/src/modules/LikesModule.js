@@ -5,7 +5,7 @@ const initialState = {
     like: null,
     userLike: null,
     userLikes: [],
-    likeBanner: null,
+    likeBanner: [],
     postLikeUp: null,
     deleteLikeDown: null,
 };
