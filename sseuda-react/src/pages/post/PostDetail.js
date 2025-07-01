@@ -169,9 +169,10 @@ useEffect(() => {
             <p>{post.memberDTO?.userNickname}</p>
             <p>{post.postCreateAt}</p>
           </div>
-          <div className={Detail.userView}>
+
+          <div className={Detail.userLive}>
             {post.userId !== loginUserId && (
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className={Detail.userLike}>
                 <button
                   onClick={handleLikeClick}
                   style={{
@@ -188,10 +189,11 @@ useEffect(() => {
               </div>
             )}
 
-            <div>
+            <div className={Detail.userView}>
               <p>{post.viewCount}</p>
             </div>
           </div>
+
         </div>
 
         {/* 게시글 본문 */}

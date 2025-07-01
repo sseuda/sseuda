@@ -31,18 +31,13 @@
     margin: 0 30px;
 }
 
-.userView{
-    width:130px;
+.userLive{
     display: flex;
     justify-content: space-between;
 }
 
-.userView button{
-    margin: 0;
-}
-
-.userView p{
-    margin-top: 5px;
+.userLike{
+    margin-right: 20px;
 }
 
 .contentBox{
