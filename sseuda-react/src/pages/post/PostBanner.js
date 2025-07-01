@@ -26,9 +26,10 @@ function PostBanner() {
     //     console.log(bannerList, "확인");
     // }, [bannerList]);   
 
+
   return (
     <div>
-        <Swiper
+        <Swiper style={{borderRadius: '30px', width: '1310px'}}
             spaceBetween={30}
             centeredSlides={true}
             autoplay={{
