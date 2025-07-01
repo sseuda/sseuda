@@ -54,7 +54,10 @@ public class CategoryController {
 
     @Operation(summary = "하위 카테고리 등록", description = "하위 카테고리 등록이 진행됩니다.", tags = {"CategoryController"})
     @PostMapping("/insert/small")
-    public ResponseEntity<ResponseDTO> insertSmallCategory(@ModelAttribute CategorySmallDTO category) {
+    public ResponseEntity<ResponseDTO> insertSmallCategory(@RequestBody CategorySmallDTO category) {
+        System.out.println("Received DTO: " + category); // toString() 잘 오버라이드 되어 있어야 함
+        System.out.println("smallCategoryName: " + category.getSmallCategoryName());
+        System.out.println("bigCategoryId: " + category.getBigCategoryId());
 
         int result = categoryService.insertSmallCategory(category);
 

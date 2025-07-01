@@ -15,7 +15,7 @@ const ITEMS_PER_PAGE = 5;
 
 function AdminCategory() {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.categoryReducer.categoryList);
+  const categories = useSelector((state) => state.categoryReducer.categoryList) || [];
   const [currentPage, setCurrentPage] = useState(1);
 
   const reloadCategories = async () => {
@@ -23,11 +23,9 @@ function AdminCategory() {
     setCurrentPage(1);
   };
 
-
   useEffect(() => {
     dispatch(callCategoryApi());
   }, [dispatch]);
-
 
   // 대분류 수정
   const handleUpdateBigCategory = async (bigCategoryId, newName) => {
@@ -85,10 +83,12 @@ function AdminCategory() {
     }
   };
 
-  // 드롭다운용 대분류 중복 제거
+  // 드롭다운용 대분류 중복 제거 (categoryBigDTO 존재하는 항목만 필터링)
   const uniqueBigCategories = [
     ...new Map(
-      categories.map((cat) => [cat.categoryBigDTO.bigCategoryId, cat.categoryBigDTO])
+      categories
+        .filter((cat) => cat.categoryBigDTO)  // 존재하는 것만 필터
+        .map((cat) => [cat.categoryBigDTO.bigCategoryId, cat.categoryBigDTO])
     ).values(),
   ];
 
@@ -108,11 +108,11 @@ function AdminCategory() {
   return (
     <div className="admin-category-container">
       <h2>카테고리 관리</h2>
-      <CategoryBigInsert reloadCategories={reloadCategories}/>
+      <CategoryBigInsert reloadCategories={reloadCategories} />
       <CategorySmallInsert categories={categories} />
 
       {/* 카테고리 목록 */}
-      <div className="admin-category-section" style={{minHeight: '580px'}}>
+      <div className="admin-category-section" style={{ minHeight: "580px" }}>
         <h3>카테고리 목록</h3>
         <table className="category-table">
           <thead>
@@ -130,10 +130,10 @@ function AdminCategory() {
               ?.filter((cat) => cat.categoryBigDTO)
               .map((cat, index) => (
                 <tr
-                  key={`cat-${cat.categoryBigDTO.bigCategoryId}-${cat.smallCategoryId}-${index}`}
+                  key={`cat-${cat.categoryBigDTO?.bigCategoryId}-${cat.smallCategoryId}-${index}`}
                 >
-                  <td>{cat.categoryBigDTO.bigCategoryId}</td>
-                  <td>{cat.categoryBigDTO.bigCategoryName}</td>
+                  <td>{cat.categoryBigDTO?.bigCategoryId}</td>
+                  <td>{cat.categoryBigDTO?.bigCategoryName}</td>
                   <td>{cat.smallCategoryId}</td>
                   <td>{cat.smallCategoryName}</td>
                   <td>
@@ -141,7 +141,7 @@ function AdminCategory() {
                       <button
                         onClick={() =>
                           handleUpdateBigCategory(
-                            cat.categoryBigDTO.bigCategoryId,
+                            cat.categoryBigDTO?.bigCategoryId,
                             prompt("대분류 새 이름 입력")
                           )
                         }
@@ -152,7 +152,7 @@ function AdminCategory() {
                         onClick={() =>
                           handleUpdateSmallCategory(
                             cat.smallCategoryId,
-                            cat.categoryBigDTO.bigCategoryId,
+                            cat.categoryBigDTO?.bigCategoryId,
                             prompt("소분류 새 이름 입력")
                           )
                         }
@@ -164,7 +164,9 @@ function AdminCategory() {
                   <td>
                     <div className="deleteBtn">
                       <button
-                        onClick={() => handleDeleteBigCategory(cat.categoryBigDTO.bigCategoryId)}
+                        onClick={() =>
+                          handleDeleteBigCategory(cat.categoryBigDTO?.bigCategoryId)
+                        }
                       >
                         전체 삭제
                       </button>
@@ -172,7 +174,7 @@ function AdminCategory() {
                         onClick={() =>
                           handleDeleteSmallCategory(
                             cat.smallCategoryId,
-                            cat.categoryBigDTO.bigCategoryId
+                            cat.categoryBigDTO?.bigCategoryId
                           )
                         }
                       >

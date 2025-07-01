@@ -77,27 +77,36 @@ export const callInsertBigCategoryApi = ({ bigCategoryName }) => {
 
 
 //  하위 카테고리 등록
-export const callInsertSmallCategoryApi = ({ form }) =>{
+export const callInsertSmallCategoryApi = ({ smallCategoryName, bigCategoryId }) => {
     console.log('[CategoryAPICalls] callInsertSmallCategoryApi Call');
+    console.log('Request body:', { smallCategoryName, bigCategoryId });  // 여기 추가
 
     const requestURL = `${prefix}/category/insert/small`;
 
-    return async (dispatch, getState) =>{
-        const result = await fetch(requestURL, {
+    return async (dispatch, getState) => {
+        const response = await fetch(requestURL, {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',   // ✅ JSON 보내야 하니까 반드시 필요
                 Accept: '*/*',
-                Authorization:
-                    'Bearer ' + window.localStorage.getItem('accessToken')
+                Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
             },
-            body: form
-        }).then((response) => response.json());
-
+            body: JSON.stringify({
+                smallCategoryName: smallCategoryName,
+                bigCategoryId: bigCategoryId
+            })
+        });
+        
+        console.log("body? ", bigCategoryId);
+        const result = await response.json();
         console.log('[CategoryAPICalls] callInsertSmallCategoryApi RESULT : ', result);
 
         dispatch({ type: POST_SMALL_CATEGORY, payload: result });
+
+        return result;
     };
 };
+
 
 
 //  상위 카테고리 수정
