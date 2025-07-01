@@ -18,9 +18,16 @@ function AdminCategory() {
   const categories = useSelector((state) => state.categoryReducer.categoryList);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const reloadCategories = async () => {
+    await dispatch(callCategoryApi());
+    setCurrentPage(1);
+  };
+
+
   useEffect(() => {
     dispatch(callCategoryApi());
   }, [dispatch]);
+
 
   // 대분류 수정
   const handleUpdateBigCategory = async (bigCategoryId, newName) => {
@@ -101,7 +108,7 @@ function AdminCategory() {
   return (
     <div className="admin-category-container">
       <h2>카테고리 관리</h2>
-      <CategoryBigInsert />
+      <CategoryBigInsert reloadCategories={reloadCategories}/>
       <CategorySmallInsert categories={categories} />
 
       {/* 카테고리 목록 */}

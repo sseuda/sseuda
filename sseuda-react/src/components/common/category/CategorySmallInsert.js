@@ -57,7 +57,7 @@ function CategorySmallInsert() {
 >
   <option value="">-- 상위 카테고리 선택 --</option>
   {bigCategory.map(bigCat => (
-    <option key={bigCat.bigCategoryId} value={bigCat.bigCategoryId}>
+    <option key={bigCat.categoryBigDTO?.bigCategoryId} value={bigCat.bigCategoryId}>
       {bigCat.bigCategoryName}
     </option>
   ))}

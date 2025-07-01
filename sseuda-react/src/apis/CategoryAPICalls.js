@@ -48,27 +48,32 @@ export const callBigCategoryApi = () =>{
 
 
 //  상위 카테고리 등록
-export const callInsertBigCategoryApi = ({ form }) =>{
+export const callInsertBigCategoryApi = ({ bigCategoryName }) => {
     console.log('[CategoryAPICalls] callInsertBigCategoryApi Call');
 
     const requestURL = `${prefix}/category/insert`;
 
-    return async (dispatch, getState) =>{
+    return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 Accept: '*/*',
-                Authorization:
-                    'Bearer ' + window.localStorage.getItem('accessToken')
+                Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
             },
-            body: form
+            body: JSON.stringify({
+                bigCategoryName: bigCategoryName
+            })
         }).then((response) => response.json());
 
         console.log('[CategoryAPICalls] callInsertBigCategoryApi RESULT : ', result);
 
         dispatch({ type: POST_BIG_CATEGORY, payload: result });
+
+        return result;
     };
 };
+
 
 
 //  하위 카테고리 등록
