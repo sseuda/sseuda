@@ -12,7 +12,7 @@ function TextEditorUpdate() {
   const { postId } = useParams();
   const quillRef = useRef(null);
 
-  const [category, setCategory] = useState({});
+  const [category, setCategory] = useState({}); // { 대분류명: [소분류객체, ...] }
   const [smallCategory, setSmallCategory] = useState([]);
 
   const accessToken = localStorage.getItem('accessToken');
@@ -26,7 +26,7 @@ function TextEditorUpdate() {
     image: null,
   });
 
-  // 🔽 이미지 업로드 핸들러
+  // 이미지 핸들러
   const imageHandler = () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -75,53 +75,73 @@ function TextEditorUpdate() {
     },
   }), []);
 
-  // 🔽 기존 게시글 정보 + 카테고리 정보 불러오기
+  // 1) 게시글 상세 데이터 불러오기
   useEffect(() => {
-  axios.get(`http://localhost:8080/post/${postId}`, {
-    headers: { 'Authorization': `Bearer ${accessToken}` },
-  })
-  .then(res => {
-    console.log('서버 응답:', res);
-    const dataArray = res.data.data;   // 배열
-    if (dataArray && dataArray.length > 0) {
-      const data = dataArray[0];        // 배열 첫 번째 요소가 실제 게시글 객체
+    if (!postId) return;
 
-      setPost({
-        postTitle: data.postTitle || '',
-        postContent: data.postContent || '',
-        categoryBig: data.categoryBigName || '',
-        categorySmall: data.smallCategoryId || '',
-        image: null,
+    axios.get(`http://localhost:8080/post/${postId}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+      .then(res => {
+        const data = res.data.data[0]; // 배열 안에 게시글 데이터가 있음
+        if (data) {
+          setPost({
+            postTitle: data.postTitle || '',
+            postContent: data.postContent || '',
+            categoryBig: data.categoryBigName || '',  // 서버에서 대분류 이름이 어떻게 오는지 맞게 조정 필요
+            categorySmall: data.smallCategoryId || '',
+            image: null,
+          });
+        }
+      })
+      .catch(err => {
+        console.error('게시글 상세 조회 실패', err);
+        alert('게시글 상세 조회에 실패했습니다.');
       });
-    } else {
-      console.error('게시글 데이터가 없습니다.');
-    }
-  })
-  .catch(err => console.error('게시글 로딩 실패', err));
-}, [postId, accessToken]);
+  }, [postId, accessToken]);
 
+  // 2) 카테고리 목록 불러오기
+  useEffect(() => {
+    axios.get('http://localhost:8080/category/post/userpage', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+      .then(res => {
+        const categoryMap = {};
+        res.data.data.forEach(item => {
+          const big = item.categoryBigDTO.bigCategoryName;
+          const small = { id: item.smallCategoryId, name: item.smallCategoryName };
+          if (!categoryMap[big]) categoryMap[big] = [];
+          categoryMap[big].push(small);
+        });
+        setCategory(categoryMap);
+      })
+      .catch(err => {
+        console.error('카테고리 로딩 실패', err);
+      });
+  }, [accessToken]);
 
-
-  // 🔽 대분류 변경 시 소분류 다시 세팅
+  // 3) post.categoryBig가 바뀌면 smallCategory 세팅하기
   useEffect(() => {
     if (post.categoryBig && category[post.categoryBig]) {
       setSmallCategory(category[post.categoryBig]);
+    } else {
+      setSmallCategory([]);
     }
   }, [post.categoryBig, category]);
 
+  // 저장 핸들러
   const handleSave = async () => {
-    const postContent = post.postContent || '';
     if (!post.postTitle.trim()) return alert('제목을 입력해주세요.');
     if (!post.categoryBig) return alert('대분류 카테고리를 선택해주세요.');
     if (!post.categorySmall) return alert('소분류 카테고리를 선택해주세요.');
-    if (!/<img[^>]+src="([^">]+)"/.test(postContent)) {
+    if (!/<img[^>]+src="([^">]+)"/.test(post.postContent)) {
       return alert('이미지를 한 장 이상 첨부해주세요.');
     }
 
     try {
       const formData = new FormData();
       formData.append('postTitle', post.postTitle);
-      formData.append('postContent', postContent);
+      formData.append('postContent', post.postContent);
       formData.append('categoryBig', post.categoryBig);
       formData.append('smallCategoryId', post.categorySmall);
 
@@ -132,12 +152,12 @@ function TextEditorUpdate() {
       await axios.put(`http://localhost:8080/post/${username}/update?postId=${postId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
       alert('게시글 수정 성공');
-      navigate(`/post/mypage/${username}`);
+      navigate(`/mypage/${username}`);
     } catch (err) {
       console.error('게시글 수정 실패', err);
       alert('서버 오류로 게시글 수정 실패');
@@ -146,21 +166,19 @@ function TextEditorUpdate() {
 
   return (
     <div className={Editor.editorBox}>
-      {/* 제목 입력 */}
       <div className={Editor.titleBox}>
         <input
           type="text"
           placeholder="제목을 입력하세요"
-          value={post.postTitle || ''}
-          onChange={e => setPost({ ...post, postTitle: e.target.value })}
+          value={post.postTitle}
+          onChange={e => setPost(prev => ({ ...prev, postTitle: e.target.value }))}
         />
       </div>
 
-      {/* 카테고리 선택 */}
       <div className={Editor.titleBox}>
         <div className={Editor.selectBox}>
           <select
-            value={post.categoryBig || ''}
+            value={post.categoryBig}
             onChange={e => {
               const selected = e.target.value;
               setPost(prev => ({ ...prev, categoryBig: selected, categorySmall: '' }));
@@ -174,8 +192,8 @@ function TextEditorUpdate() {
           </select>
 
           <select
-            value={post.categorySmall || ''}
-            onChange={e => setPost({ ...post, categorySmall: e.target.value })}
+            value={post.categorySmall}
+            onChange={e => setPost(prev => ({ ...prev, categorySmall: e.target.value }))}
             disabled={!post.categoryBig}
           >
             <option value="">소분류 선택</option>
@@ -188,7 +206,6 @@ function TextEditorUpdate() {
         <button onClick={handleSave} className={Global.headerBTN}>수정</button>
       </div>
 
-      {/* 이미지 업로드 */}
       <input
         type="file"
         accept="image/*"
@@ -209,11 +226,10 @@ function TextEditorUpdate() {
         }}
       />
 
-      {/* 본문 내용 */}
       <ReactQuill
         ref={quillRef}
-        value={post.postContent || ''}
-        onChange={value => setPost({ ...post, postContent: value })}
+        value={post.postContent}
+        onChange={value => setPost(prev => ({ ...prev, postContent: value }))}
         modules={modules}
         className={Editor.quill}
       />
