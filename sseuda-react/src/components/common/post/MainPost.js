@@ -68,7 +68,7 @@ function Post({
                     <img
                     src={firstImage}
                     alt="썸네일"
-                    style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', marginBottom: '10px' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', marginBottom: '10px' }}
                     />)}
             </div>
         </div>

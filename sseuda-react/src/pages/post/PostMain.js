@@ -9,9 +9,9 @@ function PostMain() {
   const dispatch = useDispatch();
     const {postId} = useParams();
 
-    console.log("메인페이지 게시글 전체 조회 시작");
+    // console.log("메인페이지 게시글 전체 조회 시작");
     const postList = useSelector(state => state.postReducer);
-    console.log("postList : ", postList);
+    // console.log("postList : ", postList);
 
     const [posts, setPosts] = useState([]);
 
@@ -42,7 +42,7 @@ function PostMain() {
 
     useEffect(()=>{
         // console.log('category :', category);
-        console.log(postList, "확인");
+        // console.log(postList, "확인");
         if(Array.isArray(postList)){
           setPosts(postList)
         }

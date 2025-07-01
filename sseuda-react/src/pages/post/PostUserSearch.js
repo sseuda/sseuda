@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { callUserSearchPostsApi } from '../../apis/PostAPICalls';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import MainPost from "../../components/common/post/MainPost";
 import { decodeJwt } from '../../utils/tokenUtils';
 import SearchPost from '../../components/common/post/SearchPost';
 
@@ -29,7 +28,7 @@ function PostUserSearch() {
 		}
 	}, [keyword, dispatch]);
 
-	console.log('검색 결과 posts:', posts);
+	// console.log('검색 결과 posts:', posts);
 
 	const navigate = useNavigate();
 	const [searchTerm, setSearchTerm] = useState("");
