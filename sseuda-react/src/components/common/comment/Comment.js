@@ -5,6 +5,7 @@ import { decodeJwt } from '../../../utils/tokenUtils';
 import CommentUpdate from './CommentUpdate';
 import { useDispatch } from 'react-redux';
 import { callPostCommentDeleteApi } from '../../../apis/CommentAPICalls';
+import useLoginInfo from '../../../hooks/useLoginInfo';
 
 function Comment({
     comment: {commentId, commentText, commentCreateAt, commentUpdateAt, commentDelete, postDTO, memberDTO},
@@ -15,6 +16,8 @@ function Comment({
     const accessToken = localStorage.getItem('accessToken');
     const decodedToken = accessToken ? decodeJwt(accessToken) : null;
 
+	const loginUserId = useLoginInfo().loginUserId;
+	console.log("로그인한 사람 아이디? ", loginUserId);
     const isOwner = decodedToken?.sub === memberDTO?.username;
 
     console.log("memberDTO:", memberDTO);
@@ -43,12 +46,13 @@ function Comment({
 			<div className={CommentCSS.header}>
 				<div className={CommentCSS.leftHeader}>
 					<span className={CommentCSS.nickname}>{memberDTO?.userNickname}</span>
-					<button
+					{loginUserId !== memberDTO?.userId &&
+					(<button
 						className={CommentCSS.reportBtn}
 						onClick={() => onReport?.(commentId, memberDTO?.userId)}
 					>
 						🚨신고
-					</button>
+					</button>)}
 				</div>
 				<span className={CommentCSS.createdAt}>{commentCreateAt}</span>
 			</div>

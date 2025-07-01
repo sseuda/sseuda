@@ -10,9 +10,7 @@ import { callMemberApi } from '../../apis/MemberAPICalls';
 import ReportPopup from '../report/ReportPopup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { callLikeInsertApi, callPostDeleteApi, callUserLikeApi, callUserLikesListApi, 
-  
- } from '../../apis/LikesAPICalls';
+import { callLikeInsertApi, callPostDeleteApi, callUserLikeApi, callUserLikesListApi } from '../../apis/LikesAPICalls';
 import UserLikesList from '../../components/common/post/UserLikesList';
 import LikesSave from '../../components/common/likes/LikesSave';
 
@@ -145,7 +143,9 @@ useEffect(() => {
     <div>
       <div className={Detail.detailBox}>
 
-        <button onClick={handleReportClick}>🚨신고하기</button>
+        { loginUserId !== post.userId &&(
+        <button onClick={handleReportClick} className={Detail.reportBtn}>🚨신고하기</button>
+        )}
 
         {showReportPopup && (
           <ReportPopup
