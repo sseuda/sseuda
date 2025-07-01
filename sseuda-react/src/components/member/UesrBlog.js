@@ -2,19 +2,35 @@ import React from 'react'
 import myUser from './css/UserInfo.module.css';
 import global from '../common/Global/Button.module.css';
 import { useDispatch } from 'react-redux';
-import { setBgColor } from '../../modules/userSlice';
+import { setBgColor, setBtnBgColor, setNavBgColor } from '../../modules/userSlice';
 
 function UesrBlog() {
 
     const dispatch = useDispatch();
 
-    const handleColorChange = () => {
+    const handleBgColorChange = () => {
         const color = prompt('원하는 색상 코드를 입력하세요 (예: #FF0000 또는 red)');
 
         if (color) {
         dispatch(setBgColor(color));
         }
-  };
+    };
+
+    const handleNavColorChange = () => {
+        const color = prompt('원하는 색상 코드를 입력하세요 (예: #FF0000 또는 red)');
+
+        if (color) {
+        dispatch(setNavBgColor(color));
+        }
+    };
+
+    const handleBtnColorChange = () => {
+        const color = prompt('원하는 색상 코드를 입력하세요 (예: #FF0000 또는 red)');
+
+        if (color) {
+        dispatch(setBtnBgColor(color));
+        }
+    };
 
   return (
     <div className={myUser.infoBox}>
@@ -28,7 +44,7 @@ function UesrBlog() {
             <div style={{ width: '300px' }}>
               <p>배경 색 수정</p>
             </div>
-            <button className={global.userBtn} onClick={handleColorChange}>
+            <button className={global.userBtn} onClick={handleBgColorChange}>
               컬러 선택
             </button>
           </div>
@@ -37,7 +53,7 @@ function UesrBlog() {
             <div style={{ width: '300px' }}>
               <p>마이페이지 바 수정</p>
             </div>
-            <button className={global.userBtn} onClick={handleColorChange}>
+            <button className={global.userBtn} onClick={handleNavColorChange}>
               컬러 선택
             </button>
           </div>
@@ -46,7 +62,7 @@ function UesrBlog() {
             <div style={{ width: '300px' }}>
               <p>버튼 색 수정</p>
             </div>
-            <button className={global.userBtn} onClick={handleColorChange}>
+            <button className={global.userBtn} onClick={handleBtnColorChange}>
               컬러 선택
             </button>
           </div>

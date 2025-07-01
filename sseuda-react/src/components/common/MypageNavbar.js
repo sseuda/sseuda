@@ -9,8 +9,8 @@ function MypageNavbar() {
 
     const navigate = useNavigate();
     const {username} = useParams();
-    const bgColor = useSelector((state) => state.user.bgColor);
-    console.log("bgColor? ", bgColor);
+    const {navBgColor, btnBgColor} = useSelector((state) => state.user);
+    // console.log("bgColor? ", bgColor);
 
     const myPageHandler = () =>{
         navigate(`/mypage/${username}`, {replace:false});
@@ -24,10 +24,11 @@ function MypageNavbar() {
   return (
     <div 
     className={MyNav.navBox}
-    style={{ backgroundColor: bgColor }}>
+    style={{ backgroundColor: navBgColor }}>
         <div 
         className={MyNav.posting}
-        onClick={myPageHandler}>
+        onClick={myPageHandler}
+        style={{ backgroundColor: btnBgColor }}>
             <div className={MyNav.iconBox}>
                 <FontAwesomeIcon className={MyNav.plusIcon} icon={faPlus} />
             </div>
@@ -35,7 +36,9 @@ function MypageNavbar() {
 
         <div 
         className={MyNav.user}
-        onClick={myInformationHandler}>
+        onClick={myInformationHandler}
+        style={{ backgroundColor: btnBgColor }}
+        >
             <div className={MyNav.iconBox}>
                 <FontAwesomeIcon className={MyNav.addressBookIcon} icon={faAddressBook} />
             </div>
