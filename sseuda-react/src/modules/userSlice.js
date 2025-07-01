@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import React from 'react'
 
 const initialState = {
-    bgColor: '#fff',
+    bgColor: '#F5C3A4',
 };
 
 const userSlice = createSlice({
@@ -17,4 +17,4 @@ const userSlice = createSlice({
 });
 
 export const { setBgColor } = userSlice.actions;
-export default userSlice;
+export default userSlice.reducer;
