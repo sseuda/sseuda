@@ -49,7 +49,7 @@ function LikesList() {
 
   return (
     <div className={myUser.infoBox}>
-      <div className={myUser.likeTitle}>
+      <div className={myUser.likeTitle} style={{marginBottom: '30px'}}>
         <div className={myUser.titleBox}>
           <h3 className={myUser.highlight}>LIKE</h3>
         </div>
