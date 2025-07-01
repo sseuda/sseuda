@@ -215,7 +215,7 @@ export const callDeleteSmallCategoryApi = ({form}) =>{
 
     console.log('[CategoryAPICalls] callDeleteSmallCategoryApi Call');
 
-    let requestURL = `${prefix}/category/delete`;
+    let requestURL = `${prefix}/category/delete/small`;
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
