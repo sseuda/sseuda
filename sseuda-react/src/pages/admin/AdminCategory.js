@@ -1,5 +1,7 @@
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  callBigCategoryApi,
   callCategoryApi,
   callDeleteCategoryApi,
   callDeleteSmallCategoryApi,
@@ -9,37 +11,44 @@ import {
 import "./AdminCategory.css";
 import CategoryBigInsert from "../../components/common/category/CategoryBigInsert";
 import CategorySmallInsert from "../../components/common/category/CategorySmallInsert";
-import { useEffect, useState } from "react";
 
 const ITEMS_PER_PAGE = 5;
 
 function AdminCategory() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryReducer.categoryList) || [];
-  const [currentPage, setCurrentPage] = useState(1);
+  const bigCategoryList = useSelector((state) => state.categoryReducer.bigCategoryList) || [];
 
-  const reloadCategories = async () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [reloadTrigger, setReloadTrigger] = useState(false);
+
+  // 전체 카테고리 및 대분류 목록 불러오기
+  const fetchAllCategories = async () => {
     await dispatch(callCategoryApi());
+    await dispatch(callBigCategoryApi());
     setCurrentPage(1);
   };
 
   useEffect(() => {
-    dispatch(callCategoryApi());
-  }, [dispatch]);
+    fetchAllCategories();
+  }, [reloadTrigger]);
 
-  // 대분류 수정
+  const handleReload = () => {
+    setReloadTrigger((prev) => !prev);
+  };
+
+  // --- 카테고리 수정 및 삭제 핸들러들 ---
+
   const handleUpdateBigCategory = async (bigCategoryId, newName) => {
     if (newName) {
       const form = new FormData();
       form.append("bigCategoryId", bigCategoryId);
       form.append("bigCategoryName", newName);
       await dispatch(callUpdateCategoryApi({ form }));
-      await dispatch(callCategoryApi());
-      setCurrentPage(1);
+      handleReload();
     }
   };
 
-  // 소분류 수정
   const handleUpdateSmallCategory = async (smallCategoryId, bigCategoryId, newName) => {
     if (newName) {
       const form = new FormData();
@@ -47,52 +56,36 @@ function AdminCategory() {
       form.append("bigCategoryId", bigCategoryId);
       form.append("smallCategoryName", newName);
       await dispatch(callUpdateSmallCategoryApi({ form }));
-      await dispatch(callCategoryApi());
-      setCurrentPage(1);
+      handleReload();
     }
   };
 
-  // 대분류 삭제
   const handleDeleteBigCategory = async (bigCategoryId) => {
     const confirmDelete = window.confirm(
       "이 대분류에 속한 소분류들과 관련 게시글도 모두 삭제됩니다. 정말 삭제하시겠습니까?"
     );
-
     if (confirmDelete) {
       const form = new FormData();
       form.append("bigCategoryId", bigCategoryId);
       await dispatch(callDeleteCategoryApi({ form }));
-      await dispatch(callCategoryApi());
-      setCurrentPage(1);
+      handleReload();
     }
   };
 
-  // 소분류 삭제
   const handleDeleteSmallCategory = async (smallCategoryId, bigCategoryId) => {
     const confirmDelete = window.confirm(
       "이 소분류와 관련된 게시글도 모두 삭제됩니다. 정말 삭제하시겠습니까?"
     );
-
     if (confirmDelete) {
       const form = new FormData();
       form.append("smallCategoryId", smallCategoryId);
       form.append("bigCategoryId", bigCategoryId);
       await dispatch(callDeleteSmallCategoryApi({ form }));
-      await dispatch(callCategoryApi());
-      setCurrentPage(1);
+      handleReload();
     }
   };
 
-  // 드롭다운용 대분류 중복 제거 (categoryBigDTO 존재하는 항목만 필터링)
-  const uniqueBigCategories = [
-    ...new Map(
-      categories
-        .filter((cat) => cat.categoryBigDTO)  // 존재하는 것만 필터
-        .map((cat) => [cat.categoryBigDTO.bigCategoryId, cat.categoryBigDTO])
-    ).values(),
-  ];
-
-  // 페이지네이션 계산
+  // --- 페이지네이션 처리 ---
   const totalPages = Math.ceil(categories.length / ITEMS_PER_PAGE);
   const pagedCategories = categories.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -108,8 +101,12 @@ function AdminCategory() {
   return (
     <div className="admin-category-container">
       <h2>카테고리 관리</h2>
-      <CategoryBigInsert reloadCategories={reloadCategories} />
-      <CategorySmallInsert categories={categories} />
+
+      {/* 대분류 등록 */}
+      <CategoryBigInsert reloadCategories={handleReload} />
+
+      {/* 소분류 등록 */}
+      <CategorySmallInsert reloadCategories={handleReload} />
 
       {/* 카테고리 목록 */}
       <div className="admin-category-section" style={{ minHeight: "580px" }}>
@@ -121,13 +118,13 @@ function AdminCategory() {
               <th>대분류 이름</th>
               <th>소분류 ID</th>
               <th>소분류 이름</th>
-              <th>카테고리 수정</th>
-              <th>카테고리 삭제</th>
+              <th>수정</th>
+              <th>삭제</th>
             </tr>
           </thead>
           <tbody>
             {pagedCategories
-              ?.filter((cat) => cat.categoryBigDTO)
+              .filter((cat) => cat.categoryBigDTO)
               .map((cat, index) => (
                 <tr
                   key={`cat-${cat.categoryBigDTO?.bigCategoryId}-${cat.smallCategoryId}-${index}`}

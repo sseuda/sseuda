@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { callBigCategoryApi, callCategoryApi, callInsertSmallCategoryApi } from '../../../apis/CategoryAPICalls';
+import { callBigCategoryApi, callInsertSmallCategoryApi } from '../../../apis/CategoryAPICalls';
 
 function CategorySmallInsert({ reloadCategories }) {
   const dispatch = useDispatch();
@@ -8,20 +8,29 @@ function CategorySmallInsert({ reloadCategories }) {
 
   const [smallCategoryName, setSmallCategoryName] = useState("");
   const [bigCategoryId, setBigCategoryId] = useState("");
-  const [reloadTrigger, setReloadTrigger] = useState(false);
+
+  // 대분류 리스트 불러오기
+  const fetchBigCategories = async () => {
+    await dispatch(callBigCategoryApi());
+  };
 
   useEffect(() => {
-    const fetchBigCategories = async () => {
-      await dispatch(callBigCategoryApi());
-    };
-
     fetchBigCategories();
-  }, [reloadTrigger]);
+  }, []);
 
-  // 하위 카테고리 추가
+  // 드롭다운 옵션 캐싱
+  const categoryOptions = useMemo(() => {
+    return bigCategory.map(bigCat => (
+      <option key={bigCat.bigCategoryId} value={bigCat.bigCategoryId}>
+        {bigCat.bigCategoryName}
+      </option>
+    ));
+  }, [bigCategory]);
+
+  // 소분류 등록
   const handleAddSmallCategory = async () => {
     if (!bigCategoryId) {
-      alert("상위 카테고리를 먼저 선택하세요.");
+      alert("상위 카테고리를 선택하세요.");
       return;
     }
     if (smallCategoryName.trim() === "") {
@@ -29,56 +38,45 @@ function CategorySmallInsert({ reloadCategories }) {
       return;
     }
 
-    await dispatch(callInsertSmallCategoryApi({ 
+    await dispatch(callInsertSmallCategoryApi({
       smallCategoryName: smallCategoryName.trim(),
-      bigCategoryId: bigCategoryId
+      bigCategoryId: Number(bigCategoryId),   // 숫자 ID로 보내기
     }));
 
+    // 입력값 초기화
     setSmallCategoryName("");
     setBigCategoryId("");
 
-    setReloadTrigger(prev => !prev); // 트리거 변경으로 useEffect 다시 실행
+    // 대분류 리스트 다시 불러오기
+    await fetchBigCategories();
 
+    // 부모에 리로드 요청 (예: 목록 새로고침)
     if (reloadCategories) {
-      // reloadCategories(); // 부모의 카테고리 다시 불러오기 (필요시)
+      reloadCategories();
     }
   };
 
-  useEffect(() => {
-    const fetchBigCategories = async () => {
-      await dispatch(callCategoryApi());
-    };
-
-    fetchBigCategories();
-  }, [reloadTrigger]);
-
-
   return (
-    <>
-      {/* 하위 카테고리 추가 */}
-      <div className="admin-category-section">
-        <h3>하위 카테고리 추가</h3>
-        <select
-          value={bigCategoryId}
-          onChange={(e) => setBigCategoryId(e.target.value)}
-        >
-          <option value="">-- 상위 카테고리 선택 --</option>
-          {bigCategory.map(bigCat => (
-            <option key={bigCat.bigCategoryId} value={bigCat.bigCategoryId}>
-              {bigCat.bigCategoryName}
-            </option>
-          ))}
-        </select>
+    <div className="admin-category-section">
+      <h3>하위 카테고리 추가</h3>
 
-        <input
-          type="text"
-          placeholder="소분류 이름"
-          value={smallCategoryName}
-          onChange={(e) => setSmallCategoryName(e.target.value)}
-        />
-        <button onClick={handleAddSmallCategory}>등록</button>
-      </div>
-    </>
+      <select
+        value={bigCategoryId}
+        onChange={(e) => setBigCategoryId(e.target.value)}
+      >
+        <option value="">-- 상위 카테고리 선택 --</option>
+        {categoryOptions}
+      </select>
+
+      <input
+        type="text"
+        placeholder="소분류 이름"
+        value={smallCategoryName}
+        onChange={(e) => setSmallCategoryName(e.target.value)}
+      />
+
+      <button onClick={handleAddSmallCategory}>등록</button>
+    </div>
   );
 }
 
