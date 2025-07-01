@@ -14,9 +14,9 @@ function UesrBlog() {
             <div className={myUser.user_d}>
                 <div className={myUser.d1}>
                     <div style={{width: '300px'}}>
-                        <p>이미지 수정</p>
+                        <p>배경색 수정</p>
                     </div>
-                    <button className={global.userBtn}>파일선택</button>
+                    <button className={global.userBtn}>색깔선택</button>
                 </div>
                 <div className={myUser.d2}>
                     <p>글꼴 변경</p>

@@ -9,8 +9,7 @@ import global from '../common/Global/Button.module.css';
 function UserInfo() {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const userInfo = useSelector(state => state.memberReducer);
+    const userInfo = useSelector(state => state.memberReducer.member);
     console.log("userInfo: ", userInfo);
 
     const accessToken = localStorage.getItem('accessToken');
@@ -27,7 +26,6 @@ function UserInfo() {
             <div className={myUser.titleBox}>
                 <h3 className={myUser.highlight}>PROFILE</h3>
             </div>
-            <button className={global.allPostBTN}>수정하기</button>
         </div>
         
         <div className={myUser.infoCard}>
@@ -36,11 +34,11 @@ function UserInfo() {
                     <div style={{width: '250px'}}>
                         <p>{userInfo?.userFullname}</p>
                     </div>
-                    <div style={{width: '90px'}}>
+                    <div style={{width: '90px', color: '#999'}}>
                         <p>{userInfo?.userStatus}</p>
                     </div>
                 </div>
-                <div className={myUser.a2}>
+                <div className={myUser.a2} style={{color: '#999'}}>
                     <p>{userInfo?.enrollDate}</p>
                 </div>
                 <div className={myUser.a3}>{userInfo?.userPhone}</div>
@@ -50,26 +48,10 @@ function UserInfo() {
                 <div className={myUser.b1}>
                     <p>{userInfo?.userNickname}</p>
                 </div>
-                <div className={myUser.b2}>
+                <div className={myUser.b2} style={{color: '#999'}}>
                     <p>비밀번호</p>
                 </div>
-                
             </div>
-            
-            {/* <div className={myUser.user_c}>
-                <div className={myUser.c1}>
-                    <div>
-                        <p>우편번호</p>
-                    </div>
-                    <button>주소검색</button>
-                </div>
-                <div className={myUser.c2}>
-                    <p>기본주소</p>
-                </div>
-                <div className={myUser.c3}>
-                    <p>나머지 주소</p>
-                </div>
-            </div> */}
         </div>
     </div>
   )
