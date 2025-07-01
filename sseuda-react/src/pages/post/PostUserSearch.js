@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import MainPost from "../../components/common/post/MainPost";
 import { decodeJwt } from '../../utils/tokenUtils';
+import SearchPost from '../../components/common/post/SearchPost';
 
 function useQuery() {
 	return new URLSearchParams(useLocation().search);
@@ -57,11 +58,11 @@ function PostUserSearch() {
 				</button>
 			</div>
 			<div className="search-result">
-				<h3>🔍 <b>"{keyword}"</b> 검색 결과</h3>
+				<h3 style={{marginBottom: '30px'}}>🔍 <b>"{keyword}"</b> 검색 결과</h3>
 				{posts && posts.length > 0 ? (
 					<div className="post-list">
-						{posts.map((post) => (
-							<MainPost key={post.postId} post={post} />
+						{posts.map((post, index) => (
+							<SearchPost key={post.postId} post={post} index={index} />
 						))}
 					</div>
 			) : (
