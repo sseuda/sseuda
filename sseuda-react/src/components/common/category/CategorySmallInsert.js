@@ -1,79 +1,85 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { callBigCategoryApi, callInsertSmallCategoryApi } from '../../../apis/CategoryAPICalls';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { callBigCategoryApi, callInsertSmallCategoryApi } from "../../../apis/CategoryAPICalls";
 
-function CategorySmallInsert() {
+function CategorySmallInsert({ reloadCategories }) {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-    // const bigCategory = useSelector(state => state.categoryReducer);
-    const bigCategory = useSelector(state => state.categoryReducer.bigCategoryList) || [];
-    console.log("bigCategory : ", bigCategory);
+  // 전역 스토어에서 대분류 리스트 가져오기
+  const bigCategories = useSelector((state) => state.categoryReducer.bigCategoryList) || [];
 
-    const [smallCategoryName, setSmallCategoryName] = useState("");
-    const [selectedBigCategoryId, setSelectedBigCategoryId] = useState(null);
+  // 로컬 상태
+  const [smallCategoryName, setSmallCategoryName] = useState("");
+  const [bigCategoryId, setBigCategoryId] = useState("");
 
-    // 드롭다운용 대분류 리스트
-    // const uniqueBigCategories = categories
-     //   // ? [
-    //         ...new Map(
-    //         categories
-    //             .filter(cat => cat.categoryBigDTO)
-    //             .map(cat => [cat.categoryBigDTO.bigCategoryId, cat.categoryBigDTO])
-    //         ).values()
-    //     ]
-    //     : [];
+  // 대분류 리스트 처음 + 갱신 시 불러오기
+  useEffect(() => {
+    dispatch(callBigCategoryApi());
+  }, []);
 
-    useEffect(() => {
-        dispatch(callBigCategoryApi());
-    }, [dispatch]);
+  // 소분류 등록 함수
+  const handleAddSmallCategory = async () => {
+    if (!bigCategoryId) {
+      alert("상위 카테고리를 선택하세요.");
+      return;
+    }
+    if (smallCategoryName.trim() === "") {
+      alert("소분류 이름을 입력하세요.");
+      return;
+    }
 
-    // const bigCategoryHandler = () =>{
-    //     dispatch(callBigCategoryApi());
-    // }
+    // 소분류 등록 API 호출
+    await dispatch(
+      callInsertSmallCategoryApi({
+        smallCategoryName: smallCategoryName.trim(),
+        bigCategoryId: bigCategoryId,
+      })
+    );
 
-    // 하위 카테고리 추가
-      const handleAddSmallCategory = async () => {
-        if (!selectedBigCategoryId) {
-          alert("상위 카테고리를 먼저 선택하세요.");
-          return;
-        }
-    
-        const form = new FormData();
-        form.append("smallCategoryName", smallCategoryName);
-        form.append("bigCategoryId", selectedBigCategoryId);
-        await dispatch(callInsertSmallCategoryApi({ form }));
-        await dispatch(callBigCategoryApi());
-        setSmallCategoryName("");
-      };
+    // 입력값 초기화
+    setSmallCategoryName("");
+    setBigCategoryId("");
+
+    // 대분류 리스트 새로고침
+    await dispatch(callBigCategoryApi());
+
+    // 부모 컴포넌트로도 갱신 알림 (목록 새로 불러오기용)
+    if (reloadCategories) {
+      reloadCategories();
+    }
+  };
 
   return (
-    <>
-        {/* 하위 카테고리 추가 */}
-        <div className="admin-category-section">
-            <h3>하위 카테고리 추가</h3>
-            <select
-  value={selectedBigCategoryId || ""}   // 현재 선택된 값
-  onChange={(e) => setSelectedBigCategoryId(e.target.value)}   // 선택 시 상태 업데이트
->
-  <option value="">-- 상위 카테고리 선택 --</option>
-  {bigCategory.map(bigCat => (
-    <option key={bigCat.bigCategoryId} value={bigCat.bigCategoryId}>
-      {bigCat.bigCategoryName}
-    </option>
-  ))}
-</select>
+    <div className="admin-category-section">
+      <h3>하위 카테고리 추가</h3>
 
+      {/* 상위 카테고리 드롭다운 */}
+      <select
+        value={bigCategoryId}
+        onChange={(e) => setBigCategoryId(e.target.value)}
+      >
+        <option value="">-- 상위 카테고리 선택 --</option>
+        {bigCategories
+          .filter((bigCat) => bigCat.bigCategoryId !== undefined && bigCat.bigCategoryId !== null)
+          .map((bigCat) => (
+            <option key={`${bigCat.bigCategoryId}`} value={bigCat.bigCategoryId}>
+              {bigCat.bigCategoryName}
+            </option>
+          ))}
+      </select>
 
-            <input
-            type="text"
-            placeholder="소분류 이름"
-            value={smallCategoryName}
-            onChange={(e) => setSmallCategoryName(e.target.value)}
-            />
-            <button onClick={handleAddSmallCategory}>등록</button>
-        </div>
-    </>
-  )
+      {/* 소분류 이름 입력 */}
+      <input
+        type="text"
+        placeholder="소분류 이름"
+        value={smallCategoryName}
+        onChange={(e) => setSmallCategoryName(e.target.value)}
+      />
+
+      {/* 등록 버튼 */}
+      <button onClick={handleAddSmallCategory}>등록</button>
+    </div>
+  );
 }
 
 export default CategorySmallInsert;

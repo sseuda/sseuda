@@ -71,7 +71,7 @@ function PostMypage() {
     
       <div style={{marginTop: '50px', display: 'flex', justifyContent: "space-between"}}>
             {/* 검색창 */}
-            <div>
+            <div style={{marginBottom: '30px'}}>
               <div className={MainCSS.searchWrapper}>
                 <input
                   type="text"

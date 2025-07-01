@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { decodeJwt } from '../../utils/tokenUtils';
-import { useNavigate, useParams } from 'react-router-dom';
-import { callPostMemberApi } from '../../apis/PostAPICalls';
-import { callMemberApi, callMemberByIdApi } from '../../apis/MemberAPICalls';
+import { useNavigate } from 'react-router-dom';
+import { callMemberApi } from '../../apis/MemberAPICalls';
 import UserInfo from '../../components/member/UserInfo';
 import UesrBlog from '../../components/member/UesrBlog';
 

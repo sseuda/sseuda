@@ -7,7 +7,7 @@ const prefix = `http://${process.env.REACT_APP_RESTAPI_IP}:8080`;
 export const callCategoryApi = () =>{
     
     let requestURL = `${prefix}/category/post/userpage`;
-    console.log('[CategoryApiCalls] requestURL : ', requestURL);
+    // console.log('[CategoryApiCalls] requestURL : ', requestURL);
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -18,7 +18,7 @@ export const callCategoryApi = () =>{
             }
         }).then((response) => response.json());
         if(result.status === 200){
-            console.log('[CategoryApiCalls] callCategoryApi RESULT : ', result);
+            // console.log('[CategoryApiCalls] callCategoryApi RESULT : ', result);
             dispatch({type: GET_CATEGORY, payload: result.data});
         }
     };
@@ -28,7 +28,7 @@ export const callCategoryApi = () =>{
 export const callBigCategoryApi = () =>{
     
     let requestURL = `${prefix}/category/bigList`;
-    console.log('[CategoryApiCalls] requestURL : ', requestURL);
+    // console.log('[CategoryApiCalls] requestURL : ', requestURL);
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -39,7 +39,7 @@ export const callBigCategoryApi = () =>{
             }
         }).then((response) => response.json());
         if(result.status === 200){
-            console.log('[CategoryApiCalls] callCategoryApi RESULT : ', result);
+            // console.log('[CategoryApiCalls] callCategoryApi RESULT : ', result);
             dispatch({type: GET_BIG_CATEGORY, payload: result.data});
         }
 
@@ -48,63 +48,77 @@ export const callBigCategoryApi = () =>{
 
 
 //  상위 카테고리 등록
-export const callInsertBigCategoryApi = ({ form }) =>{
-    console.log('[CategoryAPICalls] callInsertBigCategoryApi Call');
+export const callInsertBigCategoryApi = ({ bigCategoryName }) => {
+    // console.log('[CategoryAPICalls] callInsertBigCategoryApi Call');
 
     const requestURL = `${prefix}/category/insert`;
 
-    return async (dispatch, getState) =>{
+    return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 Accept: '*/*',
-                Authorization:
-                    'Bearer ' + window.localStorage.getItem('accessToken')
+                Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
             },
-            body: form
+            body: JSON.stringify({
+                bigCategoryName: bigCategoryName
+            })
         }).then((response) => response.json());
 
-        console.log('[CategoryAPICalls] callInsertBigCategoryApi RESULT : ', result);
+        // console.log('[CategoryAPICalls] callInsertBigCategoryApi RESULT : ', result);
 
         dispatch({ type: POST_BIG_CATEGORY, payload: result });
+
+        return result;
     };
 };
+
 
 
 //  하위 카테고리 등록
-export const callInsertSmallCategoryApi = ({ form }) =>{
-    console.log('[CategoryAPICalls] callInsertSmallCategoryApi Call');
+export const callInsertSmallCategoryApi = ({ smallCategoryName, bigCategoryId }) => {
+    // console.log('[CategoryAPICalls] callInsertSmallCategoryApi Call');
+    // console.log('Request body:', { smallCategoryName, bigCategoryId });  // 여기 추가
 
     const requestURL = `${prefix}/category/insert/small`;
 
-    return async (dispatch, getState) =>{
-        const result = await fetch(requestURL, {
+    return async (dispatch, getState) => {
+        const response = await fetch(requestURL, {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',   // ✅ JSON 보내야 하니까 반드시 필요
                 Accept: '*/*',
-                Authorization:
-                    'Bearer ' + window.localStorage.getItem('accessToken')
+                Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
             },
-            body: form
-        }).then((response) => response.json());
-
-        console.log('[CategoryAPICalls] callInsertSmallCategoryApi RESULT : ', result);
+            body: JSON.stringify({
+                smallCategoryName: smallCategoryName,
+                bigCategoryId: bigCategoryId
+            })
+        });
+        
+        // console.log("body? ", bigCategoryId);
+        const result = await response.json();
+        // console.log('[CategoryAPICalls] callInsertSmallCategoryApi RESULT : ', result);
 
         dispatch({ type: POST_SMALL_CATEGORY, payload: result });
+
+        return result;
     };
 };
+
 
 
 //  상위 카테고리 수정
 export const callUpdateCategoryApi = ({ form }) => {
-    console.log("[CategoryAPICalls] callUpdateCategoryApi Call");
+    // console.log("[CategoryAPICalls] callUpdateCategoryApi Call");
 
-    for (let [key, value] of form.entries()) {
-        console.log(`2222${key}: ${value}`);
-    }
+    // for (let [key, value] of form.entries()) {
+    //     console.log(`2222${key}: ${value}`);
+    // }
 
     const requestURL = `${prefix}/category/update`;
-    console.log("requestURL:", requestURL);
+    // console.log("requestURL:", requestURL);
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -123,10 +137,10 @@ export const callUpdateCategoryApi = ({ form }) => {
             });
 
         if (result.status === 200) {
-            console.log(
-                "[CategoryAPICalls] callUpdateCategoryApi RESULT:",
-                result
-            );
+            // console.log(
+            //     "[CategoryAPICalls] callUpdateCategoryApi RESULT:",
+            //     result
+            // );
             dispatch({ type: PUT_BIG_CATEGORY, payload: result });
         }
     };
@@ -135,14 +149,14 @@ export const callUpdateCategoryApi = ({ form }) => {
 
 //  하위 카테고리 수정
 export const callUpdateSmallCategoryApi = ({ form }) => {
-    console.log("[CategoryAPICalls] callUpdateSmallCategoryApi Call");
+    // console.log("[CategoryAPICalls] callUpdateSmallCategoryApi Call");
 
-    for (let [key, value] of form.entries()) {
-        console.log(`2222${key}: ${value}`);
-    }
+    // for (let [key, value] of form.entries()) {
+    //     console.log(`2222${key}: ${value}`);
+    // }
 
     const requestURL = `${prefix}/category/update/small`;
-    console.log("requestURL:", requestURL);
+    // console.log("requestURL:", requestURL);
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -161,10 +175,10 @@ export const callUpdateSmallCategoryApi = ({ form }) => {
             });
 
         if (result.status === 200) {
-            console.log(
-                "[CategoryAPICalls] callUpdateSmallCategoryApi RESULT:",
-                result
-            );
+            // console.log(
+            //     "[CategoryAPICalls] callUpdateSmallCategoryApi RESULT:",
+            //     result
+            // );
             dispatch({ type: PUT_SMALL_CATEGORY, payload: result });
         }
     };
@@ -174,7 +188,7 @@ export const callUpdateSmallCategoryApi = ({ form }) => {
 //  카테고리 전체 삭제
 export const callDeleteCategoryApi = ({form}) =>{
 
-    console.log('[CategoryAPICalls] callDeleteCategoryApi Call');
+    // console.log('[CategoryAPICalls] callDeleteCategoryApi Call');
 
     let requestURL = `${prefix}/category/delete`;
 
@@ -189,7 +203,7 @@ export const callDeleteCategoryApi = ({form}) =>{
             body: form
         }).then((response) => response.json());
         
-        console.log('[CategoryAPICalls] callDeleteCategoryApi RESULT : ', result);
+        // console.log('[CategoryAPICalls] callDeleteCategoryApi RESULT : ', result);
         dispatch({type: DELETE_CATEGORY, payload: result});
         
     };
@@ -199,9 +213,9 @@ export const callDeleteCategoryApi = ({form}) =>{
 //  하위 카테고리 삭제
 export const callDeleteSmallCategoryApi = ({form}) =>{
 
-    console.log('[CategoryAPICalls] callDeleteSmallCategoryApi Call');
+    // console.log('[CategoryAPICalls] callDeleteSmallCategoryApi Call');
 
-    let requestURL = `${prefix}/category/delete`;
+    let requestURL = `${prefix}/category/delete/small`;
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -214,7 +228,7 @@ export const callDeleteSmallCategoryApi = ({form}) =>{
             body: form
         }).then((response) => response.json());
         
-        console.log('[CategoryAPICalls] callDeleteSmallCategoryApi RESULT : ', result);
+        // console.log('[CategoryAPICalls] callDeleteSmallCategoryApi RESULT : ', result);
         dispatch({type: DELETE_SMALL_CATEGORY, payload: result});
         
     };

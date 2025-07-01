@@ -5,6 +5,10 @@
     /* background-color: blue; */
 }
 
+.likeTitle{
+    margin-bottom: -10px;
+}
+
 .infoTitle{
     display: flex;
     justify-content: space-between;

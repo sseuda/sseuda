@@ -5,36 +5,33 @@ import { callUpdateViewCountApi } from '../../../apis/PostAPICalls';
 import MainPost from './css/MainPost.module.css';
 import { decodeJwt } from '../../../utils/tokenUtils';
 
-function Post({
-  post: {postId, postTitle, postContent, memberDTO}, index
+function SearchPost({
+  post: {postId, postTitle, postContent}, index
 }){
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const accessToken = localStorage.getItem('accessToken');
     const decoded = accessToken ? decodeJwt(accessToken) : null;
-    const username = decoded?.sub;  // 또는 decoded?.username 등
+    const username = decoded?.sub;
 
     const onClickPostHandler = async (postId) => {
     try {
         await dispatch(callUpdateViewCountApi({ postId, username }));
     } catch (error) {
         console.warn("조회수 증가 실패 (작성자 본인일 수 있음):", error);
-        // 실패하더라도 페이지 이동은 시도
+
     } finally {
         navigate(`/post/${postId}`, { replace: false });
     }
 };
 
-    // console.log("postId???? ", postId);
-
-    // quill Api 사용 첫번째 이미지 추출 함수 
     const extractFirstImageSrc = (html) => {
         const match = html.match(/<img[^>]+src="([^">]+)"/);
         return match ? match[1] : null;
     };
 
-    
     const firstImage = extractFirstImageSrc(postContent);
 
     // 배경색
@@ -45,6 +42,7 @@ function Post({
   return html.replace(/<img[^>]*>/gi, '');
 };
 
+
   return (
     <div 
     className={MainPost.postBox} 
@@ -52,16 +50,10 @@ function Post({
     style={{ backgroundColor: bgColor }}>
         <div className={MainPost.box}>
             <div className={MainPost.textBox}>
-                <div className={MainPost.userBox}>
-                    <p>
-                        {memberDTO?.userNickname}
-                    </p>
-                </div>
-
-                <div className={MainPost.contentBox}>
+                <div className={MainPost.contentBox} style={{borderBottom: '1px solid var(--text02)', height: '65px', marginBottom: '10px'}}>
                     <h2>{postTitle}</h2>
-                      <div dangerouslySetInnerHTML={{ __html: removeImageTags(postContent) }} />
                 </div>
+                <div dangerouslySetInnerHTML={{ __html: removeImageTags(postContent) }} />
             </div>
             <div className={MainPost.imgBox}>
                 {firstImage && (
@@ -75,4 +67,4 @@ function Post({
     </div>
   )
 }
-export default Post;
+export default SearchPost;

@@ -46,9 +46,10 @@ function LikesList() {
     return match ? match[1] : null;
   };
 
+
   return (
     <div className={myUser.infoBox}>
-      <div className={myUser.infoTitle}>
+      <div className={myUser.likeTitle} style={{marginBottom: '30px'}}>
         <div className={myUser.titleBox}>
           <h3 className={myUser.highlight}>LIKE</h3>
         </div>
@@ -71,7 +72,7 @@ function LikesList() {
     const firstImage = extractFirstImageSrc(post.postContent);
 
     return (
-      <SwiperSlide key={like.likesId} style={{ width: 'auto' }}>
+      <SwiperSlide key={like.likesId} style={{ width: 'auto'}}>
         {firstImage && (
           <div
             className={Post.postBox}

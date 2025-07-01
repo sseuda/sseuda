@@ -24,7 +24,6 @@ import Alarm from "./pages/alarm/Alarm";
 import PostUserSearch from "./pages/post/PostUserSearch";
 import AdminCategory from "./pages/admin/AdminCategory";
 import SuperAdminPage from "./pages/admin/SuperAdminPage";
-import LikesList from "./pages/likes/LikesList";
 
 function App() {
   return (

@@ -1,35 +1,75 @@
 import React from 'react'
 import myUser from './css/UserInfo.module.css';
 import global from '../common/Global/Button.module.css';
+import { useDispatch } from 'react-redux';
+import { setBgColor, setBtnBgColor, setNavBgColor } from '../../modules/userSlice';
 
 function UesrBlog() {
 
+    const dispatch = useDispatch();
+
+    const handleBgColorChange = () => {
+        const color = prompt('원하는 색상 코드를 입력하세요 (예: #FF0000 또는 red)');
+
+        if (color) {
+        dispatch(setBgColor(color));
+        }
+    };
+
+    const handleNavColorChange = () => {
+        const color = prompt('원하는 색상 코드를 입력하세요 (예: #FF0000 또는 red)');
+
+        if (color) {
+        dispatch(setNavBgColor(color));
+        }
+    };
+
+    const handleBtnColorChange = () => {
+        const color = prompt('원하는 색상 코드를 입력하세요 (예: #FF0000 또는 red)');
+
+        if (color) {
+        dispatch(setBtnBgColor(color));
+        }
+    };
+
   return (
     <div className={myUser.infoBox}>
-        <div className={myUser.infoTitle}>
-            <h3 className={myUser.highlight}>MYBLOG</h3>
-        </div>
-        
-        <div className={myUser.myBCard}>
-            <div className={myUser.user_d}>
-                <div className={myUser.d1}>
-                    <div style={{width: '300px'}}>
-                        <p>이미지 수정</p>
-                    </div>
-                    <button className={global.userBtn}>파일선택</button>
-                </div>
-                <div className={myUser.d2}>
-                    <p>글꼴 변경</p>
-                </div>
-                <div className={myUser.d3}>
-                    <div>글 사이즈 변경</div>
-                </div>
-            </div>
+      <div className={myUser.infoTitle}>
+        <h3 className={myUser.highlight}>MYBLOG</h3>
+      </div>
 
-            <button className={myUser.putBtn}>수정하기</button>
+      <div className={myUser.myBCard}>
+        <div className={myUser.user_d}>
+          <div className={myUser.d1}>
+            <div style={{ width: '300px' }}>
+              <p>배경 색 수정</p>
+            </div>
+            <button className={global.userBtn} onClick={handleBgColorChange}>
+              컬러 선택
+            </button>
+          </div>
+
+          <div className={myUser.d1}>
+            <div style={{ width: '300px' }}>
+              <p>마이페이지 바 수정</p>
+            </div>
+            <button className={global.userBtn} onClick={handleNavColorChange}>
+              컬러 선택
+            </button>
+          </div>
+
+          <div className={myUser.d1}>
+            <div style={{ width: '300px' }}>
+              <p>버튼 색 수정</p>
+            </div>
+            <button className={global.userBtn} onClick={handleBtnColorChange}>
+              컬러 선택
+            </button>
+          </div>
         </div>
+      </div>
     </div>
-  )
+  );
 }
 
 export default UesrBlog;

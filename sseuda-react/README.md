@@ -69,3 +69,14 @@
 - 사용한 명령어 
     * npm install jwt-decode
 
+
+## 2025.07.01 createSlice 설치
+
+- 기존 Redux의 상위 버전
+- 회원정보 페이지에서 배경 색을 다룰때 사용
+
+📝 참고:
+- 사용한 명령어 
+    * npm install @reduxjs/toolkit react-redux' 설치
+    * createSlice는 Redux의 코드를 간결하게 해준다.
+    * state, action, reducer의 사용을 편하게 해준다.

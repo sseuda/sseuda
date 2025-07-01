@@ -1,19 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { callInsertBigCategoryApi } from '../../../apis/CategoryAPICalls';
+import { callBigCategoryApi, callInsertBigCategoryApi } from '../../../apis/CategoryAPICalls';
 
-function CategoryBigInsert() {
+function CategoryBigInsert({reloadCategories}) {
 
     const dispatch = useDispatch();
     const [bigCategoryName, setBigCategoryName] = useState("");
+    const [bigCategory, setBigCategory] = useState([]);
+    const [reloadTrigger, setReloadTrigger] = useState(false);  // 변경 감지용
 
-    // ✅ 상위 카테고리 추가
-      const handleAddBigCategory = async () => {
-        const form = new FormData();
-        form.append("bigCategoryName", bigCategoryName);
-        await dispatch(callInsertBigCategoryApi({ form }));  // 등록 먼저
-        setBigCategoryName("");
-    };
+
+    useEffect(() => {
+      const fetchCategories = async () => {
+        const result = await dispatch(callBigCategoryApi());
+        setBigCategory(result);
+      };
+
+      fetchCategories();
+    }, [reloadTrigger]);
+
+    
+    const handleAddBigCategory = async () => {
+      if (bigCategoryName.trim() === "") return;
+
+      await dispatch(callInsertBigCategoryApi({ bigCategoryName }));
+
+      setBigCategoryName("");        // input 초기화
+
+      setReloadTrigger(prev => !prev);  // 상태 변경 -> useEffect 재실행으로 목록 갱신
+      // await reloadCategories();      // 부모의 카테고리 다시 불러오기
+  };
+
 
   return (
     <>
