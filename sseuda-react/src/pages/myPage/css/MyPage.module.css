@@ -12,11 +12,12 @@
     right: 0;
     background-color: var(--main-color01);
     cursor: pointer;
+    z-index: 20;
 }
 
 .penIcon{
     padding: 26px;
     font-size: 40px;
     color: var(--text01);
-    z-index: 10;
+    
 }
