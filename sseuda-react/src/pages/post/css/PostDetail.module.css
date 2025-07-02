@@ -31,18 +31,13 @@
     margin: 0 30px;
 }
 
-.userView{
-    width:130px;
+.userLive{
     display: flex;
     justify-content: space-between;
 }
 
-.userView button{
-    margin: 0;
-}
-
-.userView p{
-    margin-top: 5px;
+.userLike{
+    margin-right: 20px;
 }
 
 .contentBox{
@@ -104,4 +99,44 @@
     
     .reportBtn:hover {
     background-color: #ffe6e6;
+    }
+
+    /* quill */
+    .contentBox {
+    text-align: center; /* 본문 전체 가운데 정렬 */
+    line-height: 1.6;
+    }
+
+    .contentBox p {
+    margin-bottom: 50px; /* 이미지와 본문 간격 효과 */
+    }
+
+    .contentBox img {
+    display: block;
+    margin: 50px auto; /* 이미지 자체도 가운데 정렬 + 위아래 여백 */
+    max-width: 100%;
+    height: auto;
+    }
+
+    .contentBox h1,
+    .contentBox h2,
+    .contentBox h3 {
+    text-align: center; /* 제목들도 가운데 정렬 */
+    margin-bottom: 30px;
+    }
+
+    .contentBox blockquote {
+    text-align: center;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-left: 4px solid #f5c3a4;
+    }
+
+    .contentBox pre {
+    text-align: left; /* 코드 블록은 왼쪽 정렬 유지 (가독성 때문에) */
+    background-color: #f0f0f0;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
     }

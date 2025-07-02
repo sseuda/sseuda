@@ -49,7 +49,7 @@ function Post({
     <div 
     className={MainPost.postBox} 
     onClick={() => onClickPostHandler(postId)}
-    style={{ backgroundColor: bgColor }}>
+    style={{ backgroundColor: bgColor, borderRadius: '15px'}}>
         <div className={MainPost.box}>
             <div className={MainPost.textBox}>
                 <div className={MainPost.userBox}>

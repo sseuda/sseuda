@@ -10,9 +10,11 @@ import { callMemberApi } from '../../apis/MemberAPICalls';
 import ReportPopup from '../report/ReportPopup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { callLikeInsertApi, callPostDeleteApi, callUserLikeApi, callUserLikesListApi } from '../../apis/LikesAPICalls';
+import { callLikeInsertApi, callPostDeleteApi, callUserLikeApi } from '../../apis/LikesAPICalls';
 import UserLikesList from '../../components/common/post/UserLikesList';
 import LikesSave from '../../components/common/likes/LikesSave';
+
+import 'quill/dist/quill.snow.css';
 
 function PostDetail() {
   const dispatch = useDispatch();
@@ -167,9 +169,10 @@ useEffect(() => {
             <p>{post.memberDTO?.userNickname}</p>
             <p>{post.postCreateAt}</p>
           </div>
-          <div className={Detail.userView}>
+
+          <div className={Detail.userLive}>
             {post.userId !== loginUserId && (
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className={Detail.userLike}>
                 <button
                   onClick={handleLikeClick}
                   style={{
@@ -186,10 +189,11 @@ useEffect(() => {
               </div>
             )}
 
-            <div>
+            <div className={Detail.userView}>
               <p>{post.viewCount}</p>
             </div>
           </div>
+
         </div>
 
         {/* 게시글 본문 */}
