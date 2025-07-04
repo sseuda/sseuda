@@ -26,6 +26,14 @@ public class PostController {
         this.memberService = memberService;
     }
 
+
+    @Operation(summary = "수정된 게시글 상세 조회", description = "수정된 게시글 상세 조회가 진행됩니다.", tags = {"PostController"})
+    @GetMapping("/admin")
+    public ResponseEntity<ResponseDTO> findUpdatePostList(@RequestParam("postId") int postId){
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 상세 조회 성공", postService.findUpdatePostList(postId)));
+    }
+
     @Operation(summary = "게시글 전체 조회", description = "게시글 전체 조회가 진행됩니다.", tags = {"PostController"})
     @GetMapping("/all")
     public ResponseEntity<ResponseDTO> findPostList(){
@@ -195,6 +203,28 @@ public class PostController {
                     .body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "조회수 증가 실패", null));
         }
     }
+
+    //    관리자 게시글 상테 수정
+    @PutMapping("/admin/update")
+    public ResponseEntity<ResponseDTO> adminPostUpdate(@RequestParam("postId") int postId) {
+
+//        int userCode = 0;
+//        System.out.println("조회수증가 username????? " + username + "userCode?????" + userCode);
+//        if(username != null) {
+//            userCode = memberService.getMemberByUsername(username).getUserId();
+//        }
+//
+        int result = postService.adminPostUpdate(postId);
+
+        if (result > 0) {
+            return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "게시글 상태 변경 성공", result));
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "게시글 상태 변경 실패", null));
+        }
+    }
+
+
 
 
 

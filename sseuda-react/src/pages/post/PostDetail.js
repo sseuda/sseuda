@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { callDeletePostsApi, callPostApi } from '../../apis/PostAPICalls';
-import Detail from './css/PostDetail.module.css';
-import PostComment from '../comment/PostComment';
-import ButtonCSS from '../../components/common/Global/Button.module.css';
-import { decodeJwt } from '../../utils/tokenUtils';
-import { callMemberApi } from '../../apis/MemberAPICalls';
-import ReportPopup from '../report/ReportPopup';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { callLikeInsertApi, callPostDeleteApi, callUserLikeApi } from '../../apis/LikesAPICalls';
-import UserLikesList from '../../components/common/post/UserLikesList';
+import { callMemberApi } from '../../apis/MemberAPICalls';
+import { callAdminPostApi, callDeletePostsApi, callPostApi } from '../../apis/PostAPICalls';
+import ButtonCSS from '../../components/common/Global/Button.module.css';
 import LikesSave from '../../components/common/likes/LikesSave';
+import { decodeJwt } from '../../utils/tokenUtils';
+import PostComment from '../comment/PostComment';
+import ReportPopup from '../report/ReportPopup';
+import Detail from './css/PostDetail.module.css';
 
 import 'quill/dist/quill.snow.css';
 
@@ -31,14 +29,67 @@ function PostDetail() {
 
   const postDetail = useSelector(state => state.postReducer);
   const post = postDetail[0];
+  console.log("postDetail data: ", postDetail);
+
+  const [loginUserAuth, setLoginUserAuth] = useState(null);
+
+  // 관리자 권한 체크 (SUPER 포함)
+  const isAdmin = Array.isArray(loginUserAuth)
+    ? loginUserAuth.includes('ROLE_ADMIN') || loginUserAuth.includes('SUPER')
+    : loginUserAuth === 'ROLE_ADMIN' || loginUserAuth === 'SUPER';
+
+  console.log("decoded.auth: ", decoded?.auth);
+
+  const handleAdminClick = async () => {
+    if (!isAdmin) {
+      alert('관리자만 사용할 수 있습니다.');
+      return;
+    }
+
+    try {
+      const result = await dispatch(callAdminPostApi({ postId: post.postId }));
+
+      if (result.status === 200) {
+        alert('게시글이 관리자 권한으로 숨김 처리되었습니다.');
+        navigate(`/post/admin/${post.postId}`);
+      } else {
+        alert('게시글 숨김 처리에 실패했습니다.');
+      }
+    } catch (e) {
+      console.error('관리자 삭제 실패: ', e);
+      alert('에러가 발생했습니다.');
+    }
+  };
 
   // 게시글 내용 가져오기
-useEffect(() => {
-  if (!params.postId) return;
+  useEffect(() => {
+    if (!params.postId) return;
 
-  dispatch(callPostApi(params.postId));
+    dispatch(callPostApi(params.postId));
+  }, [params.postId, dispatch]);
 
-}, [params.postId, dispatch]);
+  // 삭제된 게시글일 경우 경고창 + 리디렉트
+  useEffect(() => {
+  if (post?.postDelete === 'Y') {
+    const isWriter = loginUserId === post.userId;
+
+    const isAdmin =
+      loginUserAuth === 'SUPER' || loginUserAuth === 'ROLE_ADMIN' ||
+      (Array.isArray(loginUserAuth) && (
+        loginUserAuth.includes('SUPER') || loginUserAuth.includes('ROLE_ADMIN')
+      ));
+
+    if (isWriter || isAdmin) {
+      // 작성자 또는 관리자면 관리자 상세 페이지로 이동
+      navigate(`/post/admin/${params.postId}`);
+    } else {
+      // 그 외 유저는 접근 차단
+      alert("이 게시글은 삭제된 상태입니다.");
+      navigate('/');
+    }
+  }
+}, [post, loginUserId, loginUserAuth, navigate, params.postId]);
+
 
 
   // 로그인 유저 정보 가져오기
@@ -48,7 +99,10 @@ useEffect(() => {
 
       try {
         const response = await dispatch(callMemberApi(decoded.sub));
-        if (response) setLoginUserId(response.userId);
+        if (response) {
+          setLoginUserId(response.userId);
+          setLoginUserAuth(decoded?.auth);
+        }
       } catch (error) {
         console.error("로그인 유저 정보 가져오기 실패: ", error);
       }
@@ -57,7 +111,7 @@ useEffect(() => {
     fetchLoginUser();
   }, [accessToken, decoded, dispatch]);
 
-  // 게시글 내용 가져오기
+  // 좋아요 상태 가져오기
   useEffect(() => {
     const fetchUserLikeStatus = async () => {
       if (!username || !params.postId) return;
@@ -66,7 +120,6 @@ useEffect(() => {
         const result = await dispatch(callUserLikeApi(username, params.postId));
 
         if (result && result.data) {
-          // 만약 현재 글에 좋아요 했다면 true
           const liked = result.data.some(likePost => likePost.postId == params.postId);
           setIsClick(liked);
         }
@@ -77,8 +130,6 @@ useEffect(() => {
 
     fetchUserLikeStatus();
   }, [username, params.postId, dispatch]);
-
-
 
   // 신고 팝업 관련
   const handleReportClick = () => {
@@ -105,39 +156,37 @@ useEffect(() => {
 
   // 좋아요 클릭 핸들러
   const handleLikeClick = async () => {
-  if (!loginUserId) {
-    alert("로그인 후 좋아요 가능합니다!");
-    return;
-  }
-
-  try {
-    if (!isClick) {
-      const form = new FormData();
-      form.append('userId', loginUserId);
-      form.append('postId', post.postId);
-
-      await dispatch(callLikeInsertApi({
-        postId: post.postId,
-        form: form,
-        username: username
-      }));
-
-      setIsClick(true);  // 좋아요 등록 성공 후 색상 ON
-
-    } else {
-      await dispatch(callPostDeleteApi({
-        postId: post.postId,
-        username: username
-      }));
-
-      setIsClick(false);  // 좋아요 취소 후 색상 OFF
+    if (!loginUserId) {
+      alert("로그인 후 좋아요 가능합니다!");
+      return;
     }
-  } catch (error) {
-    console.error('좋아요 처리 실패:', error);
-    alert('좋아요 처리 중 문제가 발생했습니다.');
-  }
-}
 
+    try {
+      if (!isClick) {
+        const form = new FormData();
+        form.append('userId', loginUserId);
+        form.append('postId', post.postId);
+
+        await dispatch(callLikeInsertApi({
+          postId: post.postId,
+          form: form,
+          username: username
+        }));
+
+        setIsClick(true);
+      } else {
+        await dispatch(callPostDeleteApi({
+          postId: post.postId,
+          username: username
+        }));
+
+        setIsClick(false);
+      }
+    } catch (error) {
+      console.error('좋아요 처리 실패:', error);
+      alert('좋아요 처리 중 문제가 발생했습니다.');
+    }
+  };
 
   if (!post) return <p>게시글을 불러오는 중입니다...</p>;
 
@@ -145,8 +194,14 @@ useEffect(() => {
     <div>
       <div className={Detail.detailBox}>
 
-        { loginUserId !== post.userId &&(
-        <button onClick={handleReportClick} className={Detail.reportBtn}>🚨신고하기</button>
+        {loginUserId !== post.userId && (
+          <button onClick={handleReportClick} className={Detail.reportBtn}>🚨신고하기</button>
+        )}
+
+        {isAdmin && (
+          <button onClick={handleAdminClick} className={Detail.reportBtn}>
+            🔒 관리자 권한으로 삭제
+          </button>
         )}
 
         {showReportPopup && (

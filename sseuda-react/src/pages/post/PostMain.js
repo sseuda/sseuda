@@ -50,26 +50,31 @@ function PostMain() {
 
     
     return (
-    <div>
-      <div style={{minHeight: '1000px', position: 'relative'}}>
-        {Array.isArray(currentPosts) && currentPosts.map((post, index) => (
+  <div>
+    <div style={{ minHeight: '1000px', position: 'relative' }}>
+      {Array.isArray(currentPosts) && currentPosts
+        .filter(post => post.postDelete !== 'Y')  // 삭제된 게시물 제외
+        .map((post, index) => (
           <div key={post.postId}>
-            <MainPost post={post} index={index}/>
+            <MainPost post={post} index={index} />
           </div>
-        ))}
+        ))
+      }
 
-            <div 
-            className={pagiNation.pagination}
-            style={{position: 'absolute', bottom: '50px', left: '200px'}}>
-            {pageNumbers.map(number => (
-              <button key={number} onClick={() => setCurrentPage(number)}>
-                {number}
-              </button>
-            ))}
-          </div>
-        </div>
+      <div
+        className={pagiNation.pagination}
+        style={{ position: 'absolute', bottom: '50px', left: '200px' }}
+      >
+        {pageNumbers.map(number => (
+          <button key={number} onClick={() => setCurrentPage(number)}>
+            {number}
+          </button>
+        ))}
+      </div>
     </div>
-  )
+  </div>
+);
+
 
 }
 

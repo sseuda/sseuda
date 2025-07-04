@@ -4,12 +4,13 @@ import com.sseuda.sseuda_server.function.post.dto.PostDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
 @Mapper
 public interface PostMapper {
+
+    List<PostDTO> findUpdatePostList(int postId);
 
 //    게시글 전체 조회
     List<PostDTO> findPostList();
@@ -45,6 +46,9 @@ public interface PostMapper {
 
 //    viewCount만 가지고오기
     int findViewCount(@Param("postId") int postId);
+
+
+    int adminPostUpdate(@Param("postId") int postId);
 
 
 }

@@ -28,7 +28,13 @@ public class PostService {
         this.memberMapper = memberMapper;
     }
 
-//    게시글 전체 조회
+//    수정된 게시글 전체 조회
+    public List<PostDTO> findUpdatePostList(int postId){
+
+        return postMapper.findUpdatePostList(postId);
+    }
+
+    //    게시글 전체 조회
     public List<PostDTO> findPostList(){
 
         return postMapper.findPostList();
@@ -114,6 +120,11 @@ public class PostService {
         }else {
             return -1;
         }
+    }
+
+
+    public int adminPostUpdate(int postId) {
+        return postMapper.adminPostUpdate(postId);
     }
 
 
