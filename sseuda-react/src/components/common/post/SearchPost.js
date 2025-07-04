@@ -6,7 +6,7 @@ import MainPost from './css/MainPost.module.css';
 import { decodeJwt } from '../../../utils/tokenUtils';
 
 function SearchPost({
-  post: {postId, postTitle, postContent}, index
+    post: {postId, postTitle, postContent}, index
 }){
 
     const dispatch = useDispatch();
@@ -39,11 +39,17 @@ function SearchPost({
     const bgColor = backgroundColors[index % backgroundColors.length];
 
     const removeImageTags = (html) => {
-  return html.replace(/<img[^>]*>/gi, '');
+    return html.replace(/<img[^>]*>/gi, '');
+};
+
+const extractTextOnly = (html) => {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.innerText;
 };
 
 
-  return (
+return (
     <div 
     className={MainPost.postBox} 
     onClick={() => onClickPostHandler(postId)}
@@ -53,7 +59,9 @@ function SearchPost({
                 <div className={MainPost.contentBox} style={{borderBottom: '1px solid var(--text02)', height: '65px', marginBottom: '10px'}}>
                     <h2>{postTitle}</h2>
                 </div>
-                <div dangerouslySetInnerHTML={{ __html: removeImageTags(postContent) }} />
+                <div className={MainPost.contentPreview}>
+                {extractTextOnly(postContent)}
+                </div>
             </div>
             <div className={MainPost.imgBox}>
                 {firstImage && (
@@ -65,6 +73,6 @@ function SearchPost({
             </div>
         </div>
     </div>
-  )
+)
 }
 export default SearchPost;

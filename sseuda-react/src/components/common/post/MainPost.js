@@ -45,7 +45,14 @@ function Post({
   return html.replace(/<img[^>]*>/gi, '');
 };
 
-  return (
+    // 게시글 글자만 추출
+    const extractTextOnly = (html) => {
+        const div = document.createElement('div');
+        div.innerHTML = html;
+        return div.innerText;
+    };
+
+    return (
     <div 
     className={MainPost.postBox} 
     onClick={() => onClickPostHandler(postId)}
@@ -60,7 +67,10 @@ function Post({
 
                 <div className={MainPost.contentBox}>
                     <h2>{postTitle}</h2>
-                      <div dangerouslySetInnerHTML={{ __html: removeImageTags(postContent) }} />
+                      {/* <div dangerouslySetInnerHTML={{ __html: removeImageTags(postContent) }} /> */}
+                        <div className={MainPost.contentPreview}>
+                            {extractTextOnly(postContent)}
+                        </div>
                 </div>
             </div>
             <div className={MainPost.imgBox}>
