@@ -192,224 +192,86 @@ VALUES
 
 -- 게시글 더미데이터
 INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           1,
-           '오사카 먹방 여행기 🍜',
-           '<h2>오사카 먹방 여행기 🍜</h2><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><h3>여행 팁</h3><ul><li>날씨를 미리 확인하고 준비물 챙기세요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
-           '2025-05-21 02:12:38',
-           10,
-           55,
-           5
-       );
+VALUES
+    (1, '오사카 먹방 여행기 🍜',
+     '<p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><h3>여행 팁</h3><ul><li>날씨를 미리 확인하고 준비물 챙기세요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
+     '2025-05-21 02:12:38', 10, 55, 5),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           2,
-           '파리에서의 낭만적인 하루',
-           '<h2>파리에서의 낭만적인 하루</h2><p>자연과 도심이 어우러진 멋진 곳이었어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>현지인 맛집을 사전에 검색해보세요.</li></ul>',
-           '2025-05-20 02:12:38',
-           5,
-           61,
-           1
-       );
+    (2, '파리에서의 낭만적인 하루',
+     '<p>자연과 도심이 어우러진 멋진 곳이었어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>현지인 맛집을 사전에 검색해보세요.</li></ul>',
+     '2025-05-20 02:12:38', 5, 61, 1),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           3,
-           '제주도 힐링 코스 추천',
-           '<h2>제주도 힐링 코스 추천</h2><p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><p><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><h3>여행 팁</h3><ul><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li><li>대중교통 패스를 미리 구매해두면 좋아요.</li></ul>',
-           '2025-05-19 02:12:38',
-           6,
-           129,
-           2
-       );
+    (3, '제주도 힐링 코스 추천',
+     '<p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><p><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><h3>여행 팁</h3><ul><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li><li>대중교통 패스를 미리 구매해두면 좋아요.</li></ul>',
+     '2025-05-19 02:12:38', 6, 129, 2),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           4,
-           '부산 해운대 일출 후기',
-           '<h2>부산 해운대 일출 후기</h2><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><h3>여행 팁</h3><ul><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
-           '2025-05-18 02:12:38',
-           2,
-           21,
-           4
-       );
+    (4, '부산 해운대 일출 후기',
+     '<p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><h3>여행 팁</h3><ul><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
+     '2025-05-18 02:12:38', 2, 21, 4),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           5,
-           '도쿄 벚꽃 시즌 여행기',
-           '<h2>도쿄 벚꽃 시즌 여행기</h2><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><p><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><h3>여행 팁</h3><ul><li>현지인 맛집을 사전에 검색해보세요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
-           '2025-05-17 02:12:38',
-           9,
-           142,
-           2
-       );
+    (5, '도쿄 벚꽃 시즌 여행기',
+     '<p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><p><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><h3>여행 팁</h3><ul><li>현지인 맛집을 사전에 검색해보세요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
+     '2025-05-17 02:12:38', 9, 142, 2),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           6,
-           '런던에서 만난 비 오는 거리',
-           '<h2>런던에서 만난 비 오는 거리</h2><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><h3>여행 팁</h3><ul><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
-           '2025-05-16 02:12:38',
-           10,
-           121,
-           5
-       );
+    (6, '런던에서 만난 비 오는 거리',
+     '<p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><h3>여행 팁</h3><ul><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
+     '2025-05-16 02:12:38', 10, 121, 5),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           7,
-           '뉴욕 야경은 정말 끝내줘요',
-           '<h2>뉴욕 야경은 정말 끝내줘요</h2><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
-           '2025-05-15 02:12:38',
-           5,
-           138,
-           3
-       );
+    (7, '뉴욕 야경은 정말 끝내줘요',
+     '<p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
+     '2025-05-15 02:12:38', 5, 138, 3),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           8,
-           '스페인 바르셀로나 여행기',
-           '<h2>스페인 바르셀로나 여행기</h2><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>현지인 맛집을 사전에 검색해보세요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
-           '2025-05-14 02:12:38',
-           2,
-           49,
-           1
-       );
+    (8, '스페인 바르셀로나 여행기',
+     '<p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>현지인 맛집을 사전에 검색해보세요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
+     '2025-05-14 02:12:38', 2, 49, 1),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           9,
-           '방콕 야시장 체험기',
-           '<h2>방콕 야시장 체험기</h2><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><h3>여행 팁</h3><ul><li>날씨를 미리 확인하고 준비물 챙기세요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
-           '2025-05-13 02:12:38',
-           10,
-           62,
-           2
-       );
+    (9, '방콕 야시장 체험기',
+     '<p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><h3>여행 팁</h3><ul><li>날씨를 미리 확인하고 준비물 챙기세요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
+     '2025-05-13 02:12:38', 10, 62, 2),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           10,
-           '하와이 해변에서의 하루',
-           '<h2>하와이 해변에서의 하루</h2><p>자연과 도심이 어우러진 멋진 곳이었어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
-           '2025-05-12 02:12:38',
-           2,
-           12,
-           2
-       );
+    (10, '하와이 해변에서의 하루',
+     '<p>자연과 도심이 어우러진 멋진 곳이었어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
+     '2025-05-12 02:12:38', 2, 12, 2),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           11,
-           '로마 유적지 탐방 후기',
-           '<h2>로마 유적지 탐방 후기</h2><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><p><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>자연과 도심이 어우러진 멋진 곳이었어요.</p><h3>여행 팁</h3><ul><li>날씨를 미리 확인하고 준비물 챙기세요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
-           '2025-05-11 02:12:38',
-           1,
-           83,
-           4
-       );
+    (11, '로마 유적지 탐방 후기',
+     '<p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><p><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>자연과 도심이 어우러진 멋진 곳이었어요.</p><h3>여행 팁</h3><ul><li>날씨를 미리 확인하고 준비물 챙기세요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
+     '2025-05-11 02:12:38', 1, 83, 4),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           12,
-           '베트남 다낭 여행 정보 공유',
-           '<h2>베트남 다낭 여행 정보 공유</h2><p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>자연과 도심이 어우러진 멋진 곳이었어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
-           '2025-05-10 02:12:38',
-           2,
-           40,
-           3
-       );
+    (12, '베트남 다낭 여행 정보 공유',
+     '<p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>자연과 도심이 어우러진 멋진 곳이었어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
+     '2025-05-10 02:12:38', 2, 40, 3),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           13,
-           '이탈리아 피렌체 미술관 투어',
-           '<h2>이탈리아 피렌체 미술관 투어</h2><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><p><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><h3>여행 팁</h3><ul><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li><li>대중교통 패스를 미리 구매해두면 좋아요.</li></ul>',
-           '2025-05-09 02:12:38',
-           3,
-           55,
-           1
-       );
+    (13, '이탈리아 피렌체 미술관 투어',
+     '<p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><p><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><h3>여행 팁</h3><ul><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li><li>대중교통 패스를 미리 구매해두면 좋아요.</li></ul>',
+     '2025-05-09 02:12:38', 3, 55, 1),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           14,
-           '시드니 오페라하우스 앞에서',
-           '<h2>시드니 오페라하우스 앞에서</h2><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><h3>여행 팁</h3><ul><li>현지인 맛집을 사전에 검색해보세요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
-           '2025-05-08 02:12:38',
-           1,
-           143,
-           3
-       );
+    (14, '시드니 오페라하우스 앞에서',
+     '<p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><h3>여행 팁</h3><ul><li>현지인 맛집을 사전에 검색해보세요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
+     '2025-05-08 02:12:38', 1, 143, 3),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           15,
-           '싱가포르 여행 꿀팁',
-           '<h2>싱가포르 여행 꿀팁</h2><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><p><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><h3>여행 팁</h3><ul><li>현지인 맛집을 사전에 검색해보세요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
-           '2025-05-07 02:12:38',
-           7,
-           70,
-           1
-       );
+    (15, '싱가포르 여행 꿀팁',
+     '<p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><p><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>여행 중 날씨가 좋아서 사진도 많이 찍었답니다.</p><h3>여행 팁</h3><ul><li>현지인 맛집을 사전에 검색해보세요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
+     '2025-05-07 02:12:38', 7, 70, 1),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           16,
-           '홍콩 딤섬 맛집 추천',
-           '<h2>홍콩 딤섬 맛집 추천</h2><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><p><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>현지인 맛집을 사전에 검색해보세요.</li></ul>',
-           '2025-05-06 02:12:38',
-           4,
-           43,
-           2
-       );
+    (16, '홍콩 딤섬 맛집 추천',
+     '<p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><p><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>현지인 맛집을 사전에 검색해보세요.</li></ul>',
+     '2025-05-06 02:12:38', 4, 43, 2),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           17,
-           '대만 야시장 음식 후기',
-           '<h2>대만 야시장 음식 후기</h2><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
-           '2025-05-05 02:12:38',
-           6,
-           22,
-           4
-       );
+    (17, '대만 야시장 음식 후기',
+     '<p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
+     '2025-05-05 02:12:38', 6, 22, 4),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           18,
-           '말레이시아 코타키나발루 리조트 체험기',
-           '<h2>말레이시아 코타키나발루 리조트 체험기</h2><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><h3>여행 팁</h3><ul><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li><li>현지인 맛집을 사전에 검색해보세요.</li></ul>',
-           '2025-05-04 02:12:38',
-           5,
-           111,
-           1
-       );
+    (18, '말레이시아 코타키나발루 리조트 체험기',
+     '<p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><h3>여행 팁</h3><ul><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li><li>현지인 맛집을 사전에 검색해보세요.</li></ul>',
+     '2025-05-04 02:12:38', 5, 111, 1),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           19,
-           '필리핀 세부 스노클링 후기',
-           '<h2>필리핀 세부 스노클링 후기</h2><p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
-           '2025-05-03 02:12:38',
-           8,
-           20,
-           5
-       );
+    (19, '필리핀 세부 스노클링 후기',
+     '<p>역사적인 장소를 직접 보니 감회가 새로웠어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>사진 찍기 좋은 시간대는 아침과 저녁이에요.</li></ul>',
+     '2025-05-03 02:12:38', 8, 20, 5),
 
-INSERT INTO tbl_post (post_id, post_title, post_content, post_create_at, user_id, view_count, small_category_id)
-VALUES (
-           20,
-           '미국 LA 한인타운 방문기',
-           '<h2>미국 LA 한인타운 방문기</h2><p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
-           '2025-05-02 02:12:38',
-           10,
-           150,
-           5
-       );
+    (20, '미국 LA 한인타운 방문기',
+     '<p>계획한 것보다 훨씬 더 즐거운 시간을 보냈어요.</p><p><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="여행 이미지" /></p><p>이번 여행은 정말 뜻깊었어요. 현지 음식도 너무 맛있었고 사람들도 친절했어요.</p><h3>여행 팁</h3><ul><li>대중교통 패스를 미리 구매해두면 좋아요.</li><li>날씨를 미리 확인하고 준비물 챙기세요.</li></ul>',
+     '2025-05-02 02:12:38', 10, 150, 5);
 
 
 -- 댓글 더미데이터
