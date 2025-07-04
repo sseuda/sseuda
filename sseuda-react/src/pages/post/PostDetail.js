@@ -40,6 +40,22 @@ useEffect(() => {
 
 }, [params.postId, dispatch]);
 
+  // 날짜 포맷 
+  const formatDateTime = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+  
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // 월은 0부터 시작
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+  
+    const ampm = hour >= 12 ? '오후' : '오전';
+    const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+    const formattedMinute = minute.toString().padStart(2, '0');
+  
+    return `${year}년 ${month}월 ${day}일, ${ampm} ${formattedHour}시 ${formattedMinute}분`;
+  };
 
   // 로그인 유저 정보 가져오기
   useEffect(() => {
@@ -167,7 +183,7 @@ useEffect(() => {
         <div className={Detail.decBox}>
           <div className={Detail.userBox}>
             <p>{post.memberDTO?.userNickname}</p>
-            <p>{post.postCreateAt}</p>
+            <p>{formatDateTime(post.postCreateAt)}</p>
           </div>
 
           <div className={Detail.userLive}>
