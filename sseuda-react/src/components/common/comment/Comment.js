@@ -40,6 +40,22 @@ function Comment({
 
     }
 
+	const formatDateTime = (dateTimeString) => {
+		const date = new Date(dateTimeString);
+	
+		const year = date.getFullYear();
+		const month = date.getMonth() + 1; // 월은 0부터 시작
+		const day = date.getDate();
+		const hour = date.getHours();
+		const minute = date.getMinutes();
+	
+		const ampm = hour >= 12 ? '오후' : '오전';
+		const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+		const formattedMinute = minute.toString().padStart(2, '0');
+	
+		return `${year}년 ${month}월 ${day}일, ${ampm} ${formattedHour}시 ${formattedMinute}분`;
+	};
+
     return (
         <div className={CommentCSS.commentContainer}>
 			{/* 상단: 닉네임 + 신고버튼 + 작성일 */}
@@ -54,7 +70,7 @@ function Comment({
 						🚨신고
 					</button>)}
 				</div>
-				<span className={CommentCSS.createdAt}>{commentCreateAt}</span>
+				<span className={CommentCSS.createdAt}>{formatDateTime(commentCreateAt)}</span>
 			</div>
 
 			{/* 본문: 댓글 + 수정/삭제 */}
