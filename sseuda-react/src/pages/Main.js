@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { decodeJwt } from "../utils/tokenUtils";
 import { useEffect, useState } from "react";
 import Alarm from "./alarm/Alarm";
+import WeatherComponent from "../components/weather/WeatherComponent";
 
 function Main() {
   const navigate = useNavigate();
@@ -44,31 +45,29 @@ function Main() {
   // 알람 모달창 
   const [showAlarm, setShowAlarm] = useState(false);
 
-  const [weather, setWeather] = useState(null);
+  // 날씨 관련
+  // const [weather, setWeather] = useState(null);
   
-    useEffect(() => {
-      const fetchWeather = async () => {
-        try {
-          const API_KEY = '59f40285acee7464751c365ea4cd8cfc';
-          const city = 'Seoul';
-          const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
-          );
-          const data = await response.json();
-          setWeather(data);
-        } catch (error) {
-          console.error('날씨 불러오기 실패:', error);
-        }
-      };
+  //   useEffect(() => {
+  //     const fetchWeather = async () => {
+  //       try {
+  //         const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+  //         const city = 'Seoul';
+  //         const response = await fetch(
+  //           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+  //         );
+  //         const data = await response.json();
+  //         setWeather(data);
+  //       } catch (error) {
+  //         console.error('날씨 불러오기 실패:', error);
+  //       }
+  //     };
   
-      fetchWeather();
-    }, []);
+  //     fetchWeather();
+  //   }, []);
   
-    if (!weather) return <div>날씨 정보를 불러오는 중...</div>;
+  //   if (!weather) return <div>날씨 정보를 불러오는 중...</div>;
 
-    const iconUrl = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`;
-  
-    
   return (
     <div>
   {/* 검색창 */}
@@ -125,16 +124,7 @@ function Main() {
         </div>
         
       {/* 날씨 */}
-        <div className={MainCSS.waetherBox}>
-        <h3> 현재 날씨 (서울)</h3>
-        <img
-          src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
-          alt="날씨 아이콘"
-          className={MainCSS.weatherIcon}
-        />
-        <p> {weather.main.temp}°C</p>
-        <p> {weather.weather[0].description}</p>
-      </div>
+        <WeatherComponent/>
 
     </div>
 
